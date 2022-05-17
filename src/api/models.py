@@ -2,15 +2,46 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class Usuarias(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    contraseña = db.Column(db.String(80), nullable=False) 
+    rol = db.Column(db.String(500))      
 
     def serialize(self):
         return {
             "id": self.id,
             "email": self.email,
-            # do not serialize the password, its a security breach
+            "rol": self.rol
         }
+
+
+class Datos_Usuaria(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    usuaria_id = db.Column(db.Integer, db.ForeignKey('usuarias.id'))
+    nombre = db.Column(db.String(150))
+    semanas_embarazo = db.Column(db.Integer)
+    fecha_aproximada_parto = db.Column(db.Date)
+    número_hijos = db.Column(db.Integer)
+    número_cesáreas = db.Column(db.Integer)
+    acompañante = db.Column(db.String(250))
+    ciudad = db.Column(db.String(150))
+    lugar_parto = db.Column(db.String(120))
+    hospital_actual = db.Column(db.String(250))
+    avatar = db.Column(db.String(500))
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
+            "semanas_embarazo": self.semanas_embarazo,
+            "fecha_aproximada_parto": self.fecha_aproximada_parto,
+            "numero_hijos": self.número_hijos,
+            "cesareas": self.cesáreas,
+            "acompanante": self.acompañante,
+            "ubicacion": self.ubicación,
+            "lugar_parto": self.lugar_parto,
+            "hospital_actual": self.hospital_actual,
+        }
+
+
