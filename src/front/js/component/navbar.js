@@ -5,6 +5,7 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-light bg-light fixed-top" id="navbar">
       <div>
+        {/* boton menu */}
         <button
           className="btn btn-light"
           type="button"
@@ -28,6 +29,7 @@ export const Navbar = () => {
         </ul>
       </div>
 
+      {/* boton perfil */}
       <div>
         <button
           className="btn btn-secondary rounded-circle"
