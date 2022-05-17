@@ -1,3 +1,12 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+#navbar {
+  padding-left: 1%;
+  padding-right: 1%;
+}
+
+#menu-dropdown {
+  margin-left: 1%;
+}
+
+#profile-dropdown {
+  margin-left: 90%;
+}
