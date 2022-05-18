@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 
 export const Form = () => {
   const [user, setUser] = useState({});
@@ -23,10 +23,10 @@ export const Form = () => {
     } else if (localStorage.getItem("token")) {
       history.push("/perfil");
       const response = await fetch(
-        "https://3001-ederdon-tiamatidoula-0nmea4h5wm7.ws-eu45.gitpod.io/api/form/<int:user_id>",
+        "https://3001-ederdon-tiamatidoula-0nmea4h5wm7.ws-eu45.gitpod.io/api/form",
 
         {
-          method: "PUT",
+          method: "POST",
           body: JSON.stringify(user),
           headers: { "Content-Type": "application/json" },
         }

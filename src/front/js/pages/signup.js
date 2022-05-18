@@ -22,7 +22,6 @@ export const Signup = () => {
       }
       const response = await fetch(
         "https://3001-ederdon-tiamatidoula-0nmea4h5wm7.ws-eu45.gitpod.io/api/signup",
-
         {
           method: "POST",
           body: JSON.stringify(user),
@@ -44,18 +43,20 @@ export const Signup = () => {
           <input
             type="email"
             className="form-control"
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
+            onChange={(e) =>
+              setUser({ ...user, email: e.target.value, rol: "usuaria" })
+            }
           />
         </div>
         <div className="form-check">
           <input
             className="form-check-input"
             type="checkbox"
-            onClick={(e) => {
-              e.checked == true
-                ? setUser({ ...user, rol: "empresa" }, setCheck(true))
-                : setUser({ ...user, rol: "usuaria" });
-            }}
+            onChange={(e) =>
+              e.target.checked
+                ? setUser({ ...user, rol: "empresa" }) & setCheck(true)
+                : setUser({ ...user, rol: "usuaria" }) & setCheck(false)
+            }
           />
           <label className="form-check-label">Soy empresa</label>
         </div>
@@ -74,9 +75,7 @@ export const Signup = () => {
           <button
             type="button"
             className="btn btn-primary"
-            onClick={(e) => {
-              saveUsersInDB();
-            }}
+            onClick={(e) => saveUsersInDB()}
           >
             Registrarse
           </button>

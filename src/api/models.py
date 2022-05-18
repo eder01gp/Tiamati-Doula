@@ -6,7 +6,7 @@ class Usuarias(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     contraseña = db.Column(db.String(80), nullable=False) 
-    rol = db.Column(db.String(500))      
+    rol = db.Column(db.String(120))      
 
     def serialize(self):
         return {
@@ -22,9 +22,9 @@ class Datos_Usuaria(db.Model):
     nombre = db.Column(db.String(150))
     semanas_embarazo = db.Column(db.Integer)
     fecha_aproximada_parto = db.Column(db.Date)
-    número_hijos = db.Column(db.Integer)
-    número_cesáreas = db.Column(db.Integer)
-    acompañante = db.Column(db.String(250))
+    numero_hijos = db.Column(db.Integer)
+    numero_cesareas = db.Column(db.Integer)
+    acompanante = db.Column(db.String(250))
     ciudad = db.Column(db.String(150))
     lugar_parto = db.Column(db.String(120))
     hospital_actual = db.Column(db.String(250))
@@ -33,13 +33,14 @@ class Datos_Usuaria(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "usuaria_id": self.usuaria_id,
             "nombre": self.nombre,
             "semanas_embarazo": self.semanas_embarazo,
             "fecha_aproximada_parto": self.fecha_aproximada_parto,
             "numero_hijos": self.número_hijos,
             "cesareas": self.cesáreas,
             "acompanante": self.acompañante,
-            "ubicacion": self.ubicación,
+            "ciudad": self.ubicación,
             "lugar_parto": self.lugar_parto,
             "hospital_actual": self.hospital_actual,
         }
