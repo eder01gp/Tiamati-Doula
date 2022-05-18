@@ -11,6 +11,7 @@ export const Signup = () => {
     if (
       user.email != null &&
       user.email.trim != "" &&
+      user.email != "" &&
       user.contraseña != null &&
       user.contraseña.trim() != ""
     ) {
@@ -35,11 +36,11 @@ export const Signup = () => {
   };
 
   return (
-    <div className="registro mt-5 align-items-center">
-      <p className="text-center">REGISTRO DE USUARIA</p>
-      <form className="col-3 m-auto needs-validation" noValidate>
-        <div className="mb-3">
-          <label className="form-label">Email</label>
+    <div className="registro mt-5">
+      <p className="text-center mt-5">REGISTRO</p>
+      <form className="col-3 m-auto align-items-center">
+        <div className="mb-1">
+          <label className="form-label mb-0">Email</label>
           <input
             type="email"
             className="form-control"
@@ -48,7 +49,7 @@ export const Signup = () => {
             }
           />
         </div>
-        <div className="form-check">
+        <div className="form-check mb-3">
           <input
             className="form-check-input"
             type="checkbox"
@@ -61,7 +62,7 @@ export const Signup = () => {
           <label className="form-check-label">Soy empresa</label>
         </div>
         <div className="mb-1">
-          <label htmlFor="exampleInputPassword1" className="form-label">
+          <label htmlFor="exampleInputPassword1" className="form-label mb-0">
             Contraseña
           </label>
           <input

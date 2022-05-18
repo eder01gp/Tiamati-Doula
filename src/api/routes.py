@@ -13,7 +13,7 @@ def save_signup_usuaria():
     body_contraseña = request.json.get("contraseña")
     body_rol = request.json.get("rol")
     if body_email and body_contraseña:
-        # if Usuarias.query.filter_by(email == body_email).first() == None:
+        # if Usuarias.query.filter_by(email).first() == None:
             user_created = Usuarias(email = body_email, contraseña = body_contraseña, rol = body_rol)
             db.session.add(user_created)
             db.session.commit()
@@ -26,9 +26,9 @@ def save_signup_usuaria():
     else: return jsonify({"msg": "Error, comprueba email y contraseña"}), 400       
      
 
-@api.route('/form/<int:usuaria_id>', methods=['POST'])
+@api.route('/form/<int:usuaria_id>', methods=['PUT']) 
 def save_or_update_user_form(usuaria_id):
-    usuaria_id = Datos_Usuaria.query.get(usuaria_id)
+    usuaria_id = Datos_Usuaria.query.filter_by(usuaria_id = usuaria_id) #------ ¿? ------#
     body_nombre = request.json.get("nombre")
     body_semanas_embarazo = request.json.get("semanas_embarazo")
     body_fecha_parto = request.json.get("fecha_aproximada_parto")
@@ -42,13 +42,20 @@ def save_or_update_user_form(usuaria_id):
         user_created = Datos_Usuaria(nombre = body_nombre, semanas_embarazo = body_semanas_embarazo, fecha_aproximada_parto = body_fecha_parto, numero_hijos = body_numero_hijos, cesareas =  body_cesareas,  acompanante = body_acompanante, ciudad = body_ciudad,  lugar_parto = body_lugar_parto, hospital_actual = body_hospital_actual)
         db.session.add(user_created)
         db.session.commit()
-        return jsonify({"msg": "Datos guardados correctamente"}), 200    
+        return jsonify({"msg": "Datos guardados correctamente"}), 200   
+    else: return jsonify({"msg": "Error, no se han podido guardar los datos"}), 400      
 
 @api.route('/usuarias', methods=['GET'])
 def get_all_usuarias():
     usuarias = Usuarias.query.all()
     usuarias_serialized = list(map(lambda item: item.serialize(), usuarias)) 
     return jsonify({"response": usuarias_serialized}), 200      
+
+@api.route('/datos_usuarias', methods=['GET'])
+def get_all_datos_usuarias():
+    datos_usuarias = Datos_Usuaria.query.all()
+    datos_usuarias_serialized = list(map(lambda item: item.serialize(), datos_usuarias)) 
+    return jsonify({"response": datos_usuarias_serialized}), 200      
 
 # @api.route('/perfil', methods=['POST'])
 # Aquí iria lo del token

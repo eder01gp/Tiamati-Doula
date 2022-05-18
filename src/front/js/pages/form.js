@@ -8,36 +8,20 @@ export const Form = () => {
   const history = useHistory();
 
   const saveUsersData = async () => {
-    if (!localStorage.getItem("token")) {
-      history.push("/login");
-      const response = await fetch(
-        "https://3001-ederdon-tiamatidoula-0nmea4h5wm7.ws-eu45.gitpod.io/api/form",
-
-        {
-          method: "POST",
-          body: JSON.stringify(user),
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      const data = await response.json();
-    } else if (localStorage.getItem("token")) {
-      history.push("/perfil");
-      const response = await fetch(
-        "https://3001-ederdon-tiamatidoula-0nmea4h5wm7.ws-eu45.gitpod.io/api/form",
-
-        {
-          method: "POST",
-          body: JSON.stringify(user),
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      const data = await response.json();
-    }
+    const response = await fetch(
+      "https://3001-ederdon-tiamatidoula-0nmea4h5wm7.ws-eu45.gitpod.io/api/form",
+      {
+        method: "PUT",
+        body: JSON.stringify(user),
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    const data = await response.json();
   };
 
   return (
-    <div className="container m-auto align-items-center">
-      <div className="text-center my-5">
+    <div className="formulario container m-auto align-items-center mt-5">
+      <div className="text-center mt-5">
         <p className="mb-0">
           Este formulario me ayudaría a conocerte mejor y poder ofrecerte un
           servicio más personalizado.
@@ -48,10 +32,10 @@ export const Form = () => {
         </p>
       </div>
       <form className="row g-3">
-        <div className="col-6">
-          <label className="visually-hidden">Nombre Usuaria</label>
+        <div className="col-auto">
+          <label className="visually-hidden">NOMBRE USUARIA</label>
           <div className="input-group">
-            <div className="input-group-text">¿Cómo te llamas?</div>
+            <div className="input-group-text bg-light">¿Cómo te llamas?</div>
             <input
               type="text"
               className="form-control"
@@ -59,14 +43,17 @@ export const Form = () => {
             />
           </div>
         </div>
-        <div className="col-4">
-          <label className="visually-hidden">Nº de semanas de embarazo</label>
+        <div className="col-3 col-lg-5 col-sm-auto">
+          <label className="visually-hidden">Nº SEMANAS EMBARAZO</label>
           <div className="input-group">
             <div className="input-group-text bg-light">
               ¿De cuántas semanas estás?
             </div>
             <input
               type="number"
+              name="cantidad"
+              step="0.5"
+              min="1"
               className="form-control"
               onChange={(e) =>
                 setUser({ ...user, semanas_embarazo: e.target.value })
@@ -74,12 +61,16 @@ export const Form = () => {
             />
           </div>
         </div>
-        <div className="col-4">
-          <label className="visually-hidden">Fecha de parto aproximada</label>
+        <div className="col-auto">
+          <label className="visually-hidden">FECHA APROX. PARTO</label>
           <div className="input-group">
-            <div className="input-group-text">Fecha probable de parto</div>
+            <div className="input-group-text bg-light">
+              Fecha probable de parto
+            </div>
             <input
               type="date"
+              name="dia"
+              min="today"
               className="form-control"
               onChange={(e) =>
                 setUser({ ...user, fecha_parto: e.target.value })
@@ -87,42 +78,46 @@ export const Form = () => {
             />
           </div>
         </div>
-        <div className="col-4">
-          <label className="visually-hidden">Nº de hijos</label>
+        <div className="col-3 col-lg-4 col-sm-auto">
+          <label className="visually-hidden">Nº HIJOS</label>
           <div className="input-group">
-            <div className="input-group-text">¿Cuántos hijos tienes?</div>
+            <div className="input-group-text bg-light">
+              ¿Cuántos hijos tienes?
+            </div>
             <input
               type="number"
+              name="cantidad"
+              min="0"
               className="form-control"
-              onChange={(e) =>
-                setUser({ ...user, número_hijos: e.target.value }) &&
-                e.target.value > 0
-                  ? setShow({ display: "block" })
-                  : setShow({ display: "none" })
-              }
+              onChange={(e) => {
+                setUser({ ...user, número_hijos: e.target.value }),
+                  e.target.value > 0
+                    ? setShow({ display: "block" })
+                    : setShow({ display: "none" });
+              }}
             />
           </div>
         </div>
-        <div className="col-auto" style={show}>
-          <label className="visually-hidden">Nº de cesáreas</label>
+        <div className="col-3 col-lg-5 col-sm-auto" style={show}>
+          <label className="visually-hidden">Nº CESÁREAS</label>
           <div className="input-group">
-            <div className="input-group-text">
+            <div className="input-group-text bg-light">
               ¿Cuántas cesáreas has tenido?
             </div>
             <input
               type="number"
+              name="cantidad"
+              min="0"
               className="form-control"
-              placeholder="Si no has tenido ninguna escribe: 0"
               onChange={(e) => setUser({ ...user, cesáreas: e.target.value })}
             />
           </div>
         </div>
         <div className="col-12">
-          <label className="visually-hidden">Acompañante</label>
+          <label className="visually-hidden">ACOMPAÑANTE</label>
           <div className="input-group">
-            <div className="input-group-text">
-              ¿Tienes acompañante? Por favor, escribe su nombre y tu relación
-              con el acompañante
+            <div className="input-group-text bg-light">
+              ¿Tienes acompañante? Escribe su nombre y su relación contigo
             </div>
             <input
               type="text"
@@ -134,9 +129,9 @@ export const Form = () => {
           </div>
         </div>
         <div className="col-auto">
-          <label className="visually-hidden">Ubicación de usuaria</label>
+          <label className="visually-hidden">CIUDAD</label>
           <div className="input-group">
-            <div className="input-group-text">¿Dónde te ubicas?</div>
+            <div className="input-group-text bg-light">¿Dónde te ubicas?</div>
             <input
               type="text"
               className="form-control"
@@ -144,10 +139,10 @@ export const Form = () => {
             />
           </div>
         </div>
-        <div className="col-auto">
-          <label className="visually-hidden">Lugar del parto</label>
+        <div className="col-auto col-lg-auto 6col-sm-4">
+          <label className="visually-hidden">LUGAR PARTO</label>
           <div className="input-group">
-            <div className="input-group-text">
+            <div className="input-group-text bg-light">
               ¿Deseas tener un parto en hospital o en casa?
             </div>
             <select className="form-select" aria-label="Default select example">
@@ -165,9 +160,9 @@ export const Form = () => {
           </div>
         </div>
         <div className="col-auto">
-          <label className="visually-hidden">Hospital o clínica actual</label>
+          <label className="visually-hidden">HOSPITAL ACTUAL</label>
           <div className="input-group">
-            <div className="input-group-text">
+            <div className="input-group-text bg-light">
               Si estás siendo acompañada en un hospital/clínica, escribe cuál:
             </div>
             <input
@@ -180,29 +175,33 @@ export const Form = () => {
           </div>
         </div>
         {!localStorage.getItem("token") ? (
-          <div className="col-auto float-end mx-3">
+          <div className="col-12">
             <Link to="/login">
-              <button className="btn btn-secondary mx-1">Omitir</button>
+              <button className="btn btn-secondary mx-1 float-end">
+                Omitir
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary float-end"
+                onClick={() => saveUsersData()}
+              >
+                Guardar
+              </button>
             </Link>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onClick={() => saveUsersData()}
-            >
-              Guardar
-            </button>
           </div>
         ) : (
-          <div className="col-auto float-end mx-3">
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onClick={() => saveUsersData()}
-            >
-              Guardar cambios
-            </button>
+          <div className="col-12">
             <Link to="/perfil">
-              <button className="btn btn-danger mx-1">Cancelar</button>
+              <button className="btn btn-danger mx-1 float-end">
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                className="btn btn-primary float-end"
+                onClick={() => saveUsersData()}
+              >
+                Guardar cambios
+              </button>
             </Link>
           </div>
         )}
