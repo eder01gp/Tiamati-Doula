@@ -19,6 +19,7 @@ class Usuarias(db.Model):
 class Datos_Usuaria(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
     usuaria_id = db.Column(db.Integer, db.ForeignKey('usuarias.id'))
+    usuarias = db.relationship(Usuarias)
     nombre = db.Column(db.String(150))
     semanas_embarazo = db.Column(db.Integer)
     fecha_aproximada_parto = db.Column(db.Date)
@@ -37,10 +38,10 @@ class Datos_Usuaria(db.Model):
             "nombre": self.nombre,
             "semanas_embarazo": self.semanas_embarazo,
             "fecha_aproximada_parto": self.fecha_aproximada_parto,
-            "numero_hijos": self.número_hijos,
-            "cesareas": self.cesáreas,
-            "acompanante": self.acompañante,
-            "ciudad": self.ubicación,
+            "numero_hijos": self.numero_hijos,
+            "numero_cesareas": self.numero_cesareas,
+            "acompanante": self.acompanante,
+            "ciudad": self.ciudad,
             "lugar_parto": self.lugar_parto,
             "hospital_actual": self.hospital_actual,
         }

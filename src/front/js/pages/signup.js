@@ -30,6 +30,7 @@ export const Signup = () => {
         }
       );
       const data = await response.json();
+      localStorage.setItem("token", data.token);
     } else {
       setError("Error, revisa tu email o contraseña");
     }

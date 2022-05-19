@@ -13,7 +13,10 @@ export const Form = () => {
       {
         method: "PUT",
         body: JSON.stringify(user),
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
       }
     );
     const data = await response.json();
@@ -73,7 +76,7 @@ export const Form = () => {
               min="today"
               className="form-control"
               onChange={(e) =>
-                setUser({ ...user, fecha_parto: e.target.value })
+                setUser({ ...user, fecha_aproximada_parto: e.target.value })
               }
             />
           </div>
@@ -90,7 +93,7 @@ export const Form = () => {
               min="0"
               className="form-control"
               onChange={(e) => {
-                setUser({ ...user, número_hijos: e.target.value }),
+                setUser({ ...user, numero_hijos: e.target.value }),
                   e.target.value > 0
                     ? setShow({ display: "block" })
                     : setShow({ display: "none" });
@@ -109,7 +112,9 @@ export const Form = () => {
               name="cantidad"
               min="0"
               className="form-control"
-              onChange={(e) => setUser({ ...user, cesáreas: e.target.value })}
+              onChange={(e) =>
+                setUser({ ...user, numero_cesareas: e.target.value })
+              }
             />
           </div>
         </div>
@@ -123,7 +128,7 @@ export const Form = () => {
               type="text"
               className="form-control"
               onChange={(e) =>
-                setUser({ ...user, acompañante: e.target.value })
+                setUser({ ...user, acompanante: e.target.value })
               }
             />
           </div>
@@ -135,7 +140,7 @@ export const Form = () => {
             <input
               type="text"
               className="form-control"
-              onChange={(e) => setUser({ ...user, ubicación: e.target.value })}
+              onChange={(e) => setUser({ ...user, ciudad: e.target.value })}
             />
           </div>
         </div>
@@ -145,15 +150,14 @@ export const Form = () => {
             <div className="input-group-text bg-light">
               ¿Deseas tener un parto en hospital o en casa?
             </div>
-            <select className="form-select" aria-label="Default select example">
-              <option
-                value="elegir"
-                onChange={(e) =>
-                  setUser({ ...user, lugar_parto: e.target.value })
-                }
-              >
-                Elige una opción...
-              </option>
+            <select
+              className="form-select"
+              aria-label="Default select example"
+              onChange={(e) =>
+                setUser({ ...user, lugar_parto: e.target.value })
+              }
+            >
+              <option value="elegir">Elige una opción...</option>
               <option value="hospital">Hospital</option>
               <option value="casa">Casa</option>
             </select>

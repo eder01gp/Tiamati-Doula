@@ -9,6 +9,7 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Redirect } from "react-router-dom";
 
 //create your first component
 const Layout = () => {
@@ -29,7 +30,7 @@ const Layout = () => {
               <Signup />
             </Route>
             <Route exact path="/form">
-              <Form />
+              {store.token == null ? <Redirect to="/"></Redirect> : <Form />}
             </Route>
             <Route>
               <h1>Not found!</h1>

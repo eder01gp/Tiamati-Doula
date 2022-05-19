@@ -4,6 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, Usuarias, Datos_Usuaria
 from api.utils import generate_sitemap, APIException
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
 api = Blueprint('api', __name__)  
 
@@ -12,34 +13,34 @@ def save_signup_usuaria():
     body_email = request.json.get("email")
     body_contraseña = request.json.get("contraseña")
     body_rol = request.json.get("rol")
+    usuaria_email = Usuarias.query.filter_by(email = body_email).first()
     if body_email and body_contraseña:
-        # if Usuarias.query.filter_by(email).first() == None:
+        if Usuarias.query.filter_by(email = body_email).first() == None:
             user_created = Usuarias(email = body_email, contraseña = body_contraseña, rol = body_rol)
             db.session.add(user_created)
             db.session.commit()
-            usuaria_id = Usuarias.query.filter_by(email = body_email).first() 
-            user_data_created = Datos_usuaria(usuaria_id = usuaria_id.id)
-            db.session.add(user_data_created)
-            db.session.commit()
-            return jsonify({"msg": "Usuario creado correctamente", "Usuario": user_created.serialize()}), 200    
-        # else: return jsonify({"msg": "Error, el email ya existe como usuaria"}), 400   
+            access_token = create_access_token(identity=user_created.id)
+            return jsonify({"logged":True, "token": access_token, "msg": "Usuario creado correctamente", "Usuario": user_created.serialize()}), 200    
+        else: return jsonify({"msg": "Error, el email ya existe como usuaria"}), 400   
     else: return jsonify({"msg": "Error, comprueba email y contraseña"}), 400       
      
 
-@api.route('/form/<int:usuaria_id>', methods=['PUT']) 
-def save_or_update_user_form(usuaria_id):
-    usuaria_id = Datos_Usuaria.query.filter_by(usuaria_id = usuaria_id) #------ ¿? ------#
+@api.route('/form', methods=['PUT']) 
+@jwt_required()
+def save_or_update_user_form():
+    current_user_id = get_jwt_identity()
+    user = Usuarias.query.get(current_user_id)
     body_nombre = request.json.get("nombre")
     body_semanas_embarazo = request.json.get("semanas_embarazo")
     body_fecha_parto = request.json.get("fecha_aproximada_parto")
     body_numero_hijos = request.json.get("numero_hijos")
-    body_cesareas = request.json.get("cesareas")
+    body_numero_cesareas = request.json.get("numero_cesareas")
     body_acompanante = request.json.get("acompanante")
     body_ciudad = request.json.get("ciudad")
     body_lugar_parto = request.json.get("lugar_parto")
     body_hospital_actual = request.json.get("hospital_actual")
-    if usuaria_id:
-        user_created = Datos_Usuaria(nombre = body_nombre, semanas_embarazo = body_semanas_embarazo, fecha_aproximada_parto = body_fecha_parto, numero_hijos = body_numero_hijos, cesareas =  body_cesareas,  acompanante = body_acompanante, ciudad = body_ciudad,  lugar_parto = body_lugar_parto, hospital_actual = body_hospital_actual)
+    if current_user_id != None:
+        user_created = Datos_Usuaria(usuaria_id = current_user_id, nombre = body_nombre, semanas_embarazo = body_semanas_embarazo, fecha_aproximada_parto = body_fecha_parto, numero_hijos = body_numero_hijos, numero_cesareas =  body_numero_cesareas,  acompanante = body_acompanante, ciudad = body_ciudad,  lugar_parto = body_lugar_parto, hospital_actual = body_hospital_actual)
         db.session.add(user_created)
         db.session.commit()
         return jsonify({"msg": "Datos guardados correctamente"}), 200   
