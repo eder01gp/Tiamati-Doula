@@ -1,6 +1,10 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
-    store: { token: null },
+
+    store: {
+      logged: null,
+      token: null
+    },
     actions: {},
   };
 };

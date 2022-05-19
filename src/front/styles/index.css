@@ -1,7 +1,20 @@
+
 footer {
   margin-top: 5cm;
 }
 
 .formulario {
   width: 60%;
+
+#navbar {
+  padding-left: 1%;
+  padding-right: 1%;
+}
+
+#menu-dropdown {
+  margin-left: 1%;
+}
+
+#profile-dropdown {
+  margin-left: 90%;
 }
