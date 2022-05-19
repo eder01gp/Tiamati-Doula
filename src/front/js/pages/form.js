@@ -42,7 +42,7 @@ export const Form = () => {
             <input
               type="text"
               className="form-control"
-              onChange={(e) => setUser({ ...user, nombre: e.target.value })}
+              onChange={(e) => setUser({ ...user, name: e.target.value })}
             />
           </div>
         </div>
@@ -59,7 +59,7 @@ export const Form = () => {
               min="1"
               className="form-control"
               onChange={(e) =>
-                setUser({ ...user, semanas_embarazo: e.target.value })
+                setUser({ ...user, pregnancy_weeks: e.target.value })
               }
             />
           </div>
@@ -76,7 +76,7 @@ export const Form = () => {
               min="today"
               className="form-control"
               onChange={(e) =>
-                setUser({ ...user, fecha_aproximada_parto: e.target.value })
+                setUser({ ...user, aproximate_birth_date: e.target.value })
               }
             />
           </div>
@@ -93,7 +93,7 @@ export const Form = () => {
               min="0"
               className="form-control"
               onChange={(e) => {
-                setUser({ ...user, numero_hijos: e.target.value }),
+                setUser({ ...user, children_number: e.target.value }),
                   e.target.value > 0
                     ? setShow({ display: "block" })
                     : setShow({ display: "none" });
@@ -113,7 +113,7 @@ export const Form = () => {
               min="0"
               className="form-control"
               onChange={(e) =>
-                setUser({ ...user, numero_cesareas: e.target.value })
+                setUser({ ...user, caesarean_sections_number: e.target.value })
               }
             />
           </div>
@@ -122,14 +122,12 @@ export const Form = () => {
           <label className="visually-hidden">ACOMPAÑANTE</label>
           <div className="input-group">
             <div className="input-group-text bg-light">
-              ¿Tienes acompañante? Escribe su nombre y su relación contigo
+              ¿Tienes acompañante? Escribe su name y su relación contigo
             </div>
             <input
               type="text"
               className="form-control"
-              onChange={(e) =>
-                setUser({ ...user, acompanante: e.target.value })
-              }
+              onChange={(e) => setUser({ ...user, companion: e.target.value })}
             />
           </div>
         </div>
@@ -140,7 +138,7 @@ export const Form = () => {
             <input
               type="text"
               className="form-control"
-              onChange={(e) => setUser({ ...user, ciudad: e.target.value })}
+              onChange={(e) => setUser({ ...user, city: e.target.value })}
             />
           </div>
         </div>
@@ -154,7 +152,7 @@ export const Form = () => {
               className="form-select"
               aria-label="Default select example"
               onChange={(e) =>
-                setUser({ ...user, lugar_parto: e.target.value })
+                setUser({ ...user, birth_place: e.target.value })
               }
             >
               <option value="elegir">Elige una opción...</option>
@@ -173,7 +171,7 @@ export const Form = () => {
               type="text"
               className="form-control"
               onChange={(e) =>
-                setUser({ ...user, hospital_actual: e.target.value })
+                setUser({ ...user, current_hospital: e.target.value })
               }
             />
           </div>

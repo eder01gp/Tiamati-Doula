@@ -30,7 +30,8 @@ const Layout = () => {
               <Signup />
             </Route>
             <Route exact path="/form">
-              {store.token == null ? <Redirect to="/"></Redirect> : <Form />}
+              <Form />
+              {/* {store.token == null ? <Redirect to="/"></Redirect> : <Form />} */}
             </Route>
             <Route>
               <h1>Not found!</h1>

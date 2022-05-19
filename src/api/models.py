@@ -2,10 +2,10 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class Usuarias(db.Model): 
+class Users(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    contraseña = db.Column(db.String(80), nullable=False) 
+    password = db.Column(db.String(80), nullable=False) 
     rol = db.Column(db.String(120))      
 
     def serialize(self):
@@ -16,34 +16,34 @@ class Usuarias(db.Model):
         }
 
 
-class Datos_Usuaria(db.Model): 
+class User_Data(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
-    usuaria_id = db.Column(db.Integer, db.ForeignKey('usuarias.id'))
-    usuarias = db.relationship(Usuarias)
-    nombre = db.Column(db.String(150))
-    semanas_embarazo = db.Column(db.Integer)
-    fecha_aproximada_parto = db.Column(db.Date)
-    numero_hijos = db.Column(db.Integer)
-    numero_cesareas = db.Column(db.Integer)
-    acompanante = db.Column(db.String(250))
-    ciudad = db.Column(db.String(150))
-    lugar_parto = db.Column(db.String(120))
-    hospital_actual = db.Column(db.String(250))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    users = db.relationship(Users)
+    name = db.Column(db.String(150))
+    pregnancy_weeks = db.Column(db.Integer)
+    aproximate_birth_date = db.Column(db.Date)
+    children_number = db.Column(db.Integer)
+    caesarean_sections_number = db.Column(db.Integer)
+    companion = db.Column(db.String(250))
+    city = db.Column(db.String(150))
+    birth_place = db.Column(db.String(120))
+    current_hospital = db.Column(db.String(250))
     avatar = db.Column(db.String(500))
 
     def serialize(self):
         return {
             "id": self.id,
-            "usuaria_id": self.usuaria_id,
-            "nombre": self.nombre,
-            "semanas_embarazo": self.semanas_embarazo,
-            "fecha_aproximada_parto": self.fecha_aproximada_parto,
-            "numero_hijos": self.numero_hijos,
-            "numero_cesareas": self.numero_cesareas,
-            "acompanante": self.acompanante,
-            "ciudad": self.ciudad,
-            "lugar_parto": self.lugar_parto,
-            "hospital_actual": self.hospital_actual,
+            "user_id": self.user_id,
+            "name": self.name,
+            "pregnancy_weeks": self.pregnancy_weeks,
+            "aproximate_birth_date": self.aproximate_birth_date,
+            "children_number": self.children_number,
+            "caesarean_sections_number": self.caesarean_sections_number,
+            "companion": self.companion,
+            "city": self.city,
+            "birth_place": self.birth_place,
+            "current_hospital": self.current_hospital,
         }
 
 

@@ -12,14 +12,14 @@ export const Signup = () => {
       user.email != null &&
       user.email.trim != "" &&
       user.email != "" &&
-      user.contraseña != null &&
-      user.contraseña.trim() != ""
+      user.password != null &&
+      user.password.trim() != ""
     ) {
       setError(null);
       if (check == false) {
         history.push("/form");
       } else if (check == true) {
-        history.push("/login");
+        history.push("/");
       }
       const response = await fetch(
         "https://3001-ederdon-tiamatidoula-0nmea4h5wm7.ws-eu45.gitpod.io/api/signup",
@@ -32,7 +32,7 @@ export const Signup = () => {
       const data = await response.json();
       localStorage.setItem("token", data.token);
     } else {
-      setError("Error, revisa tu email o contraseña");
+      setError("Error, revisa tu email o password");
     }
   };
 
@@ -64,12 +64,12 @@ export const Signup = () => {
         </div>
         <div className="mb-1">
           <label htmlFor="exampleInputPassword1" className="form-label mb-0">
-            Contraseña
+            password
           </label>
           <input
             type="password"
             className="form-control"
-            onChange={(e) => setUser({ ...user, contraseña: e.target.value })}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
           />
         </div>
         <h6 className="text-danger mb-3">{error}</h6>
