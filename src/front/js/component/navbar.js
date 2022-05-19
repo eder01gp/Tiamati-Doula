@@ -40,7 +40,7 @@ export const Navbar = () => {
         >
           <i className="fa-solid fa-user"></i>
         </button>
-        {StorageEvent.logged == true ? (
+        {Store.logged == true ? (
           <ul
             className="dropdown-menu"
             id="profile-dropdown"
