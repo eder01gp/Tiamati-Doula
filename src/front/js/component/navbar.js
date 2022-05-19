@@ -40,16 +40,25 @@ export const Navbar = () => {
         >
           <i className="fa-solid fa-user"></i>
         </button>
-        <ul
-          className="dropdown-menu"
-          id="profile-dropdown"
-          aria-labelledby="dropDownMenu"
-        >
-          <li>Iniciar Sesión</li>
-          <li>Registrarse</li>
-          <li>Cerrar Sesión</li>
-          <li>Mi Perfil</li>
-        </ul>
+        {StorageEvent.logged == true ? (
+          <ul
+            className="dropdown-menu"
+            id="profile-dropdown"
+            aria-labelledby="dropDownMenu"
+          >
+            <li>Cerrar Sesión</li>
+            <li>Mi Perfil</li>
+          </ul>
+        ) : (
+          <ul
+            className="dropdown-menu"
+            id="profile-dropdown"
+            aria-labelledby="dropDownMenu"
+          >
+            <li>Iniciar Sesión</li>
+            <li>Registrarse</li>
+          </ul>
+        )}
       </div>
     </nav>
   );
