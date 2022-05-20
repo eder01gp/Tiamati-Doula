@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const Signup = () => {
   const [user, setUser] = useState({});
   const [check, setCheck] = useState(false);
   const [error, setError] = useState();
+  const { store, actions } = useContext(Context);
   const history = useHistory();
 
   const saveUsersInDB = async () => {
@@ -21,14 +23,12 @@ export const Signup = () => {
       } else if (check == true) {
         history.push("/");
       }
-      const response = await fetch(
-        "https://3001-ederdon-tiamatidoula-0nmea4h5wm7.ws-eu45.gitpod.io/api/signup",
-        {
-          method: "POST",
-          body: JSON.stringify(user),
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const response = await fetch(store.url + "/signup", {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: { "Content-Type": "application/json" },
+      });
+
       const data = await response.json();
       localStorage.setItem("token", data.token);
     } else {

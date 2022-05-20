@@ -1,38 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const Form = () => {
   const [user, setUser] = useState({});
   const [show, setShow] = useState({ display: "none" });
+  const { store, actions } = useContext(Context);
   const history = useHistory();
 
   const saveUsersData = async () => {
-    const response = await fetch(
-      "https://3001-ederdon-tiamatidoula-0nmea4h5wm7.ws-eu45.gitpod.io/api/form",
-      {
-        method: "PUT",
-        body: JSON.stringify(user),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      }
-    );
+    const response = await fetch(store.url + "/form", {
+      method: "PUT",
+      body: JSON.stringify(user),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
     const data = await response.json();
   };
 
   return (
-    <div className="formulario container m-auto align-items-center mt-5">
-      <div className="text-center mt-5">
-        <p className="mb-0">
+    <div className="formulario container border border-1 border-dark rounded pb-3 px-3">
+      <div className="text-center mt-3">
+        <h6 className="mb-4">
           Este formulario me ayudaría a conocerte mejor y poder ofrecerte un
           servicio más personalizado.
-        </p>
-        <p>
-          Si lo deseas, puedes omitir este paso y rellenarlo más tarde desde tu
-          perfil.
-        </p>
+        </h6>
       </div>
       <form className="row g-3">
         <div className="col-auto">
@@ -42,6 +37,7 @@ export const Form = () => {
             <input
               type="text"
               className="form-control"
+              value={user.name}
               onChange={(e) => setUser({ ...user, name: e.target.value })}
             />
           </div>
@@ -58,6 +54,7 @@ export const Form = () => {
               step="0.5"
               min="1"
               className="form-control"
+              value={user.pregnancy_weeks}
               onChange={(e) =>
                 setUser({ ...user, pregnancy_weeks: e.target.value })
               }
@@ -75,6 +72,7 @@ export const Form = () => {
               name="dia"
               min="today"
               className="form-control"
+              value={user.aproximate_birth_date}
               onChange={(e) =>
                 setUser({ ...user, aproximate_birth_date: e.target.value })
               }
@@ -92,6 +90,7 @@ export const Form = () => {
               name="cantidad"
               min="0"
               className="form-control"
+              value={user.children_number}
               onChange={(e) => {
                 setUser({ ...user, children_number: e.target.value }),
                   e.target.value > 0
@@ -112,6 +111,7 @@ export const Form = () => {
               name="cantidad"
               min="0"
               className="form-control"
+              value={user.caesarean_sections_number}
               onChange={(e) =>
                 setUser({ ...user, caesarean_sections_number: e.target.value })
               }
@@ -127,6 +127,7 @@ export const Form = () => {
             <input
               type="text"
               className="form-control"
+              value={user.companion}
               onChange={(e) => setUser({ ...user, companion: e.target.value })}
             />
           </div>
@@ -138,6 +139,7 @@ export const Form = () => {
             <input
               type="text"
               className="form-control"
+              value={user.city}
               onChange={(e) => setUser({ ...user, city: e.target.value })}
             />
           </div>
@@ -151,6 +153,7 @@ export const Form = () => {
             <select
               className="form-select"
               aria-label="Default select example"
+              value={user.birth_place}
               onChange={(e) =>
                 setUser({ ...user, birth_place: e.target.value })
               }
@@ -170,43 +173,27 @@ export const Form = () => {
             <input
               type="text"
               className="form-control"
+              value={user.current_hospital}
               onChange={(e) =>
                 setUser({ ...user, current_hospital: e.target.value })
               }
             />
           </div>
         </div>
-        {!localStorage.getItem("token") ? (
-          <div className="col-12">
-            <Link to="/login">
-              <button className="btn btn-secondary mx-1 float-end">
-                Omitir
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary float-end"
-                onClick={() => saveUsersData()}
-              >
-                Guardar
-              </button>
-            </Link>
-          </div>
-        ) : (
-          <div className="col-12">
-            <Link to="/perfil">
-              <button className="btn btn-danger mx-1 float-end">
-                Cancelar
-              </button>
-              <button
-                type="submit"
-                className="btn btn-primary float-end"
-                onClick={() => saveUsersData()}
-              >
-                Guardar cambios
-              </button>
-            </Link>
-          </div>
-        )}
+        <div className="col-12">
+          <Link to="/profile">
+            <button className="btn btn-danger mx-1 float-end" onClick={show}>
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              className="btn btn-primary float-end"
+              onClick={() => saveUsersData()}
+            >
+              Guardar cambios
+            </button>
+          </Link>
+        </div>
       </form>
     </div>
   );

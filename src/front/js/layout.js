@@ -5,6 +5,7 @@ import ScrollToTop from "./component/scrollToTop";
 import { Home } from "./pages/home";
 import { Signup } from "./pages/signup";
 import { Form } from "./pages/form";
+import { Profile } from "./pages/profile";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -29,6 +30,9 @@ const Layout = () => {
             <Route exact path="/form">
               <Form />
               {/* {store.token == null ? <Redirect to="/"></Redirect> : <Form />} */}
+            </Route>
+            <Route exact path="/profile">
+              <Profile />
             </Route>
             <Route>
               <h1>Not found!</h1>

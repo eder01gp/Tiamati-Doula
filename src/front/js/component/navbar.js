@@ -50,7 +50,9 @@ export const Navbar = () => {
             aria-labelledby="dropDownMenu"
           >
             <li>Cerrar Sesión</li>
-            <li>Mi Perfil</li>
+            <li>
+              <Link to="/profile">Mi Perfil</Link>
+            </li>
           </ul>
         ) : (
           <ul
