@@ -23,6 +23,7 @@ export const Signup = () => {
       } else if (check == true) {
         history.push("/");
       }
+
       const response = await fetch(store.url + "/signup", {
         method: "POST",
         body: JSON.stringify(user),

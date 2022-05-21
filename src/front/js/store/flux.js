@@ -6,8 +6,17 @@ const getState = ({ getStore, getActions, setStore }) => {
       url:
         "https://3001-ederdon-tiamatidoula-f6gaira5d9k.ws-eu45.gitpod.io/" +
         "api",
+      users: [],
     },
-    actions: {},
+    actions: {
+      getUsers: async () => {
+        const response = await fetch(
+          "https://3001-ederdon-tiamatidoula-f6gaira5d9k.ws-eu45.gitpod.io/api/users/"
+        );
+        const info = await response.json();
+        setStore({ users: info });
+      },
+    },
   };
 };
 

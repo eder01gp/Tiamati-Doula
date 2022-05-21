@@ -181,7 +181,7 @@ export const Form = () => {
           </div>
         </div>
         <div className="col-12">
-          <Link to="/profile">
+          <Link to="/profile_user">
             <button className="btn btn-danger mx-1 float-end" onClick={show}>
               Cancelar
             </button>
