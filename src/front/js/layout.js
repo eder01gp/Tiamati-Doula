@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
+import { Context } from "./store/appContext";
 
 import { Home } from "./pages/home";
 import { Signup } from "./pages/signup";
 import { Form } from "./pages/form";
+import { Login } from "./pages/login";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -13,6 +15,7 @@ import { Redirect } from "react-router-dom";
 
 const Layout = () => {
   const basename = process.env.BASENAME || "";
+  const { store, actions } = useContext(Context);
 
   return (
     <div>
@@ -23,12 +26,15 @@ const Layout = () => {
             <Route exact path="/">
               <Home />
             </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
             <Route exact path="/signup">
               <Signup />
             </Route>
             <Route exact path="/form">
               <Form />
-              {/* {store.token == null ? <Redirect to="/"></Redirect> : <Form />} */}
+               {store.logged == true ? <Form /> : <Redirect to="/"></Redirect> } 
             </Route>
             <Route>
               <h1>Not found!</h1>
