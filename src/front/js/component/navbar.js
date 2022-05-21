@@ -59,10 +59,10 @@ export const Navbar = () => {
             aria-labelledby="dropDownMenu"
           >
           <Link to="/login">
-            <li><p href="#" className="mx-2">Iniciar Sesión</p></li>
+            <li><p className="mx-2">Iniciar Sesión</p></li>
           </Link>
           <Link to="/signup">
-            <li><p href="#" className="mx-2">Registrarse</p></li>
+            <li><p className="mx-2">Registrarse</p></li>
           </Link>
           </ul>
         )}
