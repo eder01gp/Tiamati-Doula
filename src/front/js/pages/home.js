@@ -4,7 +4,6 @@ import "../../styles/home.css";
 import { Navbar } from "../component/navbar";
 import { Link } from "react-router-dom";
 import logo from "/workspace/Tiamati-Doula/src/img/logo/logo.png";
-import flowers from "/workspace/Tiamati-Doula/src/img/logo/flowers.jpg";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -12,17 +11,15 @@ export const Home = () => {
   return (
     <div className="container">
       {/* header */}
-      <div id="header">
+      <div id="header" className="row">
         <div id="header-logo">
           <img id="logo-tiamati" src={logo} alt="logo tiamati" />
         </div>
-        <div>
-          <img id="header-img" src={flowers} alt="" />
-        </div>
+        <div id="header-img"></div>
       </div>
 
       {/* What is Tiamati */}
-      <div id="what-is-tiamati" className="text-center">
+      <div id="what-is-tiamati" className="row text-center">
         <p id="what-is-tiamati-text">
           Tiamati es un servicio de acompañamiento a la mujer embarazada y a la
           pareja. Un apoyo incondicional durante todo el embarazo, basado en
@@ -32,38 +29,36 @@ export const Home = () => {
 
         <h2>¿Necesitas una Doula?</h2>
         <h4>La ciencia nos dice:</h4>
-        <div id="benefits" className="d-flex">
-          <div id="benefits-left" className="d-flex">
+        <div id="benefits" className="row">
+          <div id="benefits-left" className="col-6">
             <img
               className="benefits-arrow"
               src="https://th.bing.com/th/id/R.c18ea882d9fb63866c0f77151fa013e9?rik=%2bxBr2Nyu6%2fc6hg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fdownload_155466.png&ehk=ZFAJlKPtcm%2bDZ%2faDLx7oenbSXUAc1P0%2bUSDrahxcRmE%3d&risl=&pid=ImgRaw&r=0"
               alt="arrow"
             />
-            <div>
+            <div className="benefits-text">
               <h6>28% menos de cesáreas</h6>
               <h6>31% menos uso de pitocin</h6>
               <h6>9% menos uso de medicacion</h6>
               <h6>Partos 40 minutos más cortos</h6>
             </div>
           </div>
-          <div id="benefits-right" className="d-flex">
+          <div id="benefits-right" className="col-6">
             <img
               className="benefits-arrow"
               src="https://th.bing.com/th/id/R.faaa5a285136fd4a98d24365beaa3bf7?rik=UveaSIN8Fxpktg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fdownload_424749.png&ehk=0VfQbRVcZNL1ViSOrCahJNW75NNRte2lhP2O%2b6xlirQ%3d&risl=&pid=ImgRaw&r=0"
               alt="arrow"
             />
-            <div>
-              <h6>28% menos de cesáreas</h6>
-              <h6>31% menos uso de pitocin</h6>
-              <h6>9% menos uso de medicacion</h6>
-              <h6>Partos 40 minutos más cortos</h6>
+            <div className="benefits-text">
+              <h6>34% experiencias más positivas</h6>
+              <h6>Mejor APGAR en el bebé</h6>
             </div>
           </div>
         </div>
       </div>
 
       {/* free appointment */}
-      <div id="free-appointment" className="text-center">
+      <div id="free-appointment" className="row text-center">
         <h2 id="first-appointment-text">
           ¿Nos conocemos primero a ver que tal?
         </h2>
@@ -74,23 +69,25 @@ export const Home = () => {
       </div>
 
       {/* bio */}
-      <div id="bio">
-        <h3 id="hello-text">¡Hola! ¡Soy Margarida!</h3>
-        <Link to="/bio">
-          <button className="btn btn-light bio-button">
-            Esta es mi historia
-          </button>
-        </Link>
+      <div id="bio" className="row">
+        <div id="hello-text">
+          <h3>¡Hola! ¡Soy Margarida!</h3>
+          <Link to="/bio">
+            <button className="btn btn-primary bio-button">
+              Esta es mi historia
+            </button>
+          </Link>
+        </div>
       </div>
 
       {/* services */}
-      <div id="services">
+      <div id="services" className="row">
         {store.services.map((serv) => {
           return (
             <div className="card service-card">
               <img
                 className="card-img-top"
-                src="https://images.unsplash.com/photo-1457342813143-a1ae27448a82?ixlib=rb-1.2.1&raw_url=true&q=80&fm=jpg&crop=entropy&cs=tinysrgb&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170"
+                src="https://images.unsplash.com/photo-1585010873004-923f9a54e54e?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169"
                 alt="Card image cap"
               />
               <div className="card-body">
@@ -112,14 +109,15 @@ export const Home = () => {
       </div>
 
       {/* documents */}
-      <div id="documents" className="d-flex">
+      <div id="documents" className="row">
         <img
           id="documents-img"
+          className="col-4"
           src="https://2.bp.blogspot.com/-8rtaDBkKiDI/WP9MgLhYCmI/AAAAAAAALMU/eq-cb_mXsmQKISq1JzNvEm7G3N-XvVaFACLcB/s1600/Guia-para-embazadas.JPG"
           alt=""
         />
-        <div id="documents-right">
-          <h3>Regístrate y accede a tu guía para embarazadas</h3>
+        <div id="documents-right" className="col-4">
+          <h4>Regístrate y accede a tu guía para embarazadas</h4>
           <Link to="/documents">
             <button className="btn btn-primary btn-lg">Obtener</button>
           </Link>
@@ -127,94 +125,46 @@ export const Home = () => {
       </div>
 
       {/* reviews */}
-      <div id="reviews">
+      <div id="reviews" className="row">
         <div
-          id="carouselExampleIndicators"
-          className="carousel slide"
-          data-ride="carousel"
+          id="carouselExampleControls"
+          class="carousel slide"
+          data-bs-ride="carousel"
         >
-          <ol className="carousel-indicators">
-            <li
-              data-target="#carouselExampleIndicators"
-              data-slide-to="0"
-              className="active"
-            ></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-          </ol>
-          <div className="carousel-inner">
-            <div className="carousel-item active">
-              <p>
-                "Donec tincidunt nibh vel purus ultrices, eget ullamcorper nibh
-                maximus. Nullam vitae risus mi. Mauris iaculis sodales suscipit.
-                Ut euismod mauris dolor, ut mollis massa elementum dapibus. Cras
-                vitae iaculis nisl. Donec eget tellus vitae orci ultricies
-                auctor. Etiam nunc tellus, rutrum nec diam a, bibendum posuere
-                elit. Sed sit amet nibh scelerisque purus mattis convallis.
-                Suspendisse ac dui orci. Maecenas ultrices erat nec quam laoreet
-                mollis. Donec sit amet purus accumsan turpis eleifend finibus.
-                Donec nec elit quis felis ullamcorper facilisis. Curabitur
-                sagittis nulla ante, ac bibendum massa tempus sed. Morbi
-                consequat ac ipsum ac lobortis. Maecenas at augue diam."
-              </p>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <p>hola</p>
             </div>
-            <div className="carousel-item">
-              <p>
-                "Nullam vitae risus mi. Mauris iaculis sodales suscipit. Ut
-                euismod mauris dolor, ut mollis massa elementum dapibus. Cras
-                vitae iaculis nisl. Donec eget tellus vitae orci ultricies
-                auctor. Etiam nunc tellus, rutrum nec diam a, bibendum posuere
-                elit. Sed sit amet nibh scelerisque purus mattis convallis.
-                Suspendisse ac dui orci. Maecenas ultrices erat nec quam laoreet
-                mollis. Donec sit amet purus accumsan turpis eleifend finibus.
-                Donec nec elit quis felis ullamcorper facilisis. Curabitur
-                sagittis nulla ante, ac bibendum massa tempus sed. Morbi
-                consequat ac ipsum ac lobortis. Maecenas at augue diam."
-              </p>
+            <div class="carousel-item">
+              <p>hola</p>
             </div>
-            <div className="carousel-item">
-              <p>
-                "Ut mollis massa elementum dapibus. Cras vitae iaculis nisl.
-                Donec eget tellus vitae orci ultricies auctor. Etiam nunc
-                tellus, rutrum nec diam a, bibendum posuere elit. Sed sit amet
-                nibh scelerisque purus mattis convallis. Suspendisse ac dui
-                orci. Maecenas ultrices erat nec quam laoreet mollis. Donec sit
-                amet purus accumsan turpis eleifend finibus. Donec nec elit quis
-                felis ullamcorper facilisis. Curabitur sagittis nulla ante, ac
-                bibendum massa tempus sed. Morbi consequat ac ipsum ac lobortis.
-                Maecenas at augue diam."
-              </p>
+            <div class="carousel-item">
+              <p>hola</p>
             </div>
           </div>
-          <Link
-            to="#carouselExampleIndicators"
-            className="carousel-control-prev"
-            role="button"
-            data-slide="prev"
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev"
           >
-            <span
-              className="carousel-control-prev-icon"
-              aria-hidden="true"
-            ></span>
-            <span className="sr-only">Previous</span>
-          </Link>
-          <Link
-            to="#carouselExampleIndicators"
-            className="carousel-control-next"
-            role="button"
-            data-slide="next"
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleControls"
+            data-bs-slide="next"
           >
-            <span
-              className="carousel-control-next-icon"
-              aria-hidden="true"
-            ></span>
-            <span className="sr-only">Next</span>
-          </Link>
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
       </div>
 
       {/* FAQ */}
-      <div id="faq-home">
+      <div id="faq-home" className="row">
         <img id="" src="" alt="" />
         <div id="faq-home-right">
           <h3>¿Tienes dudas?</h3>

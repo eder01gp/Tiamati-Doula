@@ -83,26 +83,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           includes: "incluye esto, esto y lo otro",
           price: 20,
         },
-
-        {
-          id: 9,
-          name: "nombre",
-          sold_by_unit: false,
-          description:
-            "this will be the description of the service. Aenean in tellus consectetur turpis varius posuere a molestie leo.",
-          includes: "incluye esto, esto y lo otro",
-          price: 20,
-        },
-
-        {
-          id: 10,
-          name: "nombre",
-          sold_by_unit: false,
-          description:
-            "this will be the description of the service. Aenean in tellus consectetur turpis varius posuere a molestie leo.",
-          includes: "incluye esto, esto y lo otro",
-          price: 20,
-        },
       ],
     },
     actions: {},
