@@ -14,7 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           "https://3001-ederdon-tiamatidoula-f6gaira5d9k.ws-eu45.gitpod.io/api/users/"
         );
         const info = await response.json();
-        setStore({ users: info });
+        setStore({ users: info.response });
       },
     },
   };
