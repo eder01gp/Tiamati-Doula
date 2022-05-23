@@ -12,6 +12,7 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Redirect } from "react-router-dom";
+import { Documents } from "./pages/documents";
 
 const Layout = () => {
   const basename = process.env.BASENAME || "";
@@ -35,6 +36,9 @@ const Layout = () => {
             <Route exact path="/form">
               <Form />
                {store.logged == true ? <Form /> : <Redirect to="/"></Redirect> } 
+            </Route>
+            <Route exact path="/documents">
+              <Documents />
             </Route>
             <Route>
               <h1>Not found!</h1>
