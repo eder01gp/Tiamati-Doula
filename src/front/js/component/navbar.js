@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
+
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
@@ -6,7 +7,10 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <nav className="navbar navbar-light bg-light fixed-top" id="navbar">
+    <nav
+      className="navbar navbar-light bg-light fixed-top position-relative"
+      id="navbar"
+    >
       <div>
         {/* boton menu */}
         <button
@@ -49,9 +53,37 @@ export const Navbar = () => {
             id="profile-dropdown"
             aria-labelledby="dropDownMenu"
           >
-            <li>Cerrar Sesión</li>
+            {localStorage.getItem("rol") == "usuaria" ? (
+              <div>
+                <Link to="/profile_user">
+                  <li>
+                    <p href="#" className="mx-2">
+                      Mi Perfil
+                    </p>
+                  </li>
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <Link to="/profile_company">
+                  <li>
+                    <p href="#" className="mx-2">
+                      Mi Perfil
+                    </p>
+                  </li>
+                </Link>
+              </div>
+            )}
             <li>
-              <Link to="/profile">Mi Perfil</Link>
+              <p
+                href="#"
+                className="mx-2"
+                onClick={() => {
+                  actions.logout();
+                }}
+              >
+                Cerrar Sesión
+              </p>
             </li>
           </ul>
         ) : (
@@ -60,8 +92,20 @@ export const Navbar = () => {
             id="profile-dropdown"
             aria-labelledby="dropDownMenu"
           >
-            <li>Iniciar Sesión</li>
-            <li>Registrarse</li>
+            <Link to="/login">
+              <li>
+                <p href="#" className="mx-2">
+                  Iniciar Sesión
+                </p>
+              </li>
+            </Link>
+            <Link to="/signup">
+              <li>
+                <p href="#" className="mx-2">
+                  Registrarse
+                </p>
+              </li>
+            </Link>
           </ul>
         )}
       </div>

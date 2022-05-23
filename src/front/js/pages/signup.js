@@ -6,13 +6,13 @@ export const Signup = () => {
   const [user, setUser] = useState({});
   const [check, setCheck] = useState(false);
   const [error, setError] = useState();
-  const { store, actions } = useContext(Context);
+  const { store } = useContext(Context);
   const history = useHistory();
 
   const saveUsersInDB = async () => {
     if (
       user.email != null &&
-      user.email.trim != "" &&
+      user.email.trim() != "" &&
       user.email != "" &&
       user.password != null &&
       user.password.trim() != ""
@@ -32,8 +32,10 @@ export const Signup = () => {
 
       const data = await response.json();
       localStorage.setItem("token", data.token);
+      localStorage.setItem("ID", data.User.id);
+      localStorage.setItem("rol", data.User.rol);
     } else {
-      setError("Error, revisa tu email o password");
+      setError("Error, revisa tu email o contraseña");
     }
   };
 

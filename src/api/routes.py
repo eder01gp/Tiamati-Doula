@@ -19,7 +19,7 @@ def save_signup_user():
             db.session.add(user_created)
             db.session.commit()
             access_token = create_access_token(identity=user_created.id)
-            return jsonify({"logged":True, "token": access_token, "msg": "Usuario creado correctamente", "Usuario": user_created.serialize()}), 200    
+            return jsonify({"logged":True, "token": access_token, "msg": "Usuario creado correctamente", "User": user_created.serialize()}), 200    
         else: return jsonify({"msg": "Error, el email ya existe como usuaria"}), 400   
     else: return jsonify({"msg": "Error, comprueba email y password"}), 400       
      
@@ -38,6 +38,9 @@ def save_or_update_user_form():
     body_city = request.json.get("city")
     body_birth_place = request.json.get("birth_place")
     body_current_hospital = request.json.get("current_hospital")
+    print("@@@@@@@@@@@@@@@@@@@@@")
+    print(reques)
+    print("@@@@@@@@@@@@@@@@@@@@@@@@")
     if current_user_id != None:
         user_created = User_Data(user_id = current_user_id, name = body_name, pregnancy_weeks = body_pregnancy_weeks, aproximate_birth_date = body_aproximate_birth_date, children_number = body_children_number, caesarean_sections_number =  body_caesarean_sections_number,  companion = body_companion, city = body_city,  birth_place = body_birth_place, current_hospital = body_current_hospital)
         db.session.add(user_created)
@@ -57,11 +60,53 @@ def get_all_users_data():
     users_data_serialized = list(map(lambda item: item.serialize(), users_data)) 
     return jsonify({"response": users_data_serialized}), 200      
 
-# @api.route('/profile', methods=['GET'])
-# @jwt_required()
-# def ():
-#     current_user_id = get_jwt_identity()
-#     user = Users.query.get(current_user_id)
-#     if user:
+@api.route('/profile_user', methods=['PUT'])
+@jwt_required()
+def change_user_email_or_password():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    body_email = request.json.get("email")
+    body_password = request.json.get("password")
+    if Users.query.filter_by(id = current_user_id).first():
+        user_change = Users(email = body_email, password = body_password)
+        db.session.add(user_change)
+        db.session.commit()
+        return jsonify({"msg": "Datos guardados correctamente"}), 200   
+    else: return jsonify({"msg": "Error, no se han podido guardar los datos"}), 400 
 
-    
+@api.route('/profile_company', methods=['PUT'])
+@jwt_required()
+def change_company_email_or_password():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    body_email = request.json.get("email")
+    body_password = request.json.get("password")
+    if user:
+        user_created = Users(email = body_email, password = body_password)
+        db.session.add(user_created)
+        db.session.commit()
+        return jsonify({"msg": "Datos guardados correctamente"}), 200   
+    else: return jsonify({"msg": "Error, no se han podido guardar los datos"}), 400 
+
+@api.route('/protected', methods=['GET'])
+@jwt_required()
+def private():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    if user:
+        return jsonify({"logged": True}), 200
+    else:
+        return jsonify({"logged": False}), 400
+
+@api.route('/login', methods=['POST'])
+def login():
+    email = request.json.get("Email", None)
+    password = request.json.get("Password", None)
+    user = Users.query.filter_by(email=email).first()
+    if user is None:
+        return jsonify({"msg": "Incorrect email"}), 400
+    user = Users.query.filter_by(email=email, password=password).first()
+    if user is None:
+        return jsonify({"msg": "Incorrect password"}), 400
+    access_token = create_access_token(identity=user.id)
+    return jsonify({"logged":True, "token": access_token, "msg": "User logged in correctly", "User": user.serialize()}), 200

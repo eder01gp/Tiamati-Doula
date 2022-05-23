@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "./store/appContext";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
 import { Signup } from "./pages/signup";
+import { Login } from "./pages/login";
 import { Form } from "./pages/form";
 import { Profile_user } from "./pages/profile_user";
 import { Profile_company } from "./pages/profile_company";
@@ -16,6 +18,7 @@ import { Redirect } from "react-router-dom";
 
 const Layout = () => {
   const basename = process.env.BASENAME || "";
+  const { store } = useContext(Context);
 
   return (
     <div>
@@ -30,14 +33,24 @@ const Layout = () => {
               <Signup />
             </Route>
             <Route exact path="/form">
-              <Form />
-              {/* {store.token == null ? <Redirect to="/"></Redirect> : <Form />} */}
+              {/* {store.token == true ? <Form /> : <Redirect to="/"></Redirect>} */}
             </Route>
             <Route exact path="/profile_user">
-              <Profile_user />
+              {store.logged == true ? (
+                <Profile_user />
+              ) : (
+                <Redirect to="/"></Redirect>
+              )}
             </Route>
             <Route exact path="/profile_company">
-              <Profile_company />
+              {store.logged == true ? (
+                <Profile_company />
+              ) : (
+                <Redirect to="/"></Redirect>
+              )}
+            </Route>
+            <Route exact path="/login">
+              <Login />
             </Route>
             <Route exact path="/bio">
               <Bio />

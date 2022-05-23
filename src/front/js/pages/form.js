@@ -1,13 +1,11 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Form = () => {
   const [user, setUser] = useState({});
   const [show, setShow] = useState({ display: "none" });
-  const { store, actions } = useContext(Context);
-  const history = useHistory();
+  const { store } = useContext(Context);
 
   const saveUsersData = async () => {
     const response = await fetch(store.url + "/form", {
@@ -37,7 +35,7 @@ export const Form = () => {
             <input
               type="text"
               className="form-control"
-              value={user.name}
+              placeholder={user.name}
               onChange={(e) => setUser({ ...user, name: e.target.value })}
             />
           </div>
@@ -54,7 +52,7 @@ export const Form = () => {
               step="0.5"
               min="1"
               className="form-control"
-              value={user.pregnancy_weeks}
+              placeholder={user.pregnancy_weeks}
               onChange={(e) =>
                 setUser({ ...user, pregnancy_weeks: e.target.value })
               }
@@ -72,7 +70,7 @@ export const Form = () => {
               name="dia"
               min="today"
               className="form-control"
-              value={user.aproximate_birth_date}
+              placeholder={user.aproximate_birth_date}
               onChange={(e) =>
                 setUser({ ...user, aproximate_birth_date: e.target.value })
               }
@@ -90,7 +88,7 @@ export const Form = () => {
               name="cantidad"
               min="0"
               className="form-control"
-              value={user.children_number}
+              placeholder={user.children_number}
               onChange={(e) => {
                 setUser({ ...user, children_number: e.target.value }),
                   e.target.value > 0
@@ -111,7 +109,7 @@ export const Form = () => {
               name="cantidad"
               min="0"
               className="form-control"
-              value={user.caesarean_sections_number}
+              placeholder={user.caesarean_sections_number}
               onChange={(e) =>
                 setUser({ ...user, caesarean_sections_number: e.target.value })
               }
@@ -127,7 +125,7 @@ export const Form = () => {
             <input
               type="text"
               className="form-control"
-              value={user.companion}
+              placeholder={user.companion}
               onChange={(e) => setUser({ ...user, companion: e.target.value })}
             />
           </div>
@@ -139,12 +137,12 @@ export const Form = () => {
             <input
               type="text"
               className="form-control"
-              value={user.city}
+              placeholder={user.city}
               onChange={(e) => setUser({ ...user, city: e.target.value })}
             />
           </div>
         </div>
-        <div className="col-auto col-lg-auto 6col-sm-4">
+        <div className="col-auto">
           <label className="visually-hidden">LUGAR PARTO</label>
           <div className="input-group">
             <div className="input-group-text bg-light">
@@ -153,7 +151,7 @@ export const Form = () => {
             <select
               className="form-select"
               aria-label="Default select example"
-              value={user.birth_place}
+              placeholder={user.birth_place}
               onChange={(e) =>
                 setUser({ ...user, birth_place: e.target.value })
               }
@@ -164,7 +162,7 @@ export const Form = () => {
             </select>
           </div>
         </div>
-        <div className="col-auto">
+        <div className="col-12 col-sm-6 col-lg-12">
           <label className="visually-hidden">HOSPITAL ACTUAL</label>
           <div className="input-group">
             <div className="input-group-text bg-light">
@@ -173,7 +171,7 @@ export const Form = () => {
             <input
               type="text"
               className="form-control"
-              value={user.current_hospital}
+              placeholder={user.current_hospital}
               onChange={(e) =>
                 setUser({ ...user, current_hospital: e.target.value })
               }
@@ -182,15 +180,19 @@ export const Form = () => {
         </div>
         <div className="col-12">
           <Link to="/profile_user">
-            <button className="btn btn-danger mx-1 float-end" onClick={show}>
-              Cancelar
+            <button
+              type="button"
+              className="btn btn-secondary mx-1 float-end"
+              onClick={show}
+            >
+              Cerrar
             </button>
             <button
               type="submit"
               className="btn btn-primary float-end"
               onClick={() => saveUsersData()}
             >
-              Guardar cambios
+              Guardar
             </button>
           </Link>
         </div>
