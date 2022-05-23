@@ -14,7 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         "price": 30,
         "image": "../img/woman-doubts.jpg",
         "qty": 1,
-        "error": ""
+        "error": "",
+        "discount": 25,
       },
       {
         "id": 2,
@@ -24,7 +25,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         "price": 70,
         "image": "../img/woman-doubts.jpg",
         "qty": 1,
-        "error": ""
+        "error": "",
+        "discount": 0,
       },
       {
         "id": 3,
@@ -34,7 +36,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         "price": 20,
         "image": "../img/woman-doubts.jpg",
         "qty": 1,
-        "error": ""
+        "error": "",
+        "discount": 75,
       }
     ]
     },
