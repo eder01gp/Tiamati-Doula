@@ -13,6 +13,7 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Redirect } from "react-router-dom";
+import { Documents } from "./pages/documents";
 
 const Layout = () => {
   const basename = process.env.BASENAME || "";
@@ -37,6 +38,8 @@ const Layout = () => {
               <Form />
                {store.logged == true ? <Form /> : <Redirect to="/"></Redirect> } 
             </Route>
+            <Route exact path="/documents">
+              <Documents />
             <Route exact path="/services">
               <Services />
             </Route>

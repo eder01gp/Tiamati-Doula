@@ -3,9 +3,27 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       logged: null,
       token: null,
-      url:
-        "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu45.gitpod.io/" +
-        "api",
+      url: "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu45.gitpod.io/"+"api",
+      documents: 
+      [{
+        "id": 1,
+        "name": "Consejos del primer trimestre",
+        "description": "Las mejoros tips para los primeros meses ",
+        "documentUrl": "https://3000-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu45.gitpod.io/doc01.jpg",
+      },
+      {
+        "id": 3,
+        "name": "Consejos del segundo trimestre",
+        "description": "Las mejoros tips para los segundos meses ",
+        "documentUrl": "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu45.gitpod.io/doc01.jpg",
+      },
+      {
+        "id": 7,
+        "name": "Consejos del tercer trimestre",
+        "description": "Las mejoros tips para los terceros meses",
+        "documentUrl": "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu45.gitpod.io/doc01.jpg",
+      },
+      ],
       services: [{
         "id": 1,
         "name": "Sesión acompañamiento",
@@ -39,7 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         "error": "",
         "discount": 75,
       }
-    ]
+    ],
     },
     actions: {
       verify: async () => {
@@ -61,6 +79,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         localStorage.clear();
         setStore({ logged: false });
       },
+
+      getDocuments: () => {},
+
       getServices: async () => {
         
       },
@@ -111,7 +132,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           else return x
         })
       setStore({services: newService})
-      }
+      },
     },
   };
 };
