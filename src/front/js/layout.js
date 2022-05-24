@@ -7,6 +7,7 @@ import { Signup } from "./pages/signup";
 import { Form } from "./pages/form";
 import { Profile_user } from "./pages/profile_user";
 import { Profile_company } from "./pages/profile_company";
+import { Bio } from "./pages/bio";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -37,6 +38,9 @@ const Layout = () => {
             </Route>
             <Route exact path="/profile_company">
               <Profile_company />
+            </Route>
+            <Route exact path="/bio">
+              <Bio />
             </Route>
             <Route>
               <h1>Not found!</h1>
