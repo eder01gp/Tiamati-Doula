@@ -33,17 +33,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         localStorage.clear();
         setStore({ logged: false });
       },
-      modifyUsers: (value) => {
-        setStore({ users: value });
-      },
-      checkToken: () => {
-        if (
-          localStorage.getItem("token") != null ||
-          localStorage.getItem("token") != ""
-        ) {
-          setStore({ token: true });
-        }
-      },
     },
   };
 };
