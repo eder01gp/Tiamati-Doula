@@ -31,9 +31,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         "description": "1 hora de resolución de dudas",
         "price": 30,
         "image": "../img/woman-doubts.jpg",
-        "qty": 1,
+        "qty": 2,
         "error": "",
         "discount": 25,
+        "selected": true,
       },
       {
         "id": 2,
@@ -45,6 +46,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         "qty": 1,
         "error": "",
         "discount": 0,
+        "selected": true,
       },
       {
         "id": 3,
@@ -56,8 +58,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         "qty": 1,
         "error": "",
         "discount": 75,
-      }
-    ],
+        "selected": false,
+      },
+    ]
     },
     actions: {
       verify: async () => {
