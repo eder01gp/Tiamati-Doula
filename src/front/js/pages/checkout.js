@@ -8,18 +8,36 @@ import "../../styles/checkout.css";
 export const Checkout = () => {
   const { store, actions } = useContext(Context);
   const [total, setTotal] = useState(0);
+  const [error, setError] = useState(null);
+  const [modalSelectedKO, setModalSelectedKO] = useState("");
 
   useEffect(() => {
     let totalAux = 0
     {store.services.map((service) => {
       if (service.selected == true) {
-      totalAux = (parseInt(totalAux) + parseInt((service.price*(100-service.discount)/100)*service.qty))
+      totalAux = ((totalAux) + ((service.price*(100-service.discount)/100)*service.qty))
       console.log(totalAux)
       };
     setTotal(totalAux);
     })}
   }, [store.services]);
-      
+  
+  useEffect(() => {
+    if (error!=null){    
+      actions.serviceSelectedError(error);
+      const timer = setTimeout(() => {
+        actions.serviceSelectedErrorKO(error);
+        setError(0);
+      }, 3000);
+      return (() => {
+        clearTimeout(timer);
+      })
+    }
+  }, [error]);
+
+  useEffect(() => {
+  }, [store.services]);
+
   return (
     <div className="frame01 container my-4">
       <h2> Checkout </h2>
@@ -57,8 +75,10 @@ export const Checkout = () => {
                     <button
                       className="btn btn-light m-1"
                       onClick={() => {
-                        actions.serviceSelectedUp(service.id);
-                        actions.serviceSelectedErrorKO(service.id);
+                        if (service.qty<9){
+                          actions.serviceSelectedQtyChange(service.id,0,"up");
+                        }
+                        else setError(service.id)
                       }}
                     >+
                     </button>
@@ -72,21 +92,26 @@ export const Checkout = () => {
                       className="qty form-control text-center m-1"
                       onChange={(evt) => {
                         const re = /[0-9]/;
-                        if (re.test(evt.target.value)&&(evt.target.value<10)&&(evt.target.value>-1)) {
-                          actions.serviceSelectedChange(service.id, evt.target.value)
-                          actions.serviceSelectedErrorKO(service.id)
+                        if (re.test(evt.target.value)&&(evt.target.value<10)&&(evt.target.value>0)) {
+                          actions.serviceSelectedQtyChange(service.id, evt.target.value, null)
                         }
-                        else{
-                          actions.serviceSelectedError(service.id)
-                        }
+                        else setError(service.id)
                       }}
                     />
                     <button
                       href="#"
                       className="btn btn-light m-1"
+                      data-bs-toggle={modalSelectedKO} 
+                      data-bs-target="#staticBackdrop"
                       onClick={() => {
-                        actions.serviceSelectedDown(service.id);
-                        actions.serviceSelectedErrorKO(service.id);
+                        console.log(service.selected)
+                        if (service.qty==1){
+                          setModalSelectedKO("modal");
+                        }
+                        else if (service.qty>1){
+                          actions.serviceSelectedQtyChange(service.id,0,"down");
+                          }
+                        else setError(service.id)
                       }}
                     >
                       -
@@ -99,6 +124,27 @@ export const Checkout = () => {
                 <div className="row text-center">
                     <p>{service.error}</p>
                 </div>
+                {/* <!-- Modal --> */}
+                <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5 className="modal-title" id="staticBackdropLabel">Eliminar servicio</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div className="modal-body">
+                            ...
+                          </div>
+                          <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                            <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={()=>{
+                              actions.serviceSelectedKO(service.id);
+                              console.log(service.selected)
+                            }}>Si</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
             </div>
           );
         }})}
@@ -145,6 +191,7 @@ export const Checkout = () => {
                         <button
                           className="btn btn-light m-1"
                           onClick={() => {
+                            actions.serviceSelected(service.id)
                           }}
                         >+
                         </button>
@@ -157,13 +204,13 @@ export const Checkout = () => {
                     <div className="row text-center">
                         <p>{service.error}</p>
                     </div>
-                </div>
+                </div>         
           )
           }
         })}
-
+        
         
       </div>
-    </div>
+    </div>   
   );
 };

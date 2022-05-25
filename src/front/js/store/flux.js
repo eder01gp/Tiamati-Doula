@@ -34,7 +34,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         "qty": 2,
         "error": "",
         "discount": 25,
-        "selected": true,
+        "selected": false,
       },
       {
         "id": 2,
@@ -46,7 +46,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         "qty": 1,
         "error": "",
         "discount": 0,
-        "selected": true,
+        "selected": false,
       },
       {
         "id": 3,
@@ -86,55 +86,60 @@ const getState = ({ getStore, getActions, setStore }) => {
       getDocuments: () => {},
 
       getServices: async () => {
-        
       },
-      serviceSelectedUp: (id) => {
-        const newService = getStore().services.map((x)=>{
-          if (x.id==id && x.qty<9){
-            var newqty = parseInt(x.qty)+1;
-            return {...x, qty:newqty}
-          }
-          else return x
-        })
-      setStore({services: newService})
-      },
-      serviceSelectedDown: (id) => {
-        const newService = getStore().services.map((x)=>{
-          if (x.id==id && x.qty>1){
-            var newqty = parseInt(x.qty)-1;
-            return {...x, qty:newqty}
-          }
-          else return x
-        })
-      setStore({services: newService})
-      },
-      serviceSelectedChange: (id,newQty) => {
+      serviceSelectedQtyChange: (id, newQty, action) => {
         const newService = getStore().services.map((x)=>{
           if (x.id==id){
-            return {...x, qty:newQty}
+            if (action == "up" && x.qty<9){
+              var qtyUp = parseInt(x.qty)+1;
+              return {...x, qty:qtyUp}
+            }
+            else if (action == "down" && x.qty>1){
+              var qtyDown = parseInt(x.qty)-1;
+              return {...x, qty:qtyDown}
+            }
+            else if (newQty!=0 && newQty>0 && newQty<10){
+              return {...x, qty:newQty}
+            }
+            else return x
           }
           else return x
         })
-      setStore({services: newService})  
-
+        console.log(newService)
+        setStore({services: newService})
       },
-      serviceSelectedError: (id) => {
+      serviceSelectedError: (id) => {  
         const newService = getStore().services.map((x)=>{
           if (x.id==id){
             return {...x, error:"La cantidad debe estar entre 0 y 9"}
           }
           else return x
         })
-      setStore({services: newService})
+        setStore({services: newService})
       },
       serviceSelectedErrorKO: (id) => {
         const newService = getStore().services.map((x)=>{
-          if (x.id==id){
             return {...x, error:""}
+        })
+        setStore({services: newService})
+      },
+      serviceSelected: (id) => {
+        const newService = getStore().services.map((x)=>{
+          if (x.id==id){
+            return {...x, selected:true}
           }
           else return x
         })
-      setStore({services: newService})
+        setStore({services: newService})
+      },
+      serviceSelectedKO: (id) => {
+        const newService = getStore().services.map((x)=>{
+          if (x.id==id){
+            return {...x, selected:false}
+          }
+          else return x
+        })
+        setStore({services: newService})
       },
     },
   };
