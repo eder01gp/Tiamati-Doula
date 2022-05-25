@@ -23,13 +23,11 @@ export const Signup = () => {
       } else if (check == true) {
         history.push("/");
       }
-
       const response = await fetch(store.url + "/signup", {
         method: "POST",
         body: JSON.stringify(user),
         headers: { "Content-Type": "application/json" },
       });
-
       const data = await response.json();
       localStorage.setItem("token", data.token);
       localStorage.setItem("ID", data.User.id);

@@ -8,6 +8,16 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_tok
 
 api = Blueprint('api', __name__)  
 
+@api.route('/protected', methods=['GET'])
+@jwt_required()
+def private():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    if user:
+        return jsonify({"logged": True}), 200
+    else:
+        return jsonify({"logged": False}), 400
+
 @api.route('/signup', methods=['POST'])
 def save_signup_user():
     body_email = request.json.get("email")
@@ -21,7 +31,7 @@ def save_signup_user():
             access_token = create_access_token(identity=user_created.id)
             return jsonify({"logged":True, "token": access_token, "msg": "Usuario creado correctamente", "User": user_created.serialize()}), 200    
         else: return jsonify({"msg": "Error, el email ya existe como usuaria"}), 400   
-    else: return jsonify({"msg": "Error, comprueba email y password"}), 400       
+    else: return jsonify({"msg": "Error, comprueba email y contraseña"}), 400       
      
 
 @api.route('/form', methods=['PUT']) 
@@ -65,7 +75,7 @@ def get_all_users():
     users_serialized = list(map(lambda item: item.serialize(), users)) 
     return jsonify({"response": users_serialized}), 200      
 
-#  This table bring the info os table User_Data  #
+
 @api.route('/users_data', methods=['GET'])
 def get_all_users_data():
     users_data = User_Data.query.all()
@@ -85,16 +95,6 @@ def change_user_email_or_password():
         db.session.commit()
         return jsonify({"msg": "Datos guardados correctamente"}), 200   
     else: return jsonify({"msg": "Error, no se han podido guardar los datos"}), 400 
-
-@api.route('/protected', methods=['GET'])
-@jwt_required()
-def private():
-    current_user_id = get_jwt_identity()
-    user = Users.query.get(current_user_id)
-    if user:
-        return jsonify({"logged": True}), 200
-    else:
-        return jsonify({"logged": False}), 400
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -122,23 +122,4 @@ def get_user_info():
     else:
        return jsonify({"user_loggin_info": user.serialize(), "user_data": "No user data" }), 400  
 
-# @api.route('/user_info', methods=['GET'])
-# @jwt_required()
-# def get_user_info():
-#     current_user_id = get_jwt_identity()
-#     user = Users.query.get(current_user_id)
-#     current_user_data = User_Data.query.filter_by(user_id = current_user_id).first()
-#     if current_user_id:     
-#         return jsonify({"info": user.serialize(), "data": current_user_data.serialize() }), 200
-#     else:
-#        return jsonify({"user_loggin_info": user.serialize(), "user_data": "No user data" }), 400,  
 
-# @api.route('/company_info', methods=['GET'])
-# @jwt_required()
-# def get_company_info():
-#     current_user_id = get_jwt_identity()
-#     user = Users.query.get(current_user_id)
-#     if current_user_id:
-#         return jsonify({"info": user.serialize()}), 200
-#     else:
-#        return jsonify({"msg": "No company info" }), 400  

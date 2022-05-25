@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "./store/appContext";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
@@ -9,6 +9,7 @@ import { Login } from "./pages/login";
 import { Form } from "./pages/form";
 import { Profile_user } from "./pages/profile_user";
 import { Profile_company } from "./pages/profile_company";
+import { Services } from "./pages/services";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -17,7 +18,11 @@ import { Redirect } from "react-router-dom";
 
 const Layout = () => {
   const basename = process.env.BASENAME || "";
-  const { store } = useContext(Context);
+  const { store, actions } = useContext(Context);
+
+  // useEffect(() => {
+  //   actions.getUserInfo();
+  // }, []);
 
   return (
     <div>
@@ -28,12 +33,20 @@ const Layout = () => {
             <Route exact path="/">
               <Home />
             </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
             <Route exact path="/signup">
               <Signup />
+              {/* {store.user_info.rol == "usuaria" ? (
+                <Signup />
+              ) : (
+                <Redirect to="/login"></Redirect>
+              )} */}
             </Route>
             <Route exact path="/form">
               <Form />
-              {/* {store.token == true ? <Form /> : <Redirect to="/"></Redirect>} */}
+              {/* {store.user_info ? <Form /> : <Redirect to="/login"></Redirect>} */}
             </Route>
             <Route exact path="/profile_user">
               {store.logged == true ? (
@@ -49,8 +62,8 @@ const Layout = () => {
                 <Redirect to="/"></Redirect>
               )}
             </Route>
-            <Route exact path="/login">
-              <Login />
+            <Route exact path="/services">
+              <Services />
             </Route>
             <Route>
               <h1>Not found!</h1>

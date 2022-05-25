@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
@@ -93,16 +93,12 @@ export const Navbar = () => {
           >
             <Link to="/login">
               <li>
-                <p href="#" className="mx-2">
-                  Iniciar Sesión
-                </p>
+                <p className="mx-2">Iniciar Sesión</p>
               </li>
             </Link>
             <Link to="/signup">
               <li>
-                <p href="#" className="mx-2">
-                  Registrarse
-                </p>
+                <p className="mx-2">Registrarse</p>
               </li>
             </Link>
           </ul>
