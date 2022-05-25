@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Context } from "./store/appContext";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
@@ -18,11 +18,7 @@ import { Redirect } from "react-router-dom";
 
 const Layout = () => {
   const basename = process.env.BASENAME || "";
-  const { store, actions } = useContext(Context);
-
-  // useEffect(() => {
-  //   actions.getUserInfo();
-  // }, []);
+  const { store } = useContext(Context);
 
   return (
     <div>
@@ -33,20 +29,15 @@ const Layout = () => {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
             <Route exact path="/signup">
               <Signup />
-              {/* {store.user_info.rol == "usuaria" ? (
-                <Signup />
-              ) : (
-                <Redirect to="/login"></Redirect>
-              )} */}
             </Route>
             <Route exact path="/form">
               <Form />
               {/* {store.user_info ? <Form /> : <Redirect to="/login"></Redirect>} */}
+            </Route>
+            <Route exact path="/login">
+              <Login />
             </Route>
             <Route exact path="/profile_user">
               {store.logged == true ? (
