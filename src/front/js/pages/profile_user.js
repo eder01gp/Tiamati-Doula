@@ -32,7 +32,7 @@ export const Profile_user = () => {
   };
 
   return (
-    <div className="div1 container">
+    <div className="div1 container-fluid">
       <div>
         <div className="Change email-password m-auto">
           {/* Current user email & edit button*/}

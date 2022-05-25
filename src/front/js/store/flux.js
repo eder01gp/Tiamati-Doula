@@ -4,8 +4,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       logged: null,
       token: null,
       url:
-        "https://3000-ederdon-tiamatidoula-f6gaira5d9k.ws-eu45.gitpod.io" +
-        "/api",
+        "https://3001-ederdon-tiamatidoula-f6gaira5d9k.ws-eu46.gitpod.io/" +
+        "api",
       users: [],
       user_info: [],
       user_data: [],

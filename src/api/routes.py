@@ -94,7 +94,7 @@ def change_user_email_or_password():
         user_change.email = body_email
         db.session.commit()
         return jsonify({"msg": "Datos guardados correctamente"}), 200   
-    else: return jsonify({"msg": "Error, no se han podido guardar los datos"}), 400 
+    else: return jsonify({"msg": "Error, no se han podido guardar los datos"}), 400, 401 
 
 @api.route('/login', methods=['POST'])
 def login():

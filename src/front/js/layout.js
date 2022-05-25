@@ -40,14 +40,14 @@ const Layout = () => {
               <Login />
             </Route>
             <Route exact path="/profile_user">
-              {store.logged == true ? (
+              {localStorage.getItem("token") ? (
                 <Profile_user />
               ) : (
                 <Redirect to="/"></Redirect>
               )}
             </Route>
             <Route exact path="/profile_company">
-              {store.logged == true ? (
+              {localStorage.getItem("token") ? (
                 <Profile_company />
               ) : (
                 <Redirect to="/"></Redirect>

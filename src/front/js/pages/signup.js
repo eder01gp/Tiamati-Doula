@@ -28,6 +28,7 @@ export const Signup = () => {
         body: JSON.stringify(user),
         headers: {
           "Content-Type": "application/json",
+          Accept: "application/json",
         },
       });
 

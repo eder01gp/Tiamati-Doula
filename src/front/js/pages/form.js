@@ -1,11 +1,16 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Form = () => {
   const [user, setUser] = useState({});
   const [show, setShow] = useState({ display: "none" });
-  const { store } = useContext(Context);
+  const { store, actions } = useContext(Context);
+
+  useEffect(() => {
+    actions.getUserInfo();
+    actions.verify();
+  }, []);
 
   const saveUsersData = async () => {
     const response = await fetch(store.url + "/form", {
@@ -17,6 +22,7 @@ export const Form = () => {
       },
     });
     const data = await response.json();
+    actions.getUserInfo();
   };
 
   return (
@@ -35,7 +41,7 @@ export const Form = () => {
             <input
               type="text"
               className="form-control"
-              placeholder={user.name}
+              value={store.user_data.name}
               onChange={(e) => setUser({ ...user, name: e.target.value })}
             />
           </div>
@@ -52,7 +58,7 @@ export const Form = () => {
               step="0.5"
               min="1"
               className="form-control"
-              placeholder={user.pregnancy_weeks}
+              value={store.user_data.pregnancy_weeks}
               onChange={(e) =>
                 setUser({ ...user, pregnancy_weeks: e.target.value })
               }
@@ -70,7 +76,7 @@ export const Form = () => {
               name="dia"
               min="today"
               className="form-control"
-              placeholder={user.aproximate_birth_date}
+              value={store.user_data.aproximate_birth_date}
               onChange={(e) =>
                 setUser({ ...user, aproximate_birth_date: e.target.value })
               }
@@ -88,7 +94,7 @@ export const Form = () => {
               name="cantidad"
               min="0"
               className="form-control"
-              placeholder={user.children_number}
+              value={store.user_data.children_number}
               onChange={(e) => {
                 setUser({ ...user, children_number: e.target.value }),
                   e.target.value > 0
@@ -109,14 +115,14 @@ export const Form = () => {
               name="cantidad"
               min="0"
               className="form-control"
-              placeholder={user.caesarean_sections_number}
+              value={store.user_data.caesarean_sections_number}
               onChange={(e) =>
                 setUser({ ...user, caesarean_sections_number: e.target.value })
               }
             />
           </div>
         </div>
-        <div className="col-12">
+        <div className="col-4 col-lg-auto col-sm-4">
           <label className="visually-hidden">ACOMPAÑANTE</label>
           <div className="input-group">
             <div className="input-group-text bg-light">
@@ -125,7 +131,7 @@ export const Form = () => {
             <input
               type="text"
               className="form-control"
-              placeholder={user.companion}
+              value={store.user_data.companion}
               onChange={(e) => setUser({ ...user, companion: e.target.value })}
             />
           </div>
@@ -137,7 +143,7 @@ export const Form = () => {
             <input
               type="text"
               className="form-control"
-              placeholder={user.city}
+              value={store.user_data.city}
               onChange={(e) => setUser({ ...user, city: e.target.value })}
             />
           </div>
@@ -151,7 +157,7 @@ export const Form = () => {
             <select
               className="form-select"
               aria-label="Default select example"
-              placeholder={user.birth_place}
+              value={store.user_data.birth_place}
               onChange={(e) =>
                 setUser({ ...user, birth_place: e.target.value })
               }
@@ -162,7 +168,7 @@ export const Form = () => {
             </select>
           </div>
         </div>
-        <div className="col-12 col-sm-6 col-lg-12">
+        <div className="col-4 col-lg-auto col-sm-4">
           <label className="visually-hidden">HOSPITAL ACTUAL</label>
           <div className="input-group">
             <div className="input-group-text bg-light">
@@ -171,7 +177,7 @@ export const Form = () => {
             <input
               type="text"
               className="form-control"
-              placeholder={user.current_hospital}
+              value={store.user_data.current_hospital}
               onChange={(e) =>
                 setUser({ ...user, current_hospital: e.target.value })
               }
