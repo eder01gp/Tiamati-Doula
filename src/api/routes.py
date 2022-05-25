@@ -38,14 +38,25 @@ def save_or_update_user_form():
     body_city = request.json.get("city")
     body_birth_place = request.json.get("birth_place")
     body_current_hospital = request.json.get("current_hospital")
-    print("@@@@@@@@@@@@@@@@@@@@@")
-    print(reques)
-    print("@@@@@@@@@@@@@@@@@@@@@@@@")
     if current_user_id != None:
-        user_created = User_Data(user_id = current_user_id, name = body_name, pregnancy_weeks = body_pregnancy_weeks, aproximate_birth_date = body_aproximate_birth_date, children_number = body_children_number, caesarean_sections_number =  body_caesarean_sections_number,  companion = body_companion, city = body_city,  birth_place = body_birth_place, current_hospital = body_current_hospital)
-        db.session.add(user_created)
-        db.session.commit()
-        return jsonify({"msg": "Datos guardados correctamente"}), 200   
+        current_user_data = User_Data.query.filter_by(user_id = current_user_id).first()
+        if current_user_data == None:
+            user_created = User_Data(user_id = current_user_id, name = body_name, pregnancy_weeks = body_pregnancy_weeks, aproximate_birth_date = body_aproximate_birth_date, children_number = body_children_number, caesarean_sections_number =  body_caesarean_sections_number,  companion = body_companion, city = body_city,  birth_place = body_birth_place, current_hospital = body_current_hospital)
+            db.session.add(user_created)
+            db.session.commit()
+            return jsonify({"msg": "Datos guardados correctamente"}), 200   
+        else: 
+            current_user_data.name = body_name 
+            current_user_data.pregnancy_weeks = body_pregnancy_weeks 
+            current_user_data.aproximate_birth_date = body_aproximate_birth_date 
+            current_user_data.children_number = body_children_number
+            current_user_data.caesarean_sections_number = body_caesarean_sections_number 
+            current_user_data.companion = body_companion 
+            current_user_data.city = body_city
+            current_user_data.birth_place = body_birth_place 
+            current_user_data.current_hospital = body_current_hospital
+            db.session.commit()
+            return jsonify({'msg': "Datos modificados correctamente"}), 200 
     else: return jsonify({"msg": "Error, no se han podido guardar los datos"}), 400      
 
 @api.route('/users', methods=['GET'])
@@ -54,36 +65,23 @@ def get_all_users():
     users_serialized = list(map(lambda item: item.serialize(), users)) 
     return jsonify({"response": users_serialized}), 200      
 
+#  This table bring the info os table User_Data  #
 @api.route('/users_data', methods=['GET'])
 def get_all_users_data():
     users_data = User_Data.query.all()
     users_data_serialized = list(map(lambda item: item.serialize(), users_data)) 
     return jsonify({"response": users_data_serialized}), 200      
 
-@api.route('/profile_user', methods=['PUT'])
+@api.route('/profile', methods=['PUT'])
 @jwt_required()
 def change_user_email_or_password():
     current_user_id = get_jwt_identity()
     user = Users.query.get(current_user_id)
     body_email = request.json.get("email")
     body_password = request.json.get("password")
-    if Users.query.filter_by(id = current_user_id).first():
-        user_change = Users(email = body_email, password = body_password)
-        db.session.add(user_change)
-        db.session.commit()
-        return jsonify({"msg": "Datos guardados correctamente"}), 200   
-    else: return jsonify({"msg": "Error, no se han podido guardar los datos"}), 400 
-
-@api.route('/profile_company', methods=['PUT'])
-@jwt_required()
-def change_company_email_or_password():
-    current_user_id = get_jwt_identity()
-    user = Users.query.get(current_user_id)
-    body_email = request.json.get("email")
-    body_password = request.json.get("password")
-    if user:
-        user_created = Users(email = body_email, password = body_password)
-        db.session.add(user_created)
+    user_change = Users.query.filter_by(id = current_user_id).first()
+    if user_change != None:
+        user_change.email = body_email
         db.session.commit()
         return jsonify({"msg": "Datos guardados correctamente"}), 200   
     else: return jsonify({"msg": "Error, no se han podido guardar los datos"}), 400 
@@ -110,3 +108,37 @@ def login():
         return jsonify({"msg": "Incorrect password"}), 400
     access_token = create_access_token(identity=user.id)
     return jsonify({"logged":True, "token": access_token, "msg": "User logged in correctly", "User": user.serialize()}), 200
+
+@api.route('/user_info', methods=['GET'])
+@jwt_required()
+def get_user_info():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    current_user_data = User_Data.query.filter_by(user_id = current_user_id).first()
+    if current_user_id and current_user_data == None:
+        return jsonify({"info": user.serialize()}), 200
+    elif current_user_id and current_user_data:     
+        return jsonify({"info": user.serialize(), "data": current_user_data.serialize() }), 200
+    else:
+       return jsonify({"user_loggin_info": user.serialize(), "user_data": "No user data" }), 400  
+
+# @api.route('/user_info', methods=['GET'])
+# @jwt_required()
+# def get_user_info():
+#     current_user_id = get_jwt_identity()
+#     user = Users.query.get(current_user_id)
+#     current_user_data = User_Data.query.filter_by(user_id = current_user_id).first()
+#     if current_user_id:     
+#         return jsonify({"info": user.serialize(), "data": current_user_data.serialize() }), 200
+#     else:
+#        return jsonify({"user_loggin_info": user.serialize(), "user_data": "No user data" }), 400,  
+
+# @api.route('/company_info', methods=['GET'])
+# @jwt_required()
+# def get_company_info():
+#     current_user_id = get_jwt_identity()
+#     user = Users.query.get(current_user_id)
+#     if current_user_id:
+#         return jsonify({"info": user.serialize()}), 200
+#     else:
+#        return jsonify({"msg": "No company info" }), 400  

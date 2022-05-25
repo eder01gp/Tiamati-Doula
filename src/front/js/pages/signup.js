@@ -67,7 +67,7 @@ export const Signup = () => {
         </div>
         <div className="mb-1">
           <label htmlFor="exampleInputPassword1" className="form-label mb-0">
-            password
+            Contraseña
           </label>
           <input
             type="password"
