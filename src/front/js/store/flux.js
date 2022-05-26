@@ -31,10 +31,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         "description": "1 hora de resolución de dudas",
         "price": 30,
         "image": "../img/woman-doubts.jpg",
-        "qty": 2,
-        "error": "",
+        "qty": 1,
+        "qtyError": "",
         "discount": 25,
         "selected": false,
+        "modalSelectedKO": "modal",
       },
       {
         "id": 2,
@@ -43,10 +44,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         "description": "Pack de horas para resolución de dudas",
         "price": 70,
         "image": "../img/woman-doubts.jpg",
-        "qty": 1,
-        "error": "",
+        "qty": 2,
+        "qtyError": "",
         "discount": 0,
         "selected": false,
+        "modalSelectedKO": "modal",
       },
       {
         "id": 3,
@@ -56,9 +58,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         "price": 20,
         "image": "../img/woman-doubts.jpg",
         "qty": 1,
-        "error": "",
+        "qtyError": "",
         "discount": 75,
         "selected": false,
+        "modalSelectedKO": "", 
       },
     ]
     },
@@ -91,12 +94,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         const newService = getStore().services.map((x)=>{
           if (x.id==id){
             if (action == "up" && x.qty<9){
-              var qtyUp = parseInt(x.qty)+1;
-              return {...x, qty:qtyUp}
+              newQty = parseInt(x.qty)+1;
+              return {...x, qty:newQty}
             }
             else if (action == "down" && x.qty>1){
-              var qtyDown = parseInt(x.qty)-1;
-              return {...x, qty:qtyDown}
+              newQty = parseInt(x.qty)-1;
+              return {...x, qty:newQty}
             }
             else if (newQty!=0 && newQty>0 && newQty<10){
               return {...x, qty:newQty}
@@ -105,13 +108,22 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           else return x
         })
-        console.log(newService)
         setStore({services: newService})
+        getActions().modalSelectedKO();
       },
+      modalSelectedKO: () =>{
+        const newServiceModals = getStore().services.map((x)=>{
+          if (x.qty==1){
+            return {...x, modalSelectedKO:"modal"}
+          }
+          else return {...x, modalSelectedKO:""}
+        })
+        setStore({services: newServiceModals})
+      },      
       serviceSelectedError: (id) => {  
         const newService = getStore().services.map((x)=>{
-          if (x.id==id){
-            return {...x, error:"La cantidad debe estar entre 0 y 9"}
+          if (x.id==id && x.modalSelectedKO!="modal"){
+            return {...x, qtyError:"La cantidad debe estar entre 0 y 9"}
           }
           else return x
         })
@@ -119,7 +131,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       serviceSelectedErrorKO: (id) => {
         const newService = getStore().services.map((x)=>{
-            return {...x, error:""}
+            return {...x, qtyError:""}
         })
         setStore({services: newService})
       },

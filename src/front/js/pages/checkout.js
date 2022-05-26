@@ -4,6 +4,8 @@ import { Context } from "../store/appContext";
 import service01 from "../../../img/woman-doubts.jpg";
 /* import docUrl01 from "/../../img/dum.pdf"; */
 import "../../styles/checkout.css";
+import { Login } from "./login";
+import { Signup } from "./signup";
 
 export const Checkout = () => {
   const { store, actions } = useContext(Context);
@@ -16,7 +18,6 @@ export const Checkout = () => {
     {store.services.map((service) => {
       if (service.selected == true) {
       totalAux = ((totalAux) + ((service.price*(100-service.discount)/100)*service.qty))
-      console.log(totalAux)
       };
     setTotal(totalAux);
     })}
@@ -36,12 +37,14 @@ export const Checkout = () => {
   }, [error]);
 
   useEffect(() => {
-  }, [store.services]);
+    actions.modalSelectedKO();
+  }, []);
 
   return (
     <div className="frame01 container my-4">
       <h2> Checkout </h2>
       <div className="frame02 container mt-4">
+      <div className="addServices mt-5"><h4>Servicios seleccionados</h4></div>
         {store.services.map((service, i) => {
         if (service.selected == true) {
           return (
@@ -101,16 +104,12 @@ export const Checkout = () => {
                     <button
                       href="#"
                       className="btn btn-light m-1"
-                      data-bs-toggle={modalSelectedKO} 
+                      data-bs-toggle={service.modalSelectedKO}
                       data-bs-target="#staticBackdrop"
                       onClick={() => {
-                        console.log(service.selected)
-                        if (service.qty==1){
-                          setModalSelectedKO("modal");
-                        }
-                        else if (service.qty>1){
+                        if (service.qty>1){
                           actions.serviceSelectedQtyChange(service.id,0,"down");
-                          }
+                        }
                         else setError(service.id)
                       }}
                     >
@@ -122,7 +121,7 @@ export const Checkout = () => {
                   </div>
                     
                 <div className="row text-center">
-                    <p>{service.error}</p>
+                    <p>{service.qtyError}</p>
                 </div>
                 {/* <!-- Modal --> */}
                 <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -155,8 +154,7 @@ export const Checkout = () => {
           <div className="col-sm-3 d-flex justify-content-end">
           {total} €
           </div>
-        </div>
-        <div className="addServices row mt-5"><h4>Añade más servicios</h4></div>
+        </div><div className="addServices mt-5"><h4>Añade más servicios</h4></div>
         
         {store.services.map((service, i) => {
             if (service.selected != true) {
@@ -208,8 +206,15 @@ export const Checkout = () => {
           )
           }
         })}
-        
-        
+        <div className="addServices mt-5"><h4>Datos usuaria</h4></div>
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#" >Active</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+          </ul>
       </div>
     </div>   
   );
