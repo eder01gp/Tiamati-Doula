@@ -19,6 +19,9 @@ class Users(db.Model):
     rol = db.Column(db.Integer, db.ForeignKey('user_rol.id'))
     user_rol = db.relationship(UserRol)
 
+    def __repr__(self):
+        return "User: "+self.email
+
     def serialize(self):
         return {
             "id": self.id,
@@ -85,6 +88,9 @@ class Service(db.Model):
     qty_error= db.Column(db.String(200))
     selected= db.Column(db.Boolean, default= False)
     modal_selected_KO= db.Column(db.String(50))
+
+    def __repr__(self):
+        return "service: "+self.name
 
     def serialize(self):
         return {

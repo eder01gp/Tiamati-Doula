@@ -15,6 +15,7 @@ api = Blueprint('api', __name__)
 def private():
     current_user_id = get_jwt_identity()
     user = Users.query.get(current_user_id)
+
     if user:
         return jsonify({"logged": True}), 200
     else:
