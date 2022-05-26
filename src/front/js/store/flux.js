@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       logged: null,
       token: null,
+      url: "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu46.gitpod.io/"+"api",
       faq: [
         {
           id: 1,
@@ -17,7 +18,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             "Nam est neque, semper vitae velit nec, accumsan scelerisque mi. Integer egestas vestibulum posuere. Curabitur laoreet, lacus ut iaculis consectetur, odio dui posuere lacus, a molestie lorem ex at justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         },
       ],
-      url: "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu45.gitpod.io/"+"api",
       documents: 
       [{
         "id": 1,
@@ -47,8 +47,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         "price": 30,
         "image": "../img/woman-doubts.jpg",
         "qty": 1,
-        "error": "",
+        "qtyError": "",
         "discount": 25,
+        "selected": false,
+        "modalSelectedKO": "modal",
         "sold_by_unit": true,
       },                 
       {
@@ -58,9 +60,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         "description": "Pack de horas para resolución de dudas",
         "price": 70,
         "image": "../img/woman-doubts.jpg",
-        "qty": 1,
-        "error": "",
+        "qty": 2,
+        "qtyError": "",
         "discount": 0,
+        "selected": false,
+        "modalSelectedKO": "modal",
         "includes": "incluye esto, esto y lo otro",
         "sold_by_unit": true,
       },
@@ -72,12 +76,15 @@ const getState = ({ getStore, getActions, setStore }) => {
         "price": 20,
         "image": "../img/woman-doubts.jpg",
         "qty": 1,
-        "error": "",
+        "qtyError": "",
         "discount": 75,
+        "selected": false,
+        "modalSelectedKO": "", 
         "includes": "incluye esto, esto y lo otro",
         "sold_by_unit": true,
-      }
+      },
     ],
+
     },
     actions: {
       verify: async () => {
@@ -103,55 +110,69 @@ const getState = ({ getStore, getActions, setStore }) => {
       getDocuments: () => {},
 
       getServices: async () => {
-        
       },
-      serviceSelectedUp: (id) => {
-        const newService = getStore().services.map((x)=>{
-          if (x.id==id && x.qty<9){
-            var newqty = parseInt(x.qty)+1;
-            return {...x, qty:newqty}
-          }
-          else return x
-        })
-      setStore({services: newService})
-      },
-      serviceSelectedDown: (id) => {
-        const newService = getStore().services.map((x)=>{
-          if (x.id==id && x.qty>1){
-            var newqty = parseInt(x.qty)-1;
-            return {...x, qty:newqty}
-          }
-          else return x
-        })
-      setStore({services: newService})
-      },
-      serviceSelectedChange: (id,newQty) => {
+      serviceSelectedQtyChange: (id, newQty, action) => {
         const newService = getStore().services.map((x)=>{
           if (x.id==id){
-            return {...x, qty:newQty}
+            if (action == "up" && x.qty<9){
+              newQty = parseInt(x.qty)+1;
+              return {...x, qty:newQty}
+            }
+            else if (action == "down" && x.qty>1){
+              newQty = parseInt(x.qty)-1;
+              return {...x, qty:newQty}
+            }
+            else if (newQty!=0 && newQty>0 && newQty<10){
+              return {...x, qty:newQty}
+            }
+            else return x
           }
           else return x
         })
-      setStore({services: newService})  
-
+        setStore({services: newService})
+        getActions().modalSelectedKO();
       },
-      serviceSelectedError: (id) => {
+      modalSelectedKO: () =>{
+        const newServiceModals = getStore().services.map((x)=>{
+          if (x.qty==1){
+            return {...x, modalSelectedKO:"modal"}
+          }
+          else return {...x, modalSelectedKO:""}
+        })
+        setStore({services: newServiceModals})
+      },      
+      serviceSelectedError: (id) => {  
         const newService = getStore().services.map((x)=>{
-          if (x.id==id){
-            return {...x, error:"La cantidad debe estar entre 0 y 9"}
+          if (x.id==id && x.modalSelectedKO!="modal"){
+            return {...x, qtyError:"La cantidad debe estar entre 0 y 9"}
           }
           else return x
         })
-      setStore({services: newService})
+        setStore({services: newService})
       },
       serviceSelectedErrorKO: (id) => {
         const newService = getStore().services.map((x)=>{
+            return {...x, qtyError:""}
+        })
+        setStore({services: newService})
+      },
+      serviceSelected: (id) => {
+        const newService = getStore().services.map((x)=>{
           if (x.id==id){
-            return {...x, error:""}
+            return {...x, selected:true}
           }
           else return x
         })
-      setStore({services: newService})
+        setStore({services: newService})
+      },
+      serviceSelectedKO: (id) => {
+        const newService = getStore().services.map((x)=>{
+          if (x.id==id){
+            return {...x, selected:false}
+          }
+          else return x
+        })
+        setStore({services: newService})
       },
     },
   };

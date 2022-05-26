@@ -6,10 +6,24 @@ import "../../styles/services.css";
 
 export const Services = () => {
   const { store, actions } = useContext(Context);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     actions.getServices();
   }, []);
+
+  useEffect(() => {
+    if (error!=null){    
+      actions.serviceSelectedError(error);
+      const timer = setTimeout(() => {
+        actions.serviceSelectedErrorKO(error);
+        setError(0);
+      }, 3000);
+      return (() => {
+        clearTimeout(timer);
+      })
+    }
+  }, [error]);
 
   return (
     <div className="frame01 container ">
@@ -35,8 +49,10 @@ export const Services = () => {
                 </div>
                 <div className="frame05 container d-flex flex-row p-0">
                   <div className="frame06A w-75">
-                    <Link to={"/"}>
-                      <button className="btn btn-light w-100" onClick={() => {}}>
+                    <Link to={"/checkout"}>
+                      <button className="btn btn-light w-100" onClick={() => {
+                        actions.serviceSelected(service.id)
+                      }}>
                         Lo quiero
                       </button>
                     </Link>
@@ -45,8 +61,10 @@ export const Services = () => {
                     <button
                       className="btn btn-light text-center w-25 p-1"
                       onClick={() => {
-                        actions.serviceSelectedUp(service.id);
-                        actions.serviceSelectedErrorKO(service.id);
+                        if (service.qty<9){
+                          actions.serviceSelectedQtyChange(service.id,0,"up");
+                        }
+                        else setError(service.id)                        
                       }}
                     >+</button>
                     <input
@@ -59,29 +77,25 @@ export const Services = () => {
                       className="form-control text-center w-50 p-1"
                       onChange={(evt) => {
                         const re = /[0-9]/;
-                        if (re.test(evt.target.value)&&(evt.target.value<10)&&(evt.target.value>-1)) {
-                          actions.serviceSelectedChange(service.id, evt.target.value)
-                          actions.serviceSelectedErrorKO(service.id)
+                        if (re.test(evt.target.value)&&(evt.target.value<10)&&(evt.target.value>0)) {
+                          actions.serviceSelectedQtyChange(service.id, evt.target.value, null)
                         }
-                        else{
-                          actions.serviceSelectedError(service.id)
-                        }
+                        else setError(service.id)
                       }}
                     />
                     <button
                       href="#"
                       className="btn btn-light text-center w-25 p-1"
                       onClick={() => {
-                        actions.serviceSelectedDown(service.id);
-                        actions.serviceSelectedErrorKO(service.id);
+                        if (service.qty>1){
+                        actions.serviceSelectedQtyChange(service.id,0,"down");
+                        }
+                        else setError(service.id)
                       }}
                     >
                       -
                     </button>
-                    
-
                   </div>
-
                 </div>
                 <div className="text-center">
                     <p>{service.error}</p>

@@ -4,6 +4,7 @@ import { Context } from "../store/appContext";
 import doc01 from "../../../img/doc01.jpg";
 /* import docUrl01 from "../../../img/dum.pdf"; */
 import "../../styles/documents.css";
+import { Upload } from "../component/upload";
 
 export const Documents = () => {
   const { store, actions } = useContext(Context);
@@ -48,6 +49,10 @@ export const Documents = () => {
           );
         })}
       </div>
+      <div className="mt-5">
+        <Upload/>
+      </div>
+      
     </div>
   );
 };
