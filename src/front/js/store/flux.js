@@ -29,12 +29,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         "name": "Sesión acompañamiento",
         "type": "session",
         "description": "1 hora de resolución de dudas",
+        "includes": "incluye esto, esto y lo otro",
         "price": 30,
         "image": "../img/woman-doubts.jpg",
         "qty": 1,
         "error": "",
         "discount": 25,
-      },
+        "sold_by_unit": true,
+      },                 
       {
         "id": 2,
         "name": "Bono Sesiones",
@@ -45,6 +47,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         "qty": 1,
         "error": "",
         "discount": 0,
+        "includes": "incluye esto, esto y lo otro",
+        "sold_by_unit": true,
       },
       {
         "id": 3,
@@ -56,6 +60,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         "qty": 1,
         "error": "",
         "discount": 75,
+        "includes": "incluye esto, esto y lo otro",
+        "sold_by_unit": true,
       }
     ],
     },
