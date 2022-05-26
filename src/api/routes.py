@@ -8,6 +8,16 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_tok
 
 api = Blueprint('api', __name__)  
 
+@api.route('/protected', methods=['GET'])
+@jwt_required()
+def private():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    if user:
+        return jsonify({"logged": True}), 200
+    else:
+        return jsonify({"logged": False}), 400
+
 @api.route('/signup', methods=['POST'])
 def save_signup_user():
     body_email = request.json.get("email")
@@ -69,4 +79,17 @@ def get_all_users_data():
 #         db.session.commit()
 #         return jsonify({"msg": "Avatar guardado correctamente"}), 200
 #     else: return jsonify({"msg": "Error, no se ha podido guardar el avatar"}), 400    
+    
+@api.route('/login', methods=['POST'])
+def login():
+    email = request.json.get("Email", None)
+    password = request.json.get("Password", None)
+    user = Users.query.filter_by(email=email).first()
+    if user is None:
+        return jsonify({"msg": "Incorrect email"}), 400
+    user = Users.query.filter_by(email=email, password=password).first()
+    if user is None:
+        return jsonify({"msg": "Incorrect password"}), 400
+    access_token = create_access_token(identity=user.id)
+    return jsonify({"logged":True, "token": access_token, "msg": "User logged in correctly", "User": user.serialize()}), 200
     

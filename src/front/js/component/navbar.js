@@ -1,4 +1,6 @@
+
 import React, { useContext } from "react";
+
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
@@ -6,7 +8,7 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <nav className="navbar navbar-light bg-light fixed-top" id="navbar">
+    <nav className="navbar navbar-light bg-light fixed-top position-relative" id="navbar">
       <div>
         {/* boton menu */}
         <button
@@ -49,8 +51,8 @@ export const Navbar = () => {
             id="profile-dropdown"
             aria-labelledby="dropDownMenu"
           >
-            <li>Cerrar Sesión</li>
-            <li>Mi Perfil</li>
+            <li><p href="#" className="mx-2">Mi Perfil</p></li>
+            <li><p href="#" className="mx-2" onClick={()=>{actions.logout()}}>Cerrar Sesión</p></li>  
           </ul>
         ) : (
           <ul
@@ -58,8 +60,12 @@ export const Navbar = () => {
             id="profile-dropdown"
             aria-labelledby="dropDownMenu"
           >
-            <li>Iniciar Sesión</li>
-            <li>Registrarse</li>
+          <Link to="/login">
+            <li><p className="mx-2">Iniciar Sesión</p></li>
+          </Link>
+          <Link to="/signup">
+            <li><p className="mx-2">Registrarse</p></li>
+          </Link>
           </ul>
         )}
       </div>
