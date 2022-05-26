@@ -4,6 +4,20 @@ const getState = ({ getStore, getActions, setStore }) => {
       logged: null,
       token: null,
       url: "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu46.gitpod.io/"+"api",
+      faq: [
+        {
+          id: 1,
+          question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+          answer:
+            "Nam est neque, semper vitae velit nec, accumsan scelerisque mi. Integer egestas vestibulum posuere. Curabitur laoreet, lacus ut iaculis consectetur, odio dui posuere lacus, a molestie lorem ex at justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        },
+        {
+          id: 2,
+          question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+          answer:
+            "Nam est neque, semper vitae velit nec, accumsan scelerisque mi. Integer egestas vestibulum posuere. Curabitur laoreet, lacus ut iaculis consectetur, odio dui posuere lacus, a molestie lorem ex at justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        },
+      ],
       documents: 
       [{
         "id": 1,
@@ -29,6 +43,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         "name": "Sesión acompañamiento",
         "type": "session",
         "description": "1 hora de resolución de dudas",
+        "includes": "incluye esto, esto y lo otro",
         "price": 30,
         "image": "../img/woman-doubts.jpg",
         "qty": 1,
@@ -36,7 +51,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         "discount": 25,
         "selected": false,
         "modalSelectedKO": "modal",
-      },
+        "sold_by_unit": true,
+      },                 
       {
         "id": 2,
         "name": "Bono Sesiones",
@@ -49,6 +65,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         "discount": 0,
         "selected": false,
         "modalSelectedKO": "modal",
+        "includes": "incluye esto, esto y lo otro",
+        "sold_by_unit": true,
       },
       {
         "id": 3,
@@ -62,8 +80,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         "discount": 75,
         "selected": false,
         "modalSelectedKO": "", 
+        "includes": "incluye esto, esto y lo otro",
+        "sold_by_unit": true,
       },
-    ]
+    ],
+
     },
     actions: {
       verify: async () => {
