@@ -1,0 +1,18 @@
+.lines-images-boxes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lines-images-boxes,
+img {
+  width: 5.5cm;
+  height: 5.5cm;
+  margin-right: 0.5cm;
+}
+.div-bio {
+  margin-top: 3cm;
+}
+.image-b-and-w {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}

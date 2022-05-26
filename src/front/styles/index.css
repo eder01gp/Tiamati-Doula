@@ -4,7 +4,7 @@ footer {
 
 .formulario {
   margin-top: 7%;
-  width: 60%;
+  width: 80%;
 }
 
 #navbar {
@@ -22,28 +22,4 @@ footer {
 
 .div1 {
   margin-top: 7%;
-}
-.lines-images-boxes {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.lines-images-boxes,
-img {
-  width: 6cm;
-  height: 6cm;
-}
-.div-bio {
-  margin-top: 3cm;
-}
-.image-b-and-w {
-  -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);
-}
-.img-top {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 99;
 }
