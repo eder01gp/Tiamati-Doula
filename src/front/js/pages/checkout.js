@@ -16,8 +16,8 @@ export const Checkout = () => {
   useEffect(() => {
     let totalAux = 0
     {store.services.map((service) => {
-      if (service.selected == true) {
-      totalAux = ((totalAux) + ((service.price*(100-service.discount)/100)*service.qty))
+      if (service.service.selected == true) {
+      totalAux = ((totalAux) + ((service.service.price*(100-service.service.discount)/100)*service.service.qty))
       };
     setTotal(totalAux);
     })}
@@ -46,31 +46,31 @@ export const Checkout = () => {
       <div className="frame02 container mt-4">
       <div className="addServices mt-5"><h4>Servicios seleccionados</h4></div>
         {store.services.map((service, i) => {
-        if (service.selected == true) {
+        if (service.service.selected == true) {
           return (
-            <div key={service.id} className="frame03 row my-2">
+            <div key={service.service.id} className="frame03 row my-2">
               <div className="frame04A col-sm-1 my-2 justify-content-center">
               {<img
                 src={service01}
                 className="imgCard"
-                alt={service.name}
+                alt={service.service.name}
                 width="50px"
                 height="50px"
               />}
               </div>
                 <div className="col-sm-4 p-1 d-flex align-items-center">  
-                {service.name}</div>
+                {service.service.name}</div>
                 <div className="col-sm-4 p-1 d-flex align-items-center">
-                {service.discount>0 ? 
+                {service.service.discount>0 ? 
                     <div className= "container d-flex flex-row justify-content-end align-items-center mx-2">
-                        <div className="oldPrice mx-2">{service.price} € </div> 
-                        <div className="discount mx-2 px-2">{service.discount} %</div> 
-                        <div className="price mx-2 px-2">{(service.price*(100-service.discount)/100)} €</div>
+                        <div className="oldPrice mx-2">{service.service.price} € </div> 
+                        <div className="discount mx-2 px-2">{service.service.discount} %</div> 
+                        <div className="price mx-2 px-2">{(service.service.price*(100-service.service.discount)/100)} €</div>
                     </div> : 
                     <div className= "container d-flex flex-row justify-content-end align-items-center mx-2">
                     <div className="oldPrice mx-2"></div> 
                     <div className="discount mx-2"></div> 
-                    <div className="price mx-2 px-2">{(service.price*(100-service.discount)/100)} €</div>
+                    <div className="price mx-2 px-2">{(service.service.price*(100-service.service.discount)/100)} €</div>
                     </div>
                 }
                 </div>
@@ -78,15 +78,15 @@ export const Checkout = () => {
                     <button
                       className="btn btn-light m-1"
                       onClick={() => {
-                        if (service.qty<9){
-                          actions.serviceSelectedQtyChange(service.id,0,"up");
+                        if (service.service.qty<9){
+                          actions.serviceSelectedQtyChange(service.service.id,0,"up");
                         }
-                        else setError(service.id)
+                        else setError(service.service.id)
                       }}
                     >+
                     </button>
                     <input
-                      value={service.qty}
+                      value={service.service.qty}
                       type="number"
                       min="1"
                       max="9"
@@ -96,32 +96,32 @@ export const Checkout = () => {
                       onChange={(evt) => {
                         const re = /[0-9]/;
                         if (re.test(evt.target.value)&&(evt.target.value<10)&&(evt.target.value>0)) {
-                          actions.serviceSelectedQtyChange(service.id, evt.target.value, null)
+                          actions.serviceSelectedQtyChange(service.service.id, evt.target.value, null)
                         }
-                        else setError(service.id)
+                        else setError(service.service.id)
                       }}
                     />
                     <button
                       href="#"
                       className="btn btn-light m-1"
-                      data-bs-toggle={service.modalSelectedKO}
+                      data-bs-toggle={service.service.modal_selected_KO}
                       data-bs-target="#staticBackdrop"
                       onClick={() => {
-                        if (service.qty>1){
-                          actions.serviceSelectedQtyChange(service.id,0,"down");
+                        if (service.service.qty>1){
+                          actions.serviceSelectedQtyChange(service.service.id,0,"down");
                         }
-                        else setError(service.id)
+                        else setError(service.service.id)
                       }}
                     >
                       -
                     </button>
                   </div>
                   <div className="col-sm-1 p-1 d-flex align-items-center justify-content-end">
-                    {(service.price*(100-service.discount)/100)*service.qty} €
+                    {(service.service.price*(100-service.service.discount)/100)*service.service.qty} €
                   </div>
                     
                 <div className="row text-center">
-                    <p>{service.qtyError}</p>
+                    <p>{service.service.qty_error}</p>
                 </div>
                 {/* <!-- Modal --> */}
                 <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -137,8 +137,8 @@ export const Checkout = () => {
                           <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No</button>
                             <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={()=>{
-                              actions.serviceSelectedKO(service.id);
-                              console.log(service.selected)
+                              actions.serviceSelectedKO(service.service.id);
+                              console.log(service.service.selected)
                             }}>Si</button>
                           </div>
                         </div>
@@ -157,31 +157,31 @@ export const Checkout = () => {
         </div><div className="addServices mt-5"><h4>Añade más servicios</h4></div>
         
         {store.services.map((service, i) => {
-            if (service.selected != true) {
+            if (service.service.selected != true) {
               return (
-                <div key={service.id} className="frame03 row my-2">
+                <div key={service.service.id} className="frame03 row my-2">
                   <div className="frame04A col-sm-1 my-2 justify-content-center">
                   {<img
                     src={service01}
                     className="imgCard"
-                    alt={service.name}
+                    alt={service.service.name}
                     width="50px"
                     height="50px"
                   />}
                   </div>
                     <div className="col-sm-4 p-1 d-flex align-items-center">  
-                    {service.name}</div>
+                    {service.service.name}</div>
                     <div className="col-sm-4 p-1 d-flex align-items-center">
-                    {service.discount>0 ? 
+                    {service.service.discount>0 ? 
                         <div className= "container d-flex flex-row justify-content-end align-items-center mx-2">
-                            <div className="oldPrice mx-2">{service.price} € </div> 
-                            <div className="discount mx-2 px-2">{service.discount} %</div> 
-                            <div className="price mx-2 px-2">{(service.price*(100-service.discount)/100)} €</div>
+                            <div className="oldPrice mx-2">{service.service.price} € </div> 
+                            <div className="discount mx-2 px-2">{service.service.discount} %</div> 
+                            <div className="price mx-2 px-2">{(service.service.price*(100-service.service.discount)/100)} €</div>
                         </div> : 
                         <div className= "container d-flex flex-row justify-content-end align-items-center mx-2">
                         <div className="oldPrice mx-2"></div> 
                         <div className="discount mx-2"></div> 
-                        <div className="price mx-2 px-2">{(service.price*(100-service.discount)/100)} €</div>
+                        <div className="price mx-2 px-2">{(service.service.price*(100-service.service.discount)/100)} €</div>
                         </div>
                     }
                     </div>
@@ -189,7 +189,7 @@ export const Checkout = () => {
                         <button
                           className="btn btn-light m-1"
                           onClick={() => {
-                            actions.serviceSelected(service.id)
+                            actions.serviceSelected(service.service.id)
                           }}
                         >+
                         </button>
@@ -200,7 +200,7 @@ export const Checkout = () => {
                       </div>
                         
                     <div className="row text-center">
-                        <p>{service.error}</p>
+                        <p>{service.service.qty_error}</p>
                     </div>
                 </div>         
           )

@@ -46,53 +46,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu45.gitpod.io/doc01.jpg",
         },
       ],
-      services: [
-        {
-          id: 1,
-          name: "Sesión acompañamiento",
-          type: "session",
-          description: "1 hora de resolución de dudas",
-          includes: "incluye esto, esto y lo otro",
-          price: 30,
-          image: "../img/woman-doubts.jpg",
-          qty: 1,
-          qtyError: "",
-          discount: 25,
-          selected: false,
-          modalSelectedKO: "modal",
-          sold_by_unit: true,
-        },
-        {
-          id: 2,
-          name: "Bono Sesiones",
-          type: "session",
-          description: "Pack de horas para resolución de dudas",
-          price: 70,
-          image: "../img/woman-doubts.jpg",
-          qty: 2,
-          qtyError: "",
-          discount: 0,
-          selected: false,
-          modalSelectedKO: "modal",
-          includes: "incluye esto, esto y lo otro",
-          sold_by_unit: true,
-        },
-        {
-          id: 3,
-          name: "Plan de parto interactivo",
-          type: "access",
-          description: "Genera tu propio plan de parto interactivo",
-          price: 20,
-          image: "../img/woman-doubts.jpg",
-          qty: 1,
-          qtyError: "",
-          discount: 75,
-          selected: false,
-          modalSelectedKO: "",
-          includes: "incluye esto, esto y lo otro",
-          sold_by_unit: true,
-        },
-      ],
+      services: [],
     },
     actions: {
       getUsers: async () => {
@@ -137,8 +91,79 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ logged: false });
       },
       getDocuments: () => {},
-
-      getServices: async () => {},
+      getServices: async () => {
+        try {
+          const resp = await fetch(getStore().url + "/services");
+          const data = await resp.json();
+          console.log(data)
+          setStore({ services: data.response });
+        } catch (e) {
+          console.log("Error getting services");
+        }
+      },
+      serviceSelectedQtyChange: (id, newQty, action) => {
+        const newService = getStore().services.map((x)=>{
+          if (x.service.id==id){
+            if (action == "up" && x.service.qty<9){
+              newQty = parseInt(x.service.qty)+1;
+              return {...x, service: {...x.service, qty: newQty} }
+            }
+            else if (action == "down" && x.service.qty>1){
+              newQty = parseInt(x.service.qty)-1;
+              return {...x, service: {...x.service, qty: newQty} }
+            }
+            else if (newQty!=0 && newQty>0 && newQty<10){
+              return {...x, service: {...x.service, qty: newQty} }
+            }
+            else return x
+          }
+          else return x
+        })
+        setStore({services: newService})
+        getActions().modalSelectedKO();
+      },
+      modalSelectedKO: () =>{
+        const newServiceModals = getStore().services.map((x)=>{
+          if (x.service.qty==1){
+            return {...x, service: {...x.service, modal_selected_KO:"modal"}}
+          }
+          else return {...x, service: {...x.service, modal_selected_KO:""}}
+        })
+        setStore({services: newServiceModals})
+      },      
+      serviceSelectedError: (id) => {  
+        const newService = getStore().services.map((x)=>{
+          if (x.service.id==id && x.service.modal_selected_KO!="modal"){
+            return {...x, service: {...x.service, qty_error:"La cantidad debe estar entre 1 y 9"}}
+          }
+          else return x
+        })
+        setStore({services: newService})
+      },
+      serviceSelectedErrorKO: (id) => {
+        const newService = getStore().services.map((x)=>{
+          return {...x, service: {...x.service, qty_error:""}}
+        })
+        setStore({services: newService})
+      },
+      serviceSelected: (id) => {
+        const newService = getStore().services.map((x)=>{
+          if (x.service.id==id){
+            return {...x, service: {...x.service, selected:true}}
+          }
+          else return x
+        })
+        setStore({services: newService})
+      },
+      serviceSelectedKO: (id) => {
+        const newService = getStore().services.map((x)=>{
+          if (x.service.id==id){
+            return {...x, service: {...x.service, selected:false}}
+          }
+          else return x
+        })
+        setStore({services: newService})
+      },
       serviceSelectedQtyChange: (id, newQty, action) => {
         const newService = getStore().services.map((x) => {
           if (x.id == id) {
