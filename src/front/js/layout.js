@@ -1,13 +1,16 @@
 import React, { useContext } from "react";
+import { Context } from "./store/appContext";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
-import { Context } from "./store/appContext";
 
 import { Home } from "./pages/home";
 import { Signup } from "./pages/signup";
-import { Form } from "./pages/form";
-import { Faq } from "./pages/faq";
+
 import { Login } from "./pages/login";
+import { Form } from "./pages/form";
+import { Profile_user } from "./pages/profile_user";
+import { Profile_company } from "./pages/profile_company";
+import { Faq } from "./pages/faq";
 import { Services } from "./pages/services";
 
 import { Checkout } from "./pages/checkout";
@@ -21,7 +24,7 @@ import { Documents } from "./pages/documents";
 
 const Layout = () => {
   const basename = process.env.BASENAME || "";
-  const { store, actions } = useContext(Context);
+  const { store } = useContext(Context);
 
   return (
     <div>
@@ -32,22 +35,35 @@ const Layout = () => {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
             <Route exact path="/signup">
               <Signup />
             </Route>
             <Route exact path="/form">
               <Form />
-               {store.logged == true ? <Form /> : <Redirect to="/"></Redirect> } 
+            </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/profile_user">
+              {localStorage.getItem("token") ? (
+                <Profile_user />
+              ) : (
+                <Redirect to="/"></Redirect>
+              )}
+            </Route>
+            <Route exact path="/profile_company">
+              {localStorage.getItem("token") ? (
+                <Profile_company />
+              ) : (
+                <Redirect to="/"></Redirect>
+              )}
             </Route>
             <Route exact path="/documents">
               <Documents />
-              </Route>
+            </Route>
             <Route exact path="/services">
               <Services />
-              </Route>
+            </Route>
             <Route exact path="/checkout">
               <Checkout />
             </Route>

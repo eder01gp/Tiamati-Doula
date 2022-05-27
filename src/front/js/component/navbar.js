@@ -1,6 +1,4 @@
-
 import React, { useContext } from "react";
-
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
@@ -8,7 +6,10 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <nav className="navbar navbar-light bg-light fixed-top position-relative" id="navbar">
+    <nav
+      className="navbar navbar-light bg-light fixed-top position-relative"
+      id="navbar"
+    >
       <div>
         {/* boton menu */}
         <button
@@ -25,17 +26,17 @@ export const Navbar = () => {
           aria-labelledby="dropDownMenu"
         >
           <Link to="/">
-          <li>Inicio</li>
+            <li>Inicio</li>
           </Link>
           <li>Bio</li>
           <Link to="/services">
-          <li>Servicios</li>
+            <li>Servicios</li>
           </Link>
           <Link to="/documents">
-          <li>Documentos</li>
+            <li>Documentos</li>
           </Link>
           <Link to="/faq">
-          <li>FAQ</li>
+            <li>FAQ</li>
           </Link>
         </ul>
       </div>
@@ -57,8 +58,38 @@ export const Navbar = () => {
             id="profile-dropdown"
             aria-labelledby="dropDownMenu"
           >
-            <li><p href="#" className="mx-2">Mi Perfil</p></li>
-            <li><p href="#" className="mx-2" onClick={()=>{actions.logout()}}>Cerrar Sesión</p></li>  
+            {localStorage.getItem("rol") == "usuaria" ? (
+              <div>
+                <Link to="/profile_user">
+                  <li>
+                    <p href="#" className="mx-2">
+                      Mi Perfil
+                    </p>
+                  </li>
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <Link to="/profile_company">
+                  <li>
+                    <p href="#" className="mx-2">
+                      Mi Perfil
+                    </p>
+                  </li>
+                </Link>
+              </div>
+            )}
+            <li>
+              <p
+                href="#"
+                className="mx-2"
+                onClick={() => {
+                  actions.logout();
+                }}
+              >
+                Cerrar Sesión
+              </p>
+            </li>
           </ul>
         ) : (
           <ul
@@ -66,12 +97,16 @@ export const Navbar = () => {
             id="profile-dropdown"
             aria-labelledby="dropDownMenu"
           >
-          <Link to="/login">
-            <li><p className="mx-2">Iniciar Sesión</p></li>
-          </Link>
-          <Link to="/signup">
-            <li><p className="mx-2">Registrarse</p></li>
-          </Link>
+            <Link to="/login">
+              <li>
+                <p className="mx-2">Iniciar Sesión</p>
+              </li>
+            </Link>
+            <Link to="/signup">
+              <li>
+                <p className="mx-2">Registrarse</p>
+              </li>
+            </Link>
           </ul>
         )}
       </div>

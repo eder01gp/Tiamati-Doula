@@ -26,6 +26,8 @@ export const Login = () => {
       if (!response.ok) setResult("Something went wrong");
       if (response.status == 200) {
         localStorage.setItem("token", confirmation.token);
+        localStorage.setItem("ID", confirmation.User.id);
+        localStorage.setItem("rol", confirmation.User.rol);
         setResult(confirmation.msg);
         actions.verify();
         history.push("/");
@@ -33,8 +35,8 @@ export const Login = () => {
         setResult(confirmation.msg);
       }
     } catch (e) {
-      setResult(e.name + ': ' + e.message);
-      console.log(e.name + ': ' + e.message);
+      setResult(e.name + ": " + e.message);
+      console.log(e.name + ": " + e.message);
     }
   };
 
@@ -52,7 +54,7 @@ export const Login = () => {
               className="form-control"
               id="inputUser"
               onChange={(e) => {
-                setUser({ ...user, Email: e.target.value})
+                setUser({ ...user, Email: e.target.value });
               }}
             />
           </div>
@@ -67,26 +69,25 @@ export const Login = () => {
               className="form-control"
               id="inputPassword3"
               onChange={(e) => {
-                setUser({ ...user, Password: e.target.value})
+                setUser({ ...user, Password: e.target.value });
               }}
             />
           </div>
         </div>
         <div className="col-sm-12 mx-auto">
-        <a
-          className="btn btn-light "
-          onClick={() => {
-            login();
-          }}
-        >
-          Login
-        </a>
+          <a
+            className="btn btn-light "
+            onClick={() => {
+              login();
+            }}
+          >
+            Login
+          </a>
         </div>
       </form>
       <div>
-      <p className="my-2 mx-auto text-center">{result}</p>
+        <p className="my-2 mx-auto text-center">{result}</p>
       </div>
     </div>
-
   );
 };
