@@ -33,32 +33,38 @@ export const Profile_company = () => {
       <div>
         <div className="Change email-password m-auto">
           {/* Current user email & edit button*/}
-          <p className="mb-0" style={userData}>
-            Email: {store.user_info.email}
-          </p>
-          <button
-            className="btn"
-            style={userData}
-            onClick={() =>
-              setUserData({ display: "none" }) &
-              setInputEmail({ display: "block" })
-            }
-          >
-            <i className="fa-solid fa-pen-to-square"></i>
-          </button>
+          <div className="d-flex">
+            <p className="mb-0 mt-2" style={userData}>
+              Email: {store.user_info.email}
+            </p>
+            <button
+              className="btn"
+              style={userData}
+              onClick={() =>
+                setUserData({ display: "none" }) &
+                setInputEmail({ display: "block" })
+              }
+            >
+              <i className="fa-solid fa-pen-to-square mx-2"></i>
+            </button>
+          </div>
 
           {/* "Password" & edit button*/}
-          <p style={userData}>Contraseña: ·······</p>
-          <button
-            className="btn"
-            style={userData}
-            onClick={() =>
-              setUserData({ display: "none" }) &
-              setInputPassword({ display: "block" })
-            }
-          >
-            <i className="fa-solid fa-pen-to-square"></i>
-          </button>
+          <div className="d-flex">
+            <p style={userData} className="mt-3">
+              Contraseña: ·······
+            </p>
+            <button
+              className="btn"
+              style={userData}
+              onClick={() =>
+                setUserData({ display: "none" }) &
+                setInputPassword({ display: "block" })
+              }
+            >
+              <i className="fa-solid fa-pen-to-square mx-2"></i>
+            </button>
+          </div>
 
           {/* Email Input */}
           <input

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
-import { Form } from "./form";
+import { FormData } from "../component/form_data";
 
 export const Profile_user = () => {
   const { store, actions } = useContext(Context);
@@ -32,36 +32,42 @@ export const Profile_user = () => {
   };
 
   return (
-    <div className="div1 container-fluid">
+    <div className="div-profile-user container-fluid">
       <div>
         <div className="Change email-password m-auto">
           {/* Current user email & edit button*/}
-          <p className="mb-0" style={userData}>
-            Email: {store.user_info.email}
-          </p>
-          <button
-            className="btn"
-            style={userData}
-            onClick={() =>
-              setUserData({ display: "none" }) &
-              setInputEmail({ display: "block" })
-            }
-          >
-            <i className="fa-solid fa-pen-to-square"></i>
-          </button>
+          <div className="d-flex">
+            <p className="mb-0 mt-2" style={userData}>
+              Email: {store.user_info.email}
+            </p>
+            <button
+              className="btn"
+              style={userData}
+              onClick={() =>
+                setUserData({ display: "none" }) &
+                setInputEmail({ display: "block" })
+              }
+            >
+              <i className="fa-solid fa-pen-to-square mx-2"></i>
+            </button>
+          </div>
 
           {/* "Password" & edit button*/}
-          <p style={userData}>Contraseña: ·······</p>
-          <button
-            className="btn"
-            style={userData}
-            onClick={() =>
-              setUserData({ display: "none" }) &
-              setInputPassword({ display: "block" })
-            }
-          >
-            <i className="fa-solid fa-pen-to-square"></i>
-          </button>
+          <div className="d-flex">
+            <p style={userData} className="mt-3">
+              Contraseña: ·······
+            </p>
+            <button
+              className="btn"
+              style={userData}
+              onClick={() =>
+                setUserData({ display: "none" }) &
+                setInputPassword({ display: "block" })
+              }
+            >
+              <i className="fa-solid fa-pen-to-square mx-2"></i>
+            </button>
+          </div>
 
           {/* Email Input */}
           <input
@@ -150,8 +156,20 @@ export const Profile_user = () => {
               Mis servicios
             </button>
           </div>
-          <div className="Personal-Data mt-5" style={showForm}>
-            <Form />
+          <div className="Personal-Data" style={showForm}>
+            <FormData
+              closeBtn={
+                <button
+                  type="button"
+                  className="btn btn-secondary float-end"
+                  onClick={() => {
+                    setShowForm({ display: "none" });
+                  }}
+                >
+                  Cerrar
+                </button>
+              }
+            />
           </div>
           <div className="Hired-Services mt-5" style={showServices}>
             <h5>

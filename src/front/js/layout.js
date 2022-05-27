@@ -9,7 +9,6 @@ import { Login } from "./pages/login";
 import { Form } from "./pages/form";
 import { Profile_user } from "./pages/profile_user";
 import { Profile_company } from "./pages/profile_company";
-import { Services } from "./pages/services";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -52,9 +51,6 @@ const Layout = () => {
               ) : (
                 <Redirect to="/"></Redirect>
               )}
-            </Route>
-            <Route exact path="/services">
-              <Services />
             </Route>
             <Route>
               <h1>Not found!</h1>
