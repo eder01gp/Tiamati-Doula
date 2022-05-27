@@ -38,7 +38,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         "documentUrl": "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu45.gitpod.io/doc01.jpg",
       },
       ],
-      services: [{
+      services: [],
+/*       services: [{
         "id": 1,
         "name": "Sesión acompañamiento",
         "type": "session",
@@ -83,7 +84,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         "includes": "incluye esto, esto y lo otro",
         "sold_by_unit": true,
       },
-    ],
+    ], */
 
     },
     actions: {
@@ -114,24 +115,24 @@ const getState = ({ getStore, getActions, setStore }) => {
           const resp = await fetch(getStore().url + "/services");
           const data = await resp.json();
           console.log(data)
-          setStore({ services: data });
+          setStore({ services: data.response });
         } catch (e) {
           console.log("Error getting services");
         }
       },
       serviceSelectedQtyChange: (id, newQty, action) => {
         const newService = getStore().services.map((x)=>{
-          if (x.id==id){
-            if (action == "up" && x.qty<9){
-              newQty = parseInt(x.qty)+1;
-              return {...x, qty:newQty}
+          if (x.service.id==id){
+            if (action == "up" && x.service.qty<9){
+              newQty = parseInt(x.service.qty)+1;
+              return {...x, service: {...x.service, qty: newQty} }
             }
-            else if (action == "down" && x.qty>1){
-              newQty = parseInt(x.qty)-1;
-              return {...x, qty:newQty}
+            else if (action == "down" && x.service.qty>1){
+              newQty = parseInt(x.service.qty)-1;
+              return {...x, service: {...x.service, qty: newQty} }
             }
             else if (newQty!=0 && newQty>0 && newQty<10){
-              return {...x, qty:newQty}
+              return {...x, service: {...x.service, qty: newQty} }
             }
             else return x
           }
@@ -142,17 +143,17 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       modalSelectedKO: () =>{
         const newServiceModals = getStore().services.map((x)=>{
-          if (x.qty==1){
-            return {...x, modalSelectedKO:"modal"}
+          if (x.service.qty==1){
+            return {...x, service: {...x.service, modal_selected_KO:"modal"}}
           }
-          else return {...x, modalSelectedKO:""}
+          else return {...x, service: {...x.service, modal_selected_KO:""}}
         })
         setStore({services: newServiceModals})
       },      
       serviceSelectedError: (id) => {  
         const newService = getStore().services.map((x)=>{
-          if (x.id==id && x.modalSelectedKO!="modal"){
-            return {...x, qtyError:"La cantidad debe estar entre 0 y 9"}
+          if (x.service.id==id && x.service.modal_selected_KO!="modal"){
+            return {...x, service: {...x.service, qty_error:"La cantidad debe estar entre 1 y 9"}}
           }
           else return x
         })
@@ -160,14 +161,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       serviceSelectedErrorKO: (id) => {
         const newService = getStore().services.map((x)=>{
-            return {...x, qtyError:""}
+          return {...x, service: {...x.service, qty_error:""}}
         })
         setStore({services: newService})
       },
       serviceSelected: (id) => {
         const newService = getStore().services.map((x)=>{
-          if (x.id==id){
-            return {...x, selected:true}
+          if (x.service.id==id){
+            return {...x, service: {...x.service, selected:true}}
           }
           else return x
         })
@@ -175,8 +176,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       serviceSelectedKO: (id) => {
         const newService = getStore().services.map((x)=>{
-          if (x.id==id){
-            return {...x, selected:false}
+          if (x.service.id==id){
+            return {...x, service: {...x.service, selected:false}}
           }
           else return x
         })
