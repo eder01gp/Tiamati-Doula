@@ -46,7 +46,7 @@ export const Signup = () => {
             type="email"
             className="form-control"
             onChange={(e) =>
-              setUser({ ...user, email: e.target.value, rol: "usuaria" })
+              setUser({ ...user, email: e.target.value, rol: 1 })
             }
           />
         </div>
@@ -56,8 +56,8 @@ export const Signup = () => {
             type="checkbox"
             onChange={(e) =>
               e.target.checked
-                ? setUser({ ...user, rol: "empresa" }) & setCheck(true)
-                : setUser({ ...user, rol: "usuaria" }) & setCheck(false)
+                ? setUser({ ...user, rol: 2 }) & setCheck(true)
+                : setUser({ ...user, rol: 1 }) & setCheck(false)
             }
           />
           <label className="form-check-label">Soy empresa</label>

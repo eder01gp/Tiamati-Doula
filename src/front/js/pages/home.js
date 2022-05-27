@@ -91,15 +91,15 @@ export const Home = () => {
                 alt="Card image cap"
               />
               <div className="card-body">
-                <h5 className="card-title">{serv.name}</h5>
-                <p className="card-text">{serv.description}</p>
+                <h5 className="card-title">{serv.service.name}</h5>
+                <p className="card-text">{serv.service.description}</p>
               </div>
               <div className="card-body">
                 <div>
                   <h6>Incluye</h6>
-                  <p>{serv.includes}</p>
+                  <p>{serv.service.description_includes}</p>
                 </div>
-                <Link to="/servicios">
+                <Link to="/services">
                   <button className="btn btn-success">Leer más</button>
                 </Link>
               </div>
@@ -128,37 +128,37 @@ export const Home = () => {
       <div id="reviews" className="row">
         <div
           id="carouselExampleControls"
-          class="carousel slide"
+          className="carousel slide"
           data-bs-ride="carousel"
         >
-          <div class="carousel-inner">
-            <div class="carousel-item active">
+          <div className="carousel-inner">
+            <div className="carousel-item active">
               <p>hola</p>
             </div>
-            <div class="carousel-item">
+            <div className="carousel-item">
               <p>hola</p>
             </div>
-            <div class="carousel-item">
+            <div className="carousel-item">
               <p>hola</p>
             </div>
           </div>
           <button
-            class="carousel-control-prev"
+            className="carousel-control-prev"
             type="button"
             data-bs-target="#carouselExampleControls"
             data-bs-slide="prev"
           >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
+            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Previous</span>
           </button>
           <button
-            class="carousel-control-next"
+            className="carousel-control-next"
             type="button"
             data-bs-target="#carouselExampleControls"
             data-bs-slide="next"
           >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
+            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Next</span>
           </button>
         </div>
       </div>
