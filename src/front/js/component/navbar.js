@@ -29,9 +29,15 @@ export const Navbar = () => {
             <li>Inicio</li>
           </Link>
           <li>Bio</li>
-          <li>Servicios</li>
-          <li>Documentos</li>
-          <li>FAQ</li>
+          <Link to="/services">
+            <li>Servicios</li>
+          </Link>
+          <Link to="/documents">
+            <li>Documentos</li>
+          </Link>
+          <Link to="/faq">
+            <li>FAQ</li>
+          </Link>
         </ul>
       </div>
 

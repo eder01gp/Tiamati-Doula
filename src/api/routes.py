@@ -2,9 +2,11 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Users, User_Data
+from api.models import db, Users, UserData
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
+import cloudinary
+import cloudinary.uploader
 
 api = Blueprint('api', __name__)  
 
@@ -13,6 +15,7 @@ api = Blueprint('api', __name__)
 def private():
     current_user_id = get_jwt_identity()
     user = Users.query.get(current_user_id)
+
     if user:
         return jsonify({"logged": True}), 200
     else:
@@ -78,7 +81,7 @@ def get_all_users():
 
 @api.route('/users_data', methods=['GET'])
 def get_all_users_data():
-    users_data = User_Data.query.all()
+    users_data = UserData.query.all()
     users_data_serialized = list(map(lambda item: item.serialize(), users_data)) 
     return jsonify({"response": users_data_serialized}), 200      
 
@@ -122,4 +125,14 @@ def get_user_info():
     else:
        return jsonify({"user_loggin_info": user.serialize(), "user_data": "No user data" }), 400  
 
+
+@api.route('/upload', methods=['POST'])
+def handle_upload():
+    result = cloudinary.uploader.upload(request.files["document"])
+    document_url = result["secure_url"]
+    document_name = request.documentName["documentName"]
+
+    return jsonify("document correctly upload"), 200
+
+#services
 

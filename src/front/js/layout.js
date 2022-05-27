@@ -5,15 +5,22 @@ import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
 import { Signup } from "./pages/signup";
+
 import { Login } from "./pages/login";
 import { Form } from "./pages/form";
 import { Profile_user } from "./pages/profile_user";
 import { Profile_company } from "./pages/profile_company";
+import { Faq } from "./pages/faq";
+import { Services } from "./pages/services";
+
+import { Checkout } from "./pages/checkout";
+
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Redirect } from "react-router-dom";
+import { Documents } from "./pages/documents";
 
 const Layout = () => {
   const basename = process.env.BASENAME || "";
@@ -33,7 +40,6 @@ const Layout = () => {
             </Route>
             <Route exact path="/form">
               <Form />
-              {/* {store.user_info ? <Form /> : <Redirect to="/login"></Redirect>} */}
             </Route>
             <Route exact path="/login">
               <Login />
@@ -51,6 +57,18 @@ const Layout = () => {
               ) : (
                 <Redirect to="/"></Redirect>
               )}
+            </Route>
+            <Route exact path="/documents">
+              <Documents />
+            </Route>
+            <Route exact path="/services">
+              <Services />
+            </Route>
+            <Route exact path="/checkout">
+              <Checkout />
+            </Route>
+            <Route exact path="/faq">
+              <Faq />
             </Route>
             <Route>
               <h1>Not found!</h1>
