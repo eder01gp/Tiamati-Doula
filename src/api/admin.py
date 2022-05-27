@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, Users, UserData, UserRol, ServiceTypes, Service, Documents, ServiceRols
+from .models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -15,9 +15,9 @@ def setup_admin(app):
     admin.add_view(MyModel(Users, db.session)),
     admin.add_view(MyModel(UserData, db.session))
     admin.add_view(MyModel(UserRol, db.session))
-    admin.add_view(MyModel(ServiceTypes, db.session))
+    admin.add_view(MyModel(ServiceType, db.session))
     admin.add_view(MyModel(Service, db.session))
-    admin.add_view(MyModel(Documents, db.session))
+    admin.add_view(MyModel(Document, db.session))
     admin.add_view(MyModel(ServiceRols, db.session))
 
     # You can duplicate that line to add mew models

@@ -25,12 +25,18 @@ export const Navbar = () => {
           aria-labelledby="dropDownMenu"
         >
           <Link to="/">
-            <li>Inicio</li>
+          <li>Inicio</li>
           </Link>
           <li>Bio</li>
+          <Link to="/services">
           <li>Servicios</li>
+          </Link>
+          <Link to="/documents">
           <li>Documentos</li>
+          </Link>
+          <Link to="/faq">
           <li>FAQ</li>
+          </Link>
         </ul>
       </div>
 
