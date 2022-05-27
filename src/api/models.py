@@ -83,7 +83,7 @@ class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200),nullable=False)
     type = db.Column(db.Integer, db.ForeignKey('service_type.id'))
-    service_type = db.relationship(ServiceTypes)
+    service_type = db.relationship(ServiceType)
     session_time = db.Column(db.Float)
     session_qty = db.Column(db.Integer)
     sold_per_units = db.Column(db.Boolean)
@@ -129,19 +129,12 @@ class ServiceRols(db.Model):
     rol_id = db.Column(db.Integer, db.ForeignKey('user_rol.id'))
     rol= db.relationship(UserRol)
 
-class ServiceDocuments(db.Model): 
-    id = db.Column(db.Integer, primary_key=True)
-    service_id = db.Column(db.Integer, db.ForeignKey('service.id'))
-    service = db.relationship(Service)
-    document_id = db.Column(db.Integer, db.ForeignKey('document.id'))
-    document = db.relationship(Document)
-
 class ServiceToService(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     service_id_father = db.Column(db.Integer, db.ForeignKey('service.id'))
-    service = db.relationship(Service)
+    service = db.relationship(Service, foreign_keys=[service_id_father])
     service_id_child = db.Column(db.Integer, db.ForeignKey('service.id'))
-    service = db.relationship(Service)
+    service = db.relationship(Service, foreign_keys=[service_id_child])
 
 class ServiceHired(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -165,3 +158,10 @@ class Document(db.Model):
             "id": self.id,
             "document": self.document,
         }
+
+class ServiceDocuments(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    service_id = db.Column(db.Integer, db.ForeignKey('service.id'))
+    service = db.relationship(Service)
+    document_id = db.Column(db.Integer, db.ForeignKey('document.id'))
+    document = db.relationship(Document)
