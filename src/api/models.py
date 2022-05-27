@@ -6,6 +6,9 @@ class UserRol(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     rol = db.Column(db.String(150))
 
+    def __repr__(self):
+        return "Rol: "+self.rol
+
     def serialize(self):
         return {
             "id": self.id,
@@ -18,6 +21,7 @@ class Users(db.Model):
     password = db.Column(db.String(80), nullable=False) 
     rol = db.Column(db.Integer, db.ForeignKey('user_rol.id'))
     user_rol = db.relationship(UserRol)
+    is_active = db.Column(db.Boolean, default= True)
 
     def __repr__(self):
         return "User: "+self.email
@@ -44,6 +48,9 @@ class UserData(db.Model):
     current_hospital = db.Column(db.String(250))
     avatar = db.Column(db.String(500))
 
+    def __repr__(self):
+        return "User data of user id:"+self.user_id+" name:"+self.name
+
     def serialize(self):
         return {
             "id": self.id,
@@ -59,35 +66,36 @@ class UserData(db.Model):
             "current_hospital": self.current_hospital,
         }
 
-class ServiceTypes(db.Model):
+class ServiceType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    service_type = db.Column(db.String(150))
+    service_type = db.Column(db.String(150),unique=True,nullable=False)
     
+    def __repr__(self):
+        return "Service type: "+self.service_type
+
     def serialize(self):
         return {
             "id": self.id,
             "service_type": self.service_type,
         }
 
-
 class Service(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200))
-    type = db.Column(db.Integer, db.ForeignKey('service_types.id'))
-    service_types = db.relationship(ServiceTypes)
+    name = db.Column(db.String(200),nullable=False)
+    type = db.Column(db.Integer, db.ForeignKey('service_type.id'))
+    service_type = db.relationship(ServiceTypes)
     session_time = db.Column(db.Float)
-    """     available_to = 
-    access_to_documents = """
+    session_qty = db.Column(db.Integer)
     sold_per_units = db.Column(db.Boolean)
     description = db.Column(db.String(1000))
     description_includes = db.Column(db.String(1000))
     price = db.Column(db.Integer)
     discount = db.Column(db.Integer)
-    image_url = db.Column(db.String(500))
-    qty= db.Column(db.Integer, default=1)
-    qty_error= db.Column(db.String(200))
-    selected= db.Column(db.Boolean, default= False)
-    modal_selected_KO= db.Column(db.String(50))
+    service_cover_url = db.Column(db.String(500))
+    qty = db.Column(db.Integer, default=1)
+    qty_error = db.Column(db.String(200))
+    selected = db.Column(db.Boolean, default= False)
+    modal_selected_KO = db.Column(db.String(50))
 
     def __repr__(self):
         return "service: "+self.name
@@ -118,16 +126,39 @@ class ServiceRols(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     service_id = db.Column(db.Integer, db.ForeignKey('service.id'))
     service = db.relationship(Service)
-    """ service_name = db.Column(db.String(200), db.ForeignKey('service.name'))
-    service = db.relationship(Service) """
     rol_id = db.Column(db.Integer, db.ForeignKey('user_rol.id'))
     rol= db.relationship(UserRol)
-"""     rol_name = db.Column(db.String(150), db.ForeignKey('user_rol.rol'))
-    rol= db.relationship(UserRol) """
 
-class Documents(db.Model): 
+class ServiceDocuments(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
-    document = db.Column(db.String(200))
+    service_id = db.Column(db.Integer, db.ForeignKey('service.id'))
+    service = db.relationship(Service)
+    document_id = db.Column(db.Integer, db.ForeignKey('document.id'))
+    document = db.relationship(Document)
+
+class ServiceToService(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    service_id_father = db.Column(db.Integer, db.ForeignKey('service.id'))
+    service = db.relationship(Service)
+    service_id_child = db.Column(db.Integer, db.ForeignKey('service.id'))
+    service = db.relationship(Service)
+
+class ServiceHired(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    service_id = db.Column(db.Integer, db.ForeignKey('service.id'))
+    service = db.relationship(Service)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    users = db.relationship(Users)
+    sessions_left: db.Column(db.Integer)
+
+class Document(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    document_url = db.Column(db.String(300))
+    document_name = db.Column(db.String(300))
+    document_cover_url = db.Column(db.String(300))
+    
+    def __repr__(self):
+        return "document: "+self.document_name
 
     def serialize(self):
         return {

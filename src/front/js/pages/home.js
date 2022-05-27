@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Navbar } from "../component/navbar";
 import { Link } from "react-router-dom";
-import logo from "/workspace/Tiamati-Doula/src/img/logo/logo.png";
+import logo from "../../../img/logo/logo.png";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
