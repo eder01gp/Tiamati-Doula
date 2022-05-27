@@ -6,14 +6,13 @@ export const Signup = () => {
   const [user, setUser] = useState({});
   const [check, setCheck] = useState(false);
   const [error, setError] = useState();
+  const { store } = useContext(Context);
   const history = useHistory();
-
-  const { store, actions } = useContext(Context);
 
   const saveUsersInDB = async () => {
     if (
       user.email != null &&
-      user.email.trim != "" &&
+      user.email.trim() != "" &&
       user.email != "" &&
       user.password != null &&
       user.password.trim() != ""
@@ -24,15 +23,21 @@ export const Signup = () => {
       } else if (check == true) {
         history.push("/");
       }
-      const response = await fetch(store.url+"/signup", {
+      const response = await fetch(store.url + "/signup", {
         method: "POST",
         body: JSON.stringify(user),
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
       });
+
       const data = await response.json();
       localStorage.setItem("token", data.token);
+      localStorage.setItem("ID", data.User.id);
+      localStorage.setItem("rol", data.User.rol);
     } else {
-      setError("Error, revisa tu email o password");
+      setError("Error, revisa tu email o contraseña");
     }
   };
 
@@ -64,7 +69,7 @@ export const Signup = () => {
         </div>
         <div className="mb-1">
           <label htmlFor="exampleInputPassword1" className="form-label mb-0">
-            password
+            Contraseña
           </label>
           <input
             type="password"
