@@ -110,6 +110,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       getDocuments: () => {},
 
       getServices: async () => {
+        try {
+          const resp = await fetch(getStore().url + "/services");
+          const data = await resp.json();
+          console.log(data)
+          setStore({ services: data });
+        } catch (e) {
+          console.log("Error getting services");
+        }
       },
       serviceSelectedQtyChange: (id, newQty, action) => {
         const newService = getStore().services.map((x)=>{

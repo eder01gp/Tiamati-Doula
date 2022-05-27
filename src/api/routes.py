@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Users, UserData
+from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 import cloudinary
@@ -105,3 +105,35 @@ def handle_upload():
     return jsonify("document correctly upload"), 200
 
 #services
+@api.route('/services', methods=['GET'])
+def services():
+    service_response=[]
+    services = Service.query.all()
+    if services:
+        services_serialized = list(map(lambda item: item.serialize(), services))
+        for service in services_serialized:
+            #get rols
+            rols = ServiceRols.query.filter_by(service_id=service["id"])
+            rols_serialized = list(map(lambda item: item.serialize(), rols))
+            service_rols = []
+            for rol in rols_serialized:
+                rol_name = UserRol.query.get(rol["rol"])
+                service_rols.append(rol_name)
+            #get documents
+            documents = ServiceDocuments.query.filter_by(service_id=service["id"])
+            documents_serialized = list(map(lambda item: item.serialize(), documents))
+            services_connected = ServiceToService.query.filter_by(service_id_father=service["id"])
+            services_connected_serialized = list(map(lambda item: item.serialize(), services_connected))
+            service_complete = {
+                "service_id": service["id"],
+                "service": service,
+                "rols": rols_serialized,
+                #"rols_names": service_rols,
+                "documents": documents_serialized,
+                "services_connected": services_connected_serialized,
+            }
+            service_response.append(service_complete)
+
+        return jsonify({"response":service_response}), 200    
+    else: 
+        return jsonify({"No services in database"}), 400
