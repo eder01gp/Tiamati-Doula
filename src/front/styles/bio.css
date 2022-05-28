@@ -1,27 +1,9 @@
 .div-bio {
   margin-top: 3cm;
-}
-.lines-images-boxes {
   justify-content: center;
-  align-items: center;
 }
+
 img {
   height: 5.5cm;
   width: 5.5cm;
 }
-/* .div-img {
-  
-} */
-#bubble-1 {
-  top: 20%;
-  left: 20%;
-  font-size: 170px;
-  color: rgba(240, 239, 158, 0.995);
-  position: relative;
-}
-/* #text-1 {
-  font-size: 20px;
-  top: 30%;
-  left: 5%;
-  z-index: 100;
-} */
