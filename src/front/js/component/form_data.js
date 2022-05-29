@@ -15,6 +15,10 @@ export const FormData = (props) => {
     actions.verify();
   }, []);
 
+  useEffect(() => {
+    setUser(store.user_data);
+  }, [store.user_data]);
+
   const saveUsersData = async () => {
     const response = await fetch(store.url + "/form", {
       method: "PUT",
@@ -25,6 +29,9 @@ export const FormData = (props) => {
       },
     });
     const data = await response.json();
+    if (response.status == 200) {
+      setUser({});
+    }
     actions.getUserInfo();
     setAlert({ display: "block" });
     setInterval(() => {
@@ -49,9 +56,7 @@ export const FormData = (props) => {
               type="text"
               className="form-control"
               defaultValue={store.user_data.name}
-              onChange={(e) =>
-                setUser({ ...store.user_data, name: e.target.value })
-              }
+              onChange={(e) => setUser({ ...user, name: e.target.value })}
             />
           </div>
         </div>
@@ -69,7 +74,7 @@ export const FormData = (props) => {
               className="form-control"
               defaultValue={store.user_data.pregnancy_weeks}
               onChange={(e) =>
-                setUser({ ...store.user_data, pregnancy_weeks: e.target.value })
+                setUser({ ...user, pregnancy_weeks: e.target.value })
               }
             />
           </div>
@@ -88,7 +93,7 @@ export const FormData = (props) => {
               defaultValue={store.user_data.aproximate_birth_date}
               onChange={(e) =>
                 setUser({
-                  ...store.user_data,
+                  ...user,
                   aproximate_birth_date: e.target.value,
                 })
               }
@@ -109,7 +114,7 @@ export const FormData = (props) => {
               defaultValue={store.user_data.children_number}
               onChange={(e) => {
                 setUser({
-                  ...store.user_data,
+                  ...user,
                   children_number: e.target.value,
                 }),
                   e.target.value > 0
@@ -136,7 +141,7 @@ export const FormData = (props) => {
               defaultValue={store.user_data.caesarean_sections_number}
               onChange={(e) =>
                 setUser({
-                  ...store.user_data,
+                  ...user,
                   caesarean_sections_number: e.target.value,
                 })
               }
@@ -153,9 +158,7 @@ export const FormData = (props) => {
               type="text"
               className="form-control"
               defaultValue={store.user_data.companion}
-              onChange={(e) =>
-                setUser({ ...store.user_data, companion: e.target.value })
-              }
+              onChange={(e) => setUser({ ...user, companion: e.target.value })}
             />
           </div>
         </div>
@@ -167,9 +170,7 @@ export const FormData = (props) => {
               type="text"
               className="form-control"
               defaultValue={store.user_data.city}
-              onChange={(e) =>
-                setUser({ ...store.user_data, city: e.target.value })
-              }
+              onChange={(e) => setUser({ ...user, city: e.target.value })}
             />
           </div>
         </div>
@@ -182,7 +183,7 @@ export const FormData = (props) => {
             <select
               className="form-select"
               onChange={(e) => {
-                setUser({ ...store.user_data, birth_place: e.target.value });
+                setUser({ ...user, birth_place: e.target.value });
               }}
             >
               <option>Elige una opción...</option>
@@ -215,7 +216,7 @@ export const FormData = (props) => {
               defaultValue={store.user_data.current_hospital}
               onChange={(e) =>
                 setUser({
-                  ...store.user_data,
+                  ...user,
                   current_hospital: e.target.value,
                 })
               }
@@ -224,6 +225,7 @@ export const FormData = (props) => {
         </div>
         <div className="col-12">
           {props.closeBtn}
+          {props.dismissBtn}
           <button
             type="button"
             id="save-data-button"
@@ -250,4 +252,5 @@ export const FormData = (props) => {
 
 FormData.propTypes = {
   closeBtn: propTypes.element,
+  dismissBtn: propTypes.element,
 };

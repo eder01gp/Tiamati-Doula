@@ -2,13 +2,13 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-        "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu46.gitpod.io/" +
+        "https://3001-ederdon-tiamatidoula-f6gaira5d9k.ws-eu46.gitpod.io/" +
         "api",
       logged: null,
       token: null,
       users: [],
       user_info: [],
-      user_data: [],
+      user_data: {},
       faq: [
         {
           id: 1,
@@ -111,7 +111,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           const data = await resp.json();
           setStore({ user_info: data.info });
-          setStore({ user_data: data.data });
+          setStore({ user_data: data.data || {} });
         } catch (e) {
           setStore({ user_info: null });
           setStore({ user_data: null });

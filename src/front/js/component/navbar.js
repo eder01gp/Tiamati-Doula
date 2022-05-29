@@ -58,7 +58,7 @@ export const Navbar = () => {
             id="profile-dropdown"
             aria-labelledby="dropDownMenu"
           >
-            {localStorage.getItem("rol") == "usuaria" ? (
+            {localStorage.getItem("rol") == 1 ? (
               <div>
                 <Link to="/profile_user">
                   <li>

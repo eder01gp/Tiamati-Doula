@@ -8,7 +8,7 @@ export const Form = () => {
   return (
     <div>
       <FormData
-        closeBtn={
+        dismissBtn={
           <button
             type="button"
             className="btn btn-secondary float-end"

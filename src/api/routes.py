@@ -52,9 +52,9 @@ def save_or_update_user_form():
     body_birth_place = request.json.get("birth_place")
     body_current_hospital = request.json.get("current_hospital")
     if current_user_id != None:
-        current_user_data = User_Data.query.filter_by(user_id = current_user_id).first()
+        current_user_data = UserData.query.filter_by(user_id = current_user_id).first()
         if current_user_data == None:
-            user_created = User_Data(user_id = current_user_id, name = body_name, pregnancy_weeks = body_pregnancy_weeks, aproximate_birth_date = body_aproximate_birth_date, children_number = body_children_number, caesarean_sections_number =  body_caesarean_sections_number,  companion = body_companion, city = body_city,  birth_place = body_birth_place, current_hospital = body_current_hospital)
+            user_created = UserData(user_id = current_user_id, name = body_name, pregnancy_weeks = body_pregnancy_weeks, aproximate_birth_date = body_aproximate_birth_date, children_number = body_children_number, caesarean_sections_number =  body_caesarean_sections_number,  companion = body_companion, city = body_city,  birth_place = body_birth_place, current_hospital = body_current_hospital)
             db.session.add(user_created)
             db.session.commit()
             return jsonify({"msg": "Datos guardados correctamente"}), 200   
@@ -117,7 +117,7 @@ def login():
 def get_user_info():
     current_user_id = get_jwt_identity()
     user = Users.query.get(current_user_id)
-    current_user_data = User_Data.query.filter_by(user_id = current_user_id).first()
+    current_user_data = UserData.query.filter_by(user_id = current_user_id).first()
     if current_user_id and current_user_data == None:
         return jsonify({"info": user.serialize()}), 200
     elif current_user_id and current_user_data:     
