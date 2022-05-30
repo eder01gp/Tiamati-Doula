@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Users, User_Data
+from api.models import db, Users, UserData
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
@@ -39,7 +39,7 @@ def save_or_update_user_form():
     body_birth_place = request.json.get("birth_place")
     body_current_hospital = request.json.get("current_hospital")
     if current_user_id != None:
-        user_created = User_Data(user_id = current_user_id, name = body_name, pregnancy_weeks = body_pregnancy_weeks, aproximate_birth_date = body_aproximate_birth_date, children_number = body_children_number, caesarean_sections_number =  body_caesarean_sections_number,  companion = body_companion, city = body_city,  birth_place = body_birth_place, current_hospital = body_current_hospital)
+        user_created = UserData(user_id = current_user_id, name = body_name, pregnancy_weeks = body_pregnancy_weeks, aproximate_birth_date = body_aproximate_birth_date, children_number = body_children_number, caesarean_sections_number =  body_caesarean_sections_number,  companion = body_companion, city = body_city,  birth_place = body_birth_place, current_hospital = body_current_hospital)
         db.session.add(user_created)
         db.session.commit()
         return jsonify({"msg": "Datos guardados correctamente"}), 200   
@@ -53,15 +53,9 @@ def get_all_users():
 
 @api.route('/users_data', methods=['GET'])
 def get_all_users_data():
-    users_data = User_Data.query.all()
+    users_data = UserData.query.all()
     users_data_serialized = list(map(lambda item: item.serialize(), users_data)) 
     return jsonify({"response": users_data_serialized}), 200      
 
-# @api.route('/profile', methods=['GET'])
-# @jwt_required()
-# def ():
-#     current_user_id = get_jwt_identity()
-#     user = Users.query.get(current_user_id)
-#     if user:
 
     

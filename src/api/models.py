@@ -16,7 +16,7 @@ class Users(db.Model):
         }
 
 
-class User_Data(db.Model): 
+class UserData(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     users = db.relationship(Users)
