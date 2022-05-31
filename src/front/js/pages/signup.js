@@ -6,13 +6,13 @@ export const Signup = () => {
   const [user, setUser] = useState({});
   const [check, setCheck] = useState(false);
   const [error, setError] = useState();
-  const { store, actions } = useContext(Context);
+  const { store } = useContext(Context);
   const history = useHistory();
 
   const saveUsersInDB = async () => {
     if (
       user.email != null &&
-      user.email.trim != "" &&
+      user.email.trim() != "" &&
       user.email != "" &&
       user.password != null &&
       user.password.trim() != ""
@@ -23,17 +23,21 @@ export const Signup = () => {
       } else if (check == true) {
         history.push("/");
       }
-
       const response = await fetch(store.url + "/signup", {
         method: "POST",
         body: JSON.stringify(user),
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
       });
 
       const data = await response.json();
       localStorage.setItem("token", data.token);
+      localStorage.setItem("ID", data.User.id);
+      localStorage.setItem("rol", data.User.rol);
     } else {
-      setError("Error, revisa tu email o password");
+      setError("Error, revisa tu email o contraseña");
     }
   };
 
@@ -47,7 +51,7 @@ export const Signup = () => {
             type="email"
             className="form-control"
             onChange={(e) =>
-              setUser({ ...user, email: e.target.value, rol: "usuaria" })
+              setUser({ ...user, email: e.target.value, rol: 1 })
             }
           />
         </div>
@@ -57,15 +61,15 @@ export const Signup = () => {
             type="checkbox"
             onChange={(e) =>
               e.target.checked
-                ? setUser({ ...user, rol: "empresa" }) & setCheck(true)
-                : setUser({ ...user, rol: "usuaria" }) & setCheck(false)
+                ? setUser({ ...user, rol: 2 }) & setCheck(true)
+                : setUser({ ...user, rol: 1 }) & setCheck(false)
             }
           />
           <label className="form-check-label">Soy empresa</label>
         </div>
         <div className="mb-1">
           <label htmlFor="exampleInputPassword1" className="form-label mb-0">
-            password
+            Contraseña
           </label>
           <input
             type="password"

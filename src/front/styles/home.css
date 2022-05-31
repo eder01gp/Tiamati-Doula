@@ -1,7 +1,117 @@
-/*
-    home.css: This website contains selectors only used in home.css
+#header-logo {
+  margin-top: 7%;
+  height: 100px;
+  background-color: rgb(165, 250, 221);
+  padding: 1%;
+  text-align: center;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+#logo-tiamati {
+  width: 100px;
+  margin-top: 1%;
+}
+
+#header-img {
+  width: 1320px;
+  height: 300px;
+  background-image: url(https://imagesvc.meredithcorp.io/v3/mm/image?url=https://static.onecms.io/wp-content/uploads/sites/24/2017/02/gettyimages-623380230-2000.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#what-is-tiamati {
+  background-color: rgb(255, 255, 175);
+  padding: 2%;
+}
+
+.benefits-arrow {
+  height: 100px;
+  width: 30px;
+}
+
+#free-appointment {
+  padding: 4%;
+  padding-top: 5%;
+  height: 500px;
+  background-color: rgb(255, 106, 106);
+}
+
+#first-appointment-text {
+  font-size: 80px;
+  margin-bottom: 2%;
+}
+
+#free-appointment h3 {
+  font-size: 40px;
+  margin-top: 1%;
+}
+
+#bio {
+  height: 500px;
+  background-image: url(https://i.pinimg.com/736x/2d/47/e2/2d47e2d157e85ccdbc208c8568a74bb6.jpg);
+  background-position-y: 15%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 10%;
+  padding-left: 8%;
+}
+
+#hello-text {
+  background-color: white;
+  padding: 1%;
+  width: 200px;
+  height: 150px;
+  text-align: center;
+}
+
+#services {
+  padding: 2%;
+  padding-left: 10%;
+  background-color: rgb(241, 247, 210);
+}
+
+.service-card {
+  width: 250px;
+  margin-bottom: 2%;
+  margin-right: 2%;
+}
+
+#documents {
+  padding: 2%;
+  padding-left: 25%;
+  background-color: rgb(128, 241, 213);
+}
+
+#documents-img {
+  margin-right: 2%;
+  width: 200px;
+}
+
+#documents-right {
+  margin-top: 3%;
+}
+
+#reviews {
+  padding: 2%;
+  background-color: rgb(38, 144, 177);
+}
+
+.carousel-item {
+  width: 800px;
+  margin-left: 17%;
+}
+
+.carousel-item p {
+  text-align: center;
+}
+
+#faq-home {
+  height: 300px;
+  background-color: rgb(175, 187, 255);
+  padding: 2%;
+  text-align: center;
+}
+
+#faq-home h2 {
+  font-size: 80px;
+}
