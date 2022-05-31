@@ -2,7 +2,9 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
+
 from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired
+
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 import cloudinary
@@ -52,12 +54,12 @@ def save_or_update_user_form():
     body_birth_place = request.json.get("birth_place")
     body_current_hospital = request.json.get("current_hospital")
     if current_user_id != None:
-        current_user_data = User_Data.query.filter_by(user_id = current_user_id).first()
+        current_user_data = UserData.query.filter_by(user_id = current_user_id).first()
         if current_user_data == None:
-            user_created = User_Data(user_id = current_user_id, name = body_name, pregnancy_weeks = body_pregnancy_weeks, aproximate_birth_date = body_aproximate_birth_date, children_number = body_children_number, caesarean_sections_number =  body_caesarean_sections_number,  companion = body_companion, city = body_city,  birth_place = body_birth_place, current_hospital = body_current_hospital)
+            user_created = UserData(user_id = current_user_id, name = body_name, pregnancy_weeks = body_pregnancy_weeks, aproximate_birth_date = body_aproximate_birth_date, children_number = body_children_number, caesarean_sections_number =  body_caesarean_sections_number,  companion = body_companion, city = body_city,  birth_place = body_birth_place, current_hospital = body_current_hospital)
             db.session.add(user_created)
             db.session.commit()
-            return jsonify({"msg": "Datos guardados correctamente"}), 200   
+            return jsonify({"msg": "Datos guardados correctamente"}), 200    
         else: 
             current_user_data.name = body_name 
             current_user_data.pregnancy_weeks = body_pregnancy_weeks 
@@ -70,6 +72,7 @@ def save_or_update_user_form():
             current_user_data.current_hospital = body_current_hospital
             db.session.commit()
             return jsonify({'msg': "Datos modificados correctamente"}), 200 
+
     else: return jsonify({"msg": "Error, no se han podido guardar los datos"}), 400      
 
 @api.route('/users', methods=['GET'])
@@ -84,6 +87,7 @@ def get_all_users_data():
     users_data = UserData.query.all()
     users_data_serialized = list(map(lambda item: item.serialize(), users_data)) 
     return jsonify({"response": users_data_serialized}), 200      
+
 
 @api.route('/profile', methods=['PUT'])
 @jwt_required()
@@ -168,4 +172,5 @@ def services():
         return jsonify({"response":service_response}), 200    
     else: 
         return jsonify({"No services in database"}), 400
+
 

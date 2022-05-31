@@ -33,6 +33,7 @@ class Users(db.Model):
             "rol": self.rol
         }
 
+
 class UserData(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))

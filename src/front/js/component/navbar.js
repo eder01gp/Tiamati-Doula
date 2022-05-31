@@ -28,7 +28,9 @@ export const Navbar = () => {
           <Link to="/">
             <li>Inicio</li>
           </Link>
-          <li>Bio</li>
+          <Link to="/bio">
+            <li>Bio</li>
+          </Link>
           <Link to="/services">
             <li>Servicios</li>
           </Link>
