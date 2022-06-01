@@ -30,7 +30,8 @@ class Users(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "rol": self.rol
+            "rol": self.rol,
+            "is_active": self.is_active
         }
 
 class UserData(db.Model): 
@@ -52,12 +53,13 @@ class UserData(db.Model):
         return "User data of user id:"+self.user_id+" name:"+self.name
 
     def serialize(self):
+        print(type(self.aproximate_birth_date), "@@@@@@@@@@@@@@@@@@")
         return {
             "id": self.id,
             "user_id": self.user_id,
             "name": self.name,
             "pregnancy_weeks": self.pregnancy_weeks,
-            "aproximate_birth_date": self.aproximate_birth_date,
+            "aproximate_birth_date": self.aproximate_birth_date.strftime("%d/%m/%Y"),
             "children_number": self.children_number,
             "caesarean_sections_number": self.caesarean_sections_number,
             "companion": self.companion,

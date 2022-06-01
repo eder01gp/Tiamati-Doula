@@ -87,17 +87,15 @@ export const FormData = (props) => {
             </div>
             <input
               type="date"
-              name="dia"
-              min="today"
               className="form-control"
               id="selectedDate"
               defaultValue={user.aproximate_birth_date}
-              onChange={(e) =>
+              onChange={(e) => {
                 setUser({
                   ...user,
                   aproximate_birth_date: e.target.value,
-                })
-              }
+                });
+              }}
             />
           </div>
         </div>

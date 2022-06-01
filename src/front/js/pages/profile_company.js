@@ -173,7 +173,8 @@ export const Profile_company = () => {
       </div>
       <div className="DELETE-ACCOUNT-BUTTON mt-5">
         <button
-          className="btn btn-secondary" /*  onClick={eliminar usuario}  */
+          className="btn btn-secondary"
+          onClick={() => actions.deleteUser()}
         >
           Eliminar cuenta
         </button>

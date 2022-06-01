@@ -111,6 +111,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           const data = await resp.json();
           setStore({ user_info: data.info });
+          if (data.data) {
+            data.data.aproximate_birth_date = new Date(
+              data.data.aproximate_birth_date
+            )
+              .toISOString()
+              .split("T")[0];
+          }
           setStore({ user_data: data.data || {} });
         } catch (e) {
           setStore({ user_info: null });
@@ -193,6 +200,17 @@ const getState = ({ getStore, getActions, setStore }) => {
           } else return x;
         });
         setStore({ services: newService });
+      },
+      deleteUser: async () => {
+        const response = await fetch(getStore().url + "/deleteUser", {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        if (response.status == 200) {
+          getActions().logout();
+        }
       },
     },
   };

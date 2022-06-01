@@ -6,15 +6,15 @@ import { FormData } from "../component/form_data";
 export const Profile_user = () => {
   const { store, actions } = useContext(Context);
   const [user, setUser] = useState({});
-  const [userData, setUserData] = useState({ display: "block" });
+  const [userInfo, setUserInfo] = useState({ display: "block" });
   const [inputEmail, setInputEmail] = useState({ display: "none" });
   const [inputPassword, setInputPassword] = useState({ display: "none" });
   const [showForm, setShowForm] = useState({ display: "none" });
   const [showServices, setShowServices] = useState({ display: "none" });
 
   useEffect(() => {
-    actions.getUserInfo();
     actions.verify();
+    actions.getUserInfo();
   }, []);
 
   const changeData = async () => {
@@ -37,14 +37,14 @@ export const Profile_user = () => {
         <div className="Change email-password m-auto">
           {/* Current user email & edit button*/}
           <div className="d-flex">
-            <p className="mb-0 mt-2" style={userData}>
+            <p className="mb-0 mt-2" style={userInfo}>
               Email: {store.user_info.email}
             </p>
             <button
               className="btn"
-              style={userData}
+              style={userInfo}
               onClick={() =>
-                setUserData({ display: "none" }) &
+                setUserInfo({ display: "none" }) &
                 setInputEmail({ display: "block" })
               }
             >
@@ -54,14 +54,14 @@ export const Profile_user = () => {
 
           {/* "Password" & edit button*/}
           <div className="d-flex">
-            <p style={userData} className="mt-3">
+            <p style={userInfo} className="mt-3">
               Contraseña: ·······
             </p>
             <button
               className="btn"
-              style={userData}
+              style={userInfo}
               onClick={() =>
-                setUserData({ display: "none" }) &
+                setUserInfo({ display: "none" }) &
                 setInputPassword({ display: "block" })
               }
             >
@@ -95,7 +95,7 @@ export const Profile_user = () => {
               onClick={() => {
                 changeData() &
                   setInputEmail({ display: "none" }) &
-                  setUserData({ display: "block" });
+                  setUserInfo({ display: "block" });
               }}
             >
               Guardar
@@ -105,7 +105,7 @@ export const Profile_user = () => {
               style={inputEmail}
               onClick={() =>
                 setInputEmail({ display: "none" }) &
-                setUserData({ display: "block" })
+                setUserInfo({ display: "block" })
               }
             >
               Cerrar
@@ -118,7 +118,7 @@ export const Profile_user = () => {
               onClick={() => {
                 changeData() &
                   setInputPassword({ display: "none" }) &
-                  setUserData({ display: "block" });
+                  setUserInfo({ display: "block" });
               }}
             >
               Guardar
@@ -128,7 +128,7 @@ export const Profile_user = () => {
               style={inputPassword}
               onClick={() =>
                 setInputPassword({ display: "none" }) &
-                setUserData({ display: "block" })
+                setUserInfo({ display: "block" })
               }
             >
               Cerrar
@@ -139,10 +139,10 @@ export const Profile_user = () => {
           <div className="btn-group justify-content-center" role="group">
             <button
               className="form-personal-info btn  btn-sm btn-outline-secondary"
-              onClick={() =>
-                setShowForm({ display: "block" }) &
-                setShowServices({ display: "none" })
-              }
+              onClick={() => {
+                setShowForm({ display: "block" });
+                setShowServices({ display: "none" });
+              }}
             >
               Información Personal
             </button>
@@ -183,7 +183,7 @@ export const Profile_user = () => {
         <div className="DELETE-ACCOUNT-BUTTON mt-5">
           <button
             className="btn btn-secondary"
-            /*onClick={() => }*/
+            onClick={() => actions.deleteUser()}
           >
             Eliminar cuenta
           </button>
