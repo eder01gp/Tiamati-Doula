@@ -57,16 +57,4 @@ def get_all_users_data():
     users_data_serialized = list(map(lambda item: item.serialize(), users_data)) 
     return jsonify({"response": users_data_serialized}), 200      
 
-# @api.route('/perfil', methods=['POST'])
-# Aquí iria lo del token
-# def save_or_update_usuaria_avatar(user_id):
-#     current_user_id = get_jwt_identity()
-#     usuaria = Users.query.get(current_user_id)
-#     if user:
-#         body_avatar = request.json.get("avatar") #-------------En la vista 'perfil' sería: <input type=file> (mirar en Bootstrap)------------#
-#         usuaria_avatar = Usuaria(avatar = body_avatar)
-#         db.session.add(usuaria_avatar)
-#         db.session.commit()
-#         return jsonify({"msg": "Avatar guardado correctamente"}), 200
-#     else: return jsonify({"msg": "Error, no se ha podido guardar el avatar"}), 400    
-    
+
