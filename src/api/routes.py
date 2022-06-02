@@ -55,13 +55,19 @@ def get_all_users():
 def get_all_users_data():
     users_data = User_Data.query.all()
     users_data_serialized = list(map(lambda item: item.serialize(), users_data)) 
-    return jsonify({"response": users_data_serialized}), 200      
+    return jsonify({"response": users_data_serialized}), 200    
+      
 
 @api.route('/user_faq', methods=['GET'])
 def get_user_faq():
     user_faq = UserFaq.query.all()
-    user_faq_serialized = list(map(lambda user_faq: user_faq.serialize, user_faq))
-
+    user_faq_serialized = list(map(lambda user_faq: user_faq.serialize(), user_faq))
     return jsonify({"response": user_faq_serialized}), 200
+
+@api.route('/business_faq', methods=['GET'])
+def get_business_faq():
+    business_faq = BusinessFaq.query.all()
+    business_faq_serialized = list(map(lambda business_faq: business_faq.serialize(), business_faq))
+    return jsonify({"response": business_faq_serialized}), 200
 
 
