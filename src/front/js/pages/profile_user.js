@@ -6,11 +6,11 @@ import { FormData } from "../component/form_data";
 export const Profile_user = () => {
   const { store, actions } = useContext(Context);
   const [user, setUser] = useState({});
-  const [userInfo, setUserInfo] = useState({ display: "block" });
-  const [inputEmail, setInputEmail] = useState({ display: "none" });
-  const [inputPassword, setInputPassword] = useState({ display: "none" });
-  const [showForm, setShowForm] = useState({ display: "none" });
-  const [showServices, setShowServices] = useState({ display: "none" });
+  const [userInfo, setUserInfo] = useState(true);
+  const [inputEmail, setInputEmail] = useState(false);
+  const [inputPassword, setInputPassword] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [showServices, setShowServices] = useState(false);
 
   useEffect(() => {
     actions.verify();
@@ -32,153 +32,164 @@ export const Profile_user = () => {
   };
 
   return (
-    <div className="div-profile-user container-fluid">
+    <div className="div-profile container">
       <div>
-        <div className="Change email-password m-auto">
+        <div className="Change email-password m-auto mt-5 mb-5">
           {/* Current user email & edit button*/}
-          <div className="d-flex">
-            <p className="mb-0 mt-2" style={userInfo}>
-              Email: {store.user_info.email}
-            </p>
-            <button
-              className="btn"
-              style={userInfo}
-              onClick={() =>
-                setUserInfo({ display: "none" }) &
-                setInputEmail({ display: "block" })
-              }
-            >
-              <i className="fa-solid fa-pen-to-square mx-2"></i>
-            </button>
-          </div>
+          {userInfo ? (
+            <div className="d-flex">
+              <p className="mb-0 mt-2">
+                Email: {store.user_info ? store.user_info.email : null}
+              </p>
+              <button
+                className="btn"
+                onClick={() => {
+                  setUserInfo(false);
+                  setInputEmail(true);
+                }}
+              >
+                <i className="fa-solid fa-pen-to-square mx-2"></i>
+              </button>
+            </div>
+          ) : null}
 
           {/* "Password" & edit button*/}
-          <div className="d-flex">
-            <p style={userInfo} className="mt-3">
-              Contraseña: ·······
-            </p>
-            <button
-              className="btn"
-              style={userInfo}
-              onClick={() =>
-                setUserInfo({ display: "none" }) &
-                setInputPassword({ display: "block" })
-              }
-            >
-              <i className="fa-solid fa-pen-to-square mx-2"></i>
-            </button>
-          </div>
+          {userInfo ? (
+            <div className="d-flex">
+              <p className="mt-3">Contraseña: ·······</p>
+              <button
+                className="btn"
+                onClick={() => {
+                  setUserInfo(false);
+                  setInputPassword(true);
+                }}
+              >
+                <i className="fa-solid fa-pen-to-square mx-2"></i>
+              </button>
+            </div>
+          ) : null}
 
           {/* Email Input */}
-          <input
-            type="email"
-            className="mb-0"
-            style={inputEmail}
-            placeholder="Nuevo email"
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
-          />
+          {inputEmail ? (
+            <input
+              type="email"
+              className="mb-0"
+              placeholder="Nuevo email"
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+            />
+          ) : null}
           {/* Password Input */}
-          <input
-            type="password"
-            style={inputPassword}
-            placeholder="Nueva contraseña"
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-          />
+          {inputPassword ? (
+            <input
+              type="password"
+              placeholder="Nueva contraseña"
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
+            />
+          ) : null}
 
           {/* INPUTS BUTTONS */}
-          <div className="btn btn-group">
-            {/* Save & Close Email edit */}
-            <button
-              className="save-button btn btn-primary mb-5 rounded"
-              type="submit"
-              style={inputEmail}
-              onClick={() => {
-                changeData() &
-                  setInputEmail({ display: "none" }) &
-                  setUserInfo({ display: "block" });
-              }}
-            >
-              Guardar
-            </button>
-            <button
-              className="close-button btn btn-sm btn-secondary mb-5 mx-3 rounded"
-              style={inputEmail}
-              onClick={() =>
-                setInputEmail({ display: "none" }) &
-                setUserInfo({ display: "block" })
-              }
-            >
-              Cerrar
-            </button>
-            {/* Save & Close Password edit */}
-            <button
-              className="save-button btn btn-primary mb-5 rounded"
-              type="submit"
-              style={inputPassword}
-              onClick={() => {
-                changeData() &
-                  setInputPassword({ display: "none" }) &
-                  setUserInfo({ display: "block" });
-              }}
-            >
-              Guardar
-            </button>
-            <button
-              className="close-button btn btn-sm btn-secondary mb-5 mx-3 rounded"
-              style={inputPassword}
-              onClick={() =>
-                setInputPassword({ display: "none" }) &
-                setUserInfo({ display: "block" })
-              }
-            >
-              Cerrar
-            </button>
-          </div>
+          {/* Save & Close Email edit */}
+          {inputEmail ? (
+            <div className="buttons mt-2 mb-5">
+              <button
+                className="save-button btn btn-primary btn-sm rounded"
+                type="submit"
+                onClick={() => {
+                  changeData();
+                  setInputEmail(false);
+                  setUserInfo(true);
+                }}
+              >
+                Guardar
+              </button>
+
+              <button
+                className="close-button btn btn-sm btn-secondary mx-3 rounded"
+                onClick={() => {
+                  setInputEmail(false);
+                  setUserInfo(true);
+                }}
+              >
+                Cerrar
+              </button>
+            </div>
+          ) : null}
+
+          {/* Save & Close Password edit */}
+          {inputPassword ? (
+            <div className="buttons mt-2 mb-5">
+              <button
+                className="save-button btn btn-sm btn-primary rounded"
+                type="submit"
+                onClick={() => {
+                  changeData();
+                  setInputPassword(false);
+                  setUserInfo(true);
+                }}
+              >
+                Guardar
+              </button>
+
+              <button
+                className="close-button btn btn-sm btn-secondary mx-3 rounded"
+                onClick={() => {
+                  setInputPassword(false);
+                  setUserInfo(true);
+                }}
+              >
+                Cerrar
+              </button>
+            </div>
+          ) : null}
         </div>
         <div className="FORM-AND-SERVICES-MENU">
           <div className="btn-group justify-content-center" role="group">
             <button
               className="form-personal-info btn  btn-sm btn-outline-secondary"
               onClick={() => {
-                setShowForm({ display: "block" });
-                setShowServices({ display: "none" });
+                setShowForm(true);
+                setShowServices(false);
               }}
             >
               Información Personal
             </button>
             <button
               className="my-services btn btn-outline-secondary"
-              onClick={() =>
-                setShowForm({ display: "none" }) &
-                setShowServices({ display: "block" })
-              }
+              onClick={() => {
+                setShowForm(false);
+                setShowServices(true);
+              }}
             >
               Mis servicios
             </button>
           </div>
-          <div className="Personal-Data" style={showForm}>
-            <FormData
-              closeBtn={
-                <button
-                  type="button"
-                  className="btn btn-secondary float-end"
-                  onClick={() => {
-                    setShowForm({ display: "none" });
-                  }}
-                >
-                  Cerrar
-                </button>
-              }
-            />
-          </div>
-          <div className="Hired-Services mt-5" style={showServices}>
-            <h5>
-              <u>SERVICIOS CONTRATADOS</u>
-            </h5>
-            Se mostrarán los servicios contratados o: 'Aún no has contratado
-            servicios, ¿quieres{" "}
-            <Link to="/services">navegar por nuestra web?</Link> '
-          </div>
+          {showForm ? (
+            <div className="Personal-Data">
+              <FormData
+                closeBtn={
+                  <button
+                    type="button"
+                    className="btn btn-secondary float-end"
+                    onClick={() => {
+                      setShowForm(false);
+                    }}
+                  >
+                    Cerrar
+                  </button>
+                }
+              />
+            </div>
+          ) : null}
+          {showServices ? (
+            <div className="Hired-Services mt-5">
+              <h5>
+                <u>SERVICIOS CONTRATADOS</u>
+              </h5>
+              Se mostrarán los servicios contratados o: 'Aún no has contratado
+              servicios, ¿quieres{" "}
+              <Link to="/services">navegar por nuestra web?</Link> '
+            </div>
+          ) : null}
         </div>
         <div className="DELETE-ACCOUNT-BUTTON mt-5">
           <button

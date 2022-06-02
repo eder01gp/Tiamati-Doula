@@ -1,6 +1,7 @@
 import React from "react";
 import { FormData } from "../component/form_data";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Form = () => {
   const history = useHistory();
@@ -8,6 +9,7 @@ export const Form = () => {
   return (
     <div>
       <FormData
+        goHome={<Link to="/" />}
         dismissBtn={
           <button
             type="button"

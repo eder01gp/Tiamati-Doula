@@ -6,10 +6,7 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <nav
-      className="navbar navbar-light bg-light fixed-top position-relative"
-      id="navbar"
-    >
+    <nav className="navbar navbar-light bg-light fixed-top" id="navbar">
       <div>
         {/* boton menu */}
         <button

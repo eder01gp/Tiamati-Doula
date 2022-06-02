@@ -7,7 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       logged: null,
       token: null,
       users: [],
-      user_info: [],
+      user_info: {},
       user_data: {},
       faq: [
         {
@@ -111,15 +111,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           const data = await resp.json();
           setStore({ user_info: data.info });
-          if (data.data) {
-            data.data.aproximate_birth_date = new Date(
-              data.data.aproximate_birth_date
-            )
-              .toISOString()
-              .split("T")[0];
-          }
           setStore({ user_data: data.data || {} });
         } catch (e) {
+          console.log(e);
           setStore({ user_info: null });
           setStore({ user_data: null });
         }
