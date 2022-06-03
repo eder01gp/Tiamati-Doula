@@ -17,7 +17,7 @@ export const Profile_user = () => {
     actions.getUserInfo();
   }, []);
 
-  const changeData = async () => {
+  const changeEmail = async () => {
     const response = await fetch(store.url + "/profile", {
       method: "PUT",
       body: JSON.stringify(user),
@@ -95,7 +95,7 @@ export const Profile_user = () => {
                 className="save-button btn btn-primary btn-sm rounded"
                 type="submit"
                 onClick={() => {
-                  changeData();
+                  changeEmail();
                   setInputEmail(false);
                   setUserInfo(true);
                 }}
@@ -122,7 +122,7 @@ export const Profile_user = () => {
                 className="save-button btn btn-sm btn-primary rounded"
                 type="submit"
                 onClick={() => {
-                  changeData();
+                  changeEmail();
                   setInputPassword(false);
                   setUserInfo(true);
                 }}

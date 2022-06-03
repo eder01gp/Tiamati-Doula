@@ -9,7 +9,6 @@ export const Form = () => {
   return (
     <div>
       <FormData
-        goHome={<Link to="/" />}
         dismissBtn={
           <button
             type="button"

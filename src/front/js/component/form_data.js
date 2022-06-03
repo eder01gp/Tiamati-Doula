@@ -30,9 +30,6 @@ export const FormData = (props) => {
     if (response.status == 200) {
       setUser({});
     }
-    {
-      props.goHome;
-    }
     actions.getUserInfo();
     setAlert(true);
     setInterval(() => {
@@ -214,6 +211,7 @@ export const FormData = (props) => {
         <div className="col-12">
           {props.closeBtn}
           {props.dismissBtn}
+          {props.saveBtn}
           <button
             type="button"
             id="save-data-button"
@@ -240,5 +238,5 @@ export const FormData = (props) => {
 FormData.propTypes = {
   closeBtn: propTypes.element,
   dismissBtn: propTypes.element,
-  goHome: propTypes.func,
+  saveBtn: propTypes.func,
 };
