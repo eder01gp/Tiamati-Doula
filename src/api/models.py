@@ -161,7 +161,7 @@ class Document(db.Model):
 
     def serialize(self):
         return {
-            "id": self.id;
+            "id": self.id,
             "document": self.document,
         }
 
