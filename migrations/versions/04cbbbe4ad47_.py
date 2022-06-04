@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: ed26344602ca
+Revision ID: 04cbbbe4ad47
 Revises: 
-Create Date: 2022-05-27 15:35:57.899297
+Create Date: 2022-06-02 09:37:25.425979
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ed26344602ca'
+revision = '04cbbbe4ad47'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,6 +22,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('document_url', sa.String(length=300), nullable=True),
     sa.Column('document_name', sa.String(length=300), nullable=True),
+    sa.Column('document_description', sa.String(length=300), nullable=True),
     sa.Column('document_cover_url', sa.String(length=300), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
@@ -65,7 +66,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
-    op.create_table('service_documents',
+    op.create_table('ServiceDocument',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('service_id', sa.Integer(), nullable=True),
     sa.Column('document_id', sa.Integer(), nullable=True),
@@ -122,7 +123,7 @@ def downgrade():
     op.drop_table('service_to_service')
     op.drop_table('service_rols')
     op.drop_table('service_hired')
-    op.drop_table('service_documents')
+    op.drop_table('ServiceDocument')
     op.drop_table('users')
     op.drop_table('service')
     op.drop_table('user_rol')
