@@ -1,5 +1,8 @@
-footer {
-  margin-top: 5cm;
+html {
+  box-sizing: border-box;
+}
+.container {
+  padding-bottom: 200px;
 }
 
 .formulario {
@@ -21,7 +24,25 @@ footer {
 }
 
 footer {
-  margin-top: 5cm;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 200px;
+  padding: 1%;
+  background-color: rgb(255, 217, 146);
+  color: white;
+}
+
+#insta-logo {
+  width: 50px;
+}
+
+#whatsapp-logo {
+  width: 80px;
+  margin-left: 80%;
+  margin-bottom: 50px;
 }
 
 .form-general-div {

@@ -1,3 +1,4 @@
+
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/faq.css";
@@ -7,6 +8,7 @@ import { Link } from "react-router-dom";
 
 export const Faq = () => {
   const { store, actions } = useContext(Context);
+  const { show, setShow } = useState(false);
 
   useEffect(() => {
     actions.getUserFaq();

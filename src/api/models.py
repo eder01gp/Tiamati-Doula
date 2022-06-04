@@ -204,3 +204,18 @@ class BusinessFaq(db.Model):
             "answer": self.answer
         }
 
+class Faq(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    question_id = db.Column(db.String(5), unique=True)
+    question = db.Column(db.String(200))
+    answer_id = db.Column(db.String(5), unique=True)
+    answer = db.Column(db.String(200))  
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "question_id": self.question_id,
+            "question": self.question
+            "answer_id": self.answer_id,
+            "answer": self.answer
+        }
