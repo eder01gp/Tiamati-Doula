@@ -15,7 +15,7 @@ export const Qa = (props) => {
     <div className="accordion-item">
       <h2 className="accordion-header" id={question_id}>
         <button
-          className="accordion-button"
+          className="accordion-button collapsed"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target={`${"#"}` + answer_id}
