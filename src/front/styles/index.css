@@ -3,7 +3,8 @@ footer {
 }
 
 .formulario {
-  width: 60%;
+  margin-top: 7%;
+  width: 80%;
 }
 
 #navbar {
@@ -17,4 +18,22 @@ footer {
 
 #profile-dropdown {
   margin-left: 90%;
+}
+
+footer {
+  margin-top: 5cm;
+}
+
+.form-general-div {
+  margin-top: 7%;
+  width: 60%;
+  box-sizing: unset;
+}
+
+#check-data-saved-form {
+  font-size: 10px;
+}
+
+.div-profile-user {
+  margin-top: 7%;
 }
