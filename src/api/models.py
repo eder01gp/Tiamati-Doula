@@ -31,8 +31,10 @@ class Users(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "rol": self.rol
+            "rol": self.rol,
+            "is_active": self.is_active
         }
+
 
 class UserData(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
@@ -50,7 +52,7 @@ class UserData(db.Model):
     avatar = db.Column(db.String(500))
 
     def __repr__(self):
-        return "User data of user id:"+self.user_id+" name:"+self.name
+        return "User data of user  name:"+self.name
 
     def serialize(self):
         return {
@@ -58,7 +60,7 @@ class UserData(db.Model):
             "user_id": self.user_id,
             "name": self.name,
             "pregnancy_weeks": self.pregnancy_weeks,
-            "aproximate_birth_date": self.aproximate_birth_date,
+            "aproximate_birth_date": self.aproximate_birth_date.strftime("%Y-%m-%d") if self.aproximate_birth_date is not None else None,
             "children_number": self.children_number,
             "caesarean_sections_number": self.caesarean_sections_number,
             "companion": self.companion,
@@ -177,21 +179,61 @@ class Document(db.Model):
             "document_name": self.document_name,
             "document_description": self.document_description,
             "document_cover_url": self.document_cover_url,
+
         }
 
-""" class ServiceDocuments(db.Model): 
+class ServiceDocuments(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
     service_id = db.Column(db.Integer, db.ForeignKey('service.id'))
     service = db.relationship(Service)
     document_id = db.Column(db.Integer, db.ForeignKey('document.id'))
     document = db.relationship(Document)
 
+    
+class UserFaq(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    question_id = db.Column(db.String(5), unique=True)
+    question = db.Column(db.String(200))
+    answer_id = db.Column(db.String(5), unique=True)
+    answer = db.Column(db.String(200))  
+    
     def serialize(self):
         return {
             "id": self.id,
-            "service_id": self.service_id,
-            "service": self.service.name,
-            "document_id": self.document_id,
-            "document": self.document.document_name,
-        } """
+            "question_id": self.question_id,
+            "question": self.question,
+            "answer_id": self.answer_id,
+            "answer": self.answer
+        }
 
+class BusinessFaq(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    question_id = db.Column(db.String(5), unique=True)
+    question = db.Column(db.String(200))
+    answer_id = db.Column(db.String(5), unique=True)
+    answer = db.Column(db.String(200))  
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "question_id": self.question_id,
+            "question": self.question,
+            "answer_id": self.answer_id,
+            "answer": self.answer
+        }
+
+class Faq(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    question_id = db.Column(db.String(5), unique=True)
+    question = db.Column(db.String(200))
+    answer_id = db.Column(db.String(5), unique=True)
+    answer = db.Column(db.String(200))  
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "question_id": self.question_id,
+            "question": self.question
+            "answer_id": self.answer_id,
+            "answer": self.answer
+        }

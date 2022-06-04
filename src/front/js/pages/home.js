@@ -84,7 +84,7 @@ export const Home = () => {
       <div id="services" className="row">
         {store.services.map((serv) => {
           return (
-            <div className="card service-card">
+            <div key={serv.id} className="card service-card">
               <img
                 className="card-img-top"
                 src="https://images.unsplash.com/photo-1585010873004-923f9a54e54e?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169"

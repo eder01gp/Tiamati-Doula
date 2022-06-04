@@ -1,0 +1,295 @@
+.div-bio {
+  margin-top: 3cm;
+  padding-bottom: 5cm;
+  justify-content: center;
+}
+
+.photo {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.lines-images-boxes {
+  height: 5.5cm;
+  width: 5.5cm;
+}
+
+.speech-bubble {
+  max-height: 0;
+}
+
+/* BUBBLE-1 BREAKPOINTS */
+@media (max-width: 750px) {
+  .bubble1 {
+    z-index: 50;
+    top: -20px;
+    left: -5px;
+  }
+}
+@media (min-width: 750px) {
+  .bubble1 {
+    z-index: 50;
+    top: -30px;
+    left: 5px;
+  }
+}
+@media (min-width: 1000px) {
+  .bubble1 {
+    z-index: 50;
+    top: -50px;
+    left: 20px;
+  }
+}
+
+/* BUBBLE-2 BREAKPOINTS */
+@media (max-width: 750px) {
+  .bubble2 {
+    z-index: 50;
+    top: -240px;
+    left: -20px;
+  }
+}
+@media (min-width: 750px) {
+  .bubble2 {
+    z-index: 50;
+    top: -270px;
+    left: 10px;
+  }
+}
+@media (min-width: 1000px) {
+  .bubble2 {
+    z-index: 50;
+    top: -280px;
+    left: 40px;
+  }
+}
+
+/* BUBBLE-3 BREAKPOINTS */
+@media (max-width: 750px) {
+  .bubble3 {
+    z-index: 50;
+    top: -230px;
+    left: -30px;
+  }
+}
+@media (min-width: 750px) {
+  .bubble3 {
+    z-index: 50;
+    top: -260px;
+    left: -5px;
+  }
+}
+@media (min-width: 1000px) {
+  .bubble3 {
+    z-index: 50;
+    top: -285px;
+    left: 20px;
+  }
+}
+
+/* BUBBLE-4 BREAKPOINTS */
+@media (max-width: 750px) {
+  .bubble4 {
+    z-index: 50;
+    top: -30px;
+    left: -20px;
+  }
+}
+@media (min-width: 750px) {
+  .bubble4 {
+    z-index: 50;
+    top: -30px;
+    left: 20px;
+  }
+}
+@media (min-width: 1000px) {
+  .bubble4 {
+    z-index: 50;
+    top: -30px;
+    left: 20px;
+  }
+}
+
+/* BUBBLE-5 BREAKPOINTS */
+@media (max-width: 750px) {
+  .bubble5 {
+    z-index: 50;
+    top: -230px;
+    left: 0;
+  }
+}
+@media (min-width: 750px) {
+  .bubble5 {
+    z-index: 50;
+    top: -260px;
+    left: 40px;
+  }
+}
+@media (min-width: 1000px) {
+  .bubble5 {
+    z-index: 50;
+    top: -280px;
+    left: 80px;
+  }
+}
+
+/* BUBBLE-6 BREAKPOINTS */
+@media (max-width: 750px) {
+  .bubble6 {
+    z-index: 50;
+    top: -230px;
+    left: -40px;
+  }
+}
+@media (min-width: 750px) {
+  .bubble6 {
+    z-index: 50;
+    top: -270px;
+    left: -5px;
+  }
+}
+@media (min-width: 1000px) {
+  .bubble6 {
+    z-index: 50;
+    top: -290px;
+    left: 10px;
+  }
+}
+
+/* BUBBLE-7 BREAKPOINTS */
+@media (max-width: 750px) {
+  .bubble7 {
+    z-index: 50;
+    top: -30px;
+    left: -70px;
+  }
+}
+@media (min-width: 750px) {
+  .bubble7 {
+    z-index: 50;
+    top: -30px;
+    left: -60px;
+  }
+}
+@media (min-width: 1000px) {
+  .bubble7 {
+    z-index: 50;
+    top: -40px;
+    left: -60px;
+  }
+}
+
+/* BUBBLE-8 BREAKPOINTS */
+@media (max-width: 750px) {
+  .bubble8 {
+    z-index: 50;
+    top: -235px;
+    left: -70px;
+  }
+}
+@media (min-width: 750px) {
+  .bubble8 {
+    z-index: 50;
+    top: -270px;
+    left: -60px;
+  }
+}
+@media (min-width: 1000px) {
+  .bubble8 {
+    z-index: 50;
+    top: -290px;
+    left: -50px;
+  }
+}
+
+/* BUBBLE-9 BREAKPOINTS */
+@media (max-width: 750px) {
+  .bubble9 {
+    z-index: 50;
+    top: -230px;
+    left: -70px;
+  }
+}
+@media (min-width: 750px) {
+  .bubble9 {
+    z-index: 50;
+    top: -270px;
+    left: 50px;
+  }
+}
+@media (min-width: 1000px) {
+  .bubble9 {
+    z-index: 50;
+    top: -280px;
+    left: 80px;
+  }
+}
+
+/* BUBBLE-10 BREAKPOINTS */
+@media (max-width: 750px) {
+  .bubble10 {
+    z-index: 50;
+    top: -20px;
+    left: -180px;
+  }
+}
+@media (min-width: 750px) {
+  .bubble10 {
+    z-index: 50;
+    top: -40px;
+    left: -80px;
+  }
+}
+@media (min-width: 1000px) {
+  .bubble10 {
+    z-index: 50;
+    top: -40px;
+    left: -50px;
+  }
+}
+
+/* BUBBLE-11 BREAKPOINTS */
+@media (max-width: 750px) {
+  .bubble11 {
+    z-index: 50;
+    top: -230px;
+    left: -190px;
+  }
+}
+@media (min-width: 750px) {
+  .bubble11 {
+    z-index: 50;
+    top: -270px;
+    left: -60px;
+  }
+}
+@media (min-width: 1000px) {
+  .bubble11 {
+    z-index: 50;
+    top: -280px;
+    left: -20px;
+  }
+}
+
+/* BUBBLE-12 BREAKPOINTS */
+@media (max-width: 750px) {
+  .bubble12 {
+    z-index: 50;
+    top: -240px;
+    left: -180px;
+  }
+}
+@media (min-width: 750px) {
+  .bubble12 {
+    z-index: 50;
+    top: -270px;
+    left: -180px;
+  }
+}
+@media (min-width: 1000px) {
+  .bubble12 {
+    z-index: 50;
+    top: -290px;
+    left: -180px;
+  }
+}

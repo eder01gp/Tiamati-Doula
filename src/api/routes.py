@@ -2,7 +2,9 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceToService, ServiceHired
+
+from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq
+
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 import cloudinary
@@ -52,12 +54,12 @@ def save_or_update_user_form():
     body_birth_place = request.json.get("birth_place")
     body_current_hospital = request.json.get("current_hospital")
     if current_user_id != None:
-        current_user_data = User_Data.query.filter_by(user_id = current_user_id).first()
+        current_user_data = UserData.query.filter_by(user_id = current_user_id).first()
         if current_user_data == None:
-            user_created = User_Data(user_id = current_user_id, name = body_name, pregnancy_weeks = body_pregnancy_weeks, aproximate_birth_date = body_aproximate_birth_date, children_number = body_children_number, caesarean_sections_number =  body_caesarean_sections_number,  companion = body_companion, city = body_city,  birth_place = body_birth_place, current_hospital = body_current_hospital)
+            user_created = UserData(user_id = current_user_id, name = body_name, pregnancy_weeks = body_pregnancy_weeks, aproximate_birth_date = body_aproximate_birth_date, children_number = body_children_number, caesarean_sections_number =  body_caesarean_sections_number,  companion = body_companion, city = body_city,  birth_place = body_birth_place, current_hospital = body_current_hospital)
             db.session.add(user_created)
             db.session.commit()
-            return jsonify({"msg": "Datos guardados correctamente"}), 200   
+            return jsonify({"msg": "Datos guardados correctamente"}), 200    
         else: 
             current_user_data.name = body_name 
             current_user_data.pregnancy_weeks = body_pregnancy_weeks 
@@ -70,6 +72,7 @@ def save_or_update_user_form():
             current_user_data.current_hospital = body_current_hospital
             db.session.commit()
             return jsonify({'msg': "Datos modificados correctamente"}), 200 
+
     else: return jsonify({"msg": "Error, no se han podido guardar los datos"}), 400      
 
 @api.route('/users', methods=['GET'])
@@ -83,7 +86,7 @@ def get_all_users():
 def get_all_users_data():
     users_data = UserData.query.all()
     users_data_serialized = list(map(lambda item: item.serialize(), users_data)) 
-    return jsonify({"response": users_data_serialized}), 200      
+    return jsonify({"response": users_data_serialized}), 200    
 
 @api.route('/profile', methods=['PUT'])
 @jwt_required()
@@ -103,7 +106,7 @@ def change_user_email_or_password():
 def login():
     email = request.json.get("Email", None)
     password = request.json.get("Password", None)
-    user = Users.query.filter_by(email=email).first()
+    user = Users.query.filter_by(email=email).filter_by(is_active=True).first()
     if user is None:
         return jsonify({"msg": "Incorrect email"}), 400
     user = Users.query.filter_by(email=email, password=password).first()
@@ -117,13 +120,25 @@ def login():
 def get_user_info():
     current_user_id = get_jwt_identity()
     user = Users.query.get(current_user_id)
-    current_user_data = User_Data.query.filter_by(user_id = current_user_id).first()
+    current_user_data = UserData.query.filter_by(user_id = current_user_id).first()
     if current_user_id and current_user_data == None:
         return jsonify({"info": user.serialize()}), 200
     elif current_user_id and current_user_data:     
         return jsonify({"info": user.serialize(), "data": current_user_data.serialize() }), 200
     else:
        return jsonify({"user_loggin_info": user.serialize(), "user_data": "No user data" }), 400  
+      
+ @api.route('/deleteUser', methods=['DELETE'])
+@jwt_required()
+def delete_user():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    print(user.serialize())
+    user.is_active = False
+    print(user.serialize())
+    db.session.commit()
+    print(user.serialize())
+    return jsonify({"msg": "User deleted, ok"}), 200     
 
 #upload
 
@@ -174,6 +189,7 @@ def update_document():
         return jsonify({'msg': "Error updating document. Document id not found"}), 400
     
 
+  
 #services
 
 @api.route('/services', methods=['GET'])
@@ -198,7 +214,22 @@ def services():
 
         return jsonify({"response":service_response}), 200    
     else: 
+
         return jsonify({"response":"No services in database"}), 400
+    
+#FAQ
+    
+@api.route('/user_faq', methods=['GET'])
+def get_user_faq():
+    user_faq = UserFaq.query.all()
+    user_faq_serialized = list(map(lambda user_faq: user_faq.serialize(), user_faq))
+    return jsonify({"response": user_faq_serialized}), 200
+
+@api.route('/business_faq', methods=['GET'])
+def get_business_faq():
+    business_faq = BusinessFaq.query.all()
+    business_faq_serialized = list(map(lambda business_faq: business_faq.serialize(), business_faq))
+    return jsonify({"response": business_faq_serialized}), 200
 
 @api.route('/documents', methods=['GET'])
 def documents():

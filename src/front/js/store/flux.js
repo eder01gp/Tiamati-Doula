@@ -2,13 +2,15 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-        "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu46.gitpod.io/" +
+        "https://3001-ederdon-tiamatidoula-f6gaira5d9k.ws-eu46.gitpod.io/" +
         "api",
       logged: null,
       token: null,
+      user_faq: [],
+      business_faq: [],
       users: [],
-      user_info: [],
-      user_data: [],
+      user_info: {},
+      user_data: {},
       faq: [
         {
           id: 1,
@@ -23,10 +25,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             "Nam est neque, semper vitae velit nec, accumsan scelerisque mi. Integer egestas vestibulum posuere. Curabitur laoreet, lacus ut iaculis consectetur, odio dui posuere lacus, a molestie lorem ex at justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         },
       ],
-      documents: [
-      ],
+      documents: [],
       services: [],
     },
+    
     actions: {
       getUsers: async () => {
         const response = await fetch(getStore().url + "/users");
@@ -44,8 +46,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           const data = await resp.json();
           setStore({ user_info: data.info });
-          setStore({ user_data: data.data });
+          setStore({ user_data: data.data || {} });
         } catch (e) {
+          console.log(e);
           setStore({ user_info: null });
           setStore({ user_data: null });
         }
@@ -216,8 +219,28 @@ const getState = ({ getStore, getActions, setStore }) => {
         return data.document_created_url
         
       },
+      deleteUser: async () => {
+        const response = await fetch(getStore().url + "/deleteUser", {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        if (response.status == 200) {
+          getActions().logout();
+        }
+      },     
+     getUserFaq: async () => {
+        const response = await fetch(getStore().url + "/user_faq");
+        const data = await response.json();
+        setStore({ user_faq: data.response });
+      },
+
+      getBusinessFaq: async () => {
+        const response = await fetch(getStore().url + "/business_faq");
+        const data = await response.json();
+        setStore({ business_faq: data.response });
     },
   };
 };
-
 export default getState;
