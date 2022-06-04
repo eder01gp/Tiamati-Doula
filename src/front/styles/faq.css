@@ -24,3 +24,7 @@ body {
 #faq-business h3 {
   margin-bottom: 2%;
 }
+
+.accordion-button {
+  font-weight: 500;
+}

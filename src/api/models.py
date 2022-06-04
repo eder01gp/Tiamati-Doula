@@ -161,7 +161,7 @@ class Document(db.Model):
 
     def serialize(self):
         return {
-            "id": self.id,
+            "id": self.id;
             "document": self.document,
         }
 
@@ -171,3 +171,36 @@ class ServiceDocuments(db.Model):
     service = db.relationship(Service)
     document_id = db.Column(db.Integer, db.ForeignKey('document.id'))
     document = db.relationship(Document)
+    
+class UserFaq(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    question_id = db.Column(db.String(5), unique=True)
+    question = db.Column(db.String(200))
+    answer_id = db.Column(db.String(5), unique=True)
+    answer = db.Column(db.String(200))  
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "question_id": self.question_id,
+            "question": self.question,
+            "answer_id": self.answer_id,
+            "answer": self.answer
+        }
+
+class BusinessFaq(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    question_id = db.Column(db.String(5), unique=True)
+    question = db.Column(db.String(200))
+    answer_id = db.Column(db.String(5), unique=True)
+    answer = db.Column(db.String(200))  
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "question_id": self.question_id,
+            "question": self.question,
+            "answer_id": self.answer_id,
+            "answer": self.answer
+        }
+

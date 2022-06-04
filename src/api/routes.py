@@ -2,9 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-
-from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired
-
+from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 import cloudinary
@@ -86,8 +84,7 @@ def get_all_users():
 def get_all_users_data():
     users_data = UserData.query.all()
     users_data_serialized = list(map(lambda item: item.serialize(), users_data)) 
-    return jsonify({"response": users_data_serialized}), 200      
-
+    return jsonify({"response": users_data_serialized}), 200    
 
 @api.route('/profile', methods=['PUT'])
 @jwt_required()
@@ -172,5 +169,20 @@ def services():
         return jsonify({"response":service_response}), 200    
     else: 
         return jsonify({"No services in database"}), 400
+      
+ #FAQ
+    
+@api.route('/user_faq', methods=['GET'])
+def get_user_faq():
+    user_faq = UserFaq.query.all()
+    user_faq_serialized = list(map(lambda user_faq: user_faq.serialize(), user_faq))
+    return jsonify({"response": user_faq_serialized}), 200
+
+@api.route('/business_faq', methods=['GET'])
+def get_business_faq():
+    business_faq = BusinessFaq.query.all()
+    business_faq_serialized = list(map(lambda business_faq: business_faq.serialize(), business_faq))
+    return jsonify({"response": business_faq_serialized}), 200
+
 
 
