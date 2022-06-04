@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import whatsapp from "../../../img/logo/whatsapp.png";
-import insta from "/workspace/Tiamati-Doula/src/img/logo/Instagram.png";
+import insta from "../../../img/logo/Instagram.png";
 
 export const Footer = () => (
   <footer className="footer text-center position-absolute bottom-0 start-0">

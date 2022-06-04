@@ -241,6 +241,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const data = await response.json();
         setStore({ business_faq: data.response });
     },
-  };
+  },
 };
+}
 export default getState;
