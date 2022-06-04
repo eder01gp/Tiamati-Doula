@@ -1,12 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import propTypes from "prop-types";
+import { useHistory } from "react-router-dom";
 
 export const FormData = (props) => {
   const { store, actions } = useContext(Context);
   const [user, setUser] = useState({});
   const [alert, setAlert] = useState(false);
   const [caesareanSectionInput, setCaesarianSectionInput] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     actions.getUserInfo();
@@ -35,6 +37,7 @@ export const FormData = (props) => {
     setInterval(() => {
       setAlert(false);
     }, 3000);
+    history.push("/profile_user");
   };
 
   return (
@@ -238,5 +241,4 @@ export const FormData = (props) => {
 FormData.propTypes = {
   closeBtn: propTypes.element,
   dismissBtn: propTypes.element,
-  saveBtn: propTypes.func,
 };

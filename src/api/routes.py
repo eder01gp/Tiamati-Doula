@@ -118,9 +118,7 @@ def get_user_info():
     current_user_id = get_jwt_identity()
     user = Users.query.get(current_user_id)
     current_user_data = UserData.query.filter_by(user_id = current_user_id).first()
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@2")
-    print(current_user_data)
-    if current_user_id and current_user_data == None and current_user_data.aproximate_birth_date == None:
+    if current_user_id and current_user_data == None:
         return jsonify({"info": user.serialize()}), 200
     elif current_user_id and current_user_data:     
         return jsonify({"info": user.serialize(), "data": current_user_data.serialize() }), 200
