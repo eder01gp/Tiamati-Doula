@@ -104,7 +104,7 @@ def change_user_email_or_password():
 def login():
     email = request.json.get("Email", None)
     password = request.json.get("Password", None)
-    user = Users.query.filter_by(email=email).first()
+    user = Users.query.filter_by(email=email).filter_by(is_active=True).first()
     if user is None:
         return jsonify({"msg": "Incorrect email"}), 400
     user = Users.query.filter_by(email=email, password=password).first()
@@ -118,13 +118,25 @@ def login():
 def get_user_info():
     current_user_id = get_jwt_identity()
     user = Users.query.get(current_user_id)
-    current_user_data = User_Data.query.filter_by(user_id = current_user_id).first()
+    current_user_data = UserData.query.filter_by(user_id = current_user_id).first()
     if current_user_id and current_user_data == None:
         return jsonify({"info": user.serialize()}), 200
     elif current_user_id and current_user_data:     
         return jsonify({"info": user.serialize(), "data": current_user_data.serialize() }), 200
     else:
        return jsonify({"user_loggin_info": user.serialize(), "user_data": "No user data" }), 400  
+      
+ @api.route('/deleteUser', methods=['DELETE'])
+@jwt_required()
+def delete_user():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    print(user.serialize())
+    user.is_active = False
+    print(user.serialize())
+    db.session.commit()
+    print(user.serialize())
+    return jsonify({"msg": "User deleted, ok"}), 200     
 
 
 @api.route('/upload', methods=['POST'])
@@ -135,6 +147,7 @@ def handle_upload():
 
     return jsonify("document correctly upload"), 200
 
+  
 #services
 
 @api.route('/services', methods=['GET'])

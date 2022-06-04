@@ -30,7 +30,8 @@ class Users(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "rol": self.rol
+            "rol": self.rol,
+            "is_active": self.is_active
         }
 
 
@@ -50,7 +51,7 @@ class UserData(db.Model):
     avatar = db.Column(db.String(500))
 
     def __repr__(self):
-        return "User data of user id:"+self.user_id+" name:"+self.name
+        return "User data of user  name:"+self.name
 
     def serialize(self):
         return {
@@ -58,7 +59,7 @@ class UserData(db.Model):
             "user_id": self.user_id,
             "name": self.name,
             "pregnancy_weeks": self.pregnancy_weeks,
-            "aproximate_birth_date": self.aproximate_birth_date,
+            "aproximate_birth_date": self.aproximate_birth_date.strftime("%Y-%m-%d") if self.aproximate_birth_date is not None else None,
             "children_number": self.children_number,
             "caesarean_sections_number": self.caesarean_sections_number,
             "companion": self.companion,

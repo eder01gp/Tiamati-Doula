@@ -1,19 +1,23 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import propTypes from "prop-types";
+import { useHistory } from "react-router-dom";
 
 export const FormData = (props) => {
   const { store, actions } = useContext(Context);
   const [user, setUser] = useState({});
-  const [alert, setAlert] = useState({ display: "none" });
-  const [caesareanSectionInput, setCaesarianSectionInput] = useState({
-    display: "none",
-  });
+  const [alert, setAlert] = useState(false);
+  const [caesareanSectionInput, setCaesarianSectionInput] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     actions.getUserInfo();
     actions.verify();
   }, []);
+
+  useEffect(() => {
+    setUser(store.user_data);
+  }, [store.user_data]);
 
   const saveUsersData = async () => {
     const response = await fetch(store.url + "/form", {
@@ -25,15 +29,19 @@ export const FormData = (props) => {
       },
     });
     const data = await response.json();
+    if (response.status == 200) {
+      setUser({});
+    }
     actions.getUserInfo();
-    setAlert({ display: "block" });
+    setAlert(true);
     setInterval(() => {
-      setAlert({ display: "none" });
+      setAlert(false);
     }, 3000);
+    history.push("/profile_user");
   };
 
   return (
-    <div className="form-general-div container border border-1 border-dark rounded pb-3 px-3 overflow-auto">
+    <div className="form-general-div container border border-1 border-dark rounded pb-3 px-3 overflow-auto bg-white">
       <div className="text-center mt-3">
         <h6 className="mb-4">
           Este formulario me ayudaría a conocerte mejor y poder ofrecerte un
@@ -48,10 +56,8 @@ export const FormData = (props) => {
             <input
               type="text"
               className="form-control"
-              defaultValue={store.user_data.name}
-              onChange={(e) =>
-                setUser({ ...store.user_data, name: e.target.value })
-              }
+              defaultValue={user ? user.name : null}
+              onChange={(e) => setUser({ ...user, name: e.target.value })}
             />
           </div>
         </div>
@@ -67,9 +73,9 @@ export const FormData = (props) => {
               step="0.5"
               min="1"
               className="form-control"
-              defaultValue={store.user_data.pregnancy_weeks}
+              defaultValue={user ? user.pregnancy_weeks : null}
               onChange={(e) =>
-                setUser({ ...store.user_data, pregnancy_weeks: e.target.value })
+                setUser({ ...user, pregnancy_weeks: e.target.value })
               }
             />
           </div>
@@ -82,16 +88,15 @@ export const FormData = (props) => {
             </div>
             <input
               type="date"
-              name="dia"
-              min="today"
               className="form-control"
-              defaultValue={store.user_data.aproximate_birth_date}
-              onChange={(e) =>
+              id="selectedDate"
+              defaultValue={user ? user.aproximate_birth_date : null}
+              onChange={(e) => {
                 setUser({
-                  ...store.user_data,
+                  ...user,
                   aproximate_birth_date: e.target.value,
-                })
-              }
+                });
+              }}
             />
           </div>
         </div>
@@ -106,43 +111,42 @@ export const FormData = (props) => {
               name="cantidad"
               min="0"
               className="form-control"
-              defaultValue={store.user_data.children_number}
+              defaultValue={user ? user.children_number : null}
               onChange={(e) => {
                 setUser({
-                  ...store.user_data,
+                  ...user,
                   children_number: e.target.value,
                 }),
                   e.target.value > 0
-                    ? setCaesarianSectionInput({ display: "block" })
-                    : setCaesarianSectionInput({ display: "none" });
+                    ? setCaesarianSectionInput(true)
+                    : setCaesarianSectionInput(false);
               }}
             />
           </div>
         </div>
-        <div
-          className="col-auto col-lg-5 col-sm-auto"
-          style={caesareanSectionInput}
-        >
-          <label className="visually-hidden">Nº CESÁREAS</label>
-          <div className="input-group">
-            <div className="input-group-text bg-light">
-              ¿Cuántas cesáreas has tenido?
+        {caesareanSectionInput ? (
+          <div className="col-auto col-lg-5 col-sm-auto">
+            <label className="visually-hidden">Nº CESÁREAS</label>
+            <div className="input-group">
+              <div className="input-group-text bg-light">
+                ¿Cuántas cesáreas has tenido?
+              </div>
+              <input
+                type="number"
+                name="cantidad"
+                min="0"
+                className="form-control"
+                defaultValue={user ? user.caesarean_sections_number : null}
+                onChange={(e) =>
+                  setUser({
+                    ...user,
+                    caesarean_sections_number: e.target.value,
+                  })
+                }
+              />
             </div>
-            <input
-              type="number"
-              name="cantidad"
-              min="0"
-              className="form-control"
-              defaultValue={store.user_data.caesarean_sections_number}
-              onChange={(e) =>
-                setUser({
-                  ...store.user_data,
-                  caesarean_sections_number: e.target.value,
-                })
-              }
-            />
           </div>
-        </div>
+        ) : null}
         <div className="col-auto">
           <label className="visually-hidden">ACOMPAÑANTE</label>
           <div className="input-group">
@@ -152,10 +156,8 @@ export const FormData = (props) => {
             <input
               type="text"
               className="form-control"
-              defaultValue={store.user_data.companion}
-              onChange={(e) =>
-                setUser({ ...store.user_data, companion: e.target.value })
-              }
+              defaultValue={user ? user.companion : null}
+              onChange={(e) => setUser({ ...user, companion: e.target.value })}
             />
           </div>
         </div>
@@ -166,10 +168,8 @@ export const FormData = (props) => {
             <input
               type="text"
               className="form-control"
-              defaultValue={store.user_data.city}
-              onChange={(e) =>
-                setUser({ ...store.user_data, city: e.target.value })
-              }
+              defaultValue={user ? user.city : null}
+              onChange={(e) => setUser({ ...user, city: e.target.value })}
             />
           </div>
         </div>
@@ -180,26 +180,15 @@ export const FormData = (props) => {
               ¿Deseas un parto en hospital o en casa?
             </div>
             <select
+              value={user && user.birth_place ? user.birth_place : false}
               className="form-select"
               onChange={(e) => {
-                setUser({ ...store.user_data, birth_place: e.target.value });
+                setUser({ ...user, birth_place: e.target.value });
               }}
             >
               <option>Elige una opción...</option>
-              <option
-                selected={
-                  store.user_data.birth_place == "Hospital" ? true : false
-                }
-                defaultValue="Hospital"
-              >
-                Hospital
-              </option>
-              <option
-                selected={store.user_data.birth_place == "Casa" ? true : false}
-                defaultValue="Casa"
-              >
-                Casa
-              </option>
+              <option value="Hospital">Hospital</option>
+              <option value="Casa">Casa</option>
             </select>
           </div>
         </div>
@@ -212,10 +201,10 @@ export const FormData = (props) => {
             <input
               type="text"
               className="form-control"
-              defaultValue={store.user_data.current_hospital}
+              defaultValue={user ? user.current_hospital : null}
               onChange={(e) =>
                 setUser({
-                  ...store.user_data,
+                  ...user,
                   current_hospital: e.target.value,
                 })
               }
@@ -224,6 +213,8 @@ export const FormData = (props) => {
         </div>
         <div className="col-12">
           {props.closeBtn}
+          {props.dismissBtn}
+          {props.saveBtn}
           <button
             type="button"
             id="save-data-button"
@@ -234,14 +225,13 @@ export const FormData = (props) => {
           >
             Guardar
           </button>
-          <i
-            className="fa-solid fa-circle-check fa-lg text-success float-start mt-4"
-            style={alert}
-          >
-            <p id="check-data-saved-form" className="d-inline mx-1">
-              Datos guardados correctamente
-            </p>
-          </i>
+          {alert ? (
+            <i className="fa-solid fa-circle-check fa-lg text-success float-start mt-4">
+              <p id="check-data-saved-form" className="d-inline mx-1">
+                Datos guardados correctamente
+              </p>
+            </i>
+          ) : null}
         </div>
       </form>
     </div>
@@ -250,4 +240,5 @@ export const FormData = (props) => {
 
 FormData.propTypes = {
   closeBtn: propTypes.element,
+  dismissBtn: propTypes.element,
 };
