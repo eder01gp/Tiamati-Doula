@@ -6,7 +6,8 @@ html {
 }
 
 .formulario {
-  width: 60%;
+  margin-top: 7%;
+  width: 80%;
 }
 
 #navbar {
@@ -42,4 +43,18 @@ footer {
   width: 80px;
   margin-left: 80%;
   margin-bottom: 50px;
+}
+
+.form-general-div {
+  margin-top: 7%;
+  width: 60%;
+  box-sizing: unset;
+}
+
+#check-data-saved-form {
+  font-size: 10px;
+}
+
+.div-profile-user {
+  margin-top: 7%;
 }

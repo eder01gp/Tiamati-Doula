@@ -6,7 +6,10 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <nav className="navbar navbar-light bg-light fixed-top" id="navbar">
+    <nav
+      className="navbar navbar-light bg-light fixed-top position-relative"
+      id="navbar"
+    >
       <div>
         {/* boton menu */}
         <button
@@ -25,10 +28,18 @@ export const Navbar = () => {
           <Link to="/">
             <li>Inicio</li>
           </Link>
-          <li>Bio</li>
-          <li>Servicios</li>
-          <li>Documentos</li>
-          <li>FAQ</li>
+          <Link to="/bio">
+            <li>Bio</li>
+          </Link>
+          <Link to="/services">
+            <li>Servicios</li>
+          </Link>
+          <Link to="/documents">
+            <li>Documentos</li>
+          </Link>
+          <Link to="/faq">
+            <li>FAQ</li>
+          </Link>
         </ul>
       </div>
 
@@ -49,8 +60,38 @@ export const Navbar = () => {
             id="profile-dropdown"
             aria-labelledby="dropDownMenu"
           >
-            <li>Cerrar Sesión</li>
-            <li>Mi Perfil</li>
+            {localStorage.getItem("rol") == "usuaria" ? (
+              <div>
+                <Link to="/profile_user">
+                  <li>
+                    <p href="#" className="mx-2">
+                      Mi Perfil
+                    </p>
+                  </li>
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <Link to="/profile_company">
+                  <li>
+                    <p href="#" className="mx-2">
+                      Mi Perfil
+                    </p>
+                  </li>
+                </Link>
+              </div>
+            )}
+            <li>
+              <p
+                href="#"
+                className="mx-2"
+                onClick={() => {
+                  actions.logout();
+                }}
+              >
+                Cerrar Sesión
+              </p>
+            </li>
           </ul>
         ) : (
           <ul
@@ -58,8 +99,16 @@ export const Navbar = () => {
             id="profile-dropdown"
             aria-labelledby="dropDownMenu"
           >
-            <li>Iniciar Sesión</li>
-            <li>Registrarse</li>
+            <Link to="/login">
+              <li>
+                <p className="mx-2">Iniciar Sesión</p>
+              </li>
+            </Link>
+            <Link to="/signup">
+              <li>
+                <p className="mx-2">Registrarse</p>
+              </li>
+            </Link>
           </ul>
         )}
       </div>
