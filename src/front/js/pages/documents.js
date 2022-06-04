@@ -1,13 +1,12 @@
 import React, { Component, useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-import doc01 from "../../../img/doc01.jpg";
-/* import docUrl01 from "../../../img/dum.pdf"; */
 import "../../styles/documents.css";
-import { Upload } from "../component/upload";
+import { UploadDocs } from "../component/uploadDocs";
 
 export const Documents = () => {
   const { store, actions } = useContext(Context);
+  const [ documentIdEdit, setDocumentIdEdit ] = useState(null);
 
   useEffect(() => {
     actions.getDocuments();
@@ -21,24 +20,25 @@ export const Documents = () => {
           return (
             <div key={document.id} className=" frame03 card m-2" style={{ width: "220px" }}>
               <img
-                src={doc01}
+                src={document.document_cover_url}
                 className="imgCard card-img-top"
                 alt=""
                 width="auto"
                 height="100px"
               />
               <div className="frame04 card-body">
-                <h6 className="card-title">{document.name}</h6>
+                <h6 className="card-title">{document.document_name}</h6>
                 <p className="card-text">
-                  {document.description}
+                  {document.document_description}
                 </p>
                 <div className="frame05 container d-flex flex-row p-0">
                   <div className="frame06A w-75">
-                    <Link to={"/"}>
-                      <button className="btn btn-light w-100" href="" target="_blank" onClick={() => {window.open(document.documentUrl)}}>
+                      <button className="btn btn-light w-100" href="" target="_blank" onClick={() => {window.open(document.document_url)}}>
                         Ver
                       </button>
-                    </Link>
+                      <button className="btn btn-light w-100" href="" target="_blank" onClick={() => {setDocumentIdEdit(document.id)}}>
+                        Editar
+                      </button>
                   </div>
                 </div>
                 <div className="text-center">
@@ -50,8 +50,21 @@ export const Documents = () => {
         })}
       </div>
       <div className="mt-5">
-        <Upload/>
+        <UploadDocs
+        method="POST"
+        title= "Subir un nuevo documento"
+        btnText= "Subir"
+        />
       </div>
+      <div className="mt-5"> 
+        <UploadDocs
+        documentId={documentIdEdit}
+        method="PUT"
+        title= "Actualizar un documento"
+        btnText= "Actualizar"
+        />
+      </div>
+      
       
     </div>
   );

@@ -2,7 +2,9 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
+
 from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq
+
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 import cloudinary
@@ -138,14 +140,54 @@ def delete_user():
     print(user.serialize())
     return jsonify({"msg": "User deleted, ok"}), 200     
 
+#upload
 
 @api.route('/upload', methods=['POST'])
-def handle_upload():
-    result = cloudinary.uploader.upload(request.files["document"])
-    document_url = result["secure_url"]
-    document_name = request.documentName["documentName"]
+def upload():
+    try:
+        result = cloudinary.uploader.upload(request.files["document"])
+    except:
+        return jsonify({"msg":"Failed to upload to Cloudinary"}), 400
+    document_url = result["secure_url"]    
+    return jsonify({"document_created_url": document_url}), 200
 
-    return jsonify("document correctly upload"), 200
+        
+@api.route('/document', methods=['POST'])
+def new_document():
+    document_url = request.json.get("document_url") 
+    document_name =request.json.get("document_name") 
+    document_description =request.json.get("document_description")
+    document_cover_url =request.json.get("document_cover_url")
+    
+    document_created = Document(
+        document_url = document_url,
+        document_name = document_name,
+        document_description = document_description,
+        document_cover_url = document_cover_url
+        )
+    db.session.add(document_created)
+    db.session.commit()
+    return jsonify({"document_created_id": document_created.id}), 200
+
+@api.route('/document', methods=['PUT'])
+def update_document():
+    document_id = request.json.get("id")
+    document_url = request.json.get("document_url") 
+    document_name = request.json.get("document_name") 
+    document_description = request.json.get("document_description")
+    document_cover_url = request.json.get("document_cover_url")
+
+    document = Document.query.get(document_id)
+    if document:
+        document.document_url = document_url
+        document.document_name = document_name
+        document.document_description = document_description
+        document.document_cover_url = document_cover_url
+        db.session.commit()
+        return jsonify({'msg': "Document correctly updated"}), 200
+    else: 
+        return jsonify({'msg': "Error updating document. Document id not found"}), 400
+    
 
   
 #services
@@ -160,30 +202,22 @@ def services():
             #get rols
             rols = ServiceRols.query.filter_by(service_id=service["id"])
             rols_serialized = list(map(lambda item: item.serialize(), rols))
-            service_rols = []
-            for rol in rols_serialized:
-                rol_name = UserRol.query.get(rol["rol"])
-                service_rols.append(rol_name)
-            #get documents
-            documents = ServiceDocuments.query.filter_by(service_id=service["id"])
-            documents_serialized = list(map(lambda item: item.serialize(), documents))
             services_connected = ServiceToService.query.filter_by(service_id_father=service["id"])
             services_connected_serialized = list(map(lambda item: item.serialize(), services_connected))
             service_complete = {
                 "service_id": service["id"],
                 "service": service,
                 "rols": rols_serialized,
-                #"rols_names": service_rols,
-                "documents": documents_serialized,
                 "services_connected": services_connected_serialized,
             }
             service_response.append(service_complete)
 
         return jsonify({"response":service_response}), 200    
     else: 
-        return jsonify({"No services in database"}), 400
-      
- #FAQ
+
+        return jsonify({"response":"No services in database"}), 400
+    
+#FAQ
     
 @api.route('/user_faq', methods=['GET'])
 def get_user_faq():
@@ -197,5 +231,8 @@ def get_business_faq():
     business_faq_serialized = list(map(lambda business_faq: business_faq.serialize(), business_faq))
     return jsonify({"response": business_faq_serialized}), 200
 
-
-
+@api.route('/documents', methods=['GET'])
+def documents():
+    documents = Document.query.all()
+    documents_serialized = list(map(lambda item: item.serialize(), documents))
+    return jsonify({"response":documents_serialized}), 200  

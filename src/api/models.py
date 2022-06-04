@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+import pickle
 
 db = SQLAlchemy()
 
@@ -68,6 +69,12 @@ class UserData(db.Model):
             "current_hospital": self.current_hospital,
         }
 
+ServiceDocument = db.Table("ServiceDocument",
+    db.Column("id", db.Integer, primary_key=True),
+    db.Column("service_id", db.Integer, db.ForeignKey("service.id")),
+    db.Column("document_id", db.Integer, db.ForeignKey("document.id"))
+    )
+
 class ServiceType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     service_type = db.Column(db.String(150),unique=True,nullable=False)
@@ -98,6 +105,7 @@ class Service(db.Model):
     qty_error = db.Column(db.String(200))
     selected = db.Column(db.Boolean, default= False)
     modal_selected_KO = db.Column(db.String(50))
+    documents = db.relationship("Document", secondary=ServiceDocument, backref=db.backref("Service"))
 
     def __repr__(self):
         return "service: "+self.name
@@ -120,7 +128,9 @@ class Service(db.Model):
             "qty_error": self.qty_error,
             "selected": self.selected,
             "modal_selected_KO": self.modal_selected_KO,
+            "documents": list(map(lambda item: item.serialize(), self.documents))
         }
+    
 
 class ServiceRols(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
@@ -134,6 +144,7 @@ class ServiceRols(db.Model):
             "id": self.id,
             "service": self.service_id,
             "rol": self.rol_id,
+            "rol_name": self.rol.rol
         }
 
 class ServiceToService(db.Model):
@@ -149,21 +160,26 @@ class ServiceHired(db.Model):
     service = db.relationship(Service)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     users = db.relationship(Users)
-    sessions_left: db.Column(db.Integer)
+    sessions_left= db.Column(db.Integer)
 
 class Document(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
     document_url = db.Column(db.String(300))
     document_name = db.Column(db.String(300))
+    document_description = db.Column(db.String(300))
     document_cover_url = db.Column(db.String(300))
     
     def __repr__(self):
-        return "document: "+self.document_name
+        return ("document: "+ self.document_name) if self.document_name is not None else {"document ": "without name"}
 
     def serialize(self):
         return {
-            "id": self.id;
-            "document": self.document,
+            "id": self.id,
+            "document_url": self.document_url,
+            "document_name": self.document_name,
+            "document_description": self.document_description,
+            "document_cover_url": self.document_cover_url,
+
         }
 
 class ServiceDocuments(db.Model): 
@@ -172,6 +188,7 @@ class ServiceDocuments(db.Model):
     service = db.relationship(Service)
     document_id = db.Column(db.Integer, db.ForeignKey('document.id'))
     document = db.relationship(Document)
+
     
 class UserFaq(db.Model): 
     id = db.Column(db.Integer, primary_key=True)

@@ -25,30 +25,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             "Nam est neque, semper vitae velit nec, accumsan scelerisque mi. Integer egestas vestibulum posuere. Curabitur laoreet, lacus ut iaculis consectetur, odio dui posuere lacus, a molestie lorem ex at justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         },
       ],
-      documents: [
-        {
-          id: 1,
-          name: "Consejos del primer trimestre",
-          description: "Las mejoros tips para los primeros meses ",
-          documentUrl:
-            "https://3000-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu45.gitpod.io/doc01.jpg",
-        },
-
-        {
-          id: 3,
-          name: "Consejos del segundo trimestre",
-          description: "Las mejoros tips para los segundos meses ",
-          documentUrl:
-            "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu45.gitpod.io/doc01.jpg",
-        },
-        {
-          id: 7,
-          name: "Consejos del tercer trimestre",
-          description: "Las mejoros tips para los terceros meses",
-          documentUrl:
-            "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu45.gitpod.io/doc01.jpg",
-        },
-      ],
+      documents: [],
       services: [],
     },
     
@@ -95,12 +72,20 @@ const getState = ({ getStore, getActions, setStore }) => {
         localStorage.clear();
         setStore({ logged: false });
       },
-      getDocuments: () => {},
+      getDocuments: async () => {
+        try {
+          const resp = await fetch(getStore().url + "/documents");
+          const data = await resp.json();
+          console.log(data)
+          setStore({ documents: data.response });
+        } catch (e) {
+          console.log("Error getting documents");
+        }        
+      },
       getServices: async () => {
         try {
           const resp = await fetch(getStore().url + "/services");
           const data = await resp.json();
-          console.log(data)
           setStore({ services: data.response });
         } catch (e) {
           console.log("Error getting services");
@@ -224,6 +209,16 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ services: newService });
       },
+      uploadCloud: async (body) =>{
+        const options = {
+            body,
+            method: "POST"
+        }
+        const resp = await fetch(getStore().url+"/upload",options)
+        const data = await resp.json() 
+        return data.document_created_url
+        
+      },
       deleteUser: async () => {
         const response = await fetch(getStore().url + "/deleteUser", {
           method: "DELETE",
@@ -234,9 +229,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         if (response.status == 200) {
           getActions().logout();
         }
-      },
-        
-        getUserFaq: async () => {
+      },     
+     getUserFaq: async () => {
         const response = await fetch(getStore().url + "/user_faq");
         const data = await response.json();
         setStore({ user_faq: data.response });
