@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Users, UserData
+from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 import cloudinary
@@ -57,7 +57,7 @@ def save_or_update_user_form():
             user_created = UserData(user_id = current_user_id, name = body_name, pregnancy_weeks = body_pregnancy_weeks, aproximate_birth_date = body_aproximate_birth_date, children_number = body_children_number, caesarean_sections_number =  body_caesarean_sections_number,  companion = body_companion, city = body_city,  birth_place = body_birth_place, current_hospital = body_current_hospital)
             db.session.add(user_created)
             db.session.commit()
-            return jsonify({"msg": "Datos guardados correctamente"}), 200   
+            return jsonify({"msg": "Datos guardados correctamente"}), 200    
         else: 
             current_user_data.name = body_name 
             current_user_data.pregnancy_weeks = body_pregnancy_weeks 
@@ -70,6 +70,7 @@ def save_or_update_user_form():
             current_user_data.current_hospital = body_current_hospital
             db.session.commit()
             return jsonify({'msg': "Datos modificados correctamente"}), 200 
+
     else: return jsonify({"msg": "Error, no se han podido guardar los datos"}), 400      
 
 @api.route('/users', methods=['GET'])
@@ -83,7 +84,7 @@ def get_all_users():
 def get_all_users_data():
     users_data = UserData.query.all()
     users_data_serialized = list(map(lambda item: item.serialize(), users_data)) 
-    return jsonify({"response": users_data_serialized}), 200      
+    return jsonify({"response": users_data_serialized}), 200    
 
 @api.route('/profile', methods=['PUT'])
 @jwt_required()
@@ -124,6 +125,18 @@ def get_user_info():
         return jsonify({"info": user.serialize(), "data": current_user_data.serialize() }), 200
     else:
        return jsonify({"user_loggin_info": user.serialize(), "user_data": "No user data" }), 400  
+      
+ @api.route('/deleteUser', methods=['DELETE'])
+@jwt_required()
+def delete_user():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    print(user.serialize())
+    user.is_active = False
+    print(user.serialize())
+    db.session.commit()
+    print(user.serialize())
+    return jsonify({"msg": "User deleted, ok"}), 200     
 
 
 @api.route('/upload', methods=['POST'])
@@ -134,16 +147,55 @@ def handle_upload():
 
     return jsonify("document correctly upload"), 200
 
+  
 #services
 
-@api.route('/deleteUser', methods=['DELETE'])
-@jwt_required()
-def delete_user():
-    current_user_id = get_jwt_identity()
-    user = Users.query.get(current_user_id)
-    print(user.serialize())
-    user.is_active = False
-    print(user.serialize())
-    db.session.commit()
-    print(user.serialize())
-    return jsonify({"msg": "User deleted, ok"}), 200
+@api.route('/services', methods=['GET'])
+def services():
+    service_response=[]
+    services = Service.query.all()
+    if services:
+        services_serialized = list(map(lambda item: item.serialize(), services))
+        for service in services_serialized:
+            #get rols
+            rols = ServiceRols.query.filter_by(service_id=service["id"])
+            rols_serialized = list(map(lambda item: item.serialize(), rols))
+            service_rols = []
+            for rol in rols_serialized:
+                rol_name = UserRol.query.get(rol["rol"])
+                service_rols.append(rol_name)
+            #get documents
+            documents = ServiceDocuments.query.filter_by(service_id=service["id"])
+            documents_serialized = list(map(lambda item: item.serialize(), documents))
+            services_connected = ServiceToService.query.filter_by(service_id_father=service["id"])
+            services_connected_serialized = list(map(lambda item: item.serialize(), services_connected))
+            service_complete = {
+                "service_id": service["id"],
+                "service": service,
+                "rols": rols_serialized,
+                #"rols_names": service_rols,
+                "documents": documents_serialized,
+                "services_connected": services_connected_serialized,
+            }
+            service_response.append(service_complete)
+
+        return jsonify({"response":service_response}), 200    
+    else: 
+        return jsonify({"No services in database"}), 400
+      
+ #FAQ
+    
+@api.route('/user_faq', methods=['GET'])
+def get_user_faq():
+    user_faq = UserFaq.query.all()
+    user_faq_serialized = list(map(lambda user_faq: user_faq.serialize(), user_faq))
+    return jsonify({"response": user_faq_serialized}), 200
+
+@api.route('/business_faq', methods=['GET'])
+def get_business_faq():
+    business_faq = BusinessFaq.query.all()
+    business_faq_serialized = list(map(lambda business_faq: business_faq.serialize(), business_faq))
+    return jsonify({"response": business_faq_serialized}), 200
+
+
+

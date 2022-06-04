@@ -34,6 +34,7 @@ class Users(db.Model):
             "is_active": self.is_active
         }
 
+
 class UserData(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -106,17 +107,15 @@ class Service(db.Model):
             "id": self.id,
             "name": self.name,
             "type": self.type,
-            "service_types": self.service_types,
+            "service_type": self.service_type,
             "session_time": self.session_time,
-            "available_to": self.available_to,
-            "access_to_documents": self.access_to_documents,
-            "services_connected": self.services_connected,
+            "session_qty": self.session_qty,
             "sold_per_units": self.sold_per_units,
             "description": self.description,
             "description_includes": self.description_includes,
             "price": self.price,
             "discount": self.discount,
-            "image_url": self.image_url,
+            "service_cover_url": self.service_cover_url,
             "qty": self.qty,
             "qty_error": self.qty_error,
             "selected": self.selected,
@@ -129,6 +128,13 @@ class ServiceRols(db.Model):
     service = db.relationship(Service)
     rol_id = db.Column(db.Integer, db.ForeignKey('user_rol.id'))
     rol= db.relationship(UserRol)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "service": self.service_id,
+            "rol": self.rol_id,
+        }
 
 class ServiceToService(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -156,7 +162,7 @@ class Document(db.Model):
 
     def serialize(self):
         return {
-            "id": self.id,
+            "id": self.id;
             "document": self.document,
         }
 
@@ -166,3 +172,51 @@ class ServiceDocuments(db.Model):
     service = db.relationship(Service)
     document_id = db.Column(db.Integer, db.ForeignKey('document.id'))
     document = db.relationship(Document)
+    
+class UserFaq(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    question_id = db.Column(db.String(5), unique=True)
+    question = db.Column(db.String(200))
+    answer_id = db.Column(db.String(5), unique=True)
+    answer = db.Column(db.String(200))  
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "question_id": self.question_id,
+            "question": self.question,
+            "answer_id": self.answer_id,
+            "answer": self.answer
+        }
+
+class BusinessFaq(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    question_id = db.Column(db.String(5), unique=True)
+    question = db.Column(db.String(200))
+    answer_id = db.Column(db.String(5), unique=True)
+    answer = db.Column(db.String(200))  
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "question_id": self.question_id,
+            "question": self.question,
+            "answer_id": self.answer_id,
+            "answer": self.answer
+        }
+
+class Faq(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    question_id = db.Column(db.String(5), unique=True)
+    question = db.Column(db.String(200))
+    answer_id = db.Column(db.String(5), unique=True)
+    answer = db.Column(db.String(200))  
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "question_id": self.question_id,
+            "question": self.question
+            "answer_id": self.answer_id,
+            "answer": self.answer
+        }
