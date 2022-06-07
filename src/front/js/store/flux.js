@@ -50,8 +50,25 @@ const getState = ({ getStore, getActions, setStore }) => {
         },
       ],
       services: [],
+      monthsNames: [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre",
+      ],
+
+      weekDays: ["L", "M", "X", "J", "V", "S", "D"],
+      endDays: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
     },
-    
+
     actions: {
       getUsers: async () => {
         const response = await fetch(getStore().url + "/users");
@@ -100,74 +117,76 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const resp = await fetch(getStore().url + "/services");
           const data = await resp.json();
-          console.log(data)
+          console.log(data);
           setStore({ services: data.response });
         } catch (e) {
           console.log("Error getting services");
         }
       },
       serviceSelectedQtyChange: (id, newQty, action) => {
-        const newService = getStore().services.map((x)=>{
-          if (x.service.id==id){
-            if (action == "up" && x.service.qty<9){
-              newQty = parseInt(x.service.qty)+1;
-              return {...x, service: {...x.service, qty: newQty} }
-            }
-            else if (action == "down" && x.service.qty>1){
-              newQty = parseInt(x.service.qty)-1;
-              return {...x, service: {...x.service, qty: newQty} }
-            }
-            else if (newQty!=0 && newQty>0 && newQty<10){
-              return {...x, service: {...x.service, qty: newQty} }
-            }
-            else return x
-          }
-          else return x
-        })
-        setStore({services: newService})
+        const newService = getStore().services.map((x) => {
+          if (x.service.id == id) {
+            if (action == "up" && x.service.qty < 9) {
+              newQty = parseInt(x.service.qty) + 1;
+              return { ...x, service: { ...x.service, qty: newQty } };
+            } else if (action == "down" && x.service.qty > 1) {
+              newQty = parseInt(x.service.qty) - 1;
+              return { ...x, service: { ...x.service, qty: newQty } };
+            } else if (newQty != 0 && newQty > 0 && newQty < 10) {
+              return { ...x, service: { ...x.service, qty: newQty } };
+            } else return x;
+          } else return x;
+        });
+        setStore({ services: newService });
         getActions().modalSelectedKO();
       },
-      modalSelectedKO: () =>{
-        const newServiceModals = getStore().services.map((x)=>{
-          if (x.service.qty==1){
-            return {...x, service: {...x.service, modal_selected_KO:"modal"}}
-          }
-          else return {...x, service: {...x.service, modal_selected_KO:""}}
-        })
-        setStore({services: newServiceModals})
-      },      
-      serviceSelectedError: (id) => {  
-        const newService = getStore().services.map((x)=>{
-          if (x.service.id==id && x.service.modal_selected_KO!="modal"){
-            return {...x, service: {...x.service, qty_error:"La cantidad debe estar entre 1 y 9"}}
-          }
-          else return x
-        })
-        setStore({services: newService})
+      modalSelectedKO: () => {
+        const newServiceModals = getStore().services.map((x) => {
+          if (x.service.qty == 1) {
+            return {
+              ...x,
+              service: { ...x.service, modal_selected_KO: "modal" },
+            };
+          } else
+            return { ...x, service: { ...x.service, modal_selected_KO: "" } };
+        });
+        setStore({ services: newServiceModals });
+      },
+      serviceSelectedError: (id) => {
+        const newService = getStore().services.map((x) => {
+          if (x.service.id == id && x.service.modal_selected_KO != "modal") {
+            return {
+              ...x,
+              service: {
+                ...x.service,
+                qty_error: "La cantidad debe estar entre 1 y 9",
+              },
+            };
+          } else return x;
+        });
+        setStore({ services: newService });
       },
       serviceSelectedErrorKO: (id) => {
-        const newService = getStore().services.map((x)=>{
-          return {...x, service: {...x.service, qty_error:""}}
-        })
-        setStore({services: newService})
+        const newService = getStore().services.map((x) => {
+          return { ...x, service: { ...x.service, qty_error: "" } };
+        });
+        setStore({ services: newService });
       },
       serviceSelected: (id) => {
-        const newService = getStore().services.map((x)=>{
-          if (x.service.id==id){
-            return {...x, service: {...x.service, selected:true}}
-          }
-          else return x
-        })
-        setStore({services: newService})
+        const newService = getStore().services.map((x) => {
+          if (x.service.id == id) {
+            return { ...x, service: { ...x.service, selected: true } };
+          } else return x;
+        });
+        setStore({ services: newService });
       },
       serviceSelectedKO: (id) => {
-        const newService = getStore().services.map((x)=>{
-          if (x.service.id==id){
-            return {...x, service: {...x.service, selected:false}}
-          }
-          else return x
-        })
-        setStore({services: newService})
+        const newService = getStore().services.map((x) => {
+          if (x.service.id == id) {
+            return { ...x, service: { ...x.service, selected: false } };
+          } else return x;
+        });
+        setStore({ services: newService });
       },
       serviceSelectedQtyChange: (id, newQty, action) => {
         const newService = getStore().services.map((x) => {
@@ -235,8 +254,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().logout();
         }
       },
-        
-        getUserFaq: async () => {
+
+      getUserFaq: async () => {
         const response = await fetch(getStore().url + "/user_faq");
         const data = await response.json();
         setStore({ user_faq: data.response });
@@ -246,6 +265,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const response = await fetch(getStore().url + "/business_faq");
         const data = await response.json();
         setStore({ business_faq: data.response });
+      },
     },
   };
 };

@@ -5,19 +5,17 @@ import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
 import { Signup } from "./pages/signup";
-
 import { Login } from "./pages/login";
 import { Form } from "./pages/form";
 import { Profile_user } from "./pages/profile_user";
 import { Profile_company } from "./pages/profile_company";
-
 import { Bio } from "./pages/bio";
+import { Appointment } from "./pages/appointment";
 
 import { Faq } from "./pages/faq";
 import { Services } from "./pages/services";
 
 import { Checkout } from "./pages/checkout";
-
 
 import injectContext from "./store/appContext";
 
@@ -76,6 +74,9 @@ const Layout = () => {
             </Route>
             <Route exact path="/bio">
               <Bio />
+            </Route>
+            <Route exact path="/appointment">
+              <Appointment />
             </Route>
             <Route>
               <h1>Not found!</h1>
