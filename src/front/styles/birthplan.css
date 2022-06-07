@@ -1,0 +1,28 @@
+.container {
+}
+#plan-title {
+  background-color: rgb(255, 221, 159);
+  padding: 1%;
+}
+
+#plan-menu {
+  background-color: rgb(255, 244, 225);
+  padding: 1%;
+}
+
+#topic {
+  background-color: white;
+}
+
+#placeholder-img {
+  width: 600px;
+}
+
+#topic-description {
+  margin-top: 50px;
+  padding: 2%;
+}
+
+.comment-card {
+  margin-bottom: 1%;
+}

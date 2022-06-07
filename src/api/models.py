@@ -175,11 +175,11 @@ class Document(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "document": self.document,
             "document_url": self.document_url,
             "document_name": self.document_name,
             "document_description": self.document_description,
             "document_cover_url": self.document_cover_url,
-
         }
 
 class ServiceDocuments(db.Model): 
@@ -222,18 +222,62 @@ class BusinessFaq(db.Model):
             "answer": self.answer
         }
 
-class Faq(db.Model): 
-    id = db.Column(db.Integer, primary_key=True)
-    question_id = db.Column(db.String(5), unique=True)
-    question = db.Column(db.String(200))
-    answer_id = db.Column(db.String(5), unique=True)
-    answer = db.Column(db.String(200))  
 
-    def serialize(self):
+class BirthplanVideos(db.model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+    
+     def serialize(self):
         return {
             "id": self.id,
-            "question_id": self.question_id,
-            "question": self.question,
-            "answer_id": self.answer_id,
-            "answer": self.answer,
+            "name": self.name
         }
+
+class BirthplanOptions(db.model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True)
+    description = db.Column(db.String(500))
+    video_id = db.Column(db.Integer, db.ForeignKey('birthplanvideo.id'))
+    video = db.relationship(BirthplanVideos)
+    comment_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
+    comment = db.relationship(Comment)
+
+    def serialize(self):
+        return{
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "video": self.video,
+            "comment": self.comment
+        }
+
+class BirthplanSelected(db.model):
+    id = db.Column(db.Integer, primary_key=True)
+    option_id = db.Column(db.Integer, db.ForeignKey('birthplanoptions.id'))
+    option = db.relationship(BirthplanOptions)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    users = db.relationship(Users)
+
+    def serialize(self):
+        return{
+            "id": self.id,
+            "option": self.option,
+            "user": self.user
+        }
+
+class Comment(db.model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    users = db.relationship(Users)
+    option_id = db.Column(db.Integer, db.ForeignKey('birthplanoptions.id'))
+    option = db.relationship(BirthplanOptions)
+    comment = db.Column(db.String(500))
+
+    def serialize(db.model):
+        "id": self.id,
+        "user": self.user,
+        "comment": self.comment
+
+            
+        }
+

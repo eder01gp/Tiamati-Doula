@@ -135,13 +135,42 @@ export const Home = () => {
         >
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <p>hola</p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                interdum dictum neque vel volutpat. Etiam urna justo, luctus a
+                mattis id, sollicitudin eget massa. Sed maximus ut orci non
+                scelerisque. Nam at blandit mauris, tincidunt tempus sem. Fusce
+                posuere arcu tellus, et rutrum elit sodales et. Nunc malesuada,
+                arcu eu cursus viverra, tellus nibh ornare nulla, et viverra
+                urna tortor nec elit. Donec facilisis nec enim eget pharetra.
+                Donec varius nibh non rhoncus congue. Donec lacinia tortor nisl,
+                quis imperdiet neque ullamcorper id.
+              </p>
             </div>
             <div className="carousel-item">
-              <p>hola</p>
+              <p>
+                Aenean sagittis dolor quis turpis efficitur consequat. Nulla ex
+                velit, laoreet in faucibus et, finibus eu mauris. Duis sodales
+                augue et pretium vulputate. Sed imperdiet elit justo, eget
+                porttitor neque tincidunt ac. Ut sodales facilisis nisl. Proin
+                suscipit bibendum elementum. Nulla at erat eget ex ultricies
+                rutrum. Mauris lacinia accumsan risus, quis sagittis sem semper
+                pellentesque. Nam cursus massa ex, interdum egestas mi pharetra
+                id. Vivamus tincidunt massa sit amet dui imperdiet
+              </p>
             </div>
             <div className="carousel-item">
-              <p>hola</p>
+              <p>
+                Pellentesque facilisis lectus id velit ultrices mollis. Fusce in
+                nibh nec magna facilisis tempor. Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit. Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit. Aliquam est dui, pretium in
+                molestie non, venenatis fringilla justo. Aliquam laoreet gravida
+                fringilla. Nullam in ligula consequat, sollicitudin turpis in,
+                scelerisque ligula. Mauris nec dapibus nibh. Vivamus porta odio
+                id molestie tincidunt. Duis malesuada gravida mauris, vel mollis
+                tortor imperdiet nec.
+              </p>
             </div>
           </div>
           <button
@@ -150,7 +179,10 @@ export const Home = () => {
             data-bs-target="#carouselExampleControls"
             data-bs-slide="prev"
           >
-            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span
+              className="carousel-control-prev-icon"
+              aria-hidden="true"
+            ></span>
             <span className="visually-hidden">Previous</span>
           </button>
           <button
@@ -159,7 +191,10 @@ export const Home = () => {
             data-bs-target="#carouselExampleControls"
             data-bs-slide="next"
           >
-            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+            <span
+              className="carousel-control-next-icon"
+              aria-hidden="true"
+            ></span>
             <span className="visually-hidden">Next</span>
           </button>
         </div>
