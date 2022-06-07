@@ -128,7 +128,7 @@ def get_user_info():
     else:
        return jsonify({"user_loggin_info": user.serialize(), "user_data": "No user data" }), 400  
       
- @api.route('/deleteUser', methods=['DELETE'])
+@api.route('/deleteUser', methods=['DELETE'])
 @jwt_required()
 def delete_user():
     current_user_id = get_jwt_identity()
@@ -187,8 +187,13 @@ def update_document():
         return jsonify({'msg': "Document correctly updated"}), 200
     else: 
         return jsonify({'msg': "Error updating document. Document id not found"}), 400
-    
 
+  
+@api.route('/documents', methods=['GET'])
+def documents():
+    documents = Document.query.all()
+    documents_serialized = list(map(lambda item: item.serialize(), documents))
+    return jsonify({"response":documents_serialized}), 200  
   
 #services
 
@@ -231,8 +236,3 @@ def get_business_faq():
     business_faq_serialized = list(map(lambda business_faq: business_faq.serialize(), business_faq))
     return jsonify({"response": business_faq_serialized}), 200
 
-@api.route('/documents', methods=['GET'])
-def documents():
-    documents = Document.query.all()
-    documents_serialized = list(map(lambda item: item.serialize(), documents))
-    return jsonify({"response":documents_serialized}), 200  

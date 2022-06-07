@@ -45,7 +45,7 @@ export const UploadDocs = (props) => {
 
     return (
         <div className="container">
-            <div className="d-flex flex-column mt-3">
+            <div className="d-flex flex-column">
                 <div className="">
                     <p className="">{props.title}</p>
                 </div>

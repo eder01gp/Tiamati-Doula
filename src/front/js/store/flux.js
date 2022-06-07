@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-        "https://3001-ederdon-tiamatidoula-f6gaira5d9k.ws-eu46.gitpod.io/" +
+      "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu46.gitpod.io/" +
         "api",
       logged: null,
       token: null,
@@ -92,7 +92,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       serviceSelectedQtyChange: (id, newQty, action) => {
+        console.log("+");
         const newService = getStore().services.map((x)=>{
+          console.log("qty change service",x)
           if (x.service.id==id){
             if (action == "up" && x.service.qty<9){
               newQty = parseInt(x.service.qty)+1;
@@ -154,61 +156,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         })
         setStore({services: newService})
       },
-      serviceSelectedQtyChange: (id, newQty, action) => {
-        const newService = getStore().services.map((x) => {
-          if (x.id == id) {
-            if (action == "up" && x.qty < 9) {
-              newQty = parseInt(x.qty) + 1;
-              return { ...x, qty: newQty };
-            } else if (action == "down" && x.qty > 1) {
-              newQty = parseInt(x.qty) - 1;
-              return { ...x, qty: newQty };
-            } else if (newQty != 0 && newQty > 0 && newQty < 10) {
-              return { ...x, qty: newQty };
-            } else return x;
-          } else return x;
-        });
-        setStore({ services: newService });
-        getActions().modalSelectedKO();
-      },
-      modalSelectedKO: () => {
-        const newServiceModals = getStore().services.map((x) => {
-          if (x.qty == 1) {
-            return { ...x, modalSelectedKO: "modal" };
-          } else return { ...x, modalSelectedKO: "" };
-        });
-        setStore({ services: newServiceModals });
-      },
-      serviceSelectedError: (id) => {
-        const newService = getStore().services.map((x) => {
-          if (x.id == id && x.modalSelectedKO != "modal") {
-            return { ...x, qtyError: "La cantidad debe estar entre 0 y 9" };
-          } else return x;
-        });
-        setStore({ services: newService });
-      },
-      serviceSelectedErrorKO: (id) => {
-        const newService = getStore().services.map((x) => {
-          return { ...x, qtyError: "" };
-        });
-        setStore({ services: newService });
-      },
-      serviceSelected: (id) => {
-        const newService = getStore().services.map((x) => {
-          if (x.id == id) {
-            return { ...x, selected: true };
-          } else return x;
-        });
-        setStore({ services: newService });
-      },
-      serviceSelectedKO: (id) => {
-        const newService = getStore().services.map((x) => {
-          if (x.id == id) {
-            return { ...x, selected: false };
-          } else return x;
-        });
-        setStore({ services: newService });
-      },
       uploadCloud: async (body) =>{
         const options = {
             body,
@@ -230,17 +177,16 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().logout();
         }
       },     
-     getUserFaq: async () => {
+      getUserFaq: async () => {
         const response = await fetch(getStore().url + "/user_faq");
         const data = await response.json();
         setStore({ user_faq: data.response });
       },
-
       getBusinessFaq: async () => {
         const response = await fetch(getStore().url + "/business_faq");
         const data = await response.json();
         setStore({ business_faq: data.response });
-    },
+      },
   },
 };
 }

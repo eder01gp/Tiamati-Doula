@@ -2,7 +2,7 @@ html {
   box-sizing: border-box;
 }
 .container {
-  padding-bottom: 200px;
+  /* padding-bottom: 200px; cancelado porque afecta a todos los containers de la web*/
 }
 
 .formulario {
@@ -13,6 +13,7 @@ html {
 #navbar {
   padding-left: 1%;
   padding-right: 1%;
+  background-color: rgba(1, 1, 1, 0.2);
 }
 
 #menu-dropdown {
@@ -24,15 +25,15 @@ html {
 }
 
 footer {
-  position: absolute;
+/*   position: absolute;
   left: 0;
   bottom: 0;
   right: 0;
   width: 100%;
   height: 200px;
-  padding: 1%;
+  padding: 1%; */
+  color: white; 
   background-color: rgb(255, 217, 146);
-  color: white;
 }
 
 #insta-logo {

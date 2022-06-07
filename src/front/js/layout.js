@@ -2,29 +2,25 @@ import React, { useContext } from "react";
 import { Context } from "./store/appContext";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
+import { Navbar } from "./component/navbar";
+import { Footer } from "./component/footer";
 
 import { Home } from "./pages/home";
 import { Signup } from "./pages/signup";
-
 import { Login } from "./pages/login";
 import { Form } from "./pages/form";
 import { Profile_user } from "./pages/profile_user";
 import { Profile_company } from "./pages/profile_company";
-
 import { Bio } from "./pages/bio";
-
 import { Faq } from "./pages/faq";
 import { Services } from "./pages/services";
-
 import { Checkout } from "./pages/checkout";
-
+import { Documents } from "./pages/documents";
 
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
 import { Redirect } from "react-router-dom";
-import { Documents } from "./pages/documents";
+
 
 const Layout = () => {
   const basename = process.env.BASENAME || "";
