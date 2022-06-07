@@ -1,5 +1,8 @@
-footer {
-  margin-top: 5cm;
+html {
+  box-sizing: border-box;
+}
+.container {
+  /* padding-bottom: 200px; cancelado porque afecta a todos los containers de la web*/
 }
 
 .formulario {
@@ -10,6 +13,7 @@ footer {
 #navbar {
   padding-left: 1%;
   padding-right: 1%;
+  background-color: rgba(1, 1, 1, 0.2);
 }
 
 #menu-dropdown {
@@ -21,7 +25,25 @@ footer {
 }
 
 footer {
-  margin-top: 5cm;
+/*   position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 200px;
+  padding: 1%; */
+  color: white; 
+  background-color: rgb(255, 217, 146);
+}
+
+#insta-logo {
+  width: 50px;
+}
+
+#whatsapp-logo {
+  width: 80px;
+  margin-left: 80%;
+  margin-bottom: 50px;
 }
 
 .form-general-div {
@@ -34,6 +56,6 @@ footer {
   font-size: 10px;
 }
 
-.div-profile-user {
+.div-profile {
   margin-top: 7%;
 }

@@ -14,7 +14,7 @@
 #header-img {
   width: 1320px;
   height: 300px;
-  background-image: url(https://imagesvc.meredithcorp.io/v3/mm/image?url=https://static.onecms.io/wp-content/uploads/sites/24/2017/02/gettyimages-623380230-2000.jpg);
+  background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1654589067/illustrations/Banner_dark_y73sds.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -48,12 +48,13 @@
 
 #bio {
   height: 500px;
-  background-image: url(https://i.pinimg.com/736x/2d/47/e2/2d47e2d157e85ccdbc208c8568a74bb6.jpg);
+  background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1654589077/illustrations/Portrait_yellow_purple_phkh10.jpg);
   background-position-y: 15%;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   padding-top: 10%;
   padding-left: 8%;
+  background-position: center;
 }
 
 #hello-text {

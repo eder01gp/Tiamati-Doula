@@ -4,6 +4,8 @@ import "../../styles/home.css";
 import { Navbar } from "../component/navbar";
 import { Link } from "react-router-dom";
 import logo from "../../../img/logo/logo.png";
+import banner from "../../img/illustrations/Banner_dark.jpg";
+
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -70,21 +72,21 @@ export const Home = () => {
 
       {/* bio */}
       <div id="bio" className="row">
-        <div id="hello-text">
-          <h3>¡Hola! ¡Soy Margarida!</h3>
+        {/* <div id="hello-text"> */}
+          {/* <h3>¡Hola! ¡Soy Margarida!</h3>
           <Link to="/bio">
             <button className="btn btn-primary bio-button">
               Esta es mi historia
             </button>
-          </Link>
-        </div>
+          </Link> */}
+        {/* </div> */}
       </div>
 
       {/* services */}
       <div id="services" className="row">
         {store.services.map((serv) => {
           return (
-            <div className="card service-card">
+            <div key={serv.id} className="card service-card">
               <img
                 className="card-img-top"
                 src="https://images.unsplash.com/photo-1585010873004-923f9a54e54e?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169"
