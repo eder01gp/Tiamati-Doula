@@ -184,5 +184,44 @@ def get_business_faq():
     business_faq_serialized = list(map(lambda business_faq: business_faq.serialize(), business_faq))
     return jsonify({"response": business_faq_serialized}), 200
 
+#Birthplan
+
+@api.route('/birthplan_video', methods={'GET'})
+def get_videos():
+    bp_videos = BirthplanVideos.query.all()
+    bp_videos_serialized = list(map(lambda bp_videos: bp_videos.serialize(), bp_videos))
+    return jsonify({"response": bp_videos_serialized}), 200
+
+@api.route('/birthplan_options', methods={'GET'})
+def get_options():
+    bp_options = BirthplanOptions.query.all()
+    bp_options_serialized = list(map(lambda bp_options: bp_options.serialize(), bp_options))
+    return jsonify({"response": bp_options_serialized}), 200
+
+@api.route('/birthplan_selected', methods={'POST'})
+def post_selected():
+    option = request.json.get("option")
+    user = request.json.get("user")
+    return jsonify({"selected": True})
+
+@api.route('/birthplan_selected', methods={'GET'})
+def get_selected():
+    bp_selected = BirthplanSelected.query.all()
+    bp_selected_serialized = list(map(lambda bp_selected: bp_selected.serialize(), bp_selected))
+    return jsonify({"response": bp_selected_serialized}), 200
+
+@api.route('/comment', methods={'POST'})
+def post_comment():
+    user = request.json.get("user")
+    option = request.json.get("option")
+    comment = request.json.get("comment")
+    return jsonify({"posted": True})
+
+@api.route('/comment', methods{'GET'})
+def get_comments():
+    comments = Comment.query.all()
+    comments_serialized = list(map(lambda comments: comments.serialize(), comments))
+    return jsonify({"response": comments_serialized}), 200
+
 
 
