@@ -233,7 +233,7 @@ class Faq(db.Model):
         return {
             "id": self.id,
             "question_id": self.question_id,
-            "question": self.question
+            "question": self.question,
             "answer_id": self.answer_id,
-            "answer": self.answer
+            "answer": self.answer,
         }

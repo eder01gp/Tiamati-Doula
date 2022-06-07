@@ -6,7 +6,7 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <nav className="navbar navbar-light bg-light fixed-top" id="navbar">
+    <nav className="navbar navbar-light fixed-top" id="navbar">
       <div>
         {/* boton menu */}
         <button

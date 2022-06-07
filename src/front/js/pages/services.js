@@ -29,9 +29,9 @@ export const Services = () => {
     <div className="frame01 container ">
       <h1> Servicios </h1>
       <div className="frame02 row d-flex overflow-auto justify-content-center flex-wrap">
-        {store.services.map((service, i) => {
+        {store.services.map((service) => {
           return (
-            <div key={service.service.id} className=" frame03 card my-2" style={{ width: "440px" }}>
+            <div key={service.service_id} className=" frame03 card my-2" style={{ width: "440px" }}>
               <img
                 src={service01}
                 className="imgCard card-img-top"
@@ -51,7 +51,7 @@ export const Services = () => {
                   <div className="frame06A w-75">
                     <Link to={"/checkout"}>
                       <button className="btn btn-light w-100" onClick={() => {
-                        actions.serviceSelected(service.service.id)
+                        actions.serviceSelected(service.service_id)
                       }}>
                         Lo quiero
                       </button>
@@ -62,9 +62,9 @@ export const Services = () => {
                       className="btn btn-light text-center w-25 p-1"
                       onClick={() => {
                         if (service.service.qty<9){
-                          actions.serviceSelectedQtyChange(service.service.id,0,"up");
+                          actions.serviceSelectedQtyChange(service.service_id,0,"up");
                         }
-                        else setError(service.service.id)                        
+                        else setError(service.service_id)                        
                       }}
                     >+</button>
                     <input
@@ -78,9 +78,9 @@ export const Services = () => {
                       onChange={(evt) => {
                         const re = /[0-9]/;
                         if (re.test(evt.target.value)&&(evt.target.value<10)&&(evt.target.value>0)) {
-                          actions.serviceSelectedQtyChange(service.service.id, evt.target.value, null)
+                          actions.serviceSelectedQtyChange(service.service_id, evt.target.value, null)
                         }
-                        else setError(service.service.id)
+                        else setError(service.service_id)
                       }}
                     />
                     <button
@@ -88,9 +88,9 @@ export const Services = () => {
                       className="btn btn-light text-center w-25 p-1"
                       onClick={() => {
                         if (service.service.qty>1){
-                        actions.serviceSelectedQtyChange(service.service.id,0,"down");
+                        actions.serviceSelectedQtyChange(service.service_id,0,"down");
                         }
-                        else setError(service.service.id)
+                        else setError(service.service_id)
                       }}
                     >
                       -

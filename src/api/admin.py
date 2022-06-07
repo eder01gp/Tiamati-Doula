@@ -25,8 +25,8 @@ def setup_admin(app):
     admin.add_view(MyModel(ServiceRols, db.session))
     admin.add_view(MyModel(ServiceHired, db.session))
     admin.add_view(MyModel(ServiceToService, db.session))
-    admin.add_view(ModelView(UserFaq, db.session))
-    admin.add_view(ModelView(BusinessFaq, db.session))
+    admin.add_view(MyModel(UserFaq, db.session))
+    admin.add_view(MyModel(BusinessFaq, db.session))
 
 
 

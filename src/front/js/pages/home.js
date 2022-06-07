@@ -4,6 +4,8 @@ import "../../styles/home.css";
 import { Navbar } from "../component/navbar";
 import { Link } from "react-router-dom";
 import logo from "../../../img/logo/logo.png";
+import banner from "../../img/illustrations/Banner_dark.jpg";
+
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -70,14 +72,14 @@ export const Home = () => {
 
       {/* bio */}
       <div id="bio" className="row">
-        <div id="hello-text">
-          <h3>¡Hola! ¡Soy Margarida!</h3>
+        {/* <div id="hello-text"> */}
+          {/* <h3>¡Hola! ¡Soy Margarida!</h3>
           <Link to="/bio">
             <button className="btn btn-primary bio-button">
               Esta es mi historia
             </button>
-          </Link>
-        </div>
+          </Link> */}
+        {/* </div> */}
       </div>
 
       {/* services */}

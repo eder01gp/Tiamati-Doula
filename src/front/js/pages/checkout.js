@@ -154,8 +154,9 @@ export const Checkout = () => {
           <div className="col-sm-3 d-flex justify-content-end">
           {total} €
           </div>
-        </div><div className="addServices mt-5"><h4>Añade más servicios</h4></div>
-        
+        </div>
+        <div className="addServices mt-5"><h4>Añade más servicios</h4>
+        </div>
         {store.services.map((service, i) => {
             if (service.service.selected != true) {
               return (
@@ -206,16 +207,17 @@ export const Checkout = () => {
           )
           }
         })}
-        <div className="addServices mt-5"><h4>Datos usuaria</h4></div>
-          <ul class="nav nav-pills">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#" >Active</a>
+{/*         <div className="addServices mt-5"><h4>Datos usuaria</h4></div>
+          <ul className="nav nav-pills">
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="#" >Active</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Link</a>
             </li>
           </ul>
-      </div>
+         */}
+    </div>     
     </div>   
   );
 };
