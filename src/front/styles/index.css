@@ -1,8 +1,9 @@
 html {
   box-sizing: border-box;
 }
-.container {
-  /* padding-bottom: 200px; cancelado porque afecta a todos los containers de la web*/
+
+.div-home {
+  padding-bottom: 100px;
 }
 
 .formulario {
@@ -14,6 +15,7 @@ html {
   padding-left: 1%;
   padding-right: 1%;
   background-color: rgba(1, 1, 1, 0.2);
+  height: 50px;
 }
 
 #menu-dropdown {
@@ -24,20 +26,9 @@ html {
   margin-left: 90%;
 }
 
-footer {
-/*   position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 200px;
-  padding: 1%; */
-  color: white; 
-  background-color: rgb(255, 217, 146);
-}
-
 #insta-logo {
   width: 50px;
+  cursor: pointer;
 }
 
 #whatsapp-logo {
@@ -58,4 +49,22 @@ footer {
 
 .div-profile {
   margin-top: 7%;
+}
+
+.page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.content-wrap {
+  padding-bottom: 11rem; /* Footer height */
+  padding-top: 50px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 11rem;
+  background-color: rgb(255, 217, 146); /* Footer height */
 }

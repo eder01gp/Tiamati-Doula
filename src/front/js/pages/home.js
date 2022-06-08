@@ -1,17 +1,14 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import { Navbar } from "../component/navbar";
 import { Link } from "react-router-dom";
 import logo from "../../../img/logo/logo.png";
-import banner from "../../img/illustrations/Banner_dark.jpg";
-
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div className="container">
+    <div className="div-home container">
       {/* header */}
       <div id="header" className="row">
         <div id="header-logo">
@@ -73,7 +70,7 @@ export const Home = () => {
       {/* bio */}
       <div id="bio" className="row">
         {/* <div id="hello-text"> */}
-          {/* <h3>¡Hola! ¡Soy Margarida!</h3>
+        {/* <h3>¡Hola! ¡Soy Margarida!</h3>
           <Link to="/bio">
             <button className="btn btn-primary bio-button">
               Esta es mi historia

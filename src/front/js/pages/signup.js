@@ -6,7 +6,7 @@ export const Signup = () => {
   const [user, setUser] = useState({});
   const [check, setCheck] = useState(false);
   const [error, setError] = useState();
-  const { store } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const history = useHistory();
 
   const saveUsersInDB = async () => {
@@ -18,11 +18,6 @@ export const Signup = () => {
       user.password.trim() != ""
     ) {
       setError(null);
-      if (check == false) {
-        history.push("/form");
-      } else if (check == true) {
-        history.push("/");
-      }
       const response = await fetch(store.url + "/signup", {
         method: "POST",
         body: JSON.stringify(user),
@@ -36,6 +31,13 @@ export const Signup = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("ID", data.User.id);
       localStorage.setItem("rol", data.User.rol);
+
+      if (check == false) {
+        history.push("/form");
+      } else if (check == true) {
+        actions.verify();
+        history.push("/");
+      }
     } else {
       setError("Error, revisa tu email o contraseña");
     }
