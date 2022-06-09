@@ -39,10 +39,18 @@ export const Calendar = () => {
     month = store.monthsNames[mN];
   };
 
-  //*this makes the week start on Monday & end on Sunday*//
+  /*return the number of the week day == first day of month*/
   const startDay = () => {
     let start = new Date(currentYear, monthNum, 1);
+    /*this makes the week start on Monday & end on Sunday*/
     return start.getDay() - 1 == -1 ? 6 : start.getDay() - 1;
+  };
+
+  /*return the number of the week day == last day of month*/
+  const endDay = () => {
+    let end = new Date(currentYear, monthNum, store.endDays[monthNum]);
+    /*this makes the week start on Monday & end on Sunday*/
+    return end.getDay() - 1 == -1 ? 6 : end.getDay() - 1;
   };
 
   const getTotalDays = (monthN) => {
@@ -61,33 +69,36 @@ export const Calendar = () => {
   };
 
   //* 3 functions for calendar day numbers*//
-  const generateDaysOFmonth = () => {
+  const generateMonthDays = () => {
     let days = [];
     for (let i = 1; i <= getTotalDays(monthNum); i++) {
       days.push(i);
     }
     return days;
   };
-  const days = generateDaysOFmonth();
+  const days = generateMonthDays();
 
-  const prevMonthDays = () => {
-    let prevDays = [];
+  const generatePrevMonthDays = () => {
+    let prevMonthDays = [];
     for (let i = startDay(); i > 0; i--) {
-      prevDays.push(getTotalDays(monthNum - 1) - (i - 1));
+      prevMonthDays.push(
+        getTotalDays(monthNum - 1 == -1 ? 11 : monthNum - 1) - (i - 1)
+      );
     }
-    return prevDays;
+    return prevMonthDays;
   };
-  const prevDays = prevMonthDays();
+  const prevMonthDays = generatePrevMonthDays();
 
-  const nextMonthDays = () => {
-    let nextDays = [];
-    for (let i = store.endDays[monthNum]; i > 0; i++) {
-      nextDays.push(getTotalDays(monthNum + 1));
-      return nextDays;
+  const generateNextMonthDays = () => {
+    let nextMonthDays = [];
+    let d = 0;
+    for (let i = endDay(); i < 6; i++) {
+      d += 1;
+      nextMonthDays.push(d);
     }
+    return nextMonthDays;
   };
-  const nextDays = nextMonthDays();
-  console.log(nextDays);
+  const nextMonthDays = generateNextMonthDays();
 
   /// --- RENDER --- ///
   return (
@@ -131,10 +142,10 @@ export const Calendar = () => {
       </div>
 
       <div className="calendar-body-columns">
-        {prevDays.map((x) => {
+        {prevMonthDays.map((prev) => {
           return (
-            <div key={x} className="calendar-prev-num-day">
-              {x}
+            <div key={prev} className="calendar-prev-month-day">
+              {prev}
             </div>
           );
         })}
@@ -152,6 +163,13 @@ export const Calendar = () => {
               </div>
             );
           }
+        })}
+        {nextMonthDays.map((next) => {
+          return (
+            <div key={next} className="calendar-next-month-day">
+              {next}
+            </div>
+          );
         })}
       </div>
     </div>

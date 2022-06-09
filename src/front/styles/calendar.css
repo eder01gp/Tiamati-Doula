@@ -43,6 +43,7 @@
   margin: auto;
 }
 
-.calendar-prev-num-day {
+.calendar-prev-month-day,
+.calendar-next-month-day {
   color: rgb(128, 128, 128);
 }

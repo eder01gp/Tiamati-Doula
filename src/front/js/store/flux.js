@@ -11,44 +11,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       users: [],
       user_info: {},
       user_data: {},
-      faq: [
-        {
-          id: 1,
-          question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
-          answer:
-            "Nam est neque, semper vitae velit nec, accumsan scelerisque mi. Integer egestas vestibulum posuere. Curabitur laoreet, lacus ut iaculis consectetur, odio dui posuere lacus, a molestie lorem ex at justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        },
-        {
-          id: 2,
-          question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
-          answer:
-            "Nam est neque, semper vitae velit nec, accumsan scelerisque mi. Integer egestas vestibulum posuere. Curabitur laoreet, lacus ut iaculis consectetur, odio dui posuere lacus, a molestie lorem ex at justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        },
-      ],
-      documents: [
-        {
-          id: 1,
-          name: "Consejos del primer trimestre",
-          description: "Las mejoros tips para los primeros meses ",
-          documentUrl:
-            "https://3000-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu45.gitpod.io/doc01.jpg",
-        },
-
-        {
-          id: 3,
-          name: "Consejos del segundo trimestre",
-          description: "Las mejoros tips para los segundos meses ",
-          documentUrl:
-            "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu45.gitpod.io/doc01.jpg",
-        },
-        {
-          id: 7,
-          name: "Consejos del tercer trimestre",
-          description: "Las mejoros tips para los terceros meses",
-          documentUrl:
-            "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu45.gitpod.io/doc01.jpg",
-        },
-      ],
       services: [],
       monthsNames: [
         "Enero",
@@ -64,7 +26,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         "Noviembre",
         "Diciembre",
       ],
-
       weekDays: ["L", "M", "X", "J", "V", "S", "D"],
       endDays: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
     },
