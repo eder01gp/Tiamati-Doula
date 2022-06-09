@@ -131,7 +131,7 @@ export const Home = () => {
           data-bs-ride="carousel"
         >
           <div className="carousel-inner">
-            <div className="carousel-item active">
+            <div key={1} className="carousel-item active">
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
                 interdum dictum neque vel volutpat. Etiam urna justo, luctus a
@@ -144,7 +144,7 @@ export const Home = () => {
                 quis imperdiet neque ullamcorper id.
               </p>
             </div>
-            <div className="carousel-item">
+            <div key={2} className="carousel-item">
               <p>
                 Aenean sagittis dolor quis turpis efficitur consequat. Nulla ex
                 velit, laoreet in faucibus et, finibus eu mauris. Duis sodales
@@ -156,7 +156,7 @@ export const Home = () => {
                 id. Vivamus tincidunt massa sit amet dui imperdiet
               </p>
             </div>
-            <div className="carousel-item">
+            <div key={3} className="carousel-item">
               <p>
                 Pellentesque facilisis lectus id velit ultrices mollis. Fusce in
                 nibh nec magna facilisis tempor. Lorem ipsum dolor sit amet,

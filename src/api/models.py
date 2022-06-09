@@ -92,7 +92,7 @@ class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200),nullable=False)
     type = db.Column(db.Integer, db.ForeignKey('service_type.id'))
-    service_type = db.relationship(ServiceType)
+    service_type = db.relationship("ServiceType")
     session_time = db.Column(db.Float)
     session_qty = db.Column(db.Integer)
     sold_per_units = db.Column(db.Boolean)
@@ -115,7 +115,6 @@ class Service(db.Model):
             "id": self.id,
             "name": self.name,
             "type": self.type,
-            "service_type": self.service_type,
             "session_time": self.session_time,
             "session_qty": self.session_qty,
             "sold_per_units": self.sold_per_units,
@@ -175,7 +174,6 @@ class Document(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "document": self.document,
             "document_url": self.document_url,
             "document_name": self.document_name,
             "document_description": self.document_description,
