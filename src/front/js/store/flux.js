@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-      "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu46.gitpod.io/" +
+        "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu46.gitpod.io/" +
         "api",
       logged: null,
       token: null,
@@ -11,20 +11,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       users: [],
       user_info: {},
       user_data: {},
-      faq: [
-        {
-          id: 1,
-          question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
-          answer:
-            "Nam est neque, semper vitae velit nec, accumsan scelerisque mi. Integer egestas vestibulum posuere. Curabitur laoreet, lacus ut iaculis consectetur, odio dui posuere lacus, a molestie lorem ex at justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        },
-        {
-          id: 2,
-          question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
-          answer:
-            "Nam est neque, semper vitae velit nec, accumsan scelerisque mi. Integer egestas vestibulum posuere. Curabitur laoreet, lacus ut iaculis consectetur, odio dui posuere lacus, a molestie lorem ex at justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        },
-      ],
       documents: [],
       services: [],
     },
@@ -76,11 +62,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const resp = await fetch(getStore().url + "/documents");
           const data = await resp.json();
-          console.log(data)
+          console.log(data);
           setStore({ documents: data.response });
         } catch (e) {
           console.log("Error getting documents");
-        }        
+        }
       },
       getServices: async () => {
         try {
@@ -95,8 +81,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       serviceSelectedQtyChange: (id, newQty, action) => {
-
         const newService = getStore().services.map((x) => {
+          console.log("qty change service", x);
           if (x.service.id == id) {
             if (action == "up" && x.service.qty < 9) {
               newQty = parseInt(x.service.qty) + 1;
@@ -110,27 +96,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           } else return x;
         });
         setStore({ services: newService });
-
-        console.log("+");
-        const newService = getStore().services.map((x)=>{
-          console.log("qty change service",x)
-          if (x.service.id==id){
-            if (action == "up" && x.service.qty<9){
-              newQty = parseInt(x.service.qty)+1;
-              return {...x, service: {...x.service, qty: newQty} }
-            }
-            else if (action == "down" && x.service.qty>1){
-              newQty = parseInt(x.service.qty)-1;
-              return {...x, service: {...x.service, qty: newQty} }
-            }
-            else if (newQty!=0 && newQty>0 && newQty<10){
-              return {...x, service: {...x.service, qty: newQty} }
-            }
-            else return x
-          }
-          else return x
-        })
-        setStore({services: newService})
 
         getActions().modalSelectedKO();
       },
@@ -182,15 +147,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ services: newService });
       },
-      uploadCloud: async (body) =>{
+      uploadCloud: async (body) => {
         const options = {
-            body,
-            method: "POST"
-        }
-        const resp = await fetch(getStore().url+"/upload",options)
-        const data = await resp.json() 
-        return data.document_created_url
-        
+          body,
+          method: "POST",
+        };
+        const resp = await fetch(getStore().url + "/upload", options);
+        const data = await resp.json();
+        return data.document_created_url;
       },
       deleteUser: async () => {
         const response = await fetch(getStore().url + "/deleteUser", {
@@ -200,30 +164,24 @@ const getState = ({ getStore, getActions, setStore }) => {
           },
         });
         setStore({ services: newService });
-      },
-
-
         if (response.status == 200) {
           getActions().logout();
         }
-      },     
+      },
 
       getUserFaq: async () => {
         const response = await fetch(getStore().url + "/user_faq");
         const data = await response.json();
         setStore({ user_faq: data.response });
       },
+
       getBusinessFaq: async () => {
         const response = await fetch(getStore().url + "/business_faq");
         const data = await response.json();
         setStore({ business_faq: data.response });
       },
-
     },
   };
-
-  },
-
 };
-}
+
 export default getState;

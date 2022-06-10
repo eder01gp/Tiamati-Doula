@@ -23,6 +23,8 @@ class Users(db.Model):
     rol = db.Column(db.Integer, db.ForeignKey('user_rol.id'))
     user_rol = db.relationship(UserRol)
     is_active = db.Column(db.Boolean, default= True)
+    comment = db.relationship('Comment', backref='users', lazy=True)
+    birthplan_selected = db.relationship('BirthplanSelected', backref='users', lazy=True)
 
     def __repr__(self):
         return "User: "+self.email
@@ -222,62 +224,15 @@ class BusinessFaq(db.Model):
             "answer": self.answer
         }
 
-
-class BirthplanVideos(db.model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True)
-    
-     def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name
-        }
-
-class BirthplanOptions(db.model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True)
-    description = db.Column(db.String(500))
-    video_id = db.Column(db.Integer, db.ForeignKey('birthplanvideo.id'))
-    video = db.relationship(BirthplanVideos)
-    comment_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
-    comment = db.relationship(Comment)
-
-    def serialize(self):
-        return{
-            "id": self.id,
-            "name": self.name,
-            "description": self.description,
-            "video": self.video,
-            "comment": self.comment
-        }
-
-class BirthplanSelected(db.model):
-    id = db.Column(db.Integer, primary_key=True)
-    option_id = db.Column(db.Integer, db.ForeignKey('birthplanoptions.id'))
-    option = db.relationship(BirthplanOptions)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    users = db.relationship(Users)
-
-    def serialize(self):
-        return{
-            "id": self.id,
-            "option": self.option,
-            "user": self.user
-        }
-
+#Birthplan
 class Comment(db.model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    users = db.relationship(Users)
-    option_id = db.Column(db.Integer, db.ForeignKey('birthplanoptions.id'))
-    option = db.relationship(BirthplanOptions)
-    comment = db.Column(db.String(500))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    text = db.Column(db.String(500), nullable=False)
 
-    def serialize(db.model):
-        "id": self.id,
-        "user": self.user,
-        "comment": self.comment
-
-            
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "text": self.text
         }
-

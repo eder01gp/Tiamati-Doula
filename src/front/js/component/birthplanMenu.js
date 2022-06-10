@@ -40,7 +40,6 @@ export const Birthplanmenu = () => {
           <button className="btn btn-success">Generar plan de parto</button>
         </div>
       </div>
-      <h4 id="topic-title">Tema 1 - Lorem</h4>
 
       <div id="menu-buttons">
         <button className="btn btn-primary me-2">Anterior</button>

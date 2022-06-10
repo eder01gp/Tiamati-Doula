@@ -270,7 +270,7 @@ def post_comment():
     comment = request.json.get("comment")
     return jsonify({"posted": True})
 
-@api.route('/comment', methods{'GET'})
+@api.route('/comment', methods={'GET'})
 def get_comments():
     comments = Comment.query.all()
     comments_serialized = list(map(lambda comments: comments.serialize(), comments))

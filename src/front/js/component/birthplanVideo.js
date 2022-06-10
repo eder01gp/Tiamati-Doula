@@ -15,6 +15,7 @@ export const Birthplanvideo = () => {
           <img src={placeholder} id="placeholder-img" />
         </div>
         <div id="topic-description" className="col-6">
+          <h3>EN DILATACION</h3>
           <h5>Tema 1: Lorem</h5>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lorem
