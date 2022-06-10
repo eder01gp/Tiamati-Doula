@@ -14,13 +14,24 @@ export const Footer = () => (
         window.open("https://www.instagram.com/doulatiamati/");
       }}
     />
-    <a
+
+    <img
+      src={whatsapp}
+      id="whatsapp-logo"
+      className="whatsapp_float fixed-bottom"
+      rel="noopener noreferrer"
+      onClick={() => {
+        window.open("https://wa.me/34615077934");
+      }}
+    />
+
+    {/* <a
       href="https://wa.me/34615077934"
       className="whatsapp_float fixed-bottom"
       target="_blank"
       rel="noopener noreferrer"
     >
       <img src={whatsapp} alt="whatsapp logo" id="whatsapp-logo" />
-    </a>
+    </a> */}
   </footer>
 );

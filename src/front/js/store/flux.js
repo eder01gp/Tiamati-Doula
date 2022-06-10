@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-        "https://3001-ederdon-tiamatidoula-f6gaira5d9k.ws-eu47.gitpod.io/" +
+        "https://3001-ederdon-tiamatidoula-1er83oozol2.ws-eu47.gitpod.io/" +
         "api",
       logged: null,
       token: null,
