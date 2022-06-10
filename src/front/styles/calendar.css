@@ -37,13 +37,29 @@
 }
 
 #today {
-  background: rgb(228 166 49 / 71%);
+  background: rgba(243, 236, 111, 0.756);
   border-radius: 100%;
   width: 30px;
   margin: auto;
 }
 
+#today:hover {
+  background: rgb(228 166 49 / 71%);
+  border-radius: 100%;
+  width: 30px;
+  margin: auto;
+  cursor: pointer;
+}
+
 .calendar-prev-month-day,
 .calendar-next-month-day {
   color: rgb(128, 128, 128);
+}
+
+.calendar-num-day:hover {
+  background: rgb(228 166 49 / 71%);
+  border-radius: 100%;
+  width: 30px;
+  margin: auto;
+  cursor: pointer;
 }

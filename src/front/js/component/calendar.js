@@ -1,15 +1,15 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/calendar.css";
 
 export const Calendar = () => {
   const { store } = useContext(Context);
   let currentDate = new Date();
-  let currentDay = currentDate.getDate();
-  const [monthNum, setMonthNum] = useState(currentDate.getMonth());
-  const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
+  let currentDay = new Date().getDate();
   let month = "";
   let year = "";
+  const [monthNum, setMonthNum] = useState(currentDate.getMonth());
+  const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
 
   ///// --- FUNCTIONS --- /////
   const previousMonth = () => {
@@ -46,9 +46,19 @@ export const Calendar = () => {
     return start.getDay() - 1 == -1 ? 6 : start.getDay() - 1;
   };
 
-  /*return the number of the week day == last day of month*/
+  //*return the number of the week day == last day of month*//
   const endDay = () => {
     let end = new Date(currentYear, monthNum, store.endDays[monthNum]);
+
+    if (monthNum == 1) {
+      if (
+        (currentYear % 4 == 0 && currentYear % 100 != 0) ||
+        currentYear % 400 == 0
+      ) {
+        end = new Date(currentYear, monthNum, 29);
+      }
+    }
+
     /*this makes the week start on Monday & end on Sunday*/
     return end.getDay() - 1 == -1 ? 6 : end.getDay() - 1;
   };
@@ -68,7 +78,7 @@ export const Calendar = () => {
     return maxDays;
   };
 
-  //* 3 functions for calendar day numbers*//
+  //* 3 functions for generate calendar day numbers*//
   const generateMonthDays = () => {
     let days = [];
     for (let i = 1; i <= getTotalDays(monthNum); i++) {
@@ -150,9 +160,13 @@ export const Calendar = () => {
           );
         })}
         {days.map((day) => {
-          if (day == currentDay) {
+          if (
+            day == currentDay &&
+            monthNum == currentDate.getMonth() &&
+            currentYear == currentDate.getFullYear()
+          ) {
             return (
-              <div key={day} id="today" className="calendar-num-day">
+              <div key={day} id="today" classNamec={"calendar-num-day"}>
                 <b>{day}</b>
               </div>
             );
