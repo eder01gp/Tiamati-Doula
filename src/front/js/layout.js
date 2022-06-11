@@ -5,6 +5,8 @@ import ScrollToTop from "./component/scrollToTop";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
+import { Payment } from "./pages/payment";
+
 import { Home } from "./pages/home";
 import { Signup } from "./pages/signup";
 import { Login } from "./pages/login";

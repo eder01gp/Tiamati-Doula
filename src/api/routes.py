@@ -1,7 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, redirect
 
 from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq
 
@@ -9,8 +9,15 @@ from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 import cloudinary
 import cloudinary.uploader
+import stripe
 
 api = Blueprint('api', __name__)  
+
+# This is the test secret API key.
+stripe.api_key = 'sk_test_51L9AB1GwDdfyjr9WWHWxYk8V77Cd7dDRpQc1JhXslN9vOfopsi8sNtfduhXogaZobR1ggOHhfdW57YFQUIaMGdUD00yAYi6V1I'
+
+YOUR_DOMAIN = "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu47.gitpod.io/api"
+
 
 @api.route('/protected', methods=['GET'])
 @jwt_required()
@@ -216,8 +223,7 @@ def services():
 
         return jsonify({"response":service_response}), 200    
     else: 
-
-        return jsonify({"response":"No services in database"}), 400
+        return jsonify({"response":services,"msg":"There are no services in database"}), 200
     
 #FAQ
     
@@ -233,7 +239,28 @@ def get_business_faq():
     business_faq_serialized = list(map(lambda business_faq: business_faq.serialize(), business_faq))
     return jsonify({"response": business_faq_serialized}), 200
 
+@api.route('/create_checkout_session', methods=['POST'])
+def create_checkout_session():
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    'price': "price_1L9C1bGwDdfyjr9WPIpKL7iJ",
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            success_url=YOUR_DOMAIN + "/checkout",
+            cancel_url=YOUR_DOMAIN + '/checkout',
+        )
+        print(checkout_session)
+    except Exception as e:
+        return str(e)
+
+    return jsonify({"response": checkout_session.url}), 303
 
 
 
+    
 

@@ -6,6 +6,7 @@ import service01 from "../../../img/woman-doubts.jpg";
 import "../../styles/checkout.css";
 import { Login } from "./login";
 import { Signup } from "./signup";
+import { Payment } from "./payment";
 
 export const Checkout = () => {
   const { store, actions } = useContext(Context);
@@ -13,15 +14,16 @@ export const Checkout = () => {
   const [error, setError] = useState(null);
   const [modalSelectedKO, setModalSelectedKO] = useState("");
 
+  JSON.stringify({line_items: []})
+
+
   useEffect(() => {
     let totalAux = 0
-    {store.services.map((service) => {
-      if (service.service.selected == true) {
+    {store.services_selected.map((service) => {
       totalAux = ((totalAux) + ((service.service.price*(100-service.service.discount)/100)*service.service.qty))
-      };
-    setTotal(totalAux);
+      setTotal(totalAux);
     })}
-  }, [store.services]);
+  }, [store.services_selected]);
   
   useEffect(() => {
     if (error!=null){    
@@ -38,6 +40,7 @@ export const Checkout = () => {
 
   useEffect(() => {
     actions.modalSelectedKO();
+    actions.getServices();
   }, []);
 
   return (
@@ -45,13 +48,13 @@ export const Checkout = () => {
       <h2> Checkout </h2>
       <div className="frame02 container mt-4">
       <div className="addServices mt-5"><h4>Servicios seleccionados</h4></div>
-        {store.services.map((service, i) => {
-        if (service.service.selected == true) {
+        {store.services_selected.map((service, i) => {
+
           return (
             <div key={service.service.id} className="frame03 row my-2">
               <div className="frame04A col-sm-1 my-2 justify-content-center">
               {<img
-                src={service01}
+                src={service.service.service_cover_url}
                 className="imgCard"
                 alt={service.service.name}
                 width="50px"
@@ -146,7 +149,7 @@ export const Checkout = () => {
                     </div>
             </div>
           );
-        }})}
+        })}
         <div className="total row">
           <div className="col-sm-9">
             Total
@@ -155,6 +158,7 @@ export const Checkout = () => {
           {total} €
           </div>
         </div>
+{/* Añade más servicios */}
         <div className="addServices mt-5"><h4>Añade más servicios</h4>
         </div>
         {store.services.map((service, i) => {
@@ -207,17 +211,38 @@ export const Checkout = () => {
           )
           }
         })}
-{/*         <div className="addServices mt-5"><h4>Datos usuaria</h4></div>
-          <ul className="nav nav-pills">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#" >Active</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
-            </li>
-          </ul>
-         */}
-    </div>     
-    </div>   
+{/* Login */}
+        {store.logged ?
+        null :
+            <div>
+                  <div className="addServices mt-5"><h4>Datos personales</h4>
+                    </div>
+                    <div>
+                        <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                          <li className="nav-item" role="presentation">
+                            <button className="nav-link active" id="pills-login-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Log in</button>
+                          </li>
+                          <li className="nav-item" role="presentation">
+                            <button className="nav-link" id="pills-signup-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Crear cuenta</button>
+                          </li>
+                        </ul>
+                        <div className="tab-content" id="pills-tabContent">
+                          <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-login-tab"><Login/></div>
+                          <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-signup-tab"><Signup/></div>
+                        </div>
+                    </div>
+            </div>
+}
+{/* Pago */}
+<div className="addServices mt-5"><h4>Pago</h4>
+  <button onClick={()=>{actions.createCheckoutSession()}}>
+          Checkout
+  </button>
+  </div>
+
+  
+{/* Cierres finales */}
+  </div>
+</div>
   );
 };

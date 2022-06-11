@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-        "https://3001-ederdon-tiamatidoula-f6gaira5d9k.ws-eu47.gitpod.io/" +
+        "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu47.gitpod.io/" +
         "api",
       logged: null,
       token: null,
@@ -13,6 +13,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       user_data: {},
       documents: [],
       services: [],
+      services_selected: [],
     },
 
     actions: {
@@ -78,6 +79,23 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       serviceSelectedQtyChange: (id, newQty, action) => {
+        const newService = getStore().services_selected.map((x) => {
+          if (x.service.id == id) {
+            if (action == "up" && x.service.qty < 9) {
+              newQty = parseInt(x.service.qty) + 1;
+              return { ...x, service: { ...x.service, qty: newQty } };
+            } else if (action == "down" && x.service.qty > 1) {
+              newQty = parseInt(x.service.qty) - 1;
+              return { ...x, service: { ...x.service, qty: newQty } };
+            } else if (newQty != 0 && newQty > 0 && newQty < 10) {
+              return { ...x, service: { ...x.service, qty: newQty } };
+            } else return x;
+          } else return x;
+        });
+        setStore({ services_selected: newService });
+        getActions().modalSelectedKO();
+      },
+      servicesQtyChange: (id, newQty, action) => {
         const newService = getStore().services.map((x) => {
           if (x.service.id == id) {
             if (action == "up" && x.service.qty < 9) {
@@ -127,20 +145,19 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ services: newService });
       },
       serviceSelected: (id) => {
-        const newService = getStore().services.map((x) => {
+        getStore().services.map((x) => {
           if (x.service.id == id) {
-            return { ...x, service: { ...x.service, selected: true } };
-          } else return x;
+            setStore({ services_selected: [...getStore().services_selected, x] });
+          } 
         });
-        setStore({ services: newService });
       },
       serviceSelectedKO: (id) => {
+        getStore().services_selected = [];
         const newService = getStore().services.map((x) => {
-          if (x.service.id == id) {
-            return { ...x, service: { ...x.service, selected: false } };
-          } else return x;
+          if (x.service.id != id) {
+            setStore({ services_selected: [...getStore().services_selected, x] });
+          }
         });
-        setStore({ services: newService });
       },
       uploadCloud: async (body) => {
         const options = {
@@ -173,6 +190,19 @@ const getState = ({ getStore, getActions, setStore }) => {
         const response = await fetch(getStore().url + "/business_faq");
         const data = await response.json();
         setStore({ business_faq: data.response });
+      },
+      createCheckoutSession: async (body) => {
+        const options = {
+          body: body,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          }
+        };
+        const resp = await fetch(getStore().url + "/create_checkout_session", options);
+        const data = await resp.json();
+        console.log(data);
+        window.location.replace(data.response);
       },
     },
   };
