@@ -1,25 +1,18 @@
 import React, { Component, useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-import service01 from "../../../img/woman-doubts.jpg";
-/* import docUrl01 from "/../../img/dum.pdf"; */
 import "../../styles/checkout.css";
-import { Login } from "./login";
-import { Signup } from "./signup";
-import { Payment } from "./payment";
+import { Login } from "../component/login";
+import { Signup } from "../component/signup";
 
 export const Checkout = () => {
   const { store, actions } = useContext(Context);
   const [total, setTotal] = useState(0);
   const [error, setError] = useState(null);
-  const [modalSelectedKO, setModalSelectedKO] = useState("");
-
-  JSON.stringify({line_items: []})
-
 
   useEffect(() => {
     let totalAux = 0
-    {store.services_selected.map((service) => {
+    {store.services.map((service) => {
       totalAux = ((totalAux) + ((service.service.price*(100-service.service.discount)/100)*service.service.qty))
       setTotal(totalAux);
     })}
@@ -38,18 +31,13 @@ export const Checkout = () => {
     }
   }, [error]);
 
-  useEffect(() => {
-    actions.modalSelectedKO();
-    actions.getServices();
-  }, []);
-
   return (
     <div className="frame01 container my-4">
       <h2> Checkout </h2>
       <div className="frame02 container mt-4">
       <div className="addServices mt-5"><h4>Servicios seleccionados</h4></div>
-        {store.services_selected.map((service, i) => {
-
+        {store.services.map((service, i) => {
+          if (service.service.selected){
           return (
             <div key={service.service.id} className="frame03 row my-2">
               <div className="frame04A col-sm-1 my-2 justify-content-center">
@@ -82,7 +70,7 @@ export const Checkout = () => {
                       className="btn btn-light m-1"
                       onClick={() => {
                         if (service.service.qty<9){
-                          actions.serviceSelectedQtyChange(service.service.id,0,"up");
+                          actions.servicesQtyChange(service.service.id,0,"up");
                         }
                         else setError(service.service.id)
                       }}
@@ -99,7 +87,7 @@ export const Checkout = () => {
                       onChange={(evt) => {
                         const re = /[0-9]/;
                         if (re.test(evt.target.value)&&(evt.target.value<10)&&(evt.target.value>0)) {
-                          actions.serviceSelectedQtyChange(service.service.id, evt.target.value, null)
+                          actions.servicesQtyChange(service.service.id, evt.target.value, null)
                         }
                         else setError(service.service.id)
                       }}
@@ -111,7 +99,7 @@ export const Checkout = () => {
                       data-bs-target="#staticBackdrop"
                       onClick={() => {
                         if (service.service.qty>1){
-                          actions.serviceSelectedQtyChange(service.service.id,0,"down");
+                          actions.servicesQtyChange(service.service.id,0,"down");
                         }
                         else setError(service.service.id)
                       }}
@@ -148,7 +136,7 @@ export const Checkout = () => {
                       </div>
                     </div>
             </div>
-          );
+          );}
         })}
         <div className="total row">
           <div className="col-sm-9">
@@ -167,7 +155,7 @@ export const Checkout = () => {
                 <div key={service.service.id} className="frame03 row my-2">
                   <div className="frame04A col-sm-1 my-2 justify-content-center">
                   {<img
-                    src={service01}
+                    src={service.service.service_cover_url}
                     className="imgCard"
                     alt={service.service.name}
                     width="50px"
@@ -198,8 +186,6 @@ export const Checkout = () => {
                           }}
                         >+
                         </button>
-                        
-
                       </div>
                       <div className="col-sm-1">
                       </div>
@@ -211,9 +197,13 @@ export const Checkout = () => {
           )
           }
         })}
-{/* Login */}
+{/* Login y pago */}
         {store.logged ?
-        null :
+        <div className="addServices mt-5"><h4>Pago</h4>
+          <button className="btn btn-light" onClick={()=>{actions.createCheckoutSession(JSON.stringify(store.services_selected))}}>
+                  Ir a página de pago
+          </button>
+        </div> :
             <div>
                   <div className="addServices mt-5"><h4>Datos personales</h4>
                     </div>
@@ -227,18 +217,12 @@ export const Checkout = () => {
                           </li>
                         </ul>
                         <div className="tab-content" id="pills-tabContent">
-                          <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-login-tab"><Login/></div>
-                          <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-signup-tab"><Signup/></div>
+                          <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-login-tab"><Login push={false}/></div>
+                          <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-signup-tab"><Signup push={false}/></div>
                         </div>
                     </div>
             </div>
 }
-{/* Pago */}
-<div className="addServices mt-5"><h4>Pago</h4>
-  <button onClick={()=>{actions.createCheckoutSession()}}>
-          Checkout
-  </button>
-  </div>
 
   
 {/* Cierres finales */}

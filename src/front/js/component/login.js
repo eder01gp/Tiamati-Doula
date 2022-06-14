@@ -1,8 +1,9 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
+import propTypes from "prop-types";
 
-export const Login = () => {
+export const Login = (props) => {
   const [user, setUser] = useState({});
   const [result, setResult] = useState("");
 
@@ -30,13 +31,14 @@ export const Login = () => {
         localStorage.setItem("rol", confirmation.User.rol);
         setResult(confirmation.msg);
         actions.verify();
-        history.push("/");
+        if (props.push==true){
+          history.push("/");
+        }
       } else {
         setResult(confirmation.msg);
       }
     } catch (e) {
       setResult(e.name + ": " + e.message);
-      console.log(e.name + ": " + e.message);
     }
   };
 
@@ -78,7 +80,7 @@ export const Login = () => {
           <a
             className="btn btn-light "
             onClick={() => {
-              login();
+              login("home");
             }}
           >
             Login
@@ -91,3 +93,7 @@ export const Login = () => {
     </div>
   );
 };
+
+Login.propTypes = {
+  push: propTypes.any,
+}

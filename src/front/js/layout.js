@@ -5,11 +5,10 @@ import ScrollToTop from "./component/scrollToTop";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
-import { Payment } from "./pages/payment";
-
 import { Home } from "./pages/home";
-import { Signup } from "./pages/signup";
-import { Login } from "./pages/login";
+import { Signup } from "./pages/signupPage";
+import { LoginPage } from "./pages/loginPage";
+import { SignupPage } from "./pages/signupPage";
 import { Form } from "./pages/form";
 import { Profile_user } from "./pages/profile_user";
 import { Profile_company } from "./pages/profile_company";
@@ -19,10 +18,9 @@ import { Faq } from "./pages/faq";
 import { Services } from "./pages/services";
 import { Checkout } from "./pages/checkout";
 import { Documents } from "./pages/documents";
+import { Redirect } from "./pages/redirect";
 
 import injectContext from "./store/appContext";
-
-import { Redirect } from "react-router-dom";
 
 const Layout = () => {
   const basename = process.env.BASENAME || "";
@@ -38,14 +36,14 @@ const Layout = () => {
               <Route exact path="/">
                 <Home />
               </Route>
-              <Route exact path="/signup">
-                <Signup />
+              <Route exact path="/signupPage">
+                <SignupPage />
               </Route>
               <Route exact path="/form">
                 <Form />
               </Route>
-              <Route exact path="/login">
-                <Login />
+              <Route exact path="/loginPage">
+                <LoginPage />
               </Route>
               <Route exact path="/profile_user">
                 {localStorage.getItem("token") ? (
@@ -78,6 +76,9 @@ const Layout = () => {
               </Route>
               <Route exact path="/birthplan">
                 <Birthplan />
+              </Route>
+              <Route exact path="/redirect">
+                <Redirect />
               </Route>
               <Route>
                 <h1>Not found!</h1>

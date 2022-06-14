@@ -107,6 +107,7 @@ class Service(db.Model):
     modal_selected_KO = db.Column(db.String(50))
     documents = db.relationship("Document", secondary=ServiceDocument, backref=db.backref("Service"))
     stripe_price_id = db.Column(db.String(200))
+    stripe_product_id = db.Column(db.String(200))
 
     def __repr__(self):
         return "service: "+self.name
@@ -130,6 +131,7 @@ class Service(db.Model):
             "modal_selected_KO": self.modal_selected_KO,
             "documents": list(map(lambda item: item.serialize(), self.documents)),
             "stripe_price_id": self.stripe_price_id,
+            "stripe_product_id": self.stripe_product_id,
         }
     
 

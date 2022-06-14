@@ -2,22 +2,23 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, redirect
-
 from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq
-
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
+
 import cloudinary
 import cloudinary.uploader
 import stripe
+import json
 
 api = Blueprint('api', __name__)  
 
 # This is the test secret API key.
-stripe.api_key = 'sk_test_51L9AB1GwDdfyjr9WWHWxYk8V77Cd7dDRpQc1JhXslN9vOfopsi8sNtfduhXogaZobR1ggOHhfdW57YFQUIaMGdUD00yAYi6V1I'
+stripe.api_key = "sk_test_51L9AB1GwDdfyjr9WWHWxYk8V77Cd7dDRpQc1JhXslN9vOfopsi8sNtfduhXogaZobR1ggOHhfdW57YFQUIaMGdUD00yAYi6V1I"
 
-YOUR_DOMAIN = "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu47.gitpod.io/api"
+YOUR_DOMAIN = "https://3000-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu47.gitpod.io/"
 
+endpoint_secret = "whsec_858463f07c3b0bdad46be3660513488cf9f6664d2a5f10f38a81e1b2a08134fb"
 
 @api.route('/protected', methods=['GET'])
 @jwt_required()
@@ -45,7 +46,6 @@ def save_signup_user():
         else: return jsonify({"msg": "Error, el email ya existe como usuaria"}), 400   
     else: return jsonify({"msg": "Error, comprueba email y contraseña"}), 400       
      
-
 @api.route('/form', methods=['PUT']) 
 @jwt_required()
 def save_or_update_user_form():
@@ -159,7 +159,7 @@ def upload():
 @api.route('/document', methods=['POST'])
 def new_document():
     document_url = request.json.get("document_url") 
-    document_name =request.json.get("document_name") 
+    document_name = request.json.get("document_name") 
     document_description =request.json.get("document_description")
     document_cover_url =request.json.get("document_cover_url")
     
@@ -241,26 +241,97 @@ def get_business_faq():
 
 @api.route('/create_checkout_session', methods=['POST'])
 def create_checkout_session():
+    session_info = request.get_json()
+
+    try:
+        line_items=session_info["line_items"]
+    except:
+        return jsonify({"response": "/"}), 400
+        
+    try:
+        client_reference_id = session_info["client_reference_id"]
+    except:
+        client_reference_id = None
+
+    try: 
+        customer_email = session_info["customer_email"]
+    except:
+        customer_email = None
+
     try:
         checkout_session = stripe.checkout.Session.create(
-            line_items=[
-                {
-                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    'price': "price_1L9C1bGwDdfyjr9WPIpKL7iJ",
-                    'quantity': 1,
-                },
-            ],
+            line_items=session_info["line_items"],
+            client_reference_id=client_reference_id,
+            customer_email=customer_email,
             mode='payment',
-            success_url=YOUR_DOMAIN + "/checkout",
-            cancel_url=YOUR_DOMAIN + '/checkout',
+            success_url=YOUR_DOMAIN + "/redirect"+ '?success=true',
+            cancel_url=YOUR_DOMAIN + '/redirect'+ '?canceled=true',
         )
-        print(checkout_session)
+        #print(checkout_session)
     except Exception as e:
         return str(e)
 
     return jsonify({"response": checkout_session.url}), 303
 
+    
+@api.route('/webhook', methods=['POST'])
+def webhook():
+    event = None
+    payload = request.data
+    sig_header = request.headers['STRIPE_SIGNATURE']
 
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        # Invalid payload
+        raise e
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        raise e
 
+    # Handle the event  
+    if event['type'] == 'payment_intent.succeeded':
+        payment_intent = event['data']['object']
+
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        fulfill_order(session)
+
+    else:
+      print('Unhandled event type {}'.format(event['type']))
+
+    return jsonify(success=True)
+
+def fulfill_order(session):
+    print(session)   
+    try:
+        if session["status"]=="complete":
+            line_items = stripe.checkout.Session.list_line_items(session["id"])["data"]
+            print(line_items)
+    except:
+        return jsonify({"response": "Checkout status not complete or without line items"}), 400
+
+    for service_hired in line_items:
+        try:
+            service = Service.query.filter_by(stripe_product_id=service_hired["price"]["product"]).first()
+            print(service)
+        except:
+            return jsonify({"response": "no service found for"+service_hired["description"]}), 400
+
+        new_service_hired = ServiceHired(
+            user_id = session["client_reference_id"],
+            service_id = service.id,
+            sessions_left = service.session_qty,
+        )
+        db.session.add(new_service_hired)
+        db.session.commit()
+        print("new service created")
+
+    #"customer_email": "eder@gmail.com",
+    #"client_reference_id": "4",
+    #"id": "cs_test_b1l19Nh4rzDQzTdLz87S7EDamaAtRltiE3gQN56ywrTiFO845mVgPNN3Zn",
+    #return jsonify({"response": ok}), 200
     
 

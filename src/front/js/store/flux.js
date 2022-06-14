@@ -77,22 +77,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (e) {
           console.log("Error getting services");
         }
-      },
-      serviceSelectedQtyChange: (id, newQty, action) => {
-        const newService = getStore().services_selected.map((x) => {
-          if (x.service.id == id) {
-            if (action == "up" && x.service.qty < 9) {
-              newQty = parseInt(x.service.qty) + 1;
-              return { ...x, service: { ...x.service, qty: newQty } };
-            } else if (action == "down" && x.service.qty > 1) {
-              newQty = parseInt(x.service.qty) - 1;
-              return { ...x, service: { ...x.service, qty: newQty } };
-            } else if (newQty != 0 && newQty > 0 && newQty < 10) {
-              return { ...x, service: { ...x.service, qty: newQty } };
-            } else return x;
-          } else return x;
-        });
-        setStore({ services_selected: newService });
         getActions().modalSelectedKO();
       },
       servicesQtyChange: (id, newQty, action) => {
@@ -111,6 +95,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ services: newService });
         getActions().modalSelectedKO();
+        getActions().serviceSelectedUpdate();
       },
       modalSelectedKO: () => {
         const newServiceModals = getStore().services.map((x) => {
@@ -144,20 +129,44 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ services: newService });
       },
-      serviceSelected: (id) => {
-        getStore().services.map((x) => {
-          if (x.service.id == id) {
-            setStore({ services_selected: [...getStore().services_selected, x] });
-          } 
-        });
-      },
-      serviceSelectedKO: (id) => {
-        getStore().services_selected = [];
-        const newService = getStore().services.map((x) => {
-          if (x.service.id != id) {
-            setStore({ services_selected: [...getStore().services_selected, x] });
+      serviceSelectedUpdate: () => {
+        let newServiceSelected = {
+          "client_reference_id":getStore().user_info.id,
+          "customer_email":getStore().user_info.email,
+          };  
+
+        let new_line_items = []
+        getStore().services.map((x) => {          
+          if (x.service.selected) {
+            const newLineItem = {
+              "price":x["service"]["stripe_price_id"], 
+              "quantity":x["service"]["qty"],
+            }
+            new_line_items.push(newLineItem);
           }
         });
+        newServiceSelected["line_items"] = new_line_items;
+
+        setStore({services_selected: newServiceSelected});        
+        getActions().modalSelectedKO();
+      },
+      serviceSelected: (id) => {
+        const newService = getStore().services.map((x) => {
+          if (x.service.id == id) {
+            return { ...x, service: { ...x.service, selected: true } };
+          } else return x;
+        });
+        setStore({ services: newService });
+        getActions().serviceSelectedUpdate();
+      },
+      serviceSelectedKO: (id) => {
+        const newService = getStore().services.map((x) => {
+          if (x.service.id == id) {
+            return { ...x, service: { ...x.service, selected: false } };
+          } else return x;
+        });
+        setStore({ services: newService });
+        getActions().serviceSelectedUpdate();
       },
       uploadCloud: async (body) => {
         const options = {
@@ -180,7 +189,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().logout();
         }
       },
-
       getUserFaq: async () => {
         const response = await fetch(getStore().url + "/user_faq");
         const data = await response.json();
