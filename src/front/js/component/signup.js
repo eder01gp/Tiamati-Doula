@@ -1,8 +1,9 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
+import propTypes from "prop-types";
 
-export const Signup = () => {
+export const Signup = (props) => {
   const [user, setUser] = useState({});
   const [check, setCheck] = useState(false);
   const [error, setError] = useState();
@@ -10,38 +11,48 @@ export const Signup = () => {
   const history = useHistory();
 
   const saveUsersInDB = async () => {
+    try {    
     if (
-      user.email != null &&
-      user.email.trim() != "" &&
-      user.email != "" &&
-      user.password != null &&
-      user.password.trim() != ""
-    ) {
-      setError(null);
-      const response = await fetch(store.url + "/signup", {
-        method: "POST",
-        body: JSON.stringify(user),
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
+        user.email != null &&
+        user.email.trim() != "" &&
+        user.email != "" &&
+        user.password != null &&
+        user.password.trim() != ""
+        ) {
+        setError(null);
 
-      const data = await response.json();
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("ID", data.User.id);
-      localStorage.setItem("rol", data.User.rol);
+        const response = await fetch(store.url + "/signup", {
+            method: "POST",
+            body: JSON.stringify(user),
+            headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            },
+        });
 
-      if (check == false) {
-        history.push("/form");
-      } else if (check == true) {
-        actions.verify();
-        history.push("/");
-      }
-    } else {
-      setError("Error, revisa tu email o contraseña");
+        const data = await response.json();
+        if (!response.ok) setError(data.msg);
+        if (response.status == 200) {
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("ID", data.User.id);
+            localStorage.setItem("rol", data.User.rol);
+            actions.verify();
+            if (props.push==true){
+                if (check == false) {
+                    history.push("/form");
+                } else if (check == true) {
+                    history.push("/");
+                }
+            }
+            }        
+            } else {
+                setError(confirmation.msg);
+            }
     }
-  };
+    catch (e) {
+        setError(e.name + ": " + e.message);
+    }
+    };
 
   return (
     <div className="registro mt-5">
@@ -93,3 +104,7 @@ export const Signup = () => {
     </div>
   );
 };
+
+Signup.propTypes = {
+    push: propTypes.any,
+}

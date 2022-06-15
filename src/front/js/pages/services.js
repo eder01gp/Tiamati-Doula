@@ -25,6 +25,7 @@ export const Services = () => {
     }
   }, [error]);
 
+  if (store.services.length>0){
   return (
     <div className="frame01 container ">
       <h1> Servicios </h1>
@@ -62,7 +63,7 @@ export const Services = () => {
                       className="btn btn-light text-center w-25 p-1"
                       onClick={() => {
                         if (service.service.qty<9){
-                          actions.serviceSelectedQtyChange(service.service_id,0,"up");
+                          actions.servicesQtyChange(service.service_id,0,"up");
                         }
                         else setError(service.service_id)                        
                       }}
@@ -78,7 +79,7 @@ export const Services = () => {
                       onChange={(evt) => {
                         const re = /[0-9]/;
                         if (re.test(evt.target.value)&&(evt.target.value<10)&&(evt.target.value>0)) {
-                          actions.serviceSelectedQtyChange(service.service_id, evt.target.value, null)
+                          actions.servicesQtyChange(service.service_id, evt.target.value, null)
                         }
                         else setError(service.service_id)
                       }}
@@ -88,7 +89,7 @@ export const Services = () => {
                       className="btn btn-light text-center w-25 p-1"
                       onClick={() => {
                         if (service.service.qty>1){
-                        actions.serviceSelectedQtyChange(service.service_id,0,"down");
+                        actions.servicesQtyChange(service.service_id,0,"down");
                         }
                         else setError(service.service_id)
                       }}
@@ -107,4 +108,8 @@ export const Services = () => {
       </div>
     </div>
   );
+}
+else {
+  return(<h4> No hay servicios para mostrar aún </h4>)
+}
 };

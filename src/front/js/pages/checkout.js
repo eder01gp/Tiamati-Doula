@@ -1,27 +1,22 @@
 import React, { Component, useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-import service01 from "../../../img/woman-doubts.jpg";
-/* import docUrl01 from "/../../img/dum.pdf"; */
 import "../../styles/checkout.css";
-import { Login } from "./login";
-import { Signup } from "./signup";
+import { Login } from "../component/login";
+import { Signup } from "../component/signup";
 
 export const Checkout = () => {
   const { store, actions } = useContext(Context);
   const [total, setTotal] = useState(0);
   const [error, setError] = useState(null);
-  const [modalSelectedKO, setModalSelectedKO] = useState("");
 
   useEffect(() => {
     let totalAux = 0
     {store.services.map((service) => {
-      if (service.service.selected == true) {
       totalAux = ((totalAux) + ((service.service.price*(100-service.service.discount)/100)*service.service.qty))
-      };
-    setTotal(totalAux);
+      setTotal(totalAux);
     })}
-  }, [store.services]);
+  }, [store.services_selected]);
   
   useEffect(() => {
     if (error!=null){    
@@ -36,22 +31,18 @@ export const Checkout = () => {
     }
   }, [error]);
 
-  useEffect(() => {
-    actions.modalSelectedKO();
-  }, []);
-
   return (
     <div className="frame01 container my-4">
       <h2> Checkout </h2>
       <div className="frame02 container mt-4">
       <div className="addServices mt-5"><h4>Servicios seleccionados</h4></div>
         {store.services.map((service, i) => {
-        if (service.service.selected == true) {
+          if (service.service.selected){
           return (
             <div key={service.service.id} className="frame03 row my-2">
               <div className="frame04A col-sm-1 my-2 justify-content-center">
               {<img
-                src={service01}
+                src={service.service.service_cover_url}
                 className="imgCard"
                 alt={service.service.name}
                 width="50px"
@@ -79,7 +70,7 @@ export const Checkout = () => {
                       className="btn btn-light m-1"
                       onClick={() => {
                         if (service.service.qty<9){
-                          actions.serviceSelectedQtyChange(service.service.id,0,"up");
+                          actions.servicesQtyChange(service.service.id,0,"up");
                         }
                         else setError(service.service.id)
                       }}
@@ -96,7 +87,7 @@ export const Checkout = () => {
                       onChange={(evt) => {
                         const re = /[0-9]/;
                         if (re.test(evt.target.value)&&(evt.target.value<10)&&(evt.target.value>0)) {
-                          actions.serviceSelectedQtyChange(service.service.id, evt.target.value, null)
+                          actions.servicesQtyChange(service.service.id, evt.target.value, null)
                         }
                         else setError(service.service.id)
                       }}
@@ -108,7 +99,7 @@ export const Checkout = () => {
                       data-bs-target="#staticBackdrop"
                       onClick={() => {
                         if (service.service.qty>1){
-                          actions.serviceSelectedQtyChange(service.service.id,0,"down");
+                          actions.servicesQtyChange(service.service.id,0,"down");
                         }
                         else setError(service.service.id)
                       }}
@@ -145,8 +136,8 @@ export const Checkout = () => {
                       </div>
                     </div>
             </div>
-          );
-        }})}
+          );}
+        })}
         <div className="total row">
           <div className="col-sm-9">
             Total
@@ -155,6 +146,7 @@ export const Checkout = () => {
           {total} €
           </div>
         </div>
+{/* Añade más servicios */}
         <div className="addServices mt-5"><h4>Añade más servicios</h4>
         </div>
         {store.services.map((service, i) => {
@@ -163,7 +155,7 @@ export const Checkout = () => {
                 <div key={service.service.id} className="frame03 row my-2">
                   <div className="frame04A col-sm-1 my-2 justify-content-center">
                   {<img
-                    src={service01}
+                    src={service.service.service_cover_url}
                     className="imgCard"
                     alt={service.service.name}
                     width="50px"
@@ -194,8 +186,6 @@ export const Checkout = () => {
                           }}
                         >+
                         </button>
-                        
-
                       </div>
                       <div className="col-sm-1">
                       </div>
@@ -207,17 +197,36 @@ export const Checkout = () => {
           )
           }
         })}
-{/*         <div className="addServices mt-5"><h4>Datos usuaria</h4></div>
-          <ul className="nav nav-pills">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#" >Active</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
-            </li>
-          </ul>
-         */}
-    </div>     
-    </div>   
+{/* Login y pago */}
+        {store.logged ?
+        <div className="addServices mt-5"><h4>Pago</h4>
+          <button className="btn btn-light" onClick={()=>{actions.createCheckoutSession(JSON.stringify(store.services_selected))}}>
+                  Ir a página de pago
+          </button>
+        </div> :
+            <div>
+                  <div className="addServices mt-5"><h4>Datos personales</h4>
+                    </div>
+                    <div>
+                        <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                          <li className="nav-item" role="presentation">
+                            <button className="nav-link active" id="pills-login-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Log in</button>
+                          </li>
+                          <li className="nav-item" role="presentation">
+                            <button className="nav-link" id="pills-signup-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Crear cuenta</button>
+                          </li>
+                        </ul>
+                        <div className="tab-content" id="pills-tabContent">
+                          <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-login-tab"><Login push={false}/></div>
+                          <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-signup-tab"><Signup push={false}/></div>
+                        </div>
+                    </div>
+            </div>
+}
+
+  
+{/* Cierres finales */}
+  </div>
+</div>
   );
 };
