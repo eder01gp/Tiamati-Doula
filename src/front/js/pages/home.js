@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
@@ -6,6 +6,15 @@ import logo from "../../../img/logo/logo.png";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
+  const [offsetY, setOffsetY] = useState(0);
+  const handleScroll = () => setOffsetY(window.pageYOffset);
+
+
+  useEffect(()=>{
+    window.addEventListener("scroll",handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  },[])
 
   return (
     <div className="div-home container">
@@ -14,58 +23,60 @@ export const Home = () => {
         <div id="header-logo">
           <img id="logo-tiamati" src={logo} alt="logo tiamati" />
         </div>
-        <div id="header-img"></div>
-      </div>
-
-      {/* What is Tiamati */}
-      <div id="what-is-tiamati" className="row text-center">
-        <p id="what-is-tiamati-text">
-          Tiamati es un servicio de acompañamiento a la mujer embarazada y a la
-          pareja. Un apoyo incondicional durante todo el embarazo, basado en
-          evidencias científicas, para empoderar a la mujer y potenciar un
-          embarazo tranquilo y placentero
-        </p>
-
-        <h2>¿Necesitas una Doula?</h2>
-        <h4>La ciencia nos dice:</h4>
-        <div id="benefits" className="row">
-          <div id="benefits-left" className="col-6">
-            <img
-              className="benefits-arrow"
-              src="https://th.bing.com/th/id/R.c18ea882d9fb63866c0f77151fa013e9?rik=%2bxBr2Nyu6%2fc6hg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fdownload_155466.png&ehk=ZFAJlKPtcm%2bDZ%2faDLx7oenbSXUAc1P0%2bUSDrahxcRmE%3d&risl=&pid=ImgRaw&r=0"
-              alt="arrow"
-            />
-            <div className="benefits-text">
-              <h6>28% menos de cesáreas</h6>
-              <h6>31% menos uso de pitocin</h6>
-              <h6>9% menos uso de medicacion</h6>
-              <h6>Partos 40 minutos más cortos</h6>
-            </div>
-          </div>
-          <div id="benefits-right" className="col-6">
-            <img
-              className="benefits-arrow"
-              src="https://th.bing.com/th/id/R.faaa5a285136fd4a98d24365beaa3bf7?rik=UveaSIN8Fxpktg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fdownload_424749.png&ehk=0VfQbRVcZNL1ViSOrCahJNW75NNRte2lhP2O%2b6xlirQ%3d&risl=&pid=ImgRaw&r=0"
-              alt="arrow"
-            />
-            <div className="benefits-text">
-              <h6>34% experiencias más positivas</h6>
-              <h6>Mejor APGAR en el bebé</h6>
-            </div>
-          </div>
+        <div id="header-img" style={{ transform: `translateY(${offsetY * 0.5}px)` }}>
         </div>
       </div>
 
-      {/* free appointment */}
-      <div id="free-appointment" className="row text-center">
-        <h2 id="first-appointment-text">
-          ¿Nos conocemos primero a ver que tal?
-        </h2>
-        <Link to="/calendar">
-          <button className="btn btn-light">Pide tu cita</button>
-        </Link>
-        <h3>Sin ningún compromiso</h3>
+      {/* What is Tiamati */}
+      <div className="row py-3">
+        <div id="what-is-tiamati" className="col-sm text-center p-2">
+          <h2>¿Necesitas una Doula?</h2>
+          <p id="what-is-tiamati-text" className="p-2">
+            Un servicio de acompañamiento a la mujer embarazada y a la
+            pareja. Un apoyo incondicional durante todo el embarazo, basado en
+            evidencias científicas, para empoderar a la mujer y potenciar un
+            embarazo tranquilo y placentero.
+          </p>          
+{/*           <h4>La ciencia nos dice:</h4>
+          <div id="benefits" className="row">
+            <div id="benefits-left" className="col-6">
+              <img
+                className="benefits-arrow"
+                src="https://th.bing.com/th/id/R.c18ea882d9fb63866c0f77151fa013e9?rik=%2bxBr2Nyu6%2fc6hg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fdownload_155466.png&ehk=ZFAJlKPtcm%2bDZ%2faDLx7oenbSXUAc1P0%2bUSDrahxcRmE%3d&risl=&pid=ImgRaw&r=0"
+                alt="arrow"
+              />
+              <div className="benefits-text">
+                <h6>28% menos de cesáreas</h6>
+                <h6>31% menos uso de pitocin</h6>
+                <h6>9% menos uso de medicacion</h6>
+                <h6>Partos 40 minutos más cortos</h6>
+              </div>
+            </div>
+            <div id="benefits-right" className="col-6">
+              <img
+                className="benefits-arrow"
+                src="https://th.bing.com/th/id/R.faaa5a285136fd4a98d24365beaa3bf7?rik=UveaSIN8Fxpktg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fdownload_424749.png&ehk=0VfQbRVcZNL1ViSOrCahJNW75NNRte2lhP2O%2b6xlirQ%3d&risl=&pid=ImgRaw&r=0"
+                alt="arrow"
+              />
+              <div className="benefits-text">
+                <h6>34% experiencias más positivas</h6>
+                <h6>Mejor APGAR en el bebé</h6>
+              </div>
+            </div>
+          </div> */}
+        </div>
+        {/* free appointment */}
+        <div id="free-appointment" className="col-sm text-center p-2">
+          <h2>
+            ¿Nos conocemos?
+          </h2>
+          <p id="free-appoinment-text">Sin ningún compromiso</p>
+          <Link to="/calendar">
+            <button className="btn btn-light">Pide tu cita</button>
+          </Link>  
+        </div>
       </div>
+      
 
       {/* bio */}
       <div id="bio" className="row">

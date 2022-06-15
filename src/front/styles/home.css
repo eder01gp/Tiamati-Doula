@@ -1,6 +1,11 @@
+h2 {
+  font-family: 'Lobster', cursive;
+  font-weight: 400;
+}
+
 #header-logo {
   height: 100px;
-  background-color: rgb(165, 250, 221);
+  background-color: rgb(165, 250, 221,0);
   padding: 1%;
   text-align: center;
 }
@@ -17,11 +22,17 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
-
+/* 
 #what-is-tiamati {
-  background-color: rgb(255, 255, 175);
   padding: 2%;
+} */
+
+#what-is-tiamati-text #free-appoinment-text{
+  padding: 2%;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 500;
 }
+
 
 .benefits-arrow {
   height: 100px;
@@ -31,17 +42,17 @@
 #free-appointment {
   padding: 4%;
   padding-top: 5%;
-  height: 500px;
+  /* height: 500px; */
   background-color: rgb(255, 106, 106);
 }
 
 #first-appointment-text {
-  font-size: 80px;
+  /* font-size: 80px; */
   margin-bottom: 2%;
 }
 
 #free-appointment h3 {
-  font-size: 40px;
+  /* font-size: 40px; */
   margin-top: 1%;
 }
 

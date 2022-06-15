@@ -2,6 +2,12 @@ html {
   box-sizing: border-box;
 }
 
+body {
+  background-image: linear-gradient(to right, #a18cd1 0%, #fbc2eb 100%);
+  background-repeat: repeat;
+  
+}
+
 #navbar {
   padding-left: 1%;
   padding-right: 1%;
