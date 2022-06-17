@@ -3,59 +3,53 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/birthplan.css";
 import placeholder from "../../../img/placeholder.jpg";
+import PropTypes from "prop-types";
 
-export const Birthplanvideo = () => {
+export const Birthplanvideo = (props) => {
   const { store, actions } = useContext(Context);
   const [show, setShow] = useState(false);
 
+  const topic_id = props.topic_id;
+  const title = props.title;
+  const subtitle = props.subtitle;
+  const video = props.video;
+  const answer = props.answer;
+  const answer_id = props.answer_id;
+  const answer_type = props.answer_type;
+  const answer_text = props.answer_text;
+  const answer_value = props.answer_value;
+  const answer_child = props.answer_child;
+  const answer_child_id = props.answer_child_id;
+  const answer_child_type = props.answer_child_type;
+  const answer_child_text = props.answer_child_text;
+  const answer_child_value = props.answer_child_value;
+  const comments = props.comments;
+  const comments_id = props.comments_id;
+  const comments_user = props.comments_user;
+  const comments_text = props.comments_text;
+
   return (
-    <div id="topic">
+    <div id={topic_id}>
       <div className="row">
         <div id="video" className="col-6">
-          <img src={placeholder} id="placeholder-img" />
+          <video width="600" controls>
+            <source src={video} />
+          </video>
         </div>
         <div id="topic-description" className="col-6">
-          <h3>EN DILATACION</h3>
-          <h5>Tema 1: Lorem</h5>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lorem
-            ligula, posuere sit amet purus eleifend, laoreet facilisis quam.
-            Curabitur dapibus non lacus sed pulvinar. Duis et nibh pretium,
-            pretium mauris non, sagittis diam. Aenean at eros convallis, rhoncus
-            turpis id, dictum nulla.
-          </p>
+          <h3 id="title">{title}</h3>
+          <h5 id="subtitle">{subtitle}</h5>
+
           <div id="topic-options">
-            <div className="form-check">
+            <div id={answer_id} className="form-check answer">
               <input
                 className="form-check-input"
-                type="checkbox"
-                value=""
+                type={answer_type}
+                value={answer_value}
                 id="defaultCheck1"
               />
               <label className="form-check-label" htmlFor="defaultCheck1">
-                Opción A
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                value=""
-                id="defaultCheck1"
-              />
-              <label className="form-check-label" htmlFor="defaultCheck1">
-                Opción B
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                value=""
-                id="defaultCheck1"
-              />
-              <label className="form-check-label" htmlFor="defaultCheck1">
-                Opción C
+                {answer_text}
               </label>
             </div>
           </div>
@@ -89,60 +83,13 @@ export const Birthplanvideo = () => {
               data-bs-parent="#accordionExample"
             >
               <div className="accordion-body">
-                <div className="card comment-card">
+                <div id={comments_id} className="card comment-card">
                   <div className="card-header d-flex">
                     <i className="fa-solid fa-user user-avatar me-2"></i>
-                    <h6>Username</h6>
+                    <h6>{comments_user}</h6>
                   </div>
                   <div className="card-body">
-                    <p className="card-text">
-                      Donec sit amet semper nunc, non elementum odio. Nunc non
-                      tincidunt justo. Suspendisse potenti. Duis consequat, ante
-                      a congue molestie, dui nisl iaculis ante, a suscipit erat
-                      urna sed nibh. Praesent ac dictum odio. Suspendisse
-                      convallis ipsum est, non auctor magna tincidunt sit amet.
-                      Proin placerat molestie condimentum. Sed in elit rhoncus,
-                      cursus lacus nec, elementum lorem. Proin sit amet est
-                      molestie, congue nisi non, pulvinar dui.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="card comment-card">
-                  <div className="card-header d-flex">
-                    <i className="fa-solid fa-user user-avatar me-2"></i>
-                    <h6>Username</h6>
-                  </div>
-                  <div className="card-body">
-                    <p className="card-text">
-                      Donec sit amet semper nunc, non elementum odio. Nunc non
-                      tincidunt justo. Suspendisse potenti. Duis consequat, ante
-                      a congue molestie, dui nisl iaculis ante, a suscipit erat
-                      urna sed nibh. Praesent ac dictum odio. Suspendisse
-                      convallis ipsum est, non auctor magna tincidunt sit amet.
-                      Proin placerat molestie condimentum. Sed in elit rhoncus,
-                      cursus lacus nec, elementum lorem. Proin sit amet est
-                      molestie, congue nisi non, pulvinar dui.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="card comment-card">
-                  <div className="card-header d-flex">
-                    <i className="fa-solid fa-user user-avatar me-2"></i>
-                    <h6>Username</h6>
-                  </div>
-                  <div className="card-body">
-                    <p className="card-text">
-                      Donec sit amet semper nunc, non elementum odio. Nunc non
-                      tincidunt justo. Suspendisse potenti. Duis consequat, ante
-                      a congue molestie, dui nisl iaculis ante, a suscipit erat
-                      urna sed nibh. Praesent ac dictum odio. Suspendisse
-                      convallis ipsum est, non auctor magna tincidunt sit amet.
-                      Proin placerat molestie condimentum. Sed in elit rhoncus,
-                      cursus lacus nec, elementum lorem. Proin sit amet est
-                      molestie, congue nisi non, pulvinar dui.
-                    </p>
+                    <p className="card-text">{comments_text}</p>
                   </div>
                 </div>
               </div>
@@ -152,4 +99,33 @@ export const Birthplanvideo = () => {
       </div>
     </div>
   );
+};
+
+Birthplanvideo.propTypes = {
+  topic_id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
+  video: PropTypes.string,
+  answer_id: PropTypes.number.isRequired,
+  answer_type: PropTypes.string.isRequired,
+  answer_text: PropTypes.string.isRequired,
+  answer_value: PropTypes.bool.isRequired,
+  comments_id: PropTypes.number.isRequired,
+  comments_user: PropTypes.string.isRequired,
+  comments_text: PropTypes.string.isRequired,
+};
+
+Birthplanvideo.defaultProps = {
+  topic_id: 1,
+  title: "En dilatación",
+  subtitle: "Espacio Físico",
+  video: "https://www.youtube.com/watch?v=crDWEskuPII",
+  answer_id: 11,
+  answer_type: "checkbox",
+  answer_text: "Lorem ipsum dolor sit amet",
+  answer_value: false,
+  comments_id: 1,
+  comments_user: "username",
+  comments_text:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis vulputate sapien. Sed egestas, magna sit amet maximus efficitur, diam odio blandit dolor, a tristique nunc lacus in urna. Integer consectetur tincidunt molestie. In eget tellus sed ligula facilisis lobortis. Aliquam ligula felis, tempor eu vehicula nec, commodo vel sem. Donec erat massa, feugiat ac euismod ut, pellentesque nec nibh. Etiam nunc diam, interdum eget orci eget, congue eleifend nisl. Suspendisse sit amet tempus urna. Ut vitae tortor arcu. Etiam volutpat nisl id justo placerat, a rhoncus turpis bibendum.",
 };

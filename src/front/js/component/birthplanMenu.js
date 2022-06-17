@@ -2,9 +2,21 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/birthplan.css";
+import { useState } from "react/cjs/react.production.min";
 
 export const Birthplanmenu = () => {
   const { store, actions } = useContext(Context);
+  const [Next, setNext] = useState(1);
+  const [Prev, setPrev] = useState(2);
+  const [show, setShow] = useState(false);
+
+  const goNext = () => {
+    setNext = Next + 1;
+  };
+
+  const goPrev = () => {
+    setPrev = Prev - 1;
+  };
 
   return (
     <nav
@@ -42,8 +54,12 @@ export const Birthplanmenu = () => {
       </div>
 
       <div id="menu-buttons">
-        <button className="btn btn-primary me-2">Anterior</button>
-        <button className="btn btn-primary">Siguiente</button>
+        <button className="btn btn-primary me-2" onClick={goPrev}>
+          Anterior
+        </button>
+        <button className="btn btn-primary" onClick={goNext}>
+          Siguiente
+        </button>
       </div>
     </nav>
   );
