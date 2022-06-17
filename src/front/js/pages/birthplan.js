@@ -2,6 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/birthplan.css";
 import { Navbar } from "../component/navbar";
+import { CheckboxTiamati } from "../component/checkboxTiamati";
+import { MultiSelectTiamati } from "../component/multiSelectTiamati";
+import { TextInputTiamati } from "../component/textInputTiamati";
 import { Link } from "react-router-dom";
 
 export const Birthplan = () => {
@@ -77,6 +80,33 @@ export const Birthplan = () => {
           id: 1,
           user: "username3",
           text: "tristique nunc lacus in urna. Integer consectetur tincidunt molestie. In eget tellus sed ligula facilisis lobortis. Aliquam ligula felis, tempor eu vehicula nec, commodo vel sem. Donec erat massa, feugiat ac euismod ut, pellentesque nec nibh. Etiam nunc diam, interdum eget orci eget, congue eleifend nisl. Suspendisse sit amet tempus urna. Ut vitae tortor arcu. Etiam volutpat nisl id justo placerat, a rhoncus turpis bibendum.",
+        },
+      ],
+    },
+    {
+      id: 3,
+      title: "Tercero",
+      subtitle: "El tercero",
+      video:
+        "https://res.cloudinary.com/dxeieqxam/video/upload/v1654338916/GI_Oksi-73_ubelvu.mp4",
+      multiselect: false,
+      answer: [
+        {
+          id: 1,
+          type: "text",
+          text: "ipsum dolor sit amet",
+        },
+        {
+          id: 2,
+          type: "text",
+          text: "ALorem ipsum dolor sit amet",
+        },
+      ],
+      comments: [
+        {
+          id: 1,
+          user: "username",
+          text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis vulputate sapien. Sed egestas, magna sit amet maximus efficitur, diam odio blandit dolor, a tristique nunc lacus in urna. Integer consectetur tincidunt molestie. In eget tellus sed ligula facilisis lobortis. Aliquam ligula felis, tempor eu vehicula nec, commodo vel sem. Donec erat massa, feugiat ac euismod ut, pellentesque nec nibh. Etiam nunc diam, interdum eget orci eget, congue eleifend nisl. Suspendisse sit amet tempus urna. Ut vitae tortor arcu. Etiam volutpat nisl id justo placerat, a rhoncus turpis bibendum.",
         },
       ],
     },
@@ -293,22 +323,6 @@ export const Birthplan = () => {
                       } else {
                         return <TextInputTiamati />;
                       }
-                      return (
-                        <div>
-                          <input
-                            className="form-check-input"
-                            type={ans.type}
-                            value={ans.value}
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            {ans.text}
-                          </label>
-                        </div>
-                      );
                     })}
                   </div>
                 </div>
