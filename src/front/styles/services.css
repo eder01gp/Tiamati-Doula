@@ -10,7 +10,7 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.container {
+#service-container {
   max-width: 900px;
 }
 

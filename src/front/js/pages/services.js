@@ -26,7 +26,7 @@ export const Services = () => {
 
   if (store.services.length>0){
   return (
-    <div key="01" className="container p-2" >
+    <div key="01" className="container p-2" id="service-container">
       <h1> Servicios </h1>
         {store.services.map((service) => {
           return (
