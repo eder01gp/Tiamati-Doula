@@ -147,7 +147,7 @@ export const Home = () => {
                 <p className="card-text">{serv.service.description_short}</p>
               </div>
               <div className="d-flex justify-content-between">
-              <Link to="/services">
+              <Link to={"/services/#"+serv.service_id}>
                 <button class="slide">
                   <div>Leer más</div>
                   <i class="icon-arrow-right"></i>
