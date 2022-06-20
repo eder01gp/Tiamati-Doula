@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef} from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
@@ -9,10 +9,40 @@ export const Home = () => {
   const [offsetY, setOffsetY] = useState(0);
   const handleScroll = () => setOffsetY(window.pageYOffset);
 
+  const inputRef00 = useRef()
+  const inputRef01 = useRef()
+  const inputRef02 = useRef();
+  const inputRef03 = useRef();
+  const [minHeight, setMinHeight] = useState(0);
+
+  const [width, setWidth]   = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+  const updateDimensions = () => {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+  }
+  useEffect(() => {
+      window.addEventListener("resize", updateDimensions);
+      return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
+
+  const minHeightCarrousel = () => {
+    inputRef01.current.classList.add("active")
+    inputRef02.current.classList.add("active")
+    inputRef03.current.classList.add("active")
+    const divHeight00 = inputRef01.current.clientHeight
+    setMinHeight(divHeight00+28)
+    inputRef02.current.classList.remove("active")
+    inputRef03.current.classList.remove("active")
+  }
+
+  useEffect(()=>{
+    minHeightCarrousel();
+  },[width])
 
   useEffect(()=>{
     window.addEventListener("scroll",handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   },[])
 
@@ -29,7 +59,7 @@ export const Home = () => {
 
       {/* What is Tiamati */}
       <div className="row py-3">
-        <div id="what-is-tiamati" className="col-sm text-center p-2">
+        <div id="what-is-tiamati" className="col-sm text-center p-2 m-2">
           <h2>¿Necesitas una Doula?</h2>
           <p id="what-is-tiamati-text" className="p-2">
             Un servicio de acompañamiento a la mujer embarazada y a la
@@ -65,84 +95,92 @@ export const Home = () => {
             </div>
           </div> */}
         </div>
-        {/* free appointment */}
-        <div id="free-appointment" className="col-sm text-center p-2">
+      {/* free appointment */}
+        <div id="free-appointment" className="col-sm text-center p-2 m-2">
           <h2>
             ¿Nos conocemos?
           </h2>
-          <p id="free-appoinment-text">Sin ningún compromiso</p>
-          <Link to="/calendar">
-            <button className="btn btn-light">Pide tu cita</button>
+          <div>
+          <p id="free-appointment-text">Sin ningún compromiso</p>
+          <Link to="/appoinment">
+            <button className="fill">Pide tu cita</button>
           </Link>  
+          </div>
         </div>
       </div>
-      
-
       {/* bio */}
-      <div id="bio" className="row">
-        {/* <div id="hello-text"> */}
-        {/* <h3>¡Hola! ¡Soy Margarida!</h3>
-          <Link to="/bio">
-            <button className="btn btn-primary bio-button">
-              Esta es mi historia
-            </button>
-          </Link> */}
-        {/* </div> */}
+      <div id="bio" className="row py-3 d-flex align-items-center">
+        <div id="bio-hello-text" className="col mx-3 d-flex flex-column justify-content-around">
+          <div className="mt-2">
+            <h2 >¡Hola!<br/>¡Soy Margarida!</h2>
+          </div>
+          <div className="">
+            <Link to="/bio">
+              <button id="bio-button" className="fill m-3">
+                Esta es mi historia
+              </button>
+            </Link>
+          </div>
+        </div>
+        <div id="bio-picture" className="col-4">
+        </div>
       </div>
-
       {/* services */}
-      <div id="services" className="row">
+      <div className="row py-3">
+        <div className="father-display-table">
+            <div id="services-title" className="child-display-cell text-center m-4">
+              <h2>Estos son los servicios que ofrezco:</h2>
+            </div>
+        </div>
+      </div>
+      <div id="services" className="row d-flex justify-content-around py-3">
         {store.services.map((serv) => {
           return (
-            <div key={serv.id} className="card service-card">
+            <div key={serv.id} className="card service-card my-4 mx-2">
               <img
                 className="card-img-top"
-                src="https://images.unsplash.com/photo-1585010873004-923f9a54e54e?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169"
+                src={serv.service.service_cover_url}
                 alt="Card image cap"
               />
               <div className="card-body">
                 <h5 className="card-title">{serv.service.name}</h5>
-                <p className="card-text">{serv.service.description}</p>
+                <p className="card-text">{serv.service.description_short}</p>
               </div>
-              <div className="card-body">
-                <div>
-                  <h6>Incluye</h6>
-                  <p>{serv.service.description_includes}</p>
-                </div>
-                <Link to="/services">
-                  <button className="btn btn-success">Leer más</button>
-                </Link>
+              <div className="d-flex justify-content-between">
+              <Link to="/services">
+                <button class="slide">
+                  <div>Leer más</div>
+                  <i class="icon-arrow-right"></i>
+                </button >
+              </Link> 
+              <Link to="/checkout">
+                <button className="fill" id="btn-I-want-service" onClick={() => {actions.serviceSelected(serv.service_id)}}>
+                    Lo quiero!
+                </button> 
+              </Link>
               </div>
             </div>
           );
         })}
       </div>
-
-      {/* documents */}
-      <div id="documents" className="row">
-        <img
-          id="documents-img"
-          className="col-4"
-          src="https://2.bp.blogspot.com/-8rtaDBkKiDI/WP9MgLhYCmI/AAAAAAAALMU/eq-cb_mXsmQKISq1JzNvEm7G3N-XvVaFACLcB/s1600/Guia-para-embazadas.JPG"
-          alt=""
-        />
-        <div id="documents-right" className="col-4">
-          <h4>Regístrate y accede a tu guía para embarazadas</h4>
-          <Link to="/documents">
-            <button className="btn btn-primary btn-lg">Obtener</button>
-          </Link>
+      <div className="row pt-3">
+        <div className="father-display-table">
+            <div id="services-title" className="child-display-cell text-center m-4">
+              <h2>Y esto es lo que las acompañadas opinan:</h2>
+            </div>
         </div>
       </div>
-
       {/* reviews */}
-      <div id="reviews" className="row">
+      <div id="reviews" className="row mb-5 mt-2 px-2" >
         <div
           id="carouselExampleControls"
           className="carousel slide"
           data-bs-ride="carousel"
+          ref={inputRef00} 
+          style={{"min-height":`${minHeight}px`}}
         >
-          <div className="carousel-inner">
-            <div key={1} className="carousel-item active">
+          <div className="carousel-inner" >
+            <div key={1} className="carousel-item active" ref={inputRef01} >
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
                 interdum dictum neque vel volutpat. Etiam urna justo, luctus a
@@ -155,7 +193,7 @@ export const Home = () => {
                 quis imperdiet neque ullamcorper id.
               </p>
             </div>
-            <div key={2} className="carousel-item">
+            <div key={2} className="carousel-item" ref={inputRef02}>
               <p>
                 Aenean sagittis dolor quis turpis efficitur consequat. Nulla ex
                 velit, laoreet in faucibus et, finibus eu mauris. Duis sodales
@@ -167,7 +205,7 @@ export const Home = () => {
                 id. Vivamus tincidunt massa sit amet dui imperdiet
               </p>
             </div>
-            <div key={3} className="carousel-item">
+            <div key={3} className="carousel-item" ref={inputRef03}>
               <p>
                 Pellentesque facilisis lectus id velit ultrices mollis. Fusce in
                 nibh nec magna facilisis tempor. Lorem ipsum dolor sit amet,
@@ -207,16 +245,33 @@ export const Home = () => {
           </button>
         </div>
       </div>
-
+      <div className="row mx-2">
+           {/* documents */}
+          <div id="documents" className="d-flex justify-content-center">
+            <img
+              id="documents-img"
+              className="m-4"
+              src="https://res.cloudinary.com/dxeieqxam/image/upload/c_scale,w_100/v1655462293/Home/Guia-para-embazadas_dnyevj.jpg"
+              alt=""
+            />
+            <div className="father-display-table">
+              <div id="documents-right  text-center m-2" className="child-display-cell">
+                <p>Regístrate y accede a tu guía para embarazadas</p>
+                <Link to="/loginPage">
+                  <button className="fill ms-5" id="btn-get-doc">Obtener</button>
+                </Link>
+              </div>
+            </div>
+          </div>
+      </div>
       {/* FAQ */}
-      <div id="faq-home" className="row">
+      <div id="faq-home" className="row my-5">
         <img id="" src="" alt="" />
         <div id="faq-home-right">
           <h3>¿Tienes dudas?</h3>
-          <h2>FAQ</h2>
           <Link to="/faq">
-            <button className="btn btn-light btn-lg"> AQUÍ </button>
-          </Link>
+            <button id="btn-faq"> <h2>FAQ</h2> </button>
+          </Link>      
         </div>
       </div>
     </div>

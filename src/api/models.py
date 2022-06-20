@@ -96,8 +96,9 @@ class Service(db.Model):
     session_time = db.Column(db.Float)
     session_qty = db.Column(db.Integer)
     sold_per_units = db.Column(db.Boolean)
-    description = db.Column(db.String(1000))
-    description_includes = db.Column(db.String(1000))
+    description = db.Column(db.String(2000))
+    description_short = db.Column(db.String(1000))
+    description_includes = db.Column(db.String(1500))
     price = db.Column(db.Integer)
     discount = db.Column(db.Integer)
     service_cover_url = db.Column(db.String(500))
@@ -121,6 +122,7 @@ class Service(db.Model):
             "session_qty": self.session_qty,
             "sold_per_units": self.sold_per_units,
             "description": self.description,
+            "description_short": self.description_short,
             "description_includes": self.description_includes,
             "price": self.price,
             "discount": self.discount,

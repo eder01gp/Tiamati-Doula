@@ -9,14 +9,21 @@ export const Checkout = () => {
   const { store, actions } = useContext(Context);
   const [total, setTotal] = useState(0);
   const [error, setError] = useState(null);
+  const [id, setId] = useState(null);
+
+  useEffect(()=>{
+    setId(localStorage.getItem("ID"));
+  }, [])
 
   useEffect(() => {
     let totalAux = 0
     {store.services.map((service) => {
+      if (service.service.selected == true){
       totalAux = ((totalAux) + ((service.service.price*(100-service.service.discount)/100)*service.service.qty))
+      }
       setTotal(totalAux);
     })}
-  }, [store.services_selected]);
+  }, [store.services]);
   
   useEffect(() => {
     if (error!=null){    
@@ -96,7 +103,7 @@ export const Checkout = () => {
                       href="#"
                       className="btn btn-light m-1"
                       data-bs-toggle={service.service.modal_selected_KO}
-                      data-bs-target="#staticBackdrop"
+                      data-bs-target={"#staticBackdrop"+service.service.id}
                       onClick={() => {
                         if (service.service.qty>1){
                           actions.servicesQtyChange(service.service.id,0,"down");
@@ -115,7 +122,7 @@ export const Checkout = () => {
                     <p>{service.service.qty_error}</p>
                 </div>
                 {/* <!-- Modal --> */}
-                <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal fade" id={"staticBackdrop"+service.service.id} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                       <div className="modal-dialog">
                         <div className="modal-content">
                           <div className="modal-header">
@@ -123,13 +130,12 @@ export const Checkout = () => {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div className="modal-body">
-                            ...
+                          {service.service.name}
                           </div>
                           <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No</button>
                             <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={()=>{
                               actions.serviceSelectedKO(service.service.id);
-                              console.log(service.service.selected)
                             }}>Si</button>
                           </div>
                         </div>
@@ -150,7 +156,7 @@ export const Checkout = () => {
         <div className="addServices mt-5"><h4>Añade más servicios</h4>
         </div>
         {store.services.map((service, i) => {
-            if (service.service.selected != true) {
+            if (!service.service.selected) {
               return (
                 <div key={service.service.id} className="frame03 row my-2">
                   <div className="frame04A col-sm-1 my-2 justify-content-center">
@@ -198,7 +204,7 @@ export const Checkout = () => {
           }
         })}
 {/* Login y pago */}
-        {store.logged ?
+        {localStorage.getItem("ID") ?
         <div className="addServices mt-5"><h4>Pago</h4>
           <button className="btn btn-light" onClick={()=>{actions.createCheckoutSession(JSON.stringify(store.services_selected))}}>
                   Ir a página de pago
