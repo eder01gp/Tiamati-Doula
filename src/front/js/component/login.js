@@ -32,6 +32,7 @@ export const Login = (props) => {
         localStorage.setItem("email", confirmation.User.email);
         setResult(confirmation.msg);
         actions.verify();
+        actions.getUserInfo();
         if (props.push==true){
           history.push("/");
         }

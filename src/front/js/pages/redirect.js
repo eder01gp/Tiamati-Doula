@@ -27,7 +27,7 @@ export const Redirect = () => {
     <section>
       <p>{message}</p>
     </section>
-  ) : <p className="text-center"> Has sido redireccionad@ aquí por que tu sesión a caducado, puedes loguearte de nuevo :)</p>;
+  ) : <p className="text-center"> Has sido redireccionad@ aquí por que tu sesión ha caducado, puedes loguearte de nuevo :)</p>;
 }
 
 

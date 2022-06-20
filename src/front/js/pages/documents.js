@@ -16,29 +16,31 @@ export const Documents = () => {
       <div className="d-flex justify-content-between">
         <h1>Documentos</h1>
       </div>
-      <div className="frame02 row d-flex overflow-auto justify-content-center flex-wrap">
+      <div className="frame02 row d-flex overflow-auto justify-content-center flex-wrap mb-5">
         {store.documents.map((document) => {
           return (
             <div
               key={document.id}
-              className=" frame03 card m-2"
+              className="frame03 card m-3"
               style={{ width: "220px" }}
             >
               <img
                 src={document.document_cover_url}
-                className="imgCard card-img-top"
+                className="imgCard card-img-top my-2"
                 alt=""
                 width="auto"
-                height="100px"
+                height="150px"
               />
-              <div className="frame04 card-body">
-                <h6 className="card-title">{document.document_name}</h6>
-                <p className="card-text">{document.document_description}</p>
-                <div className="frame05 container d-flex flex-row p-0">
-                  <div className="frame06A w-75">
+              <div className="frame04 card-body d-flex flex-column justify-content-between">
+                <div>
+                  <h6 className="card-title">{document.document_name}</h6>
+                  <p className="card-text">{document.document_description}</p>
+                </div>
+                <div className="py-2">
+                  
                     <button
-                      className="btn btn-light w-100"
-                      href=""
+                      id="doc-button"
+                      className="fill w-100"
                       target="_blank"
                       onClick={() => {
                         window.open(document.document_url);
@@ -46,7 +48,7 @@ export const Documents = () => {
                     >
                       Ver
                     </button>
-                    <button
+                    {localStorage.getItem("rol")==3 ? <button
                       className="btn btn-light w-100"
                       data-bs-toggle="modal"
                       data-bs-target="#staticBackdrop2"
@@ -55,17 +57,14 @@ export const Documents = () => {
                       }}
                     >
                       Editar
-                    </button>
-                  </div>
-                </div>
-                <div className="text-center">
-                  <p>{}</p>
+                    </button>:null}
+                  
                 </div>
               </div>
             </div>
           );
         })}
-        <div className="d-flex justify-content-center my-3">
+        {localStorage.getItem("rol")==3 ? <div className="d-flex justify-content-center my-3">
           <button
             type="button"
             className="btn btn-primary"
@@ -74,7 +73,7 @@ export const Documents = () => {
           >
             Nuevo documento
           </button>
-        </div>
+        </div>:null}
       </div>
 
       {/* <!-- Modal Nuevo Documento --> */}
