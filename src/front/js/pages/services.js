@@ -35,6 +35,7 @@ export const Services = () => {
             <div className="row mx-3">
               <div className="col-sm-8 p-2">
                   <img
+                    id="service-img"
                     src={service.service.service_cover_url}
                     className="imgCard card-img-top"
                     alt={service.service.name}

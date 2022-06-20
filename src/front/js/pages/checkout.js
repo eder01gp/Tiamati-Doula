@@ -9,11 +9,12 @@ export const Checkout = () => {
   const { store, actions } = useContext(Context);
   const [total, setTotal] = useState(0);
   const [error, setError] = useState(null);
-  const [id, setId] = useState(null);
 
-  useEffect(()=>{
-    setId(localStorage.getItem("ID"));
-  }, [])
+
+  const goToCheckOut = async () => {
+    await actions.serviceSelectedUpdate()
+    actions.createCheckoutSession(JSON.stringify(store.services_selected))
+  }
 
   useEffect(() => {
     let totalAux = 0
@@ -206,7 +207,7 @@ export const Checkout = () => {
 {/* Login y pago */}
         {localStorage.getItem("ID") ?
         <div className="addServices mt-5"><h4>Pago</h4>
-          <button className="btn btn-light" onClick={()=>{actions.createCheckoutSession(JSON.stringify(store.services_selected))}}>
+          <button className="btn btn-light" onClick={()=>{goToCheckOut()}}>
                   Ir a página de pago
           </button>
         </div> :

@@ -25,9 +25,9 @@ export const Redirect = () => {
 
   return message ? (
     <section>
-      <p>{message}</p>
+      <p className="text-center">{message}</p>
     </section>
-  ) : <p className="text-center"> Has sido redireccionad@ aquí por que tu sesión ha caducado, puedes loguearte de nuevo :)</p>;
+  ) : <p className="text-center"> Has sido redireccionad@ aquí por que tu sesión ha caducado o has cerrado sesión, puedes loguearte de nuevo :)</p>;
 }
 
 

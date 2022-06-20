@@ -15,9 +15,9 @@ input[type=number] {
 }
 
 
-.imgCard {
+#service-img {
   object-fit: cover;
-  object-position: top;
+  object-position: center;
 }
 
 .framePrice {

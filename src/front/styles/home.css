@@ -124,6 +124,7 @@ h2 {
   background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1654589067/illustrations/Banner_dark_y73sds.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   z-index: 2;
 }
 
