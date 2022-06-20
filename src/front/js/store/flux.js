@@ -131,8 +131,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       serviceSelectedUpdate: () => {
         let newServiceSelected = {
-          "client_reference_id":getStore().user_info.id,
-          "customer_email":getStore().user_info.email,
+          "client_reference_id":localStorage.getItem("ID"),
+          "customer_email":localStorage.getItem("email"),
           };  
 
         let new_line_items = []

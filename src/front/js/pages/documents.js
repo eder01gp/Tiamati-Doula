@@ -1,5 +1,4 @@
-import React, { Component, useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/documents.css";
 import { UploadDocs } from "../component/uploadDocs";

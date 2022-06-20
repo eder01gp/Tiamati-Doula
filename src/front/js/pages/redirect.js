@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
+import { useHistory } from "react-router-dom";
 
 
 export const Redirect = () => {
@@ -12,12 +13,12 @@ export const Redirect = () => {
     console.log(query,"query")
 
     if (query.get("success")) {
-      setMessage("Order placed! You will receive an email confirmation.");
+      setMessage("¡Servicio contratado! Muchas gracias");
     }
 
     if (query.get("canceled")) {
       setMessage(
-        "Order canceled -- continue to shop around and checkout when you're ready."
+        "Pedido cancelado - puedes volver al carro de compra y continuar."
       );
     }
   }, []);
@@ -26,7 +27,7 @@ export const Redirect = () => {
     <section>
       <p>{message}</p>
     </section>
-  ) : <p>"There will be a message"</p>;
+  ) : <p className="text-center"> Has sido redireccionad@ aquí por que tu sesión a caducado, puedes loguearte de nuevo :)</p>;
 }
 
 

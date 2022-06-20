@@ -36,6 +36,7 @@ export const Signup = (props) => {
             localStorage.setItem("token", data.token);
             localStorage.setItem("ID", data.User.id);
             localStorage.setItem("rol", data.User.rol);
+            localStorage.setItem("email", data.User.email);
             actions.verify();
             if (props.push==true){
                 if (check == false) {

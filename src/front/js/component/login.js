@@ -29,6 +29,7 @@ export const Login = (props) => {
         localStorage.setItem("token", confirmation.token);
         localStorage.setItem("ID", confirmation.User.id);
         localStorage.setItem("rol", confirmation.User.rol);
+        localStorage.setItem("email", confirmation.User.email);
         setResult(confirmation.msg);
         actions.verify();
         if (props.push==true){
