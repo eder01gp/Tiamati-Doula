@@ -120,9 +120,7 @@
                 "sha256:fd8a250edc26254fe5b33be00402e6d287f562b6a5b2152dec302fa15bb3e997",
                 "sha256:ffaa5c925128e29efbde7301d8ecaf35c8c60ffbcd6a1ffd3a552177c8e5e796"
             ],
-            "version": "==1.15.0"
-
-            ],
+            "version": "==1.15.0",
             "markers": "python_version >= '3.6'",
             "version": "==2022.5.18.1"
         },
