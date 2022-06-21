@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import "../../styles/bio.css";
 import speechBubble1 from "../../../img/logo/speechBubble1.png";
 import speechBubble2 from "../../../img/logo/speechBubble2.png";
-import speechBubble3 from "../../../img/logo/speechBubble2.png";
+
+import speechBubble3 from "../../../img/logo/speechBubble3.png";
+
 import speechBubble4 from "../../../img/logo/speechBubble4.png";
 
 export const Bio = () => {
@@ -37,7 +39,7 @@ export const Bio = () => {
 
   return (
     <div className="div-bio container">
-      <h1 className="text-center mb-5">BIO</h1>
+      <h1 className="text-center mb-3 mt-3">BIO</h1>
       <div className="justify-content-center d-flex">
         {/* LINE 1 */}
         <div className="lines-images-boxes  mx-1 ">

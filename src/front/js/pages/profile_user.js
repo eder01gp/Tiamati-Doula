@@ -38,9 +38,7 @@ export const Profile_user = () => {
           {/* Current user email & edit button*/}
           {userInfo ? (
             <div className="d-flex">
-              <p className="mb-0 mt-2">
-                Email: {store.user_info ? store.user_info.email : null}
-              </p>
+              <p className="mb-0 mt-2">Email: {store.user_info.email}</p>
               <button
                 className="btn"
                 onClick={() => {

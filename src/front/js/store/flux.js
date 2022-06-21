@@ -2,7 +2,9 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-        "https://3001-ederdon-tiamatidoula-1er83oozol2.ws-eu47.gitpod.io/" +
+
+        "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu47.gitpod.io/" +
+
         "api",
       logged: null,
       token: null,
@@ -13,6 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       user_data: {},
       documents: [],
       services: [],
+      services_selected: [],
     },
 
     actions: {
@@ -23,6 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       getUserInfo: async () => {
         try {
+          await getActions().verify();
           const resp = await fetch(getStore().url + "/user_info", {
             method: "GET",
             headers: {
@@ -49,9 +53,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           });
           const data = await resp.json();
-          setStore({ logged: data.logged || false });
+          setStore({ logged: data.logged || false });         
         } catch (e) {
           setStore({ logged: false });
+          getActions().logout();
         }
       },
       logout: () => {
@@ -62,7 +67,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const resp = await fetch(getStore().url + "/documents");
           const data = await resp.json();
-          console.log(data);
+
           setStore({ documents: data.response });
         } catch (e) {
           console.log("Error getting documents");
@@ -72,15 +77,15 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const resp = await fetch(getStore().url + "/services");
           const data = await resp.json();
-
-          console.log(data);
-
           setStore({ services: data.response });
         } catch (e) {
           console.log("Error getting services");
         }
+        getActions().modalSelectedKO();
       },
-      serviceSelectedQtyChange: (id, newQty, action) => {
+
+      servicesQtyChange: (id, newQty, action) => {
+
         const newService = getStore().services.map((x) => {
           console.log("qty change service", x);
           if (x.service.id == id) {
@@ -98,6 +103,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ services: newService });
 
         getActions().modalSelectedKO();
+        getActions().serviceSelectedUpdate();
       },
       modalSelectedKO: () => {
         const newServiceModals = getStore().services.map((x) => {
@@ -131,6 +137,27 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ services: newService });
       },
+      serviceSelectedUpdate: () => {
+        let newServiceSelected = {
+          "client_reference_id":localStorage.getItem("ID"),
+          "customer_email":localStorage.getItem("email"),
+          };  
+
+        let new_line_items = []
+        getStore().services.map((x) => {          
+          if (x.service.selected) {
+            const newLineItem = {
+              "price":x["service"]["stripe_price_id"], 
+              "quantity":x["service"]["qty"],
+            }
+            new_line_items.push(newLineItem);
+          }
+        });
+        newServiceSelected["line_items"] = new_line_items;
+
+        setStore({services_selected: newServiceSelected});        
+        getActions().modalSelectedKO();
+      },
       serviceSelected: (id) => {
         const newService = getStore().services.map((x) => {
           if (x.service.id == id) {
@@ -138,6 +165,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           } else return x;
         });
         setStore({ services: newService });
+        getActions().serviceSelectedUpdate();
       },
       serviceSelectedKO: (id) => {
         const newService = getStore().services.map((x) => {
@@ -146,6 +174,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           } else return x;
         });
         setStore({ services: newService });
+        getActions().serviceSelectedUpdate();
       },
       uploadCloud: async (body) => {
         const options = {
@@ -163,7 +192,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
         });
-        setStore({ services: newService });
+
         if (response.status == 200) {
           getActions().logout();
         }
@@ -180,6 +209,21 @@ const getState = ({ getStore, getActions, setStore }) => {
         const data = await response.json();
         setStore({ business_faq: data.response });
       },
+
+      createCheckoutSession: async (body) => {
+        const options = {
+          body: body,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          }
+        };
+        const resp = await fetch(getStore().url + "/create_checkout_session", options);
+        const data = await resp.json();
+        console.log(data);
+        window.location.replace(data.response);
+      },
+
     },
   };
 };

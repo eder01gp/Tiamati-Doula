@@ -81,6 +81,15 @@ export const Navbar = () => {
                 </Link>
               </div>
             )}
+            <div>
+                <Link to="/checkout">
+                  <li>
+                    <p href="#" className="mx-2">
+                      Carro de la compra
+                    </p>
+                  </li>
+                </Link>
+            </div>
             <li>
               <p
                 href="#"
@@ -99,12 +108,12 @@ export const Navbar = () => {
             id="profile-dropdown"
             aria-labelledby="dropDownMenu"
           >
-            <Link to="/login">
+            <Link to="/loginPage">
               <li>
                 <p className="mx-2">Iniciar Sesión</p>
               </li>
             </Link>
-            <Link to="/signup">
+            <Link to="/signupPage">
               <li>
                 <p className="mx-2">Registrarse</p>
               </li>

@@ -93,12 +93,13 @@ class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200),nullable=False)
     type = db.Column(db.Integer, db.ForeignKey('service_type.id'))
-    service_type = db.relationship(ServiceType)
+    service_type = db.relationship("ServiceType")
     session_time = db.Column(db.Float)
     session_qty = db.Column(db.Integer)
     sold_per_units = db.Column(db.Boolean)
-    description = db.Column(db.String(1000))
-    description_includes = db.Column(db.String(1000))
+    description = db.Column(db.String(2000))
+    description_short = db.Column(db.String(1000))
+    description_includes = db.Column(db.String(1500))
     price = db.Column(db.Integer)
     discount = db.Column(db.Integer)
     service_cover_url = db.Column(db.String(500))
@@ -107,6 +108,8 @@ class Service(db.Model):
     selected = db.Column(db.Boolean, default= False)
     modal_selected_KO = db.Column(db.String(50))
     documents = db.relationship("Document", secondary=ServiceDocument, backref=db.backref("Service"))
+    stripe_price_id = db.Column(db.String(200))
+    stripe_product_id = db.Column(db.String(200))
 
     def __repr__(self):
         return "service: "+self.name
@@ -116,11 +119,11 @@ class Service(db.Model):
             "id": self.id,
             "name": self.name,
             "type": self.type,
-            "service_type": self.service_type,
             "session_time": self.session_time,
             "session_qty": self.session_qty,
             "sold_per_units": self.sold_per_units,
             "description": self.description,
+            "description_short": self.description_short,
             "description_includes": self.description_includes,
             "price": self.price,
             "discount": self.discount,
@@ -129,7 +132,9 @@ class Service(db.Model):
             "qty_error": self.qty_error,
             "selected": self.selected,
             "modal_selected_KO": self.modal_selected_KO,
-            "documents": list(map(lambda item: item.serialize(), self.documents))
+            "documents": list(map(lambda item: item.serialize(), self.documents)),
+            "stripe_price_id": self.stripe_price_id,
+            "stripe_product_id": self.stripe_product_id,
         }
     
 
@@ -176,7 +181,6 @@ class Document(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "document": self.document,
             "document_url": self.document_url,
             "document_name": self.document_name,
             "document_description": self.document_description,
@@ -223,6 +227,7 @@ class BusinessFaq(db.Model):
             "answer": self.answer
         }
 
+
 class BirthplanForm(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
@@ -246,3 +251,4 @@ class BirthplanForm(db.Model):
             "interruption_num": self.interruption_num,
             "birth_date": self.birth_date
         }
+
