@@ -16,7 +16,6 @@ export const Footer = () => (
       }}
     />
 
-
     <img
       src={whatsapp}
       id="whatsapp-logo"
@@ -26,5 +25,5 @@ export const Footer = () => (
         window.open("https://wa.me/34644754671");
       }}
     />
-
-    
+  </footer>
+  )

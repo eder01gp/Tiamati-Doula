@@ -102,7 +102,7 @@ export const Home = () => {
           </h2>
           <div>
           <p id="free-appointment-text">Sin ningún compromiso</p>
-          <Link to="/appoinment">
+          <Link to="/appointment">
             <button className="fill">Pide tu cita</button>
           </Link>  
           </div>

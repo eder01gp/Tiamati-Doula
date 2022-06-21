@@ -20,6 +20,7 @@ import { Documents } from "./pages/documents";
 import { Redirect } from "./pages/redirect";
 import { User_appointment } from "./pages/user_appointment";
 import { Modify_appointment } from "./pages/modify_appointment";
+import { Appointment } from "./pages/appointment";
 
 
 import injectContext from "./store/appContext";
