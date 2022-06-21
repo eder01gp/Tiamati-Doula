@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 7570fc45d876
+Revision ID: a264dc9f9f8c
 Revises: 
-Create Date: 2022-06-11 15:27:28.960484
+Create Date: 2022-06-21 18:32:01.856599
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '7570fc45d876'
+revision = 'a264dc9f9f8c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,6 +27,13 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('answer_id'),
     sa.UniqueConstraint('question_id')
+    )
+    op.create_table('calendar_availability',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('date', sa.Date(), nullable=True),
+    sa.Column('time', sa.Time(), nullable=True),
+    sa.Column('is_available', sa.Boolean(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('document',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -64,8 +71,9 @@ def upgrade():
     sa.Column('session_time', sa.Float(), nullable=True),
     sa.Column('session_qty', sa.Integer(), nullable=True),
     sa.Column('sold_per_units', sa.Boolean(), nullable=True),
-    sa.Column('description', sa.String(length=1000), nullable=True),
-    sa.Column('description_includes', sa.String(length=1000), nullable=True),
+    sa.Column('description', sa.String(length=2000), nullable=True),
+    sa.Column('description_short', sa.String(length=1000), nullable=True),
+    sa.Column('description_includes', sa.String(length=1500), nullable=True),
     sa.Column('price', sa.Integer(), nullable=True),
     sa.Column('discount', sa.Integer(), nullable=True),
     sa.Column('service_cover_url', sa.String(length=500), nullable=True),
@@ -74,6 +82,7 @@ def upgrade():
     sa.Column('selected', sa.Boolean(), nullable=True),
     sa.Column('modal_selected_KO', sa.String(length=50), nullable=True),
     sa.Column('stripe_price_id', sa.String(length=200), nullable=True),
+    sa.Column('stripe_product_id', sa.String(length=200), nullable=True),
     sa.ForeignKeyConstraint(['type'], ['service_type.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -93,6 +102,29 @@ def upgrade():
     sa.Column('document_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['document_id'], ['document.id'], ),
     sa.ForeignKeyConstraint(['service_id'], ['service.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('appointment',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('service', sa.Integer(), nullable=True),
+    sa.Column('date', sa.Date(), nullable=True),
+    sa.Column('time', sa.Time(), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['service'], ['service.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('birthplan_form',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('full_name', sa.String(length=50), nullable=False),
+    sa.Column('age', sa.Integer(), nullable=False),
+    sa.Column('phone', sa.Integer(), nullable=False),
+    sa.Column('pregnancy_num', sa.Integer(), nullable=True),
+    sa.Column('birth_num', sa.Integer(), nullable=True),
+    sa.Column('interruption_num', sa.Integer(), nullable=True),
+    sa.Column('birth_date', sa.Date(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('service_documents',
@@ -154,6 +186,8 @@ def downgrade():
     op.drop_table('service_rols')
     op.drop_table('service_hired')
     op.drop_table('service_documents')
+    op.drop_table('birthplan_form')
+    op.drop_table('appointment')
     op.drop_table('ServiceDocument')
     op.drop_table('users')
     op.drop_table('service')
@@ -161,5 +195,6 @@ def downgrade():
     op.drop_table('user_faq')
     op.drop_table('service_type')
     op.drop_table('document')
+    op.drop_table('calendar_availability')
     op.drop_table('business_faq')
     # ### end Alembic commands ###
