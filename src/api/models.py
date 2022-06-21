@@ -168,6 +168,13 @@ class ServiceHired(db.Model):
     users = db.relationship(Users)
     sessions_left= db.Column(db.Integer)
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "service_id": self.service_id,
+            "user_id": self.user_id,
+        }
+
 class Document(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
     document_url = db.Column(db.String(300))
@@ -250,5 +257,42 @@ class BirthplanForm(db.Model):
             "birth_num": self.birth_num,
             "interruption_num": self.interruption_num,
             "birth_date": self.birth_date
+        }
+
+class Appointment(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    service = db.Column(db.Integer, db.ForeignKey('service.id'))
+    services = db.relationship(Service)
+    date = db.Column(db.Date)
+    time = db.Column(db.Time)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    users = db.relationship(Users)
+
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "service": self.service,
+            "date": self.date.strftime("%Y-%m-%d") if self.date is not None else None,
+            "time": self.time.strftime("%H:%M") if self.time is not None else None,
+            "user_id": self.user_id,
+        }
+   
+    
+    
+
+class CalendarAvailability(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date)
+    time = db.Column(db.Time)
+    is_available = db.Column(db.Boolean)
+    
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "date": self.date.strftime("%Y-%m-%d") if self.date is not None else None,
+            "time": self.time.strftime("%H:%M") if self.time is not None else None,
+            "is_available": self.is_available,
         }
 

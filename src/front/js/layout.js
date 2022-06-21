@@ -6,7 +6,6 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
 import { Home } from "./pages/home";
-import { Signup } from "./pages/signupPage";
 import { LoginPage } from "./pages/loginPage";
 import { SignupPage } from "./pages/signupPage";
 import { Form } from "./pages/form";
@@ -19,6 +18,9 @@ import { Services } from "./pages/services";
 import { Checkout } from "./pages/checkout";
 import { Documents } from "./pages/documents";
 import { Redirect } from "./pages/redirect";
+import { User_appointment } from "./pages/user_appointment";
+import { Modify_appointment } from "./pages/modify_appointment";
+
 
 import injectContext from "./store/appContext";
 
@@ -80,7 +82,16 @@ const Layout = () => {
               <Route exact path="/redirect">
                 <Redirect />
               </Route>
-              <Route>
+               <Route exact path="/appointment">
+              <Appointment />
+              </Route>
+              <Route exact path="/user_appointment">
+                <User_appointment />
+              </Route>
+              <Route exact path="/modify_appointment">
+                <Modify_appointment />
+              </Route>
+                <Route>
                 <h1>Not found!</h1>
               </Route>
             </Switch>
