@@ -4,7 +4,6 @@ import "../../styles/birthplan.css";
 import { Navbar } from "../component/navbar";
 import { CheckboxTiamati } from "../component/checkboxTiamati";
 import { MultiSelectTiamati } from "../component/multiSelectTiamati";
-import { TextInputTiamati } from "../component/textInputTiamati";
 import { Link } from "react-router-dom";
 
 export const Birthplan = () => {
@@ -12,7 +11,6 @@ export const Birthplan = () => {
   const [show, setShow] = useState(false);
   const [formInfo, setFormInfo] = useState({});
   const [sectionIndex, setSectionIndex] = useState(0);
-  const [disabled, setDisabled] = useState(false);
   const [sections, setSections] = useState([
     {
       id: 1,
@@ -20,19 +18,23 @@ export const Birthplan = () => {
       subtitle: "Espacio físico",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1654338916/GI_Oksi-73_ubelvu.mp4",
-      multiselect: false,
+
       answer: [
         {
           id: 1,
           type: "checkbox",
           text: "Lorem ipsum dolor sit amet",
-          value: false,
+          checked: false,
+          input_text: null,
+          multiselect: false,
         },
         {
           id: 2,
           type: "checkbox",
           text: "Consectetur adipiscing elit",
-          value: false,
+          checked: false,
+          input_text: "",
+          multiselect: false,
         },
       ],
       comments: [
@@ -49,25 +51,28 @@ export const Birthplan = () => {
       subtitle: "Intimidad",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1654338855/RAJB5897_iazidv.mp4",
-      multiselect: false,
+
       answer: [
         {
           id: 1,
           type: "checkbox",
           text: "dolor sit amet",
-          value: false,
+          checked: false,
+          multiselect: true,
         },
         {
           id: 2,
           type: "checkbox",
           text: "Vivamus quis vulputate sapien",
-          value: false,
+          checked: false,
+          multiselect: true,
         },
         {
           id: 3,
           type: "checkbox",
           text: "Sed egestas, magna sit",
-          value: false,
+          checked: false,
+          multiselect: true,
         },
       ],
       comments: [
@@ -80,33 +85,6 @@ export const Birthplan = () => {
           id: 1,
           user: "username3",
           text: "tristique nunc lacus in urna. Integer consectetur tincidunt molestie. In eget tellus sed ligula facilisis lobortis. Aliquam ligula felis, tempor eu vehicula nec, commodo vel sem. Donec erat massa, feugiat ac euismod ut, pellentesque nec nibh. Etiam nunc diam, interdum eget orci eget, congue eleifend nisl. Suspendisse sit amet tempus urna. Ut vitae tortor arcu. Etiam volutpat nisl id justo placerat, a rhoncus turpis bibendum.",
-        },
-      ],
-    },
-    {
-      id: 3,
-      title: "Tercero",
-      subtitle: "El tercero",
-      video:
-        "https://res.cloudinary.com/dxeieqxam/video/upload/v1654338916/GI_Oksi-73_ubelvu.mp4",
-      multiselect: false,
-      answer: [
-        {
-          id: 1,
-          type: "text",
-          text: "ipsum dolor sit amet",
-        },
-        {
-          id: 2,
-          type: "text",
-          text: "ALorem ipsum dolor sit amet",
-        },
-      ],
-      comments: [
-        {
-          id: 1,
-          user: "username",
-          text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis vulputate sapien. Sed egestas, magna sit amet maximus efficitur, diam odio blandit dolor, a tristique nunc lacus in urna. Integer consectetur tincidunt molestie. In eget tellus sed ligula facilisis lobortis. Aliquam ligula felis, tempor eu vehicula nec, commodo vel sem. Donec erat massa, feugiat ac euismod ut, pellentesque nec nibh. Etiam nunc diam, interdum eget orci eget, congue eleifend nisl. Suspendisse sit amet tempus urna. Ut vitae tortor arcu. Etiam volutpat nisl id justo placerat, a rhoncus turpis bibendum.",
         },
       ],
     },
@@ -301,12 +279,17 @@ export const Birthplan = () => {
           //Section
           <div id={sections[sectionIndex - 2].id}>
             <div className="row">
-              <div id="video" className="col-6">
-                <video width="600" controls>
-                  <source src={sections[sectionIndex - 2].video} />
-                </video>
+              <div className="video col">
+                <iframe
+                  width="640"
+                  height="360"
+                  frameBorder="0"
+                  allow=" fullscreen"
+                  src={sections[sectionIndex - 2].video}
+                  controls
+                />
               </div>
-              <div id="topic-description" className="col-6">
+              <div id="topic-description" className="col">
                 <h3 id="title">{sections[sectionIndex - 2].title}</h3>
                 <h5 id="subtitle">{sections[sectionIndex - 2].subtitle}</h5>
 
@@ -316,18 +299,32 @@ export const Birthplan = () => {
                     className="form-check answer"
                   >
                     {sections[sectionIndex - 2].answer.map((ans) => {
-                      if (ans.type == "checkbox" && !ans.multiselect) {
-                        return <CheckboxTiamati />;
-                      } else if (ans.type == "checkbox" && ans.multiselect) {
-                        return <MultiSelectTiamati />;
-                      } else {
-                        return <TextInputTiamati />;
+                      if (ans.type == "checkbox" && ans.multiselect == false) {
+                        return (
+                          <CheckboxTiamati
+                            section_id={sections[sectionIndex - 2].id}
+                            sections={sections}
+                            setSections={setSections}
+                            answer={ans}
+                          />
+                        );
+                      } else if (
+                        ans.type == "checkbox" &&
+                        ans.multiselect == true
+                      ) {
+                        return (
+                          <MultiSelectTiamati
+                            section_id={sections[sectionIndex - 2].id}
+                            sections={sections}
+                            setSections={setSections}
+                            answer={ans}
+                          />
+                        );
                       }
                     })}
                   </div>
                 </div>
               </div>
-
               <div id="comments" className="accordion">
                 <div className="accordion-item">
                   <h2 className="accordion-header" id="comment-header">
