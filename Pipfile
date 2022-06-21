@@ -17,6 +17,12 @@ flask-cors = "*"
 gunicorn = "*"
 cloudinary = "*"
 flask-admin = "*"
+flask-jwt-extended = "*"
+jwt = "*"
+stripe = "*"
+django-http-method = "*"
+django = "*"
+
 
 [requires]
 python_version = "3.8"

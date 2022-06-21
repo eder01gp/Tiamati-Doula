@@ -1,0 +1,21 @@
+.div-user-appointment {
+  margin-top: 3cm;
+}
+
+.list-group-appointment {
+  width: 600px;
+}
+@media (max-width: 750px) {
+  .list-group-appointment {
+    width: 400px;
+    font-size: 14px;
+  }
+}
+
+.list-group-item-appointment {
+  height: 40px;
+}
+
+.btn-group {
+  float: inline-end;
+}

@@ -1,0 +1,9 @@
+.imgCard {
+    object-fit: contain;
+    object-position: top;
+  }
+
+  #doc-button::after{
+    background-color: #4cff6a42;
+
+  }
