@@ -1,18 +1,21 @@
 html {
   box-sizing: border-box;
 }
-.container {
-  padding-bottom: 200px;
+
+
+body {
+/*   background-image: linear-gradient(to right, #a18cd1 0%, #fbc2eb 100%);
+ */  background-repeat: repeat;
+    font-family: 'Anek Malayalam', sans-serif;
+  font-size: 200;
 }
 
-.formulario {
-  margin-top: 7%;
-  width: 80%;
-}
 
 #navbar {
   padding-left: 1%;
   padding-right: 1%;
+  background-color: rgba(1, 1, 1, 0.2);
+  height: 50px;
 }
 
 #menu-dropdown {
@@ -23,26 +26,21 @@ html {
   margin-left: 90%;
 }
 
-footer {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 200px;
-  padding: 1%;
-  background-color: rgb(255, 217, 146);
-  color: white;
-}
-
 #insta-logo {
   width: 50px;
+  cursor: pointer;
 }
 
 #whatsapp-logo {
   width: 80px;
   margin-left: 80%;
   margin-bottom: 50px;
+  cursor: pointer;
+}
+
+.formulario {
+  margin-top: 7%;
+  width: 80%;
 }
 
 .form-general-div {
@@ -58,3 +56,25 @@ footer {
 .div-profile {
   margin-top: 7%;
 }
+
+.page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.content-wrap {
+  padding-bottom: 11rem; /* Footer height */
+  padding-top: 50px;
+}
+
+.footer {
+
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 11rem;
+/*   background-color: rgb(255, 217, 146); /* Footer height */ 
+}
+
+
+

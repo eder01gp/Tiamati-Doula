@@ -6,7 +6,7 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <nav className="navbar navbar-light bg-light fixed-top" id="navbar">
+    <nav className="navbar navbar-light fixed-top" id="navbar">
       <div>
         {/* boton menu */}
         <button
@@ -36,6 +36,9 @@ export const Navbar = () => {
           </Link>
           <Link to="/faq">
             <li>FAQ</li>
+          </Link>
+          <Link to="/birthplan">
+            <li>Plan de parto interactivo</li>
           </Link>
         </ul>
       </div>
@@ -78,6 +81,15 @@ export const Navbar = () => {
                 </Link>
               </div>
             )}
+            <div>
+                <Link to="/checkout">
+                  <li>
+                    <p href="#" className="mx-2">
+                      Carro de la compra
+                    </p>
+                  </li>
+                </Link>
+            </div>
             <li>
               <p
                 href="#"
@@ -96,12 +108,12 @@ export const Navbar = () => {
             id="profile-dropdown"
             aria-labelledby="dropDownMenu"
           >
-            <Link to="/login">
+            <Link to="/loginPage">
               <li>
                 <p className="mx-2">Iniciar Sesión</p>
               </li>
             </Link>
-            <Link to="/signup">
+            <Link to="/signupPage">
               <li>
                 <p className="mx-2">Registrarse</p>
               </li>

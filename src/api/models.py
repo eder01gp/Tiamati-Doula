@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+import pickle
 
 db = SQLAlchemy()
 
@@ -22,7 +23,8 @@ class Users(db.Model):
     rol = db.Column(db.Integer, db.ForeignKey('user_rol.id'))
     user_rol = db.relationship(UserRol)
     is_active = db.Column(db.Boolean, default= True)
-
+    birthplan_form  = db.relationship('BirthplanForm', backref='users', lazy=True)
+    
     def __repr__(self):
         return "User: "+self.email
 
@@ -68,6 +70,12 @@ class UserData(db.Model):
             "current_hospital": self.current_hospital,
         }
 
+ServiceDocument = db.Table("ServiceDocument",
+    db.Column("id", db.Integer, primary_key=True),
+    db.Column("service_id", db.Integer, db.ForeignKey("service.id")),
+    db.Column("document_id", db.Integer, db.ForeignKey("document.id"))
+    )
+
 class ServiceType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     service_type = db.Column(db.String(150),unique=True,nullable=False)
@@ -85,12 +93,13 @@ class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200),nullable=False)
     type = db.Column(db.Integer, db.ForeignKey('service_type.id'))
-    service_type = db.relationship(ServiceType)
+    service_type = db.relationship("ServiceType")
     session_time = db.Column(db.Float)
     session_qty = db.Column(db.Integer)
     sold_per_units = db.Column(db.Boolean)
-    description = db.Column(db.String(1000))
-    description_includes = db.Column(db.String(1000))
+    description = db.Column(db.String(2000))
+    description_short = db.Column(db.String(1000))
+    description_includes = db.Column(db.String(1500))
     price = db.Column(db.Integer)
     discount = db.Column(db.Integer)
     service_cover_url = db.Column(db.String(500))
@@ -98,6 +107,9 @@ class Service(db.Model):
     qty_error = db.Column(db.String(200))
     selected = db.Column(db.Boolean, default= False)
     modal_selected_KO = db.Column(db.String(50))
+    documents = db.relationship("Document", secondary=ServiceDocument, backref=db.backref("Service"))
+    stripe_price_id = db.Column(db.String(200))
+    stripe_product_id = db.Column(db.String(200))
 
     def __repr__(self):
         return "service: "+self.name
@@ -107,11 +119,11 @@ class Service(db.Model):
             "id": self.id,
             "name": self.name,
             "type": self.type,
-            "service_type": self.service_type,
             "session_time": self.session_time,
             "session_qty": self.session_qty,
             "sold_per_units": self.sold_per_units,
             "description": self.description,
+            "description_short": self.description_short,
             "description_includes": self.description_includes,
             "price": self.price,
             "discount": self.discount,
@@ -120,7 +132,11 @@ class Service(db.Model):
             "qty_error": self.qty_error,
             "selected": self.selected,
             "modal_selected_KO": self.modal_selected_KO,
+            "documents": list(map(lambda item: item.serialize(), self.documents)),
+            "stripe_price_id": self.stripe_price_id,
+            "stripe_product_id": self.stripe_product_id,
         }
+    
 
 class ServiceRols(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
@@ -134,6 +150,7 @@ class ServiceRols(db.Model):
             "id": self.id,
             "service": self.service_id,
             "rol": self.rol_id,
+            "rol_name": self.rol.rol
         }
 
 class ServiceToService(db.Model):
@@ -149,7 +166,7 @@ class ServiceHired(db.Model):
     service = db.relationship(Service)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     users = db.relationship(Users)
-    sessions_left: db.Column(db.Integer)
+    sessions_left= db.Column(db.Integer)
 
     def serialize(self):
         return {
@@ -162,15 +179,19 @@ class Document(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     document_url = db.Column(db.String(300))
     document_name = db.Column(db.String(300))
+    document_description = db.Column(db.String(300))
     document_cover_url = db.Column(db.String(300))
     
     def __repr__(self):
-        return "document: "+self.document_name
+        return ("document: "+ self.document_name) if self.document_name is not None else {"document ": "without name"}
 
     def serialize(self):
         return {
             "id": self.id,
-            "document": self.document,
+            "document_url": self.document_url,
+            "document_name": self.document_name,
+            "document_description": self.document_description,
+            "document_cover_url": self.document_cover_url,
         }
 
 class ServiceDocuments(db.Model): 
@@ -179,6 +200,7 @@ class ServiceDocuments(db.Model):
     service = db.relationship(Service)
     document_id = db.Column(db.Integer, db.ForeignKey('document.id'))
     document = db.relationship(Document)
+
     
 class UserFaq(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
@@ -212,22 +234,30 @@ class BusinessFaq(db.Model):
             "answer": self.answer
         }
 
-class Faq(db.Model): 
+
+class BirthplanForm(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    question_id = db.Column(db.String(5), unique=True)
-    question = db.Column(db.String(200))
-    answer_id = db.Column(db.String(5), unique=True)
-    answer = db.Column(db.String(200))  
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    full_name = db.Column(db.String(50), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    phone = db.Column(db.Integer, nullable=False)
+    pregnancy_num = db.Column(db.Integer)
+    birth_num = db.Column(db.Integer)
+    interruption_num = db.Column(db.Integer)
+    birth_date = db.Column(db.Date, nullable=False)
 
     def serialize(self):
-        return {
+        return{
             "id": self.id,
-            "question_id": self.question_id,
-            "question": self.question,
-            "answer_id": self.answer_id,
-            "answer": self.answer
+            "user_id": self.user_id,
+            "full_name": self.full_name,
+            "age": self.age,
+            "phone": self.phone,
+            "pregnancy_num": self.pregnancy_num,
+            "birth_num": self.birth_num,
+            "interruption_num": self.interruption_num,
+            "birth_date": self.birth_date
         }
-
 
 class Appointment(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
@@ -265,3 +295,4 @@ class CalendarAvailability(db.Model):
             "time": self.time.strftime("%H:%M") if self.time is not None else None,
             "is_available": self.is_available,
         }
+

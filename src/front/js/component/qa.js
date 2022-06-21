@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/faq.css";
-import PropTypes from "prop-types";
+import propTypes from "prop-types";
 
 export const Qa = (props) => {
   const { store, actions } = useContext(Context);
@@ -42,4 +42,11 @@ export const Qa = (props) => {
       </div>
     </div>
   );
+};
+
+Qa.propTypes = {
+  question_id: propTypes.string,
+  question: propTypes.string,
+  answer_id: propTypes.string,
+  answer: propTypes.string,
 };
