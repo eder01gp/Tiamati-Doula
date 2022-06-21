@@ -177,45 +177,29 @@ export const Home = () => {
           className="carousel slide"
           data-bs-ride="carousel"
           ref={inputRef00} 
-          style={{"min-height":`${minHeight}px`}}
+          style={{"minHeight":`${minHeight}px`}}
         >
           <div className="carousel-inner" >
             <div key={1} className="carousel-item active" ref={inputRef01} >
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                interdum dictum neque vel volutpat. Etiam urna justo, luctus a
-                mattis id, sollicitudin eget massa. Sed maximus ut orci non
-                scelerisque. Nam at blandit mauris, tincidunt tempus sem. Fusce
-                posuere arcu tellus, et rutrum elit sodales et. Nunc malesuada,
-                arcu eu cursus viverra, tellus nibh ornare nulla, et viverra
-                urna tortor nec elit. Donec facilisis nec enim eget pharetra.
-                Donec varius nibh non rhoncus congue. Donec lacinia tortor nisl,
-                quis imperdiet neque ullamcorper id.
+              Hola me llamo Greisy, estoy embarazada por primera vez, al inicio estaba muy temerosa pues no sabía qué hacer, ni cómo comportarme en cada situación, pero gracias a Dios apareció Margarida mi Doula, que me ha ayudado grandemente, me ha orientado en cada una de mis dudas, en cada una de las diferentes situaciones y etapas de todo el proceso de gestación, realmente la recomiendo mucho, sus conocimientos son maravillosos, además cabe mencionar que es súper amable y dedicada en su empeño y trabajo para informar siempre de todas las posibilidades que tenemos para cada situación en la que nos encontramos en el embarazo y dejar que elijas la más adecuada para ti y tu bebé. Además de  todo lo anterior les aseguro que perdí gran parte del temor a este proceso gracias a su apoyo y ayuda incondicionales. Muchas gracias por esta gran labor y amor por lo que haces. Bendiciones 😘
+              <br/>
+              <strong>Greisy y Fernando</strong>
               </p>
             </div>
             <div key={2} className="carousel-item" ref={inputRef02}>
               <p>
-                Aenean sagittis dolor quis turpis efficitur consequat. Nulla ex
-                velit, laoreet in faucibus et, finibus eu mauris. Duis sodales
-                augue et pretium vulputate. Sed imperdiet elit justo, eget
-                porttitor neque tincidunt ac. Ut sodales facilisis nisl. Proin
-                suscipit bibendum elementum. Nulla at erat eget ex ultricies
-                rutrum. Mauris lacinia accumsan risus, quis sagittis sem semper
-                pellentesque. Nam cursus massa ex, interdum egestas mi pharetra
-                id. Vivamus tincidunt massa sit amet dui imperdiet
+              Tuve la gran suerte de contar con el acompañamiento fresco de Margarida en mi primer embarazo. Estuvo en todo momento disponible para nosotros, asistiendonos en todas las dudas que fueron surgiendo. Al principio enmarcando todas esas sensaciones nuevas para mí. Después ayudándonos a encontrar recursos, preparar el plan de parto. También compartimos la foto de mi barriga pintada, un momento/ritual muy importante para mi. Contar con su presencia y Alegría fue un regalo para mí y, no menos importante, para mi compañero. Porque... a veces se olvida, o incluso se menosprecia el papel del hombre y ¡es fundamental en el proceso! Esto es algo que Margarida sabe bien. 
+              ❤️Siempre agradecidos. ❤️
+              <br/>
+              <strong>Doris y Alvaro</strong>
               </p>
             </div>
             <div key={3} className="carousel-item" ref={inputRef03}>
               <p>
-                Pellentesque facilisis lectus id velit ultrices mollis. Fusce in
-                nibh nec magna facilisis tempor. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Aliquam est dui, pretium in
-                molestie non, venenatis fringilla justo. Aliquam laoreet gravida
-                fringilla. Nullam in ligula consequat, sollicitudin turpis in,
-                scelerisque ligula. Mauris nec dapibus nibh. Vivamus porta odio
-                id molestie tincidunt. Duis malesuada gravida mauris, vel mollis
-                tortor imperdiet nec.
+              Quiero mostrar mi agradecimiento personal a Margarida, decirte que tienes una profesion preciosa e importante, estoy sumamente agradecida por acompañarme en mi embarazo y que supo conectar conmigo desde el comienzo, a pesar de mis miedos por la mala experiencia de mi anterior embarazo "mis antecedentes obstétricos". Margarida me diste las herramientas necesarias para poder llevar un embarazo hermoso, me diste esa confianza para perder el miedo y sentirme una mujer empoderada y hacerme conocer mis derechos, gracias por tu energía positiva, por tus consejos, por que siempre estuviste ahí cuando te necesité.
+              <br/>
+              <strong>Liz</strong>
               </p>
             </div>
           </div>

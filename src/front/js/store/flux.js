@@ -51,9 +51,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           });
           const data = await resp.json();
-          setStore({ logged: data.logged || false });
+          setStore({ logged: data.logged || false });         
         } catch (e) {
           setStore({ logged: false });
+          getActions().logout();
         }
       },
       logout: () => {
