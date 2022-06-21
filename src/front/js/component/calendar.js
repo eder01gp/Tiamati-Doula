@@ -1,15 +1,37 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/calendar.css";
 
 export const Calendar = () => {
-  const { store } = useContext(Context);
+  const { store, actions } = useContext(Context);
   let currentDate = new Date();
   let currentDay = new Date().getDate();
   let month = "";
   let year = "";
+  let count = 0;
+  const [addClass, setAddClass] = useState("false");
   const [monthNum, setMonthNum] = useState(currentDate.getMonth());
   const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
+  const weekDays = ["L", "M", "X", "J", "V", "S", "D"];
+  const endDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  const monthsNames = [
+    "ENERO",
+    "FEBRERO",
+    "MARZO",
+    "ABRIL",
+    "MAYO",
+    "JUNIO",
+    "JULIO",
+    "AGOSTO",
+    "SEPTIEMBRE",
+    "OCTUBRE",
+    "NOVIEMBRE",
+    "DICIEMBRE",
+  ];
+
+  useEffect(() => {
+    actions.getAvailableDateTime();
+  }, []);
 
   ///// --- FUNCTIONS --- /////
   const previousMonth = () => {
@@ -36,7 +58,7 @@ export const Calendar = () => {
 
   const setNewDate = (mN, cY) => {
     year = cY;
-    month = store.monthsNames[mN];
+    month = monthsNames[mN];
   };
 
   /*return the number of the week day == first day of month*/
@@ -48,7 +70,7 @@ export const Calendar = () => {
 
   //*return the number of the week day == last day of month*//
   const endDay = () => {
-    let end = new Date(currentYear, monthNum, store.endDays[monthNum]);
+    let end = new Date(currentYear, monthNum, endDays[monthNum]);
 
     if (monthNum == 1) {
       if (
@@ -64,7 +86,7 @@ export const Calendar = () => {
   };
 
   const getTotalDays = (monthN) => {
-    let maxDays = store.endDays[monthN];
+    let maxDays = endDays[monthN];
 
     /*check if is leap year */
     if (monthN == 1) {
@@ -110,9 +132,22 @@ export const Calendar = () => {
   };
   const nextMonthDays = generateNextMonthDays();
 
+  const getAvailableDates = () => {
+    let availableDate = [];
+    store.available_dateTime.map((x) => {
+      availableDate.push(x.date);
+    });
+    return availableDate;
+  };
+  const availableDate = getAvailableDates();
+
+  {
+    console.log(store.services);
+  }
+
   /// --- RENDER --- ///
   return (
-    <div className="calendar ms-5">
+    <div className="calendar">
       <div id="calendar-header" className="d-flex">
         <div id="prev-month" className="mt-2 float-start ms-2">
           <i
@@ -124,7 +159,7 @@ export const Calendar = () => {
         </div>
 
         <div id="month" className="m-auto mt-2 pt-1 me-1">
-          <h6>{month == "" ? store.monthsNames[monthNum] : month}</h6>
+          <h6>{month == "" ? monthsNames[monthNum] : month}</h6>
         </div>
 
         <div id="year" className="m-auto ms-1 mt-2 pt-1">
@@ -141,8 +176,9 @@ export const Calendar = () => {
         </div>
       </div>
 
+      {/* ---- WEEKDAYS NAMES ---- */}
       <div className="calendar-body-row d-flex">
-        {store.weekDays.map((i) => {
+        {weekDays.map((i) => {
           return (
             <div key={i} className="calendar-week-day">
               <b>{i}</b>
@@ -151,6 +187,7 @@ export const Calendar = () => {
         })}
       </div>
 
+      {/* -----  DAYS Nº ----- */}
       <div className="calendar-body-columns">
         {prevMonthDays.map((prev) => {
           return (
@@ -166,13 +203,94 @@ export const Calendar = () => {
             currentYear == currentDate.getFullYear()
           ) {
             return (
-              <div key={day} id="today" classNamec={"calendar-num-day"}>
+              <div
+                key={day}
+                id="today"
+                className={
+                  addClass == true &&
+                  currentYear +
+                    "-" +
+                    (monthNum >= 9 && monthNum <= 11
+                      ? monthNum + 1
+                      : "0" + (monthNum + 1)) +
+                    "-" +
+                    day ==
+                    store.dateSelected
+                    ? "selected"
+                    : availableDate.includes(
+                        currentYear +
+                          "-" +
+                          (monthNum >= 9 && monthNum <= 11
+                            ? monthNum + 1
+                            : "0" + (monthNum + 1)) +
+                          "-" +
+                          day
+                      )
+                    ? "available-true"
+                    : "calendar-num-day"
+                }
+                onClick={() => {
+                  setAddClass(true),
+                    actions.setDateSelected(
+                      currentYear +
+                        "-" +
+                        (monthNum >= 9 && monthNum <= 11
+                          ? monthNum + 1
+                          : "0" + (monthNum + 1)) +
+                        "-" +
+                        day
+                    ),
+                    actions.getAvailableTimeofDaySelected(store.dateSelected),
+                    actions.setShowDate(false),
+                    actions.setShowTime(true);
+                }}
+              >
                 <b>{day}</b>
               </div>
             );
           } else {
             return (
-              <div key={day} className="calendar-num-day">
+              <div
+                key={day}
+                className={
+                  addClass == true &&
+                  currentYear +
+                    "-" +
+                    (monthNum >= 9 && monthNum <= 11
+                      ? monthNum + 1
+                      : "0" + (monthNum + 1)) +
+                    "-" +
+                    day ==
+                    store.dateSelected
+                    ? "selected"
+                    : availableDate.includes(
+                        currentYear +
+                          "-" +
+                          (monthNum >= 9 && monthNum <= 11
+                            ? monthNum + 1
+                            : "0" + (monthNum + 1)) +
+                          "-" +
+                          day
+                      )
+                    ? "available-true"
+                    : "calendar-num-day"
+                }
+                onClick={() => {
+                  setAddClass(true),
+                    actions.setDateSelected(
+                      currentYear +
+                        "-" +
+                        (monthNum >= 9 && monthNum <= 11
+                          ? monthNum + 1
+                          : "0" + (monthNum + 1)) +
+                        "-" +
+                        day
+                    ),
+                    actions.getAvailableTimeofDaySelected(store.dateSelected),
+                    actions.setShowDate(false),
+                    actions.setShowTime(true);
+                }}
+              >
                 {day}
               </div>
             );

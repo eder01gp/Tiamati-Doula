@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-        "https://3001-ederdon-tiamatidoula-f6gaira5d9k.ws-eu46.gitpod.io/" +
+        "https://3001-ederdon-tiamatidoula-f6gaira5d9k.ws-eu47.gitpod.io/" +
         "api",
       logged: null,
       token: null,
@@ -12,22 +12,15 @@ const getState = ({ getStore, getActions, setStore }) => {
       user_info: {},
       user_data: {},
       services: [],
-      monthsNames: [
-        "ENERO",
-        "FEBRERO",
-        "MARZO",
-        "ABRIL",
-        "MAYO",
-        "JUNIO",
-        "JULIO",
-        "AGOSTO",
-        "SEPTIEMBRE",
-        "OCTUBRE",
-        "NOVIEMBRE",
-        "DICIEMBRE",
-      ],
-      weekDays: ["L", "M", "X", "J", "V", "S", "D"],
-      endDays: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+      available_dateTime: [],
+      dateSelectedTime: [],
+      dateSelected: [],
+      showDate: false,
+      showTime: false,
+      appointment: [],
+      service_hired_name: [],
+      service_hired: [],
+      appointmentToModify: [],
     },
 
     actions: {
@@ -36,6 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const info = await response.json();
         setStore({ users: info.response });
       },
+
       getUserInfo: async () => {
         try {
           const resp = await fetch(getStore().url + "/user_info", {
@@ -54,6 +48,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ user_data: null });
         }
       },
+
       verify: async () => {
         try {
           const resp = await fetch(getStore().url + "/protected", {
@@ -69,11 +64,26 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ logged: false });
         }
       },
+
       logout: () => {
         localStorage.clear();
         setStore({ logged: false });
       },
+
+      deleteUser: async () => {
+        const response = await fetch(getStore().url + "/deleteUser", {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        if (response.status == 200) {
+          getActions().logout();
+        }
+      },
+
       getDocuments: () => {},
+
       getServices: async () => {
         try {
           const resp = await fetch(getStore().url + "/services");
@@ -84,6 +94,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("Error getting services");
         }
       },
+
       serviceSelectedQtyChange: (id, newQty, action) => {
         const newService = getStore().services.map((x) => {
           if (x.service.id == id) {
@@ -101,6 +112,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ services: newService });
         getActions().modalSelectedKO();
       },
+
       modalSelectedKO: () => {
         const newServiceModals = getStore().services.map((x) => {
           if (x.service.qty == 1) {
@@ -113,6 +125,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ services: newServiceModals });
       },
+
       serviceSelectedError: (id) => {
         const newService = getStore().services.map((x) => {
           if (x.service.id == id && x.service.modal_selected_KO != "modal") {
@@ -127,12 +140,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ services: newService });
       },
+
       serviceSelectedErrorKO: (id) => {
         const newService = getStore().services.map((x) => {
           return { ...x, service: { ...x.service, qty_error: "" } };
         });
         setStore({ services: newService });
       },
+
       serviceSelected: (id) => {
         const newService = getStore().services.map((x) => {
           if (x.service.id == id) {
@@ -141,6 +156,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ services: newService });
       },
+
       serviceSelectedKO: (id) => {
         const newService = getStore().services.map((x) => {
           if (x.service.id == id) {
@@ -149,6 +165,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ services: newService });
       },
+
       serviceSelectedQtyChange: (id, newQty, action) => {
         const newService = getStore().services.map((x) => {
           if (x.id == id) {
@@ -166,6 +183,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ services: newService });
         getActions().modalSelectedKO();
       },
+
       modalSelectedKO: () => {
         const newServiceModals = getStore().services.map((x) => {
           if (x.qty == 1) {
@@ -174,6 +192,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ services: newServiceModals });
       },
+
       serviceSelectedError: (id) => {
         const newService = getStore().services.map((x) => {
           if (x.id == id && x.modalSelectedKO != "modal") {
@@ -182,12 +201,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ services: newService });
       },
+
       serviceSelectedErrorKO: (id) => {
         const newService = getStore().services.map((x) => {
           return { ...x, qtyError: "" };
         });
         setStore({ services: newService });
       },
+
       serviceSelected: (id) => {
         const newService = getStore().services.map((x) => {
           if (x.id == id) {
@@ -196,6 +217,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ services: newService });
       },
+
       serviceSelectedKO: (id) => {
         const newService = getStore().services.map((x) => {
           if (x.id == id) {
@@ -203,17 +225,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           } else return x;
         });
         setStore({ services: newService });
-      },
-      deleteUser: async () => {
-        const response = await fetch(getStore().url + "/deleteUser", {
-          method: "DELETE",
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        });
-        if (response.status == 200) {
-          getActions().logout();
-        }
       },
 
       getUserFaq: async () => {
@@ -226,6 +237,95 @@ const getState = ({ getStore, getActions, setStore }) => {
         const response = await fetch(getStore().url + "/business_faq");
         const data = await response.json();
         setStore({ business_faq: data.response });
+      },
+
+      getAvailableDateTime: async () => {
+        const response = await fetch(getStore().url + "/available_datetime", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        const data = await response.json();
+        setStore({ available_dateTime: data.resp });
+      },
+
+      getAvailableTimeofDaySelected: async (date) => {
+        const response = await fetch(
+          getStore().url + "/available_datetime/" + date,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        const data = await response.json();
+        setStore({ dateSelectedTime: data.resp });
+      },
+
+      setDateSelected: (date) => {
+        setStore({ dateSelected: date });
+      },
+
+      setShowDate: (bool) => {
+        setStore({ showDate: bool });
+      },
+
+      setShowTime: (bool) => {
+        setStore({ showTime: bool });
+      },
+
+      getUserAppointments: async () => {
+        const response = await fetch(getStore().url + "/appointment", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        const data = await response.json();
+        setStore({ appointment: data.resp });
+      },
+
+      setAppointment: (value) => {
+        setStore({ appointment: value });
+      },
+
+      deleteAppointment: async (items) => {
+        const response = await fetch(getStore().url + "/appointment", {
+          method: "DELETE",
+          body: JSON.stringify(items),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+      },
+
+      getUserServiceHiredName: async () => {
+        const response = await fetch(getStore().url + "/services_hired", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        const data = await response.json();
+        setStore({ service_hired: data.services_id_name });
+        const service_name = [];
+        data.services_id_name.map((x) => {
+          for (let i of data.service_hired_id) {
+            if (i == x.id) {
+              service_name.push(x.service_name);
+            }
+          }
+          setStore({ service_hired_name: service_name });
+        });
+      },
+
+      setAppointmentToModify: (value) => {
+        setStore({ appointmentToModify: value });
       },
     },
   };

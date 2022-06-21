@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq
+from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq, Appointment, CalendarAvailability
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 import cloudinary
@@ -126,16 +126,13 @@ def get_user_info():
     else:
        return jsonify({"user_loggin_info": user.serialize(), "user_data": "No user data" }), 400  
       
- @api.route('/deleteUser', methods=['DELETE'])
+@api.route('/deleteUser', methods=['DELETE'])
 @jwt_required()
 def delete_user():
     current_user_id = get_jwt_identity()
     user = Users.query.get(current_user_id)
-    print(user.serialize())
     user.is_active = False
-    print(user.serialize())
     db.session.commit()
-    print(user.serialize())
     return jsonify({"msg": "User deleted, ok"}), 200     
 
 
@@ -198,4 +195,112 @@ def get_business_faq():
     return jsonify({"response": business_faq_serialized}), 200
 
 
+#CALENDAR
 
+@api.route('/available_datetime', methods=['GET'])
+@jwt_required()
+def get_available_datetime():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    dates = CalendarAvailability.query.filter(CalendarAvailability.is_available == True)
+    dates_serialized = list(map(lambda x: x.serialize(), dates))
+    if user:
+        return jsonify({"resp": dates_serialized}), 200
+    else: return jsonify({"No se ha podido traer la información"}), 400
+
+@api.route('/available_datetime/<body_date>', methods=['GET'])
+@jwt_required()
+def get_available_datetime_of_selected_date(body_date):
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    datetime = CalendarAvailability.query.filter(CalendarAvailability.date == body_date, CalendarAvailability.is_available == True)
+    datetime_serialized = list(map(lambda x: x.serialize(), datetime))
+    if user:
+        return jsonify({"resp": datetime_serialized}), 200
+    else: return jsonify({"No se ha podido traer la información"}), 400       
+
+@api.route('/services_hired', methods=['GET'])
+@jwt_required()
+def get_services_hired_by_user():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    if user:
+        user_service_hired = ServiceHired.query.filter_by(user_id = current_user_id)
+        user_service_hired_id =  list(map(lambda x: x.service_id, user_service_hired))
+        services = Service.query.all()
+        service_id_name = list(map(lambda x: {'id': x.id, 'service_name':x.name}, services))
+        return jsonify({"service_hired_id": user_service_hired_id, "services_id_name": service_id_name}), 200
+    else: return jsonify({"No se ha podido traer la información"}), 400
+
+@api.route('/appointment', methods=['POST'])
+@jwt_required()
+def save_user_appointment():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    if user:
+        body_date = request.json.get("date")
+        body_time = request.json.get("time")
+        body_service = request.json.get("service")
+        appointment_saved = Appointment(user_id = current_user_id, date = body_date, time = body_time, service = body_service)
+        db.session.add(appointment_saved)
+        db.session.commit()
+        dateTime = CalendarAvailability.query.filter_by(date = body_date).filter_by(time = body_time).first()
+        dateTime.is_available = False
+        db.session.commit()
+        return jsonify({"msg": "Datos guardados correctamente"}), 200   
+    else: return jsonify({"msg": "Error, no se han podido guardar los datos"}), 400
+
+@api.route('/appointment', methods=['GET'])
+@jwt_required()
+def get_user_appointments():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    if user:
+        user_appointment = Appointment.query.filter_by(user_id=current_user_id)
+        user_appointment_serialized = list(map(lambda x: x.serialize(), user_appointment))
+        return jsonify({"resp": user_appointment_serialized}), 200
+    else: return jsonify({"No se ha podido traer la información"}), 400
+
+@api.route('/appointment', methods=['PUT'])
+@jwt_required()
+def modify_user_appointment():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    old_date = request.json.get("old_date")
+    old_time = request.json.get("old_time")
+    body_date = request.json.get("date")
+    body_time = request.json.get("time")
+    body_service = request.json.get("service")
+    appointment_id = request.json.get("id")
+    appointment_change = Appointment.query.filter_by(user_id = current_user_id).filter_by(id = appointment_id).first()
+    if appointment_change != None:
+        appointment_change.date = body_date
+        appointment_change.time = body_time
+        appointment_change.service = body_service
+        appointment_change.id = appointment_id
+        new_dateTime = CalendarAvailability.query.filter_by(date = body_date).filter_by(time = body_time).first()
+        new_dateTime.is_available = False
+        old_dateTime = CalendarAvailability.query.filter_by(date = old_date).filter_by(time = old_time).first()
+        old_dateTime.is_available = True
+        db.session.commit()
+        return jsonify({"msg": "Se han realizado los cambios"}), 200   
+    else: return jsonify({"msg": "Error, no se han podido realizar los cambios"}), 400
+
+@api.route('/appointment', methods=['DELETE'])
+@jwt_required()
+def delete_user_appointment():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    body_date = request.json.get("date")
+    body_time = request.json.get("time")
+    dateTime = CalendarAvailability.query.filter_by(date = body_date).filter_by(time = body_time).first()
+    dateTime.is_available = True
+    appointment_id = request.json.get("id")
+    appointment = Appointment.query.filter_by(user_id = current_user_id).filter_by(id = appointment_id).delete()
+    db.session.commit()
+    return jsonify({"msg": "User deleted, ok"}), 200
+
+
+
+
+    

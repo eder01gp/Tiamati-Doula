@@ -11,11 +11,11 @@ import { Profile_user } from "./pages/profile_user";
 import { Profile_company } from "./pages/profile_company";
 import { Bio } from "./pages/bio";
 import { Appointment } from "./pages/appointment";
-
 import { Faq } from "./pages/faq";
 import { Services } from "./pages/services";
-
 import { Checkout } from "./pages/checkout";
+import { User_appointment } from "./pages/user_appointment";
+import { Modify_appointment } from "./pages/modify_appointment";
 
 import injectContext from "./store/appContext";
 
@@ -77,6 +77,12 @@ const Layout = () => {
             </Route>
             <Route exact path="/appointment">
               <Appointment />
+            </Route>
+            <Route exact path="/user_appointment">
+              <User_appointment />
+            </Route>
+            <Route exact path="/modify_appointment">
+              <Modify_appointment />
             </Route>
             <Route>
               <h1>Not found!</h1>
