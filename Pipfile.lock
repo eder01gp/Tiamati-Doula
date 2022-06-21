@@ -176,7 +176,7 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==37.0.2"
-=======
+        },
         "django": {
             "hashes": [
                 "sha256:502ae42b6ab1b612c933fb50d5ff850facf858a4c212f76946ecd8ea5b3bf2d9",
@@ -598,10 +598,6 @@
                 "sha256:eec39a17bab3f69c44c9df4e0ed87c7306f2d2bf1eca3070af644927ec4199fa",
                 "sha256:f9940528bf9c4df9e3c3872d23078b6b2da6431c19565637c09f1b88a427a684",
                 "sha256:ffe487570f47536b96eff5ef2b84034a8ba4e19aab5ab7647e677d94a119ea55"
-
-            ],
-            "index": "pypi",
-            "version": "==1.4.37"
 
             ],
             "index": "pypi",
