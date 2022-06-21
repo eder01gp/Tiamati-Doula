@@ -4,8 +4,10 @@ import insta from "../../../img/logo/Instagram.png";
 
 export const Footer = () => (
   <footer className="footer text-center">
+
     <h6 id="footer-phone">+34 644 75 46 71</h6>
     <h6 id="footer-email">hello@tiamati.com</h6>
+
     <img
       src={insta}
       id="insta-logo"
@@ -13,6 +15,7 @@ export const Footer = () => (
         window.open("https://www.instagram.com/doulatiamati/");
       }}
     />
+
 
     <img
       src={whatsapp}
@@ -24,13 +27,4 @@ export const Footer = () => (
       }}
     />
 
-    {/* <a
-      href="https://wa.me/34615077934"
-      className="whatsapp_float fixed-bottom"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <img src={whatsapp} alt="whatsapp logo" id="whatsapp-logo" />
-    </a> */}
-  </footer>
-);
+    

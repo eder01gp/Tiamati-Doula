@@ -23,7 +23,8 @@ class Users(db.Model):
     rol = db.Column(db.Integer, db.ForeignKey('user_rol.id'))
     user_rol = db.relationship(UserRol)
     is_active = db.Column(db.Boolean, default= True)
-
+    birthplan_form  = db.relationship('BirthplanForm', backref='users', lazy=True)
+    
     def __repr__(self):
         return "User: "+self.email
 
@@ -227,4 +228,27 @@ class BusinessFaq(db.Model):
         }
 
 
+class BirthplanForm(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    full_name = db.Column(db.String(50), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    phone = db.Column(db.Integer, nullable=False)
+    pregnancy_num = db.Column(db.Integer)
+    birth_num = db.Column(db.Integer)
+    interruption_num = db.Column(db.Integer)
+    birth_date = db.Column(db.Date, nullable=False)
+
+    def serialize(self):
+        return{
+            "id": self.id,
+            "user_id": self.user_id,
+            "full_name": self.full_name,
+            "age": self.age,
+            "phone": self.phone,
+            "pregnancy_num": self.pregnancy_num,
+            "birth_num": self.birth_num,
+            "interruption_num": self.interruption_num,
+            "birth_date": self.birth_date
+        }
 

@@ -2,7 +2,9 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
+
         "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu47.gitpod.io/" +
+
         "api",
       logged: null,
       token: null,
@@ -65,6 +67,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const resp = await fetch(getStore().url + "/documents");
           const data = await resp.json();
+
           setStore({ documents: data.response });
         } catch (e) {
           console.log("Error getting documents");
@@ -80,8 +83,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
         getActions().modalSelectedKO();
       },
+
       servicesQtyChange: (id, newQty, action) => {
+
         const newService = getStore().services.map((x) => {
+          console.log("qty change service", x);
           if (x.service.id == id) {
             if (action == "up" && x.service.qty < 9) {
               newQty = parseInt(x.service.qty) + 1;
@@ -95,6 +101,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           } else return x;
         });
         setStore({ services: newService });
+
         getActions().modalSelectedKO();
         getActions().serviceSelectedUpdate();
       },
@@ -190,16 +197,19 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().logout();
         }
       },
+
       getUserFaq: async () => {
         const response = await fetch(getStore().url + "/user_faq");
         const data = await response.json();
         setStore({ user_faq: data.response });
       },
+
       getBusinessFaq: async () => {
         const response = await fetch(getStore().url + "/business_faq");
         const data = await response.json();
         setStore({ business_faq: data.response });
       },
+
       createCheckoutSession: async (body) => {
         const options = {
           body: body,
@@ -213,6 +223,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log(data);
         window.location.replace(data.response);
       },
+
     },
   };
 };

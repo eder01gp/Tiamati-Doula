@@ -37,6 +37,9 @@ export const Navbar = () => {
           <Link to="/faq">
             <li>FAQ</li>
           </Link>
+          <Link to="/birthplan">
+            <li>Plan de parto interactivo</li>
+          </Link>
         </ul>
       </div>
 

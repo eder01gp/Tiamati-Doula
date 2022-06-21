@@ -1,8 +1,14 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+
+
+
+
+
 from flask import Flask, request, jsonify, url_for, Blueprint, redirect
-from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq
+from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq, BirthplanForm
+
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
@@ -238,6 +244,31 @@ def get_business_faq():
     business_faq = BusinessFaq.query.all()
     business_faq_serialized = list(map(lambda business_faq: business_faq.serialize(), business_faq))
     return jsonify({"response": business_faq_serialized}), 200
+
+
+#Birthplan form
+
+@api.route('/birthplan_form', methods=['POST'])
+@jwt_required()
+def new_birthplan_info():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    if user:
+        body_id = request.json.get("id")
+        body_full_name= request.json.get("full_name")
+        body_user_id = request.json.get("user_id")
+        body_age = request.json.get("age")
+        body_phone = request.json.get("phone")
+        body_pregnancy_num = request.json.get("pregnancy_num")
+        body_birth_num = request.json.get("birth_num")
+        body_interruption_num = request.json.get("interruption_num")
+        body_birth_date = request.json.get("birth_date")
+        birthplan_info_saved = BirthplanForm(id = body_id, full_name=body_full_name, user_id=body_user_id, age=body_age, phone=body_phone, pregnancy_num=body_pregnancy_num, birth_num=body_birth_num, interruption_num=body_interruption_num, birth_date=body_birth_date)
+        birthplan_info_saved_serialized = birthplan_info_saved.serialize()
+        db.session.add(birthplan_info_saved)
+        db.session.commit()
+        return jsonify({"saved_info": birthplan_info_saved_serialized})
+    
 
 @api.route('/create_checkout_session', methods=['POST'])
 def create_checkout_session():

@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import "../../styles/bio.css";
 import speechBubble1 from "../../../img/logo/speechBubble1.png";
 import speechBubble2 from "../../../img/logo/speechBubble2.png";
+
 import speechBubble3 from "../../../img/logo/speechBubble3.png";
+
 import speechBubble4 from "../../../img/logo/speechBubble4.png";
 
 export const Bio = () => {
