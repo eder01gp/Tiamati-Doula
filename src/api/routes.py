@@ -14,7 +14,7 @@ import os
 
 api = Blueprint('api', __name__)  
 
-stripe.api_key = os.getEnv('STRIPE_API_KEY')
+stripe.api_key = os.getenv('STRIPE_API_KEY')
 
 @api.route('/protected', methods=['GET'])
 @jwt_required()
