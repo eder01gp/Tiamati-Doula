@@ -5,6 +5,7 @@ import { Navbar } from "../component/navbar";
 import { CheckboxTiamati } from "../component/checkboxTiamati";
 import { MultiSelectTiamati } from "../component/multiSelectTiamati";
 import { Link } from "react-router-dom";
+import logo from "../../../img/logo/logo.png";
 
 export const Birthplan = () => {
   const { store, actions } = useContext(Context);
@@ -911,6 +912,11 @@ export const Birthplan = () => {
 
   return (
     <div className="container" id="section-container">
+      <div id="header-bp" className="row">
+        <div id="header-logo">
+          <img id="logo-tiamati" src={logo} alt="logo tiamati" />
+        </div>
+      </div>
       {/* <div className="row text-center" id="plan-title">
         <h1>Plan de parto interactivo</h1>
       </div> */}
