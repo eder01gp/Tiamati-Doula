@@ -1,9 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      url:
-        "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu47.gitpod.io/"+
-        "api",
+      url: os.getEnv('DOMAIN')+"api",
       logged: null,
       token: null,
       user_faq: [],
