@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      url: os.getEnv('DOMAIN')+"api",
+      url: process.env.DOMAIN+"api",
       logged: null,
       token: null,
       user_faq: [],
