@@ -3,8 +3,6 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, redirect
 from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq, BirthplanForm, Appointment, CalendarAvailability
-
-
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
@@ -12,15 +10,11 @@ import cloudinary
 import cloudinary.uploader
 import stripe
 import json
+import os
 
 api = Blueprint('api', __name__)  
 
-# This is the test secret API key.
-stripe.api_key = "sk_test_51L9AB1GwDdfyjr9WWHWxYk8V77Cd7dDRpQc1JhXslN9vOfopsi8sNtfduhXogaZobR1ggOHhfdW57YFQUIaMGdUD00yAYi6V1I"
-
-YOUR_DOMAIN = "https://3000-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu47.gitpod.io/"
-
-endpoint_secret = "whsec_858463f07c3b0bdad46be3660513488cf9f6664d2a5f10f38a81e1b2a08134fb"
+stripe.api_key = os.getEnv('STRIPE_API_KEY')
 
 @api.route('/protected', methods=['GET'])
 @jwt_required()
@@ -291,8 +285,8 @@ def create_checkout_session():
             client_reference_id=client_reference_id,
             customer_email=customer_email,
             mode='payment',
-            success_url=YOUR_DOMAIN + "/redirect"+ '?success=true',
-            cancel_url=YOUR_DOMAIN + '/redirect'+ '?canceled=true',
+            success_url=os.getEnv('DOMAIN') + "/redirect"+ '?success=true',
+            cancel_url=os.getEnv('DOMAIN') + '/redirect'+ '?canceled=true',
         )
     except Exception as e:
         return str(e)
@@ -308,7 +302,7 @@ def webhook():
 
     try:
         event = stripe.Webhook.construct_event(
-            payload, sig_header, endpoint_secret
+            payload, sig_header, os.getEnv('ENDPOINT_SECRET')
         )
     except ValueError as e:
         # Invalid payload
