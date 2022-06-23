@@ -2,14 +2,13 @@ html {
   box-sizing: border-box;
 }
 
-
 body {
-/*   background-image: linear-gradient(to right, #a18cd1 0%, #fbc2eb 100%);
- */  background-repeat: repeat;
-    font-family: 'Anek Malayalam', sans-serif;
+  /*   background-image: linear-gradient(to right, #a18cd1 0%, #fbc2eb 100%);
+ */
+  background-repeat: repeat;
+  font-family: "Anek Malayalam", sans-serif;
   font-size: 200;
 }
-
 
 #navbar {
   padding-left: 1%;
@@ -38,25 +37,6 @@ body {
   cursor: pointer;
 }
 
-.formulario {
-  margin-top: 7%;
-  width: 80%;
-}
-
-.form-general-div {
-  margin-top: 7%;
-  width: 60%;
-  box-sizing: unset;
-}
-
-#check-data-saved-form {
-  font-size: 10px;
-}
-
-.div-profile {
-  margin-top: 7%;
-}
-
 .page-container {
   position: relative;
   min-height: 100vh;
@@ -68,13 +48,9 @@ body {
 }
 
 .footer {
-
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 11rem;
-/*   background-color: rgb(255, 217, 146); /* Footer height */ 
+  /*   background-color: rgb(255, 217, 146); /* Footer height */
 }
-
-
-

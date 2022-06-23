@@ -2,12 +2,13 @@
   width: 60%;
   box-sizing: unset;
   margin-top: 50px;
-  border: 10px solid black;
-  border-image-width: 1;
-  border-image-source: url(https://img.freepik.com/vector-gratis/fondo-textura-marmol-colores-pastel_56745-36.jpg);
-  border-image-slice: 23%;
-  border-image-repeat: round;
-  background: #f2e8f7;
+  border: 0;
+  -webkit-box-shadow: 8px 0px 0px 0px #8972b2, 0px 8px 0px 0px #ff5968,
+    -8px 0px 0px 0px #4e4e56, 0px 0px 0px 8px #f1b606,
+    5px 5px 6px 5px rgb(0 0 0 / 0%);
+  box-shadow: 8px 0px 0px 0px #8972b2, 0px 8px 0px 0px #ff5968,
+    -8px 0px 0px 0px #4e4e56, 0px 0px 0px 8px #f1b606,
+    5px 5px 6px 5px rgb(0 0 0 / 0%);
 }
 
 .check-icon {
@@ -21,3 +22,43 @@
 .h6-form {
   font-family: "Anek Malayalam", sans-serif;
 }
+
+/* Fill button styling */
+.fill {
+  font-family: "Anek Malayalam", sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  padding: 13px 20px 13px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+#btn-left-form-data {
+  background: rgb(157, 110, 157);
+  padding-inline: 5px;
+  padding: 3px;
+  font-size: 14px;
+}
+
+.fill::after {
+  content: "";
+  background-color: #ffe54c;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 7px;
+  left: 7px;
+  transition: 0.2s;
+  visibility: visible;
+}
+
+.fill:hover::after {
+  top: 0px;
+  left: 0px;
+}
+/* End of Fill Button  */
