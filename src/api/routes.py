@@ -286,8 +286,8 @@ def create_checkout_session():
             client_reference_id=client_reference_id,
             customer_email=customer_email,
             mode='payment',
-            success_url=os.getEnv('DOMAIN') + "/redirect"+ '?success=true',
-            cancel_url=os.getEnv('DOMAIN') + '/redirect'+ '?canceled=true',
+            success_url="https://tiamatidoula.herokuapp.com" + "/redirect"+ '?success=true',
+            cancel_url="https://tiamatidoula.herokuapp.com" + '/redirect'+ '?canceled=true',
         )
     except Exception as e:
         return str(e)
