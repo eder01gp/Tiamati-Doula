@@ -10,6 +10,8 @@ body {
   font-size: 200;
 }
 
+/* Navbar */
+
 #navbar {
   padding-left: 1%;
   padding-right: 1%;
@@ -25,6 +27,48 @@ body {
   margin-left: 90%;
 }
 
+/* Header Logo */
+
+#header-component {
+  margin-top: 55px;
+}
+
+#header-logo {
+  height: 100px;
+  background-color: rgb(165, 250, 221, 0);
+  padding: 1%;
+  text-align: center;
+}
+
+#logo-tiamati {
+  width: 100px;
+}
+
+#logo-button {
+  border: 0px;
+  background-color: transparent;
+}
+
+/* Footer */
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 11rem;
+  /*   background-color: rgb(255, 217, 146); /* Footer height */
+}
+
+#footer-phone {
+  color: black;
+  text-decoration: none;
+  font-size: 18px;
+}
+#footer-email {
+  color: black;
+  text-decoration: none;
+  font-size: 18px;
+}
+
 #insta-logo {
   width: 50px;
   cursor: pointer;
@@ -37,6 +81,27 @@ body {
   cursor: pointer;
 }
 
+
+/* Form */
+.formulario {
+  margin-top: 7%;
+  width: 80%;
+}
+
+.form-general-div {
+  margin-top: 7%;
+  width: 60%;
+  box-sizing: unset;
+}
+
+#check-data-saved-form {
+  font-size: 10px;
+}
+
+.div-profile {
+  margin-top: 7%;
+}
+
 .page-container {
   position: relative;
   min-height: 100vh;
@@ -47,10 +112,4 @@ body {
   padding-top: 50px;
 }
 
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 11rem;
-  /*   background-color: rgb(255, 217, 146); /* Footer height */
-}
+

@@ -18,12 +18,6 @@ export const Faq = () => {
 
   return (
     <div className="container mb-5" id="faq-container">
-      <div id="header-faq" className="row">
-        <div id="header-logo">
-          <img id="logo-tiamati" src={logo} alt="logo tiamati" />
-        </div>
-      </div>
-
       <div id="faq-title" className="row">
         <h1>Preguntas Frecuentes</h1>
       </div>
