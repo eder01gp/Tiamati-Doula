@@ -18,9 +18,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       showDate: false,
       showTime: false,
       appointment: [],
-      service_hired_name: [],
-      service_hired: [],
       appointmentToModify: [],
+      user_service_hired_id: [],
       documents: [],
       services_selected: [],
     },
@@ -291,7 +290,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
       },
 
-      getUserServiceHiredName: async () => {
+      getUserServiceHired: async () => {
         const response = await fetch(getStore().url + "/services_hired", {
           headers: {
             "Content-Type": "application/json",
@@ -299,16 +298,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           },
         });
         const data = await response.json();
-        setStore({ service_hired: data.services_id_name });
-        const service_name = [];
-        data.services_id_name.map((x) => {
-          for (let i of data.service_hired_id) {
-            if (i == x.id) {
-              service_name.push(x.service_name);
+        data.service_hired_id.map((x) => {
+          for (let i of data.services_id_name) {
+            if (x.service_id == i.id) {
+              x["name"] = i.service_name;
             }
           }
-          setStore({ service_hired_name: service_name });
         });
+        setStore({ user_service_hired_id: data.service_hired_id });
       },
 
       setAppointmentToModify: (value) => {
