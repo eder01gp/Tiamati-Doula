@@ -1,3 +1,17 @@
+.fill {
+  font-family: "Anek Malayalam", sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  padding: 13px 20px 13px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+  /*   visibility: hidden; */
+}
+
 #section-container h2 {
   font-family: "Economica", sans-serif;
   font-style: italic;
@@ -5,24 +19,12 @@
   font-size: 50px;
 }
 
-#header-bp {
-  background-color: white;
-}
-
 #before-button {
-  background-color: #ff838c;
-  top: 0px;
-  left: -10px;
-}
-
-#before-button {
-  background-color: #ff838c;
-  top: 0px;
-  left: 0px;
+  background-color: hsl(356, 100%, 85%);
 }
 
 #after-button {
-  background-color: #ffe54c;
+  background-color: hsl(51, 100%, 85%);
 }
 
 #pdf-button {
@@ -48,7 +50,7 @@
 } */
 
 #plan-menu {
-  background-color: hsl(268, 33%, 65%);
+  background-color: hsl(268, 33%, 75%);
   padding: 1%;
   z-index: auto;
 }
