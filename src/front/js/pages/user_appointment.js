@@ -123,7 +123,7 @@ export const User_appointment = () => {
           </ul>
         ) : (
           <p className="text-center">
-            No tienes citas pendientes, puesdes{" "}
+            No tienes citas pendientes, puedes{" "}
             <Link to="/appointment">reservar cita aquí</Link>
           </p>
         )}

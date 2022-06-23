@@ -937,14 +937,6 @@ export const Birthplan = () => {
 
   return (
     <div className="container" id="section-container">
-      <div id="header-bp" className="row">
-        <div id="header-logo">
-          <img id="logo-tiamati" src={logo} alt="logo tiamati" />
-        </div>
-      </div>
-      {/* <div className="row text-center" id="plan-title">
-        <h1>Plan de parto interactivo</h1>
-      </div> */}
       <div className="row" id="birthplan">
         {/* Menu */}
         <nav
