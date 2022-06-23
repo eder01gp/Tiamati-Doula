@@ -1,9 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import "../../styles/navbar.css";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
+
+  useEffect (()=>{
+    actions.getUserServiceHired()
+  },[])
 
   return (
     <nav className="navbar navbar-light fixed-top" id="navbar">
@@ -23,103 +28,100 @@ export const Navbar = () => {
           aria-labelledby="dropDownMenu"
         >
           <Link to="/">
-            <li>Inicio</li>
+            <li className="px-2">Inicio</li>
           </Link>
           <Link to="/bio">
-            <li>Bio</li>
+            <li className="px-2">Bio</li>
           </Link>
           <Link to="/services">
-            <li>Servicios</li>
+            <li className="px-2">Servicios</li>
           </Link>
           <Link to="/documents">
-            <li>Documentos</li>
+            <li className="px-2">Documentos</li>
           </Link>
           <Link to="/faq">
-            <li>FAQ</li>
+            <li className="px-2">FAQ</li>
           </Link>
+          {store.service_id1_hired ? 
           <Link to="/birthplan">
-            <li>Plan de parto interactivo</li>
-          </Link>
+            <li className="px-2">Plan de parto interactivo</li>
+          </Link> : null
+          }
+
         </ul>
       </div>
 
       {/* boton perfil */}
-      <div>
-        <button
-          className="btn btn-secondary rounded-circle"
-          type="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-          id="profile-menu"
-        >
-          <i className="fa-solid fa-user"></i>
-        </button>
-        {store.logged == true ? (
-          <ul
-            className="dropdown-menu"
-            id="profile-dropdown"
-            aria-labelledby="dropDownMenu"
+      <div className="d-flex align-items-center">
+        <div className="pe-2 pt-2">{store.logged == true ? (<h6>{store.user_info.email} </h6>) : null}</div>
+        <div>       
+          <button
+            className="btn btn-secondary rounded-circle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            id="profile-menu"
           >
-            {localStorage.getItem("rol") == 1 ? (
+            <i className="fa-solid fa-user"></i>
+          </button>
+          {store.logged == true ? (
+            <ul
+              className="dropdown-menu dropdown-menu-end"
+              id="profile-dropdown"
+              aria-labelledby="dropDownMenu"
+            >
+              {localStorage.getItem("rol") == 1 ? (
+                <div>
+                  <Link to="/profile_user">
+                    <li className="ps-2">
+                        Mi Perfil
+                    </li>
+                  </Link>
+                </div>
+              ) : (
+                <div>
+                  <Link to="/profile_company">
+                    <li className="ps-2">
+                        Mi Perfil
+                    </li>
+                  </Link>
+                </div>
+              )}
               <div>
-                <Link to="/profile_user">
-                  <li>
-                    <p href="#" className="mx-2">
-                      Mi Perfil
-                    </p>
-                  </li>
-                </Link>
+                  <Link to="/checkout">
+                    <li className="ps-2">
+                        Carro de la compra
+                    </li>
+                  </Link>
               </div>
-            ) : (
-              <div>
-                <Link to="/profile_company">
-                  <li>
-                    <p href="#" className="mx-2">
-                      Mi Perfil
-                    </p>
-                  </li>
-                </Link>
-              </div>
-            )}
-            <div>
-                <Link to="/checkout">
-                  <li>
-                    <p href="#" className="mx-2">
-                      Carro de la compra
-                    </p>
-                  </li>
-                </Link>
-            </div>
-            <li>
-              <p
-                href="#"
-                className="mx-2"
-                onClick={() => {
-                  actions.logout();
-                }}
-              >
-                Cerrar Sesión
-              </p>
-            </li>
-          </ul>
-        ) : (
-          <ul
-            className="dropdown-menu"
-            id="profile-dropdown"
-            aria-labelledby="dropDownMenu"
-          >
-            <Link to="/loginPage">
-              <li>
-                <p className="mx-2">Iniciar Sesión</p>
+              <li className="ps-2"> 
+                <a className="navbar-link-underline"
+                  onClick={() => {
+                    actions.logout();
+                  }}
+                >Cerrar Sesión
+                </a>
               </li>
-            </Link>
-            <Link to="/signupPage">
-              <li>
-                <p className="mx-2">Registrarse</p>
-              </li>
-            </Link>
-          </ul>
-        )}
+            </ul>
+          ) : (
+            <ul
+              className="dropdown-menu dropdown-menu-end"
+              id="profile-dropdown"
+              aria-labelledby="dropDownMenu"
+            >
+              <Link to="/loginPage">
+                <li className="ps-2">
+                  Iniciar Sesión
+                </li>
+              </Link>
+              <Link to="/signupPage">
+                <li className="ps-2">
+                  Registrarse
+                </li>
+              </Link>
+            </ul>
+          )}
+        </div>
       </div>
     </nav>
   );
