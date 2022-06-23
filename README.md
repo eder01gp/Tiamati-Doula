@@ -1,3 +1,7 @@
+### Install dependencies
+pipenv install stripe
+pipenv install flask-jwt-extended
+
 ### How to start django server - needed to receive stripe events:
 /workspace/react-flask-hello/webhook_project $ python manage.py runserver
 
