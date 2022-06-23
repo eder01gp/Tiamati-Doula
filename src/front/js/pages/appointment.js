@@ -5,8 +5,8 @@ import { useHistory } from "react-router-dom";
 import "../../styles/appointment.css";
 
 export const Appointment = () => {
-  const { store, actions } = useContext(Context);
   let history = useHistory();
+  const { store, actions } = useContext(Context);
   const [showAppointment, setShowAppointment] = useState(false);
   const [hourSelected, setHourSelected] = useState();
   const [serviceID, setServiceID] = useState();
@@ -31,7 +31,8 @@ export const Appointment = () => {
   }, [hourSelected]);
 
   useEffect(() => {
-    actions.getUserServiceHiredName();
+    actions.verify();
+    actions.getUserServiceHired();
   }, []);
 
   const saveUserAppointment = async () => {
@@ -73,10 +74,10 @@ export const Appointment = () => {
                     }}
                   >
                     <option>Elige un servicio...</option>
-                    {store.service_hired_name.map((x, index) => {
+                    {store.user_service_hired_id.map((x, index) => {
                       return (
-                        <option key={index} value={x}>
-                          {x}
+                        <option key={index} value={x.name}>
+                          {x.name}
                         </option>
                       );
                     })}
@@ -85,15 +86,16 @@ export const Appointment = () => {
               </div>
               <div className="datetime-footer">
                 <button
-                  className="btn-appointment btn btn-sm me-2 float-end"
+                  id="btn-appointment"
+                  className="fill me-2 float-end"
                   onClick={() => {
                     actions.setShowDate(true);
                     setShowService(false);
                     setShowCalendar(true);
                     setDateTime({});
-                    store.service_hired.map((x) => {
-                      if (x.service_name == dateTime.service) {
-                        setServiceID(x.id);
+                    store.user_service_hired_id.map((x) => {
+                      if (x.name == dateTime.service) {
+                        setServiceID(x.service_id);
                       }
                     });
                   }}
@@ -208,7 +210,8 @@ export const Appointment = () => {
                 ></i>
 
                 <button
-                  className="btn-appointment btn btn-sm me-2 float-end"
+                  id="btn-appointment"
+                  className="fill me-2 float-end"
                   onClick={() => {
                     saveUserAppointment();
                     setShowAppointment(false);
@@ -235,7 +238,8 @@ export const Appointment = () => {
               </div>
               <div>
                 <button
-                  className="btn-appointment btn btn-sm float-end me-3"
+                  id="btn-appointment"
+                  className="fill btn-appointment float-end me-3"
                   onClick={() => history.push("/user_appointment")}
                 >
                   Ver mis citas

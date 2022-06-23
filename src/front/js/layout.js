@@ -21,7 +21,7 @@ import { Redirect } from "./pages/redirect";
 import { User_appointment } from "./pages/user_appointment";
 import { Modify_appointment } from "./pages/modify_appointment";
 import { Appointment } from "./pages/appointment";
-
+import { LogoHeader } from "./component/logoHeader";
 
 import injectContext from "./store/appContext";
 
@@ -34,7 +34,8 @@ const Layout = () => {
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           <Navbar />
-          <div className="content-wrap">
+          <LogoHeader />
+          <div className="content-wrap pt-0">
             <Switch>
               <Route exact path="/">
                 <Home />
@@ -83,8 +84,8 @@ const Layout = () => {
               <Route exact path="/redirect">
                 <Redirect />
               </Route>
-               <Route exact path="/appointment">
-              <Appointment />
+              <Route exact path="/appointment">
+                <Appointment />
               </Route>
               <Route exact path="/user_appointment">
                 <User_appointment />
@@ -92,7 +93,7 @@ const Layout = () => {
               <Route exact path="/modify_appointment">
                 <Modify_appointment />
               </Route>
-                <Route>
+              <Route>
                 <h1>Not found!</h1>
               </Route>
             </Switch>

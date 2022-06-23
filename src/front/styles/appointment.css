@@ -1,5 +1,5 @@
 .appointment {
-  margin-top: 3cm; /* <----  ELIMINAR ESTO ANTES DE HACER EL PUSH*/
+  margin-top: 3cm;
   justify-content: center;
 }
 @media (max-width: 750px) {
@@ -20,11 +20,11 @@
   background: #fffbfb;
   margin-top: 0.2cm;
   border: 1px solid rgb(104, 104, 104);
-  border-radius: 5px;
+  border-radius: 0;
 }
 
 .datetime-header {
-  background-image: url(https://i.pinimg.com/originals/42/92/3c/42923cdb4629164f40b19613d5a68edf.jpg);
+  background-color: #d8cce5;
   padding-left: 10px;
   border-bottom: 1px solid rgb(104, 104, 104);
 }
@@ -71,8 +71,10 @@
   color: #82c0a4;
 }
 
-.btn-appointment {
-  background: #82c0a4;
+#btn-appointment {
+  padding: 3px;
+  font-size: 14px;
+  background: hsl(269, 40%, 90%);
 }
 
 .fa-circle-check {
@@ -86,4 +88,8 @@
 .input-select-service {
   width: 80%;
   margin: auto;
+}
+
+.text-start {
+  font-family: "Anek Malayalam", sans-serif;
 }

@@ -4,9 +4,18 @@ import insta from "../../../img/logo/Instagram.png";
 
 export const Footer = () => (
   <footer className="footer text-center">
-
-    <h6 id="footer-phone">+34 644 75 46 71</h6>
-    <h6 id="footer-email">hello@tiamati.com</h6>
+    <div className="row">
+      <a id="footer-phone" href="tel:+34 644 75 46 71" className="col-12 mb-2">
+        +34 644 75 46 71
+      </a>
+      <a
+        id="footer-email"
+        href="mailto:hello@tiamati.com"
+        className="col-12 mb-2"
+      >
+        hello@tiamati.com
+      </a>
+    </div>
 
     <img
       src={insta}
@@ -26,4 +35,4 @@ export const Footer = () => (
       }}
     />
   </footer>
-  )
+);

@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import "../../styles/bio.css";
 import speechBubble1 from "../../../img/logo/speechBubble1.png";
 import speechBubble2 from "../../../img/logo/speechBubble2.png";
-
 import speechBubble3 from "../../../img/logo/speechBubble3.png";
-
 import speechBubble4 from "../../../img/logo/speechBubble4.png";
 
 export const Bio = () => {
@@ -76,7 +74,7 @@ export const Bio = () => {
               <img
                 src="https://uploads-ssl.webflow.com/5b516280e4645f724f4db51e/5da51c792977a7f803e2f2cd_HERO%20image-%20Blog%20(4).png"
                 alt=""
-                className="photo"
+                className="photo photo2-bio-z-index"
                 style={image2}
                 onMouseOver={() => setImage2(null) & setText2(true)}
                 onMouseLeave={() => setImage2(blackANDwhite) & setText2(false)}
@@ -118,7 +116,7 @@ export const Bio = () => {
 
         {/* LINE 2 */}
         <div className="lines-images-boxes mx-1">
-          <div className="img+text  p-0">
+          <div className="img+text p-0">
             <div className="div-img">
               <img
                 style={image4}
@@ -140,7 +138,7 @@ export const Bio = () => {
             ) : null}
           </div>
 
-          <div className="img+text  p-0">
+          <div className="img+text p-0">
             <div className="div-img">
               <img
                 style={image5}

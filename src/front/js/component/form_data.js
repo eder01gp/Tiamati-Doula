@@ -2,13 +2,12 @@ import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import propTypes from "prop-types";
 import { useHistory } from "react-router-dom";
+import "../../styles/form.css";
 
 export const FormData = (props) => {
   const { store, actions } = useContext(Context);
   const [user, setUser] = useState({});
-  const [alert, setAlert] = useState(false);
   const [caesareanSectionInput, setCaesarianSectionInput] = useState(false);
-  const history = useHistory();
 
   useEffect(() => {
     actions.getUserInfo();
@@ -32,17 +31,12 @@ export const FormData = (props) => {
       setUser({});
     }
     actions.getUserInfo();
-    setAlert(true);
-    setInterval(() => {
-      setAlert(false);
-    }, 3000);
-    history.push("/profile_user");
   };
 
   return (
-    <div className="form-general-div container border border-1 border-dark rounded pb-3 px-3 overflow-auto bg-white">
+    <div className="form-container-div container pb-3 px-3 overflow-auto bg-white">
       <div className="text-center mt-3">
-        <h6 className="mb-4">
+        <h6 className="h6-form mb-4">
           Este formulario me ayudaría a conocerte mejor y poder ofrecerte un
           servicio más personalizado.
         </h6>
@@ -51,7 +45,9 @@ export const FormData = (props) => {
         <div className="col-auto">
           <label className="visually-hidden">NOMBRE USUARIA</label>
           <div className="input-group">
-            <div className="input-group-text bg-light">¿Cómo te llamas?</div>
+            <div className="question-form input-group-text bg-light">
+              ¿Cómo te llamas?
+            </div>
             <input
               type="text"
               className="form-control"
@@ -63,7 +59,7 @@ export const FormData = (props) => {
         <div className="col-3 col-lg-5 col-sm-auto">
           <label className="visually-hidden">Nº SEMANAS EMBARAZO</label>
           <div className="input-group">
-            <div className="input-group-text bg-light">
+            <div className="question-form input-group-text bg-light">
               ¿De cuántas semanas estás?
             </div>
             <input
@@ -82,7 +78,7 @@ export const FormData = (props) => {
         <div className="col-auto">
           <label className="visually-hidden">FECHA APROX. PARTO</label>
           <div className="input-group">
-            <div className="input-group-text bg-light">
+            <div className="question-form input-group-text bg-light">
               Fecha probable de parto
             </div>
             <input
@@ -102,7 +98,7 @@ export const FormData = (props) => {
         <div className="col-auto col-lg-4 col-sm-auto">
           <label className="visually-hidden">Nº HIJOS</label>
           <div className="input-group">
-            <div className="input-group-text bg-light">
+            <div className="question-form input-group-text bg-light">
               ¿Cuántos hijos tienes?
             </div>
             <input
@@ -127,7 +123,7 @@ export const FormData = (props) => {
           <div className="col-auto col-lg-5 col-sm-auto">
             <label className="visually-hidden">Nº CESÁREAS</label>
             <div className="input-group">
-              <div className="input-group-text bg-light">
+              <div className="question-form input-group-text bg-light">
                 ¿Cuántas cesáreas has tenido?
               </div>
               <input
@@ -149,7 +145,7 @@ export const FormData = (props) => {
         <div className="col-auto">
           <label className="visually-hidden">ACOMPAÑANTE</label>
           <div className="input-group">
-            <div className="input-group-text bg-light">
+            <div className="question-form input-group-text bg-light">
               ¿Tienes acompañante? Escribe su nombre y su relación contigo
             </div>
             <input
@@ -163,7 +159,9 @@ export const FormData = (props) => {
         <div className="col-auto">
           <label className="visually-hidden">CIUDAD</label>
           <div className="input-group">
-            <div className="input-group-text bg-light">¿Dónde te ubicas?</div>
+            <div className="question-form input-group-text bg-light">
+              ¿Dónde te ubicas?
+            </div>
             <input
               type="text"
               className="form-control"
@@ -175,7 +173,7 @@ export const FormData = (props) => {
         <div className="col-auto">
           <label className="visually-hidden">LUGAR PARTO</label>
           <div className="input-group">
-            <div className="input-group-text bg-light">
+            <div className="question-form input-group-text bg-light">
               ¿Deseas un parto en hospital o en casa?
             </div>
             <select
@@ -194,7 +192,7 @@ export const FormData = (props) => {
         <div className="col-8">
           <label className="visually-hidden">HOSPITAL ACTUAL</label>
           <div className="input-group">
-            <div className="input-group-text bg-light">
+            <div className="question-form input-group-text bg-light">
               Si estás siendo acompañada en un hospital/clínica, escribe cuál:
             </div>
             <input
@@ -216,21 +214,43 @@ export const FormData = (props) => {
           {props.saveBtn}
           <button
             type="button"
-            id="save-data-button"
-            className="btn btn-primary mx-1 float-end"
+            id="btn-left-form-data"
+            className="fill mx-2 float-end"
+            data-bs-toggle="modal"
+            data-bs-target="#dataSaved"
             onClick={() => {
               saveUsersData();
             }}
           >
             Guardar
           </button>
-          {alert ? (
-            <i className="fa-solid fa-circle-check fa-lg text-success float-start mt-4">
-              <p id="check-data-saved-form" className="d-inline mx-1">
-                Datos guardados correctamente
-              </p>
-            </i>
-          ) : null}
+        </div>
+
+        {/* <!-- Modal --> */}
+        <div
+          className="modal fade"
+          id="dataSaved"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabIndex="-1"
+          aria-labelledby="dataSavedLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-body">
+                <i className="check-icon fa-solid fa-circle-check fa-lg text-success float-start"></i>
+                <p className="d-inline mx-1">Datos guardados correctamente</p>
+                <button
+                  type="button"
+                  class="btn-close float-end"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  onClick={props.redirect}
+                ></button>
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     </div>
@@ -240,4 +260,5 @@ export const FormData = (props) => {
 FormData.propTypes = {
   closeBtn: propTypes.element,
   dismissBtn: propTypes.element,
+  redirect: propTypes.func,
 };

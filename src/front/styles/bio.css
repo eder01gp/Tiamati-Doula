@@ -12,6 +12,10 @@
   width: 5.5cm;
 }
 
+.photo2-bio-z-index{
+  z-index: -1
+}
+
 .speech-bubble {
   max-height: 0;
 }

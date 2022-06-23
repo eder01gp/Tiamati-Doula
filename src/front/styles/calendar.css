@@ -1,13 +1,13 @@
 .calendar {
   width: 300px;
-  background-image: url(https://i.pinimg.com/736x/f9/41/ce/f941ce68efc3f467e31cd635dc0f443d.jpg);
+  background: white;
   border: 1px solid rgb(104, 104, 104);
   border-radius: 5px;
   cursor: default;
 }
 
 #calendar-header {
-  background-image: url(https://i.pinimg.com/736x/f9/41/ce/f941ce68efc3f467e31cd635dc0f443d.jpg);
+  background: #d8cce5;
   border-bottom: 1px solid rgb(104, 104, 104);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -15,7 +15,7 @@
 
 #prev-arrow,
 #next-arrow {
-  color: #e4aa5e;
+  color: hsl(269, 40%, 60%);
   cursor: pointer;
 }
 
@@ -23,7 +23,7 @@
   justify-content: space-around;
   grid-gap: 10px;
   line-height: 3;
-  background-color: #efe7d3;
+  background-color: hsl(269, 40%, 95%);
   margin-bottom: 5px;
 }
 
@@ -43,7 +43,7 @@
 }
 
 .available-true {
-  background: rgb(255 206 136);
+  background: hsl(269, 40%, 75%);
   border-radius: 5px;
   cursor: pointer;
 }
@@ -54,8 +54,8 @@
 }
 
 .selected {
-  background: rgb(246 207 121);
-  border: 2px dotted #5a4705;
+  background: hsl(269, 40%, 65%);
+  border: 2px dotted hsl(269, 40%, 50%);
   border-radius: 100%;
   cursor: pointer;
 }

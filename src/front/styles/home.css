@@ -1,6 +1,6 @@
 /* Fill button styling */
 .fill {
-  font-family: 'Anek Malayalam', sans-serif;
+  font-family: "Anek Malayalam", sans-serif;
   font-size: 20px;
   font-weight: 300;
   letter-spacing: 0px;
@@ -10,10 +10,11 @@
   cursor: pointer;
   position: relative;
   background-color: rgba(0, 0, 0, 0);
-/*   visibility: hidden; */
+  /*   visibility: hidden; */
 }
 
-#bio-button::after, #btn-get-doc::after{
+#bio-button::after,
+#btn-get-doc::after {
   background-color: #4cff6a42;
 }
 
@@ -35,29 +36,31 @@
   left: 0px;
 }
 
-#btn-I-want-service::after{
-  background-color: #C5B4D9;
+#btn-I-want-service::after {
+  background-color: #c5b4d9;
   top: 0px;
   left: -10px;
 }
 
-#btn-I-want-service:hover::after{
-  background-color: #C5B4D9;
+#btn-I-want-service:hover::after {
+  background-color: #c5b4d9;
   top: 0px;
   left: 0px;
 }
 
-#btn-faq::after, #btn-faq{
+#btn-faq::after,
+#btn-faq {
   background-color: transparent;
   white-space: nowrap;
 }
 
-#btn-faq:hover, #btn-faq{
+#btn-faq:hover,
+#btn-faq {
   border: 0px;
   white-space: nowrap;
 }
 
-#btn-faq:hover{
+#btn-faq:hover {
   text-decoration: underline;
 }
 /* End of Fill Button  */
@@ -99,27 +102,14 @@
 }
 /* End of Slide Button  */
 
-
 h2 {
-  font-family: 'Economica', sans-serif;
+  font-family: "Economica", sans-serif;
   font-style: italic;
   font-weight: 700;
 }
 
-#header-logo {
-  height: 100px;
-  background-color: rgb(165, 250, 221,0);
-  padding: 1%;
-  text-align: center;
-}
-
-#logo-tiamati {
-  width: 100px;
-  margin-top: 1%;
-}
-
 #header-img {
-  display:inline;
+  display: inline;
   height: 350px;
   background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1654589067/illustrations/Banner_dark_y73sds.jpg);
   background-repeat: no-repeat;
@@ -128,20 +118,22 @@ h2 {
   z-index: 2;
 }
 
-#what-is-tiamati, #free-appointment, #documents, #services-title {
-  box-shadow:  #5a4b9a 0px 0px 0px 2px, #C9FFE2 0px 0px 16px;
+#what-is-tiamati,
+#free-appointment,
+#documents,
+#services-title {
+  box-shadow: #5a4b9a 0px 0px 0px 2px, #c9ffe2 0px 0px 16px;
 }
 
-#what-is-tiamati-text #free-appointment-text{
+#what-is-tiamati-text #free-appointment-text {
   padding: 2%;
-  font-family: 'Anek Malayalam', sans-serif;
+  font-family: "Anek Malayalam", sans-serif;
   font-size: 200;
 }
 
-#what-is-tiamati{
-  background-color: #C5B4D9;
+#what-is-tiamati {
+  background-color: #c5b4d9;
 }
-
 
 .benefits-arrow {
   height: 100px;
@@ -152,7 +144,7 @@ h2 {
   padding: 4%;
   padding-top: 5%;
   /* height: 500px; */
-   /* background-color: #FF5968; */ 
+  /* background-color: #FF5968; */
 }
 
 #first-appointment-text {
@@ -164,12 +156,11 @@ h2 {
   margin-top: 1%;
 }
 
-
 #bio-hello-text {
   /*   background-color: #f1b6068a; */
-    border: 0px;
-    text-align: center;
-  }
+  border: 0px;
+  text-align: center;
+}
 
 #bio-picture {
   height: 350px;
@@ -192,24 +183,30 @@ h2 {
   width: 25rem;
 }
 
-.card, .card-img-top {
-  --bs-card-inner-border-radius:0;
+.card,
+.card-img-top {
+  --bs-card-inner-border-radius: 0;
   --bs-card-border-radius: 0;
 }
 
-.card, .card-footer{
+.card,
+.card-footer {
   background-color: transparent;
 }
 
-.row>.card {
+.row > .card {
   padding-right: 0;
   padding-left: 0;
 }
 
 .card {
   border: 0;
-  -webkit-box-shadow: 8px 0px 0px 0px #8972B2, 0px 8px 0px 0px #FF5968, -8px 0px 0px 0px #4E4E56, 0px 0px 0px 8px #f1b606, 5px 5px 6px 5px rgba(0,0,0,0); 
-  box-shadow: 8px 0px 0px 0px #8972B2, 0px 8px 0px 0px #FF5968, -8px 0px 0px 0px #4E4E56, 0px 0px 0px 8px #f1b606, 5px 5px 6px 5px rgba(0,0,0,0);
+  -webkit-box-shadow: 8px 0px 0px 0px #8972b2, 0px 8px 0px 0px #ff5968,
+    -8px 0px 0px 0px #4e4e56, 0px 0px 0px 8px #f1b606,
+    5px 5px 6px 5px rgba(0, 0, 0, 0);
+  box-shadow: 8px 0px 0px 0px #8972b2, 0px 8px 0px 0px #ff5968,
+    -8px 0px 0px 0px #4e4e56, 0px 0px 0px 8px #f1b606,
+    5px 5px 6px 5px rgba(0, 0, 0, 0);
 }
 
 #documents {
@@ -230,18 +227,20 @@ h2 {
 .carousel-item {
 
 } */
-.carousel-control-next-icon, .carousel-control-prev-icon {
-  background-color: #FF5968;
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  background-color: #ff5968;
   text-decoration: none;
   outline: 0;
-  opacity: .2;
+  opacity: 0.2;
 }
 
-.carousel-control-next:hover, .carousel-control-prev:hover {
-  background-color: #FF5968;
+.carousel-control-next:hover,
+.carousel-control-prev:hover {
+  background-color: #ff5968;
   text-decoration: none;
   outline: 0;
-  opacity: .2;
+  opacity: 0.2;
   transition: 0.6s;
 }
 
@@ -259,11 +258,11 @@ h2 {
   font-size: 80px;
 }
 
-.father-display-table{
-  display: table
+.father-display-table {
+  display: table;
 }
 
-.child-display-cell{
-  display: table-cell; 
+.child-display-cell {
+  display: table-cell;
   vertical-align: middle;
 }

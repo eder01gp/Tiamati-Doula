@@ -13,7 +13,7 @@ export const Qa = (props) => {
 
   return (
     <div className="accordion-item">
-      <h2 className="accordion-header" id={question_id}>
+      <h2 className="accordion-header faq-question" id={question_id}>
         <button
           className="accordion-button collapsed"
           type="button"

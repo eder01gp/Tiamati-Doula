@@ -1,23 +1,46 @@
-.div-user-appointment {
-  margin-top: 3cm;
+.head-table-profile,
+.body-table-profile {
+  border-width: 5px;
 }
 
-.list-group-appointment {
-  width: 600px;
-}
-@media (max-width: 750px) {
-  .list-group-appointment {
-    width: 400px;
-    font-size: 14px;
-  }
+.head-table-profile {
+  background: #d8cce5;
 }
 
-.list-group-item-appointment {
-  height: 40px;
+.table-profile-services {
+  width: 460px;
+  font-size: 14px;
 }
 
-.btn-group {
-  float: inline-end;
+#column-1-table-services {
+  width: 120px;
+}
+
+#column-2-table-services {
+  width: 90px;
+}
+
+#column-3-table-services {
+  width: 100px;
+}
+
+.row-table-services {
+  background: whitesmoke;
+  border-color: #ceb5e4;
+  padding-bottom: 0;
+}
+
+td {
+  border-color: #c2b5ce;
+  padding-bottom: 0;
+  height: 50px;
+  vertical-align: middle;
+}
+
+.btn-calendar {
+  font-size: 14px;
+  padding: 3px;
+  padding-inline: 10px;
 }
 
 /* Fill button styling */
@@ -63,10 +86,11 @@
 }
 
 #btn-plan {
-  background-color: #c6f8ff;
+  background-color: #a2f4ff;
   padding-inline: 5px;
   padding: 3px;
   font-size: 14px;
+  border-radius: 5px;
 }
 
 #btn-right-form-data {
@@ -74,14 +98,6 @@
   padding-inline: 5px;
   padding: 3px;
   font-size: 14px;
-}
-
-.pencil-edit-date {
-  color: #c17ecd;
-}
-
-.trash-delete-date {
-  color: #9c27b0;
 }
 
 .fill::after {
@@ -103,6 +119,10 @@
 }
 /* End of Fill Button  */
 
+#btn-delete-account {
+  font-size: 15px;
+}
+
 #modal-button-right,
 #modal-button-left {
   font-size: 14px;
@@ -117,4 +137,43 @@
 #modal-button-left {
   border: 1px solid black;
   background-color: #ddb6eb;
+}
+
+#link-search-in-web {
+  color: rgb(208 126 208);
+  text-decoration: none;
+}
+
+#link-search-in-web:hover {
+  color: #00bcd4;
+  text-decoration: none;
+}
+
+.title-user-services {
+  color: hsl(263, 20%, 55%);
+}
+
+.icons-form {
+  color: #7f387f;
+}
+
+.menu-profile-btn {
+  color: #9c27b0;
+  background: transparent;
+  border-color: #9c27b0;
+}
+.menu-profile-btn:hover {
+  color: #a6508f;
+  background: transparent;
+  border-color: #f19fff;
+}
+
+.icon-calendar-profile {
+  color: #f19fff;
+}
+
+#btn-calendar-profile {
+  background-color: rgb(119, 36, 119);
+  border: 1px solid;
+  border-radius: 5px;
 }

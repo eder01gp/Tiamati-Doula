@@ -379,10 +379,10 @@ def get_services_hired_by_user():
     user = Users.query.get(current_user_id)
     if user:
         user_service_hired = ServiceHired.query.filter_by(user_id = current_user_id)
-        user_service_hired_id =  list(map(lambda x: x.service_id, user_service_hired))
+        user_service_hired_serialized =  list(map(lambda x: x.serialize(), user_service_hired))
         services = Service.query.all()
         service_id_name = list(map(lambda x: {'id': x.id, 'service_name':x.name}, services))
-        return jsonify({"service_hired_id": user_service_hired_id, "services_id_name": service_id_name}), 200
+        return jsonify({"service_hired_id": user_service_hired_serialized, "services_id_name": service_id_name}), 200
     else: return jsonify({"No se ha podido traer la información"}), 400
 
 @api.route('/appointment', methods=['POST'])
@@ -452,8 +452,3 @@ def delete_user_appointment():
     appointment = Appointment.query.filter_by(user_id = current_user_id).filter_by(id = appointment_id).delete()
     db.session.commit()
     return jsonify({"msg": "User deleted, ok"}), 200
-
-
-
-
-    
