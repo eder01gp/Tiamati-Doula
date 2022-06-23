@@ -12,12 +12,14 @@ export const Form = () => {
         dismissBtn={
           <button
             type="button"
-            className="btn btn-secondary float-end"
+            id="modal-button-left"
+            className="float-end"
             onClick={() => history.push("/")}
           >
             Omitir
           </button>
         }
+        redirect={() => history.push("/")}
       />
     </div>
   );

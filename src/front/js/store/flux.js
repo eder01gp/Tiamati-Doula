@@ -1,7 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      url: "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu47.gitpod.io/"+"api",
+      url:
+        "https://3001-ederdon-tiamatidoula-1er83oozol2.ws-eu47.gitpod.io/" +
+        "api",
       logged: null,
       token: null,
       user_faq: [],
@@ -16,9 +18,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       showDate: false,
       showTime: false,
       appointment: [],
-      service_hired_name: [],
-      service_hired: [],
       appointmentToModify: [],
+      user_service_hired_id: [],
       documents: [],
       services_selected: [],
     },
@@ -60,7 +61,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           });
           const data = await resp.json();
-          setStore({ logged: data.logged || false });         
+          setStore({ logged: data.logged || false });
         } catch (e) {
           setStore({ logged: false });
           getActions().logout();
@@ -163,23 +164,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       serviceSelectedUpdate: () => {
         let newServiceSelected = {
-          "client_reference_id":localStorage.getItem("ID"),
-          "customer_email":localStorage.getItem("email"),
-          };  
+          client_reference_id: localStorage.getItem("ID"),
+          customer_email: localStorage.getItem("email"),
+        };
 
-        let new_line_items = []
-        getStore().services.map((x) => {          
+        let new_line_items = [];
+        getStore().services.map((x) => {
           if (x.service.selected) {
             const newLineItem = {
-              "price":x["service"]["stripe_price_id"], 
-              "quantity":x["service"]["qty"],
-            }
+              price: x["service"]["stripe_price_id"],
+              quantity: x["service"]["qty"],
+            };
             new_line_items.push(newLineItem);
           }
         });
         newServiceSelected["line_items"] = new_line_items;
 
-        setStore({services_selected: newServiceSelected});        
+        setStore({ services_selected: newServiceSelected });
         getActions().modalSelectedKO();
       },
 
@@ -289,7 +290,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
       },
 
-      getUserServiceHiredName: async () => {
+      getUserServiceHired: async () => {
         const response = await fetch(getStore().url + "/services_hired", {
           headers: {
             "Content-Type": "application/json",
@@ -297,31 +298,32 @@ const getState = ({ getStore, getActions, setStore }) => {
           },
         });
         const data = await response.json();
-        setStore({ service_hired: data.services_id_name });
-        const service_name = [];
-        data.services_id_name.map((x) => {
-          for (let i of data.service_hired_id) {
-            if (i == x.id) {
-              service_name.push(x.service_name);
+        data.service_hired_id.map((x) => {
+          for (let i of data.services_id_name) {
+            if (x.service_id == i.id) {
+              x["name"] = i.service_name;
             }
           }
-          setStore({ service_hired_name: service_name });
         });
+        setStore({ user_service_hired_id: data.service_hired_id });
       },
 
       setAppointmentToModify: (value) => {
         setStore({ appointmentToModify: value });
       },
-        
+
       createCheckoutSession: async (body) => {
         const options = {
           body: body,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-          }
+          },
         };
-        const resp = await fetch(getStore().url + "/create_checkout_session", options);
+        const resp = await fetch(
+          getStore().url + "/create_checkout_session",
+          options
+        );
         const data = await resp.json();
         console.log(data);
         window.location.replace(data.response);
