@@ -1,29 +1,61 @@
-/* .container {
-  background-color: white;
-} */
+#section-container h2 {
+  font-family: "Economica", sans-serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 50px;
+}
 
-#plan-title {
-  background-color: rgb(255, 221, 159);
+#header-bp {
+  background-color: white;
+}
+
+#before-button {
+  background-color: #ff838c;
+  top: 0px;
+  left: -10px;
+}
+
+#before-button {
+  background-color: #ff838c;
+  top: 0px;
+  left: 0px;
+}
+
+#after-button {
+  background-color: #ffe54c;
+}
+
+#pdf-button {
+  background-color: #cafee1;
+}
+
+#save-form-button {
+  background-color: #cafee1;
+}
+
+#section-container {
+  background-color: hsl(268, 33%, 85%);
+  height: 100%;
+  /* margin-top: -55px; */
+  padding-bottom: 1%;
+}
+
+/* #plan-title {
+  background-color: hsl(268, 33%, 65%);
   padding: 1%;
   margin-top: 55px;
-}
+  color: white;
+} */
 
 #plan-menu {
-  background-color: rgb(255, 244, 225);
+  background-color: hsl(268, 33%, 65%);
   padding: 1%;
+  z-index: auto;
 }
 
-#topic {
-  background-color: white;
-}
-
-#placeholder-img {
-  width: 600px;
-}
-
-#topic-description {
-  margin-top: 50px;
-  padding: 2%;
+#welcome-text {
+  padding-bottom: 2%;
+  width: 80%;
 }
 
 .comment-card {
@@ -34,4 +66,8 @@
   width: 100%;
   height: 100%;
   aspect-ratio: 16 / 9;
+}
+
+.instructions {
+  font-size: 24px;
 }

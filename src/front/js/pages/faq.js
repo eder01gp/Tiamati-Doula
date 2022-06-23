@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/faq.css";
 import { Qa } from "../component/qa";
+import logo from "../../../img/logo/logo.png";
 
 export const Faq = () => {
   const { store, actions } = useContext(Context);
@@ -16,13 +17,20 @@ export const Faq = () => {
   }, []);
 
   return (
-    <div className="container mb-5">
-      <h1 id="faq-title" className="text-center">
-        Preguntas Frecuentes
-      </h1>
+    <div className="container mb-5" id="faq-container">
+      <div id="header-faq" className="row">
+        <div id="header-logo">
+          <img id="logo-tiamati" src={logo} alt="logo tiamati" />
+        </div>
+      </div>
+
+      <div id="faq-title" className="row">
+        <h1>Preguntas Frecuentes</h1>
+      </div>
+
       {/* FAQ usuarias */}
       <div id="faq-users">
-        <h3>Usuarias</h3>
+        <h3 className="mt-3">Usuarias</h3>
         {store.user_faq.map((faqs) => {
           return (
             <div className="accordion" id="user-questions" key={faqs.id}>
@@ -39,7 +47,7 @@ export const Faq = () => {
 
       {/* FAQ empresas */}
       <div id="faq-business">
-        <h3>Empresas</h3>
+        <h3 className="mt-3">Empresas</h3>
         {store.business_faq.map((bfaqs) => {
           return (
             <div className="accordion" id="business-questions" key={bfaqs.id}>

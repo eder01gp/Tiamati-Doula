@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import "../../styles/birthplan.css";
 
 export const MultiSelectTiamati = ({
   answer,
@@ -43,6 +44,35 @@ export const MultiSelectTiamati = ({
       />
       <label className="form-check-label" htmlFor={answer.id}>
         {answer.text}
+        {answer.input_text != null ? (
+          <input
+            type="text"
+            className="ms-3"
+            value={answer.input_text}
+            onChange={(e) => {
+              if (answer.checked == true) {
+                setSections(
+                  sections.map((sect) => {
+                    if (sect.id != section_id) {
+                      return sect;
+                    } else {
+                      return {
+                        ...sect,
+                        answer: sect.answer.map((answ) => {
+                          if (answ.id != answer.id) {
+                            return answ;
+                          } else {
+                            return { ...answ, input_text: e.target.value };
+                          }
+                        }),
+                      };
+                    }
+                  })
+                );
+              }
+            }}
+          ></input>
+        ) : null}
       </label>
     </div>
   );
