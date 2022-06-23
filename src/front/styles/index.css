@@ -9,7 +9,9 @@ body {
   font-family: "Anek Malayalam", sans-serif;
   font-size: 200;
 }
+
 /* Navbar */
+
 #navbar {
   padding-left: 1%;
   padding-right: 1%;
@@ -79,6 +81,7 @@ body {
   cursor: pointer;
 }
 
+
 /* Form */
 .formulario {
   margin-top: 7%;
@@ -108,3 +111,5 @@ body {
   padding-bottom: 11rem; /* Footer height */
   padding-top: 50px;
 }
+
+

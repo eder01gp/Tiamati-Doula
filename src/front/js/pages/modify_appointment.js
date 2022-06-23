@@ -90,7 +90,7 @@ export const Modify_appointment = () => {
               </div>
               <div className="datetime-footer">
                 <button
-                  className="btn-appointment btn btn-sm me-2 float-end"
+                  className="btn-appointment me-2 float-end"
                   onClick={() => {
                     actions.setShowDate(true);
                     setShowService(false);
