@@ -17,6 +17,7 @@ export const Birthplan = () => {
       id: 1,
       title: "Acompañamiento",
       subtitle: null,
+      choose: "Elige solo una opción",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920630/plan%20parto/video_baby_pjrbou.mp4",
 
@@ -50,6 +51,7 @@ export const Birthplan = () => {
       id: 2,
       title: "En dilatación",
       subtitle: "Espacio físico",
+      choose: "Elige solo una opción",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920629/plan%20parto/video_pregnant_yls8dn.mp4",
 
@@ -87,6 +89,7 @@ export const Birthplan = () => {
       id: 3,
       title: "En dilatación",
       subtitle: "Intimidad",
+      choose: "Elige todas las opciones que desees",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920629/plan%20parto/video_pregnant_yls8dn.mp4",
 
@@ -136,6 +139,7 @@ export const Birthplan = () => {
       id: 4,
       title: "En dilatación",
       subtitle: "Autonomía personal",
+      choose: "Elige todas las opciones que desees",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920629/plan%20parto/video_pregnant_yls8dn.mp4",
 
@@ -168,6 +172,7 @@ export const Birthplan = () => {
       id: 5,
       title: "Asistencia y cuidados",
       subtitle: "Via venosa",
+      choose: "Elige solo una opción",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920629/plan%20parto/video_pregnant_yls8dn.mp4",
 
@@ -200,6 +205,7 @@ export const Birthplan = () => {
       id: 6,
       title: "Asistencia y cuidados",
       subtitle: "Alimentos y bebidas",
+      choose: "Elige todas las opciones que desees",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920629/plan%20parto/video_pregnant_yls8dn.mp4",
 
@@ -225,6 +231,7 @@ export const Birthplan = () => {
       id: 7,
       title: "Asistencia y cuidados",
       subtitle: "Intervenciones 1",
+      choose: "Elige solo una opción",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920629/plan%20parto/video_pregnant_yls8dn.mp4",
 
@@ -257,6 +264,7 @@ export const Birthplan = () => {
       id: 8,
       title: "Asistencia y cuidados",
       subtitle: "Intervenciones 2",
+      choose: "Elige todas las opciones que desees",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920629/plan%20parto/video_pregnant_yls8dn.mp4",
 
@@ -289,6 +297,7 @@ export const Birthplan = () => {
       id: 9,
       title: "Tactos vaginales",
       subtitle: null,
+      choose: "Elige todas las opciones que desees",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920630/plan%20parto/video_baby_pjrbou.mp4",
 
@@ -321,6 +330,7 @@ export const Birthplan = () => {
       id: 10,
       title: "Monitorización",
       subtitle: null,
+      choose: "Elige solo una opción",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920629/plan%20parto/video_pregnant_yls8dn.mp4",
 
@@ -352,6 +362,7 @@ export const Birthplan = () => {
       id: 11,
       title: "Alivio del dolor - Métodos farmacológicos 1",
       subtitle: null,
+      choose: "Elige solo una opción",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920630/plan%20parto/video_baby_pjrbou.mp4",
 
@@ -376,6 +387,7 @@ export const Birthplan = () => {
       id: 12,
       title: "Alivio del dolor - Métodos farmacológicos 2",
       subtitle: null,
+      choose: "Elige solo una opción",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920630/plan%20parto/video_baby_pjrbou.mp4",
 
@@ -414,6 +426,7 @@ export const Birthplan = () => {
       id: 13,
       title: "Alivio del dolor - Métodos no farmacológicos",
       subtitle: null,
+      choose: "Elige todas las opciones que desees",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920629/plan%20parto/video_pregnant_yls8dn.mp4",
 
@@ -461,6 +474,7 @@ export const Birthplan = () => {
       id: 14,
       title: "En el expulsivo",
       subtitle: null,
+      choose: "Elige todas las opciones que desees",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920630/plan%20parto/video_baby_pjrbou.mp4",
 
@@ -499,6 +513,7 @@ export const Birthplan = () => {
       id: 15,
       title: "En el caso de cesárea",
       subtitle: null,
+      choose: "Elige todas las opciones que desees",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920629/plan%20parto/video_pregnant_yls8dn.mp4",
 
@@ -565,6 +580,7 @@ export const Birthplan = () => {
       id: 16,
       title: "En el alumbramiento",
       subtitle: null,
+      choose: "Elige solo una opción",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920630/plan%20parto/video_baby_pjrbou.mp4",
 
@@ -597,6 +613,7 @@ export const Birthplan = () => {
       id: 17,
       title: "En el alumbramiento",
       subtitle: "Placenta",
+      choose: "Elige todas las opciones que desees",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920630/plan%20parto/video_baby_pjrbou.mp4",
 
@@ -628,6 +645,7 @@ export const Birthplan = () => {
       id: 18,
       title: "Cordón umbilical",
       subtitle: null,
+      choose: "Elige todas las opciones que desees",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920629/plan%20parto/video_pregnant_yls8dn.mp4",
 
@@ -666,6 +684,7 @@ export const Birthplan = () => {
       id: 19,
       title: "Cuidados del recién nacido (R.N.)",
       subtitle: "Atención al R.N.",
+      choose: "Elige todas las opciones que desees",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920630/plan%20parto/video_baby_pjrbou.mp4",
 
@@ -704,6 +723,7 @@ export const Birthplan = () => {
       id: 20,
       title: "Cuidados del recién nacido (R.N.)",
       subtitle: "Profilaxis ocular",
+      choose: "Elige solo una opción",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920630/plan%20parto/video_baby_pjrbou.mp4",
 
@@ -735,6 +755,7 @@ export const Birthplan = () => {
       id: 21,
       title: "Cuidados del recién nacido (R.N.)",
       subtitle: "Profilaxis con Vitamina K",
+      choose: "Elige solo una opción",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920630/plan%20parto/video_baby_pjrbou.mp4",
 
@@ -773,6 +794,7 @@ export const Birthplan = () => {
       id: 22,
       title: "Cuidados del recién nacido (R.N.)",
       subtitle: "Cuidados del recién nacido",
+      choose: "Elige todas las opciones que desees",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920630/plan%20parto/video_baby_pjrbou.mp4",
 
@@ -804,6 +826,7 @@ export const Birthplan = () => {
       id: 23,
       title: "Cuidados del recién nacido (R.N.)",
       subtitle: "Realización de las pruebas de cribados",
+      choose: "Elige todas las opciones que desees",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920630/plan%20parto/video_baby_pjrbou.mp4",
 
@@ -835,6 +858,7 @@ export const Birthplan = () => {
       id: 24,
       title: "Alimentación del recién nacido 1",
       subtitle: null,
+      choose: "Elige todas las opciones que desees",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920629/plan%20parto/video_pregnant_yls8dn.mp4",
 
@@ -866,6 +890,7 @@ export const Birthplan = () => {
       id: 25,
       title: "Alimentación del recién nacido 2",
       subtitle: "Apoyo",
+      choose: "Elige todas las opciones que desees",
       video:
         "https://res.cloudinary.com/dxeieqxam/video/upload/v1655920629/plan%20parto/video_pregnant_yls8dn.mp4",
 
@@ -928,7 +953,7 @@ export const Birthplan = () => {
         >
           <div>
             <div>
-              <button id="pdf-button" className="fill">
+              <button id="pdf-button" className="btn btn-lg">
                 Generar plan de parto
               </button>
             </div>
@@ -937,7 +962,7 @@ export const Birthplan = () => {
           <div id="menu-buttons">
             <button
               id="before-button"
-              className="fill me-2"
+              className="btn btn-lg me-2"
               onClick={() => {
                 if (sectionIndex !== 0) {
                   setSectionIndex((sectionIndex) => sectionIndex - 1);
@@ -948,7 +973,7 @@ export const Birthplan = () => {
             </button>
             <button
               id="after-button"
-              className="fill"
+              className="btn btn-lg"
               onClick={() => {
                 if (sectionIndex !== sections.length + 1) {
                   setSectionIndex((sectionIndex) => sectionIndex + 1);
@@ -970,16 +995,16 @@ export const Birthplan = () => {
               Estas son las instrucciones a seguir:
             </h4>
             <ol className="list-group-numbered">
-              <li className="list-group-item mb-2">
+              <li className="list-group-item mb-2 instructions">
                 Lee cuidadosamente las opciones
               </li>
-              <li className="list-group-item mb-2">
+              <li className="list-group-item mb-2 instructions">
                 Reproduce el vídeo explicatorio
               </li>
-              <li className="list-group-item mb-2">
+              <li className="list-group-item mb-2 instructions">
                 Selecciona la opción u opciones que prefieras
               </li>
-              <li className="list-group-item mb-2">
+              <li className="list-group-item mb-2 instructions">
                 Dale al botón "Generar plan de parto" para descargar tu PDF
               </li>
             </ol>
@@ -1083,7 +1108,7 @@ export const Birthplan = () => {
 
             <button
               id="save-form-button"
-              className="fill mb-3"
+              className="btn btn-lg mb-3"
               onClick={() => {
                 saveBirthplanForm();
               }}
@@ -1095,7 +1120,7 @@ export const Birthplan = () => {
           //Section
           <div id={sections[sectionIndex - 2].id}>
             <div className="row">
-              <div className="videos col">
+              <div className="video col">
                 <iframe
                   width="640"
                   height="360"
@@ -1112,7 +1137,7 @@ export const Birthplan = () => {
                 <h3 id="section-subtitle" className="mb-3">
                   {sections[sectionIndex - 2].subtitle}
                 </h3>
-
+                <h6> {sections[sectionIndex - 2].choose} </h6>
                 <div id="section-answers">
                   <div
                     id={sections[sectionIndex - 2].answer[0].id}
@@ -1126,6 +1151,7 @@ export const Birthplan = () => {
                             sections={sections}
                             setSections={setSections}
                             answer={ans}
+                            key={ans.id}
                           />
                         );
                       } else if (
@@ -1138,6 +1164,7 @@ export const Birthplan = () => {
                             sections={sections}
                             setSections={setSections}
                             answer={ans}
+                            key={ans.id}
                           />
                         );
                       }
@@ -1175,7 +1202,11 @@ export const Birthplan = () => {
                     <div className="accordion-body">
                       {sections[sectionIndex - 2].comments.map((com) => {
                         return (
-                          <div id={com.id} className="card comment-card">
+                          <div
+                            id={com.id}
+                            className="card comment-card"
+                            key={com.id}
+                          >
                             <div className="card-header d-flex">
                               <i className="fa-solid fa-user user-avatar me-2"></i>
                               <h6>{com.user}</h6>
