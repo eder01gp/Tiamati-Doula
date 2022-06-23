@@ -1,7 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      url: process.env.DOMAIN+"api",
+      url:
+        "https://3001-ederdon-tiamatidoula-1er83oozol2.ws-eu47.gitpod.io/" +
+        "api",
       logged: null,
       token: null,
       user_faq: [],
@@ -60,7 +62,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           });
           const data = await resp.json();
-          setStore({ logged: data.logged || false });         
+          setStore({ logged: data.logged || false });
         } catch (e) {
           setStore({ logged: false });
           getActions().logout();
@@ -163,23 +165,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       serviceSelectedUpdate: () => {
         let newServiceSelected = {
-          "client_reference_id":localStorage.getItem("ID"),
-          "customer_email":localStorage.getItem("email"),
-          };  
+          client_reference_id: localStorage.getItem("ID"),
+          customer_email: localStorage.getItem("email"),
+        };
 
-        let new_line_items = []
-        getStore().services.map((x) => {          
+        let new_line_items = [];
+        getStore().services.map((x) => {
           if (x.service.selected) {
             const newLineItem = {
-              "price":x["service"]["stripe_price_id"], 
-              "quantity":x["service"]["qty"],
-            }
+              price: x["service"]["stripe_price_id"],
+              quantity: x["service"]["qty"],
+            };
             new_line_items.push(newLineItem);
           }
         });
         newServiceSelected["line_items"] = new_line_items;
 
-        setStore({services_selected: newServiceSelected});        
+        setStore({ services_selected: newServiceSelected });
         getActions().modalSelectedKO();
       },
 
@@ -312,16 +314,19 @@ const getState = ({ getStore, getActions, setStore }) => {
       setAppointmentToModify: (value) => {
         setStore({ appointmentToModify: value });
       },
-        
+
       createCheckoutSession: async (body) => {
         const options = {
           body: body,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-          }
+          },
         };
-        const resp = await fetch(getStore().url + "/create_checkout_session", options);
+        const resp = await fetch(
+          getStore().url + "/create_checkout_session",
+          options
+        );
         const data = await resp.json();
         console.log(data);
         window.location.replace(data.response);
