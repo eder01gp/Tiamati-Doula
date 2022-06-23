@@ -207,7 +207,7 @@ export const Checkout = () => {
 {/* Login y pago */}
         {localStorage.getItem("ID") ?
         <div className="addServices mt-5"><h4>Pago</h4>
-          <button className="btn btn-light" onClick={()=>{goToCheckOut()}}>
+          <button className="payment-btn" onClick={()=>{goToCheckOut()}}>
                   Ir a página de pago
           </button>
         </div> :
@@ -215,12 +215,12 @@ export const Checkout = () => {
                   <div className="addServices mt-5"><h4>Datos personales</h4>
                     </div>
                     <div>
-                        <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <ul className="nav nav-pills-modified mb-3" id="pills-tab" role="tablist">
                           <li className="nav-item" role="presentation">
-                            <button className="nav-link active" id="pills-login-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Log in</button>
+                            <button className="nav-link-modified active" id="pills-login-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Log in</button>
                           </li>
                           <li className="nav-item" role="presentation">
-                            <button className="nav-link" id="pills-signup-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Crear cuenta</button>
+                            <button className="nav-link-modified" id="pills-signup-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Crear cuenta</button>
                           </li>
                         </ul>
                         <div className="tab-content" id="pills-tabContent">
