@@ -181,10 +181,60 @@ export const Profile_company = () => {
       <div className="DELETE-ACCOUNT-BUTTON mt-5">
         <button
           className="btn btn-secondary"
-          onClick={() => actions.deleteUser()}
+          data-bs-toggle="modal"
+          data-bs-target="#deleteUser"
         >
           Eliminar cuenta
         </button>
+      </div>
+
+      {/* <--Modal--> */}
+      <div
+        className="modal fade"
+        id="deleteUser"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabIndex="-1"
+        aria-labelledby="deleteUserLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="deleteUserLabel">
+                Eliminar cuenta
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              ¿Estás segura de que quieres eliminar tu cuenta?
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                data-bs-dismiss="modal"
+                onClick={() => {
+                  actions.deleteUser();
+                }}
+              >
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -8,11 +8,13 @@ export const User_appointment = () => {
   const [appointmentSelected, setAppointmentSelected] = useState({});
   const [appointmentIndex, setAppointmentIndex] = useState();
   const [appointmentData, setAppointmentData] = useState({});
+  const [serviceName, setServiceName] = useState({});
   let history = useHistory();
 
   useEffect(() => {
+    actions.verify();
     actions.getUserAppointments();
-    actions.getUserServiceHiredName();
+    actions.getUserServiceHired();
   }, []);
 
   const modifyUserAppointment = async () => {
@@ -38,11 +40,11 @@ export const User_appointment = () => {
                 key={index}
                 className="list-group-item-appointment list-group-item d-flex"
               >
-                {store.service_hired.map((y, position) => {
-                  if (x.service == y.id) {
+                {store.user_service_hired_id.map((y, position) => {
+                  if (x.service == y.service_id) {
                     return (
                       <p key={position} className="me-2">
-                        <b> {y.service_name + ":"}</b>
+                        <b> {y.name + ":"}</b>
                       </p>
                     );
                   }
@@ -70,20 +72,28 @@ export const User_appointment = () => {
                 </p>
                 <div className="btn-group ms-auto">
                   {/* <--Button trigger modal MODIFY--> */}
-                  <i
-                    type="button"
-                    className="fa-solid fa-pen-to-square mt-1 me-2"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modifyAppointment"
-                    onClick={() => {
-                      actions.setAppointmentToModify({
-                        ...appointmentToModify,
-                        date: x.date,
-                        time: x.time,
-                        id: x.id,
-                      });
-                    }}
-                  ></i>
+                  {store.user_service_hired_id.map((y, position) => {
+                    if (x.service == y.service_id) {
+                      return (
+                        <i
+                          key={position}
+                          type="button"
+                          className="fa-solid fa-pen-to-square mt-1 me-2"
+                          data-bs-toggle="modal"
+                          data-bs-target="#modifyAppointment"
+                          onClick={() => {
+                            actions.setAppointmentToModify({
+                              ...store.appointmentToModify,
+                              date: x.date,
+                              time: x.time,
+                              id: x.id,
+                              service: y.name,
+                            });
+                          }}
+                        ></i>
+                      );
+                    }
+                  })}
 
                   {/* <--Button trigger modal DELETE--> */}
                   <i
@@ -121,7 +131,7 @@ export const User_appointment = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="modifyAppointmentLabel">
-                  Eliminar cita
+                  Modificar cita
                 </h5>
                 <button
                   type="button"

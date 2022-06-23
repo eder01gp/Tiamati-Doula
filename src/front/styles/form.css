@@ -1,0 +1,23 @@
+.form-container-div {
+  width: 60%;
+  box-sizing: unset;
+  margin-top: 50px;
+  border: 10px solid black;
+  border-image-width: 1;
+  border-image-source: url(https://img.freepik.com/vector-gratis/fondo-textura-marmol-colores-pastel_56745-36.jpg);
+  border-image-slice: 23%;
+  border-image-repeat: round;
+  background: #f2e8f7;
+}
+
+.check-icon {
+  margin-top: 12px;
+}
+
+.question-form {
+  color: #8c6b94;
+}
+
+.h6-form {
+  font-family: "Anek Malayalam", sans-serif;
+}

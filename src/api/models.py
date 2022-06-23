@@ -149,13 +149,14 @@ class ServiceHired(db.Model):
     service = db.relationship(Service)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     users = db.relationship(Users)
-    sessions_left: db.Column(db.Integer)
+    sessions_left = db.Column(db.Integer)
 
     def serialize(self):
         return {
             "id": self.id,
             "service_id": self.service_id,
             "user_id": self.user_id,
+            "sessions_left": self. sessions_left,
         }
 
 class Document(db.Model): 
