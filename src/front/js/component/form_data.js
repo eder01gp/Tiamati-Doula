@@ -11,7 +11,6 @@ export const FormData = (props) => {
 
   useEffect(() => {
     actions.getUserInfo();
-    actions.verify();
   }, []);
 
   useEffect(() => {

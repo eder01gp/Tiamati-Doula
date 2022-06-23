@@ -1,7 +1,116 @@
+/* Fill button styling */
+.fill {
+  font-family: "Anek Malayalam", sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  padding: 13px 20px 13px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+  /*   visibility: hidden; */
+}
+
+#bio-button::after,
+#btn-get-doc::after {
+  background-color: #4cff6a42;
+}
+
+.fill::after {
+  content: "";
+  background-color: #ffe54c;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 7px;
+  left: 7px;
+  transition: 0.2s;
+  visibility: visible;
+}
+
+.fill:hover::after {
+  top: 0px;
+  left: 0px;
+}
+
+#btn-I-want-service::after {
+  background-color: #c5b4d9;
+  top: 0px;
+  left: -10px;
+}
+
+#btn-I-want-service:hover::after {
+  background-color: #c5b4d9;
+  top: 0px;
+  left: 0px;
+}
+
+#btn-faq::after,
+#btn-faq {
+  background-color: transparent;
+  white-space: nowrap;
+}
+
+#btn-faq:hover,
+#btn-faq {
+  border: 0px;
+  white-space: nowrap;
+}
+
+#btn-faq:hover {
+  text-decoration: underline;
+}
+/* End of Fill Button  */
+
+/* Slide button styling */
+.slide {
+  font-size: 18px;
+  font-weight: 200;
+  letter-spacing: 1px;
+  padding: 13px 30px 13px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.slide i {
+  opacity: 0;
+  font-size: 13px;
+  transition: 0.2s;
+  position: absolute;
+  right: 10px;
+  top: 21px;
+  transition: transform 1;
+}
+
+.slide div {
+  transition: transform 0.8s;
+}
+
+.slide:hover div {
+  transform: translateX(-6px);
+}
+
+.slide:hover i {
+  opacity: 1;
+  transform: translateX(-6px);
+}
+/* End of Slide Button  */
+
+h2 {
+  font-family: "Economica", sans-serif;
+  font-style: italic;
+  font-weight: 700;
+}
+
 #header-logo {
-  margin-top: 7%;
   height: 100px;
-  background-color: rgb(165, 250, 221);
+  background-color: rgb(165, 250, 221, 0);
   padding: 1%;
   text-align: center;
 }
@@ -12,16 +121,30 @@
 }
 
 #header-img {
-  width: 1320px;
-  height: 300px;
-  background-image: url(https://imagesvc.meredithcorp.io/v3/mm/image?url=https://static.onecms.io/wp-content/uploads/sites/24/2017/02/gettyimages-623380230-2000.jpg);
+  display: inline;
+  height: 350px;
+  background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1654589067/illustrations/Banner_dark_y73sds.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
+  z-index: 2;
+}
+
+#what-is-tiamati,
+#free-appointment,
+#documents,
+#services-title {
+  box-shadow: #5a4b9a 0px 0px 0px 2px, #c9ffe2 0px 0px 16px;
+}
+
+#what-is-tiamati-text #free-appointment-text {
+  padding: 2%;
+  font-family: "Anek Malayalam", sans-serif;
+  font-size: 200;
 }
 
 #what-is-tiamati {
-  background-color: rgb(255, 255, 175);
-  padding: 2%;
+  background-color: #c5b4d9;
 }
 
 .benefits-arrow {
@@ -32,73 +155,105 @@
 #free-appointment {
   padding: 4%;
   padding-top: 5%;
-  height: 500px;
-  background-color: rgb(255, 106, 106);
+  /* height: 500px; */
+  /* background-color: #FF5968; */
 }
 
 #first-appointment-text {
-  font-size: 80px;
-  margin-bottom: 2%;
+  /* font-size: 80px; */
 }
 
 #free-appointment h3 {
-  font-size: 40px;
+  /* font-size: 40px; */
   margin-top: 1%;
 }
 
-#bio {
-  height: 500px;
-  background-image: url(https://i.pinimg.com/736x/2d/47/e2/2d47e2d157e85ccdbc208c8568a74bb6.jpg);
-  background-position-y: 15%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding-top: 10%;
-  padding-left: 8%;
-}
-
-#hello-text {
-  background-color: white;
-  padding: 1%;
-  width: 200px;
-  height: 150px;
+#bio-hello-text {
+  /*   background-color: #f1b6068a; */
+  border: 0px;
   text-align: center;
 }
 
-#services {
-  padding: 2%;
-  padding-left: 10%;
-  background-color: rgb(241, 247, 210);
+#bio-picture {
+  height: 350px;
+  background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1654589077/illustrations/Portrait_yellow_purple_phkh10.jpg);
+  background-position-y: 15%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
+#bio-button {
+  font-size: 1rem;
+}
+
+/* #services {
+  background-color: rgba(7, 103, 247, 0.103);
+} */
+
 .service-card {
-  width: 250px;
-  margin-bottom: 2%;
-  margin-right: 2%;
+  width: 25rem;
+}
+
+.card,
+.card-img-top {
+  --bs-card-inner-border-radius: 0;
+  --bs-card-border-radius: 0;
+}
+
+.card,
+.card-footer {
+  background-color: transparent;
+}
+
+.row > .card {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.card {
+  border: 0;
+  -webkit-box-shadow: 8px 0px 0px 0px #8972b2, 0px 8px 0px 0px #ff5968,
+    -8px 0px 0px 0px #4e4e56, 0px 0px 0px 8px #f1b606,
+    5px 5px 6px 5px rgba(0, 0, 0, 0);
+  box-shadow: 8px 0px 0px 0px #8972b2, 0px 8px 0px 0px #ff5968,
+    -8px 0px 0px 0px #4e4e56, 0px 0px 0px 8px #f1b606,
+    5px 5px 6px 5px rgba(0, 0, 0, 0);
 }
 
 #documents {
-  padding: 2%;
-  padding-left: 25%;
-  background-color: rgb(128, 241, 213);
+  background-color: rgba(128, 241, 213, 0.068);
 }
 
 #documents-img {
-  margin-right: 2%;
-  width: 200px;
+  max-width: 100px;
+  height: 137px;
 }
 
-#documents-right {
-  margin-top: 3%;
+/* #documents-right {
 }
 
 #reviews {
-  padding: 2%;
-  background-color: rgb(38, 144, 177);
 }
 
 .carousel-item {
-  width: 800px;
-  margin-left: 17%;
+
+} */
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  background-color: #ff5968;
+  text-decoration: none;
+  outline: 0;
+  opacity: 0.2;
+}
+
+.carousel-control-next:hover,
+.carousel-control-prev:hover {
+  background-color: #ff5968;
+  text-decoration: none;
+  outline: 0;
+  opacity: 0.2;
+  transition: 0.6s;
 }
 
 .carousel-item p {
@@ -106,12 +261,20 @@
 }
 
 #faq-home {
-  height: 300px;
-  background-color: rgb(175, 187, 255);
-  padding: 2%;
+  /* height: 300px; */
+  /* background-color: rgb(175, 187, 255); */
   text-align: center;
 }
 
 #faq-home h2 {
   font-size: 80px;
+}
+
+.father-display-table {
+  display: table;
+}
+
+.child-display-cell {
+  display: table-cell;
+  vertical-align: middle;
 }

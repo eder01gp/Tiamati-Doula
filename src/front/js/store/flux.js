@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-        "https://3001-ederdon-tiamatidoula-f6gaira5d9k.ws-eu47.gitpod.io/" +
+        "https://3001-ederdon-tiamatidoula-1er83oozol2.ws-eu47.gitpod.io/" +
         "api",
       logged: null,
       token: null,
@@ -20,6 +20,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       appointment: [],
       appointmentToModify: [],
       user_service_hired_id: [],
+      documents: [],
+      services_selected: [],
     },
 
     actions: {
@@ -31,6 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getUserInfo: async () => {
         try {
+          await getActions().verify();
           const resp = await fetch(getStore().url + "/user_info", {
             method: "GET",
             headers: {
@@ -61,6 +64,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ logged: data.logged || false });
         } catch (e) {
           setStore({ logged: false });
+          getActions().logout();
         }
       },
 
@@ -81,21 +85,31 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      getDocuments: () => {},
+      getDocuments: async () => {
+        try {
+          const resp = await fetch(getStore().url + "/documents");
+          const data = await resp.json();
+
+          setStore({ documents: data.response });
+        } catch (e) {
+          console.log("Error getting documents");
+        }
+      },
 
       getServices: async () => {
         try {
           const resp = await fetch(getStore().url + "/services");
           const data = await resp.json();
-          console.log(data);
+
           setStore({ services: data.response });
         } catch (e) {
           console.log("Error getting services");
         }
       },
 
-      serviceSelectedQtyChange: (id, newQty, action) => {
+      servicesQtyChange: (id, newQty, action) => {
         const newService = getStore().services.map((x) => {
+          console.log("qty change service", x);
           if (x.service.id == id) {
             if (action == "up" && x.service.qty < 9) {
               newQty = parseInt(x.service.qty) + 1;
@@ -110,6 +124,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ services: newService });
         getActions().modalSelectedKO();
+        getActions().serviceSelectedUpdate();
       },
 
       modalSelectedKO: () => {
@@ -147,6 +162,28 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ services: newService });
       },
 
+      serviceSelectedUpdate: () => {
+        let newServiceSelected = {
+          client_reference_id: localStorage.getItem("ID"),
+          customer_email: localStorage.getItem("email"),
+        };
+
+        let new_line_items = [];
+        getStore().services.map((x) => {
+          if (x.service.selected) {
+            const newLineItem = {
+              price: x["service"]["stripe_price_id"],
+              quantity: x["service"]["qty"],
+            };
+            new_line_items.push(newLineItem);
+          }
+        });
+        newServiceSelected["line_items"] = new_line_items;
+
+        setStore({ services_selected: newServiceSelected });
+        getActions().modalSelectedKO();
+      },
+
       serviceSelected: (id) => {
         const newService = getStore().services.map((x) => {
           if (x.service.id == id) {
@@ -154,6 +191,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           } else return x;
         });
         setStore({ services: newService });
+        getActions().serviceSelectedUpdate();
       },
 
       serviceSelectedKO: (id) => {
@@ -163,67 +201,16 @@ const getState = ({ getStore, getActions, setStore }) => {
           } else return x;
         });
         setStore({ services: newService });
+        getActions().serviceSelectedUpdate();
       },
-
-      serviceSelectedQtyChange: (id, newQty, action) => {
-        const newService = getStore().services.map((x) => {
-          if (x.id == id) {
-            if (action == "up" && x.qty < 9) {
-              newQty = parseInt(x.qty) + 1;
-              return { ...x, qty: newQty };
-            } else if (action == "down" && x.qty > 1) {
-              newQty = parseInt(x.qty) - 1;
-              return { ...x, qty: newQty };
-            } else if (newQty != 0 && newQty > 0 && newQty < 10) {
-              return { ...x, qty: newQty };
-            } else return x;
-          } else return x;
-        });
-        setStore({ services: newService });
-        getActions().modalSelectedKO();
-      },
-
-      modalSelectedKO: () => {
-        const newServiceModals = getStore().services.map((x) => {
-          if (x.qty == 1) {
-            return { ...x, modalSelectedKO: "modal" };
-          } else return { ...x, modalSelectedKO: "" };
-        });
-        setStore({ services: newServiceModals });
-      },
-
-      serviceSelectedError: (id) => {
-        const newService = getStore().services.map((x) => {
-          if (x.id == id && x.modalSelectedKO != "modal") {
-            return { ...x, qtyError: "La cantidad debe estar entre 0 y 9" };
-          } else return x;
-        });
-        setStore({ services: newService });
-      },
-
-      serviceSelectedErrorKO: (id) => {
-        const newService = getStore().services.map((x) => {
-          return { ...x, qtyError: "" };
-        });
-        setStore({ services: newService });
-      },
-
-      serviceSelected: (id) => {
-        const newService = getStore().services.map((x) => {
-          if (x.id == id) {
-            return { ...x, selected: true };
-          } else return x;
-        });
-        setStore({ services: newService });
-      },
-
-      serviceSelectedKO: (id) => {
-        const newService = getStore().services.map((x) => {
-          if (x.id == id) {
-            return { ...x, selected: false };
-          } else return x;
-        });
-        setStore({ services: newService });
+      uploadCloud: async (body) => {
+        const options = {
+          body,
+          method: "POST",
+        };
+        const resp = await fetch(getStore().url + "/upload", options);
+        const data = await resp.json();
+        return data.document_created_url;
       },
 
       getUserFaq: async () => {
@@ -324,7 +311,25 @@ const getState = ({ getStore, getActions, setStore }) => {
       setAppointmentToModify: (value) => {
         setStore({ appointmentToModify: value });
       },
+
+      createCheckoutSession: async (body) => {
+        const options = {
+          body: body,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const resp = await fetch(
+          getStore().url + "/create_checkout_session",
+          options
+        );
+        const data = await resp.json();
+        console.log(data);
+        window.location.replace(data.response);
+      },
     },
   };
 };
+
 export default getState;

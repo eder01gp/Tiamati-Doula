@@ -1,10 +1,7 @@
-
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/faq.css";
-import { Navbar } from "../component/navbar";
 import { Qa } from "../component/qa";
-import { Link } from "react-router-dom";
 
 export const Faq = () => {
   const { store, actions } = useContext(Context);
@@ -19,7 +16,7 @@ export const Faq = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container mb-5">
       <h1 id="faq-title" className="text-center">
         Preguntas Frecuentes
       </h1>

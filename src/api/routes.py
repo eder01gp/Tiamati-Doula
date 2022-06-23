@@ -1,14 +1,20 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq, Appointment, CalendarAvailability
+from flask import Flask, request, jsonify, url_for, Blueprint, redirect
+from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq, BirthplanForm, Appointment, CalendarAvailability
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
+
 import cloudinary
 import cloudinary.uploader
+import stripe
+import json
+import os
 
 api = Blueprint('api', __name__)  
+
+stripe.api_key = os.getenv('STRIPE_API_KEY')
 
 @api.route('/protected', methods=['GET'])
 @jwt_required()
@@ -36,7 +42,6 @@ def save_signup_user():
         else: return jsonify({"msg": "Error, el email ya existe como usuaria"}), 400   
     else: return jsonify({"msg": "Error, comprueba email y contraseña"}), 400       
      
-
 @api.route('/form', methods=['PUT']) 
 @jwt_required()
 def save_or_update_user_form():
@@ -135,15 +140,60 @@ def delete_user():
     db.session.commit()
     return jsonify({"msg": "User deleted, ok"}), 200     
 
+#upload
 
 @api.route('/upload', methods=['POST'])
-def handle_upload():
-    result = cloudinary.uploader.upload(request.files["document"])
-    document_url = result["secure_url"]
-    document_name = request.documentName["documentName"]
+def upload():
+    try:
+        result = cloudinary.uploader.upload(request.files["document"])
+    except:
+        return jsonify({"msg":"Failed to upload to Cloudinary"}), 400
+    document_url = result["secure_url"]    
+    return jsonify({"document_created_url": document_url}), 200
 
-    return jsonify("document correctly upload"), 200
+        
+@api.route('/document', methods=['POST'])
+def new_document():
+    document_url = request.json.get("document_url") 
+    document_name = request.json.get("document_name") 
+    document_description =request.json.get("document_description")
+    document_cover_url =request.json.get("document_cover_url")
+    
+    document_created = Document(
+        document_url = document_url,
+        document_name = document_name,
+        document_description = document_description,
+        document_cover_url = document_cover_url
+        )
+    db.session.add(document_created)
+    db.session.commit()
+    return jsonify({"document_created_id": document_created.id}), 200
 
+@api.route('/document', methods=['PUT'])
+def update_document():
+    document_id = request.json.get("id")
+    document_url = request.json.get("document_url") 
+    document_name = request.json.get("document_name") 
+    document_description = request.json.get("document_description")
+    document_cover_url = request.json.get("document_cover_url")
+
+    document = Document.query.get(document_id)
+    if document:
+        document.document_url = document_url
+        document.document_name = document_name
+        document.document_description = document_description
+        document.document_cover_url = document_cover_url
+        db.session.commit()
+        return jsonify({'msg': "Document correctly updated"}), 200
+    else: 
+        return jsonify({'msg': "Error updating document. Document id not found"}), 400
+
+  
+@api.route('/documents', methods=['GET'])
+def documents():
+    documents = Document.query.all()
+    documents_serialized = list(map(lambda item: item.serialize(), documents))
+    return jsonify({"response":documents_serialized}), 200  
   
 #services
 
@@ -157,30 +207,21 @@ def services():
             #get rols
             rols = ServiceRols.query.filter_by(service_id=service["id"])
             rols_serialized = list(map(lambda item: item.serialize(), rols))
-            service_rols = []
-            for rol in rols_serialized:
-                rol_name = UserRol.query.get(rol["rol"])
-                service_rols.append(rol_name)
-            #get documents
-            documents = ServiceDocuments.query.filter_by(service_id=service["id"])
-            documents_serialized = list(map(lambda item: item.serialize(), documents))
             services_connected = ServiceToService.query.filter_by(service_id_father=service["id"])
             services_connected_serialized = list(map(lambda item: item.serialize(), services_connected))
             service_complete = {
                 "service_id": service["id"],
                 "service": service,
                 "rols": rols_serialized,
-                #"rols_names": service_rols,
-                "documents": documents_serialized,
                 "services_connected": services_connected_serialized,
             }
             service_response.append(service_complete)
 
         return jsonify({"response":service_response}), 200    
     else: 
-        return jsonify({"No services in database"}), 400
-      
- #FAQ
+        return jsonify({"response":services,"msg":"There are no services in database"}), 200
+    
+#FAQ
     
 @api.route('/user_faq', methods=['GET'])
 def get_user_faq():
@@ -195,7 +236,119 @@ def get_business_faq():
     return jsonify({"response": business_faq_serialized}), 200
 
 
-#CALENDAR
+#Birthplan form
+
+@api.route('/birthplan_form', methods=['POST'])
+@jwt_required()
+def new_birthplan_info():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    if user:
+        body_id = request.json.get("id")
+        body_full_name= request.json.get("full_name")
+        body_user_id = request.json.get("user_id")
+        body_age = request.json.get("age")
+        body_phone = request.json.get("phone")
+        body_pregnancy_num = request.json.get("pregnancy_num")
+        body_birth_num = request.json.get("birth_num")
+        body_interruption_num = request.json.get("interruption_num")
+        body_birth_date = request.json.get("birth_date")
+        birthplan_info_saved = BirthplanForm(id = body_id, full_name=body_full_name, user_id=body_user_id, age=body_age, phone=body_phone, pregnancy_num=body_pregnancy_num, birth_num=body_birth_num, interruption_num=body_interruption_num, birth_date=body_birth_date)
+        birthplan_info_saved_serialized = birthplan_info_saved.serialize()
+        db.session.add(birthplan_info_saved)
+        db.session.commit()
+        return jsonify({"saved_info": birthplan_info_saved_serialized})
+    
+
+@api.route('/create_checkout_session', methods=['POST'])
+def create_checkout_session():
+    session_info = request.get_json()
+
+    try:
+        line_items=session_info["line_items"]
+    except:
+        return jsonify({"response": "/"}), 400
+        
+    try:
+        client_reference_id = session_info["client_reference_id"]
+    except:
+        client_reference_id = None
+
+    try: 
+        customer_email = session_info["customer_email"]
+    except:
+        customer_email = None
+
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            line_items=session_info["line_items"],
+            client_reference_id=client_reference_id,
+            customer_email=customer_email,
+            mode='payment',
+            success_url=os.getEnv('DOMAIN') + "/redirect"+ '?success=true',
+            cancel_url=os.getEnv('DOMAIN') + '/redirect'+ '?canceled=true',
+        )
+    except Exception as e:
+        return str(e)
+
+    return jsonify({"response": checkout_session.url}), 303
+
+    
+@api.route('/webhook', methods=['POST'])
+def webhook():
+    event = None
+    payload = request.data
+    sig_header = request.headers['STRIPE_SIGNATURE']
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, os.getEnv('ENDPOINT_SECRET')
+        )
+    except ValueError as e:
+        # Invalid payload
+        raise e
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        raise e
+
+    # Handle the event  
+    if event['type'] == 'payment_intent.succeeded':
+        payment_intent = event['data']['object']
+
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        fulfill_order(session)
+
+    else:
+      print('Unhandled event type {}'.format(event['type']))
+
+    return jsonify(success=True)
+
+def fulfill_order(session):
+    print(session)   
+    try:
+        if session["status"]=="complete":
+            line_items = stripe.checkout.Session.list_line_items(session["id"])["data"]
+            print(line_items)
+    except:
+        return jsonify({"response": "Checkout status not complete or without line items"}), 400
+
+    for service_hired in line_items:
+        try:
+            service = Service.query.filter_by(stripe_product_id=service_hired["price"]["product"]).first()
+            print(service)
+        except:
+            return jsonify({"response": "no service found for"+service_hired["description"]}), 400
+
+        new_service_hired = ServiceHired(
+            user_id = session["client_reference_id"],
+            service_id = service.id,
+            sessions_left = service.session_qty,
+        )
+        db.session.add(new_service_hired)
+        db.session.commit()
+        print("new service created")
+
 
 @api.route('/available_datetime', methods=['GET'])
 @jwt_required()

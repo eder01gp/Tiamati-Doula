@@ -10,8 +10,8 @@ export const Profile_company = () => {
   const [showPersonalInfo, setShowPersonalInfo] = useState(false);
 
   useEffect(() => {
-    actions.getUserInfo();
     actions.verify();
+    actions.getUserInfo();
   }, []);
 
   const changeData = async () => {
