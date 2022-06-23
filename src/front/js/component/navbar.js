@@ -28,23 +28,23 @@ export const Navbar = () => {
           aria-labelledby="dropDownMenu"
         >
           <Link to="/">
-            <li className="px-2">Inicio</li>
+            <li key="01" className="px-2">Inicio</li>
           </Link>
           <Link to="/bio">
-            <li className="px-2">Bio</li>
+            <li key="02" className="px-2">Bio</li>
           </Link>
           <Link to="/services">
-            <li className="px-2">Servicios</li>
+            <li key="03" className="px-2">Servicios</li>
           </Link>
           <Link to="/documents">
-            <li className="px-2">Documentos</li>
+            <li key="04" className="px-2">Documentos</li>
           </Link>
           <Link to="/faq">
-            <li className="px-2">FAQ</li>
+            <li key="05" className="px-2">FAQ</li>
           </Link>
           {store.service_id1_hired ? 
           <Link to="/birthplan">
-            <li className="px-2">Plan de parto interactivo</li>
+            <li key="06" className="px-2">Plan de parto interactivo</li>
           </Link> : null
           }
 
@@ -73,7 +73,7 @@ export const Navbar = () => {
               {localStorage.getItem("rol") == 1 ? (
                 <div>
                   <Link to="/profile_user">
-                    <li className="ps-2">
+                    <li key="07" className="ps-2">
                         Mi Perfil
                     </li>
                   </Link>
@@ -81,7 +81,7 @@ export const Navbar = () => {
               ) : (
                 <div>
                   <Link to="/profile_company">
-                    <li className="ps-2">
+                    <li key="08" className="ps-2">
                         Mi Perfil
                     </li>
                   </Link>
@@ -89,12 +89,12 @@ export const Navbar = () => {
               )}
               <div>
                   <Link to="/checkout">
-                    <li className="ps-2">
+                    <li key="09" className="ps-2">
                         Carro de la compra
                     </li>
                   </Link>
               </div>
-              <li className="ps-2"> 
+              <li key="10" className="ps-2"> 
                 <a className="navbar-link-underline"
                   onClick={() => {
                     actions.logout();
@@ -110,12 +110,12 @@ export const Navbar = () => {
               aria-labelledby="dropDownMenu"
             >
               <Link to="/loginPage">
-                <li className="ps-2">
+                <li key="11" className="ps-2">
                   Iniciar Sesión
                 </li>
               </Link>
               <Link to="/signupPage">
-                <li className="ps-2">
+                <li key="12" className="ps-2">
                   Registrarse
                 </li>
               </Link>
