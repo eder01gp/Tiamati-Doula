@@ -72,10 +72,10 @@ export const Profile_user = () => {
           {/* INPUTS BUTTONS */}
           {/* Save & Close Email edit */}
           {inputEmail ? (
-            <div className="buttons mt-2 mb-5">
+            <div className=" mt-2 mb-5">
               <button
-                className="save-button btn btn-primary btn-sm rounded text-secondary"
                 id="btn-left-form"
+                className="fill"
                 type="submit"
                 onClick={() => {
                   changeEmail();
@@ -87,8 +87,8 @@ export const Profile_user = () => {
               </button>
 
               <button
-                className="close-button btn btn-sm btn-secondary mx-3 rounded"
                 id="btn-right-form"
+                className="fill mx-3"
                 onClick={() => {
                   setInputEmail(false);
                   setUserInfo(true);
@@ -134,7 +134,7 @@ export const Profile_user = () => {
                         Servicio
                       </th>
                       <th id="column-2-table-services" scope="col">
-                        Cita Reservada
+                        Citas Reservadas
                       </th>
                       <th id="column-3-table-services" scope="col">
                         Sesiones disponibles
@@ -155,7 +155,8 @@ export const Profile_user = () => {
                                     .reverse()
                                     .join("/") +
                                   " - " +
-                                  appointment.time
+                                  appointment.time +
+                                  " "
                                 );
                               }
                             })}
@@ -163,7 +164,8 @@ export const Profile_user = () => {
                           <td className="text-center">
                             {x.service_id == 1 ? (
                               <button
-                                className="btn-plan"
+                                id="btn-plan"
+                                className="fill"
                                 onClick={() => history.push("/birthplan")}
                               >
                                 Acceder al plan
@@ -173,16 +175,18 @@ export const Profile_user = () => {
                                 <p className="m-0">
                                   {x.sessions_left}{" "}
                                   <button
-                                    className="btn-calendar btn btn-sm btn-secondary ms-4"
+                                    id="btn-calendar-profile"
+                                    className="btn-calendar ms-4"
                                     data-bs-toggle="tooltip"
                                     data-bs-placement="top"
                                     title="Reservar cita"
                                     onClick={() => history.push("/appointment")}
                                   >
-                                    <i className="fa-solid fa-calendar-check"></i>
+                                    <i className="icon-calendar-profile fa-solid fa-calendar-check"></i>
                                   </button>
                                   <button
-                                    className="btn-calendar btn btn-sm btn-secondary ms-2"
+                                    id="btn-calendar-profile"
+                                    className="btn-calendar ms-2"
                                     data-bs-toggle="tooltip"
                                     data-bs-placement="top"
                                     title="Modificar o cancelar cita"
@@ -190,7 +194,7 @@ export const Profile_user = () => {
                                       history.push("/user_appointment")
                                     }
                                   >
-                                    <i className="fa-solid fa-calendar-xmark"></i>
+                                    <i className="icon-calendar-profile fa-solid fa-calendar-xmark"></i>
                                   </button>
                                 </p>
                               </div>
@@ -220,8 +224,8 @@ export const Profile_user = () => {
                 closeBtn={
                   <button
                     type="button"
-                    id="btn-right-form"
-                    className="float-end"
+                    id="btn-right-form-data"
+                    className="fill float-end"
                     onClick={() => {
                       setShowForm(false);
                       setShowServices(true);

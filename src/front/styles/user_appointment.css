@@ -19,3 +19,102 @@
 .btn-group {
   float: inline-end;
 }
+
+/* Fill button styling */
+.fill {
+  font-family: "Anek Malayalam", sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  padding: 13px 20px 13px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+#btn-right-form {
+  padding-inline: 5px;
+  padding: 3px;
+  font-size: 14px;
+}
+#btn-right-form::after {
+  padding-inline: 5px;
+  padding: 3px;
+  font-size: 14px;
+  background: rgb(157, 110, 157);
+  top: -2px;
+  left: -2px;
+}
+
+#btn-left-form {
+  padding-inline: 5px;
+  padding: 3px;
+  font-size: 14px;
+}
+#btn-left-form::after {
+  padding-inline: 5px;
+  padding: 3px;
+  font-size: 14px;
+  background: #aaffff;
+  top: -2px;
+  left: -2px;
+}
+
+#btn-plan {
+  background-color: #c6f8ff;
+  padding-inline: 5px;
+  padding: 3px;
+  font-size: 14px;
+}
+
+#btn-right-form-data {
+  background-color: aquamarine;
+  padding-inline: 5px;
+  padding: 3px;
+  font-size: 14px;
+}
+
+.pencil-edit-date {
+  color: #c17ecd;
+}
+
+.trash-delete-date {
+  color: #9c27b0;
+}
+
+.fill::after {
+  content: "";
+  background-color: #ffe54c;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 7px;
+  left: 7px;
+  transition: 0.2s;
+  visibility: visible;
+}
+
+.fill:hover::after {
+  top: 0px;
+  left: 0px;
+}
+/* End of Fill Button  */
+
+#modal-button-right,
+#modal-button-left {
+  font-size: 14px;
+  padding: 5px;
+}
+
+#modal-button-right {
+  background-color: #ffff00ba;
+  border: 1px solid black;
+}
+
+#modal-button-left {
+  border: 1px solid black;
+  background-color: #ddb6eb;
+}

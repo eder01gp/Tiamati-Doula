@@ -86,7 +86,8 @@ export const Appointment = () => {
               </div>
               <div className="datetime-footer">
                 <button
-                  className="btn-appointment btn btn-sm me-2 float-end"
+                  id="btn-appointment"
+                  className="fill me-2 float-end"
                   onClick={() => {
                     actions.setShowDate(true);
                     setShowService(false);
@@ -209,7 +210,8 @@ export const Appointment = () => {
                 ></i>
 
                 <button
-                  className="btn-appointment btn btn-sm me-2 float-end"
+                  id="btn-appointment"
+                  className="fill me-2 float-end"
                   onClick={() => {
                     saveUserAppointment();
                     setShowAppointment(false);
@@ -236,7 +238,8 @@ export const Appointment = () => {
               </div>
               <div>
                 <button
-                  className="btn-appointment btn btn-sm float-end me-3"
+                  id="btn-appointment"
+                  className="fill btn-appointment float-end me-3"
                   onClick={() => history.push("/user_appointment")}
                 >
                   Ver mis citas
