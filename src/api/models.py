@@ -23,7 +23,10 @@ class Users(db.Model):
     rol = db.Column(db.Integer, db.ForeignKey('user_rol.id'))
     user_rol = db.relationship(UserRol)
     is_active = db.Column(db.Boolean, default= True)
+    birthplan  = db.relationship('Birthplan', backref='users', lazy=True)
     birthplan_form  = db.relationship('BirthplanForm', backref='users', lazy=True)
+    birthplan_comment  = db.relationship('Birthplan_comment', backref='users', lazy=True)
+    
     
     def __repr__(self):
         return "User: "+self.email
@@ -235,31 +238,6 @@ class BusinessFaq(db.Model):
             "answer": self.answer
         }
 
-
-class BirthplanForm(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    full_name = db.Column(db.String(50), nullable=False)
-    age = db.Column(db.Integer, nullable=False)
-    phone = db.Column(db.Integer, nullable=False)
-    pregnancy_num = db.Column(db.Integer)
-    birth_num = db.Column(db.Integer)
-    interruption_num = db.Column(db.Integer)
-    birth_date = db.Column(db.Date, nullable=False)
-
-    def serialize(self):
-        return{
-            "id": self.id,
-            "user_id": self.user_id,
-            "full_name": self.full_name,
-            "age": self.age,
-            "phone": self.phone,
-            "pregnancy_num": self.pregnancy_num,
-            "birth_num": self.birth_num,
-            "interruption_num": self.interruption_num,
-            "birth_date": self.birth_date
-        }
-
 class Appointment(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
     service = db.Column(db.Integer, db.ForeignKey('service.id'))
@@ -293,3 +271,119 @@ class CalendarAvailability(db.Model):
             "is_available": self.is_available,
         }
 
+#Birthplan
+
+class Birthplan(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    birthplan_video = db.relationship('Birthplan_video', backref='birthplan', lazy=True)
+    birthplan_section = db.relationship('Birthplan_section', backref='birthplan', lazy=True)
+    birthplan_form = db.relationship('Birthplan_form', backref='birthplan', lazy=True)
+
+    def serialize(self):
+        return{
+            "id": self.id,
+            "user_id": self.user_id,
+           " birthplan_video": self.birthplan_video,
+            "birthplan_section": self.birthplan_section,
+            "birthplan_form": self.birthplan_form
+        }
+
+class BirthplanForm(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    birthplan = db.Column(db.Integer, db.ForeignKey('birthplan.id'), nullable=False)
+    full_name = db.Column(db.String(50), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    phone = db.Column(db.Integer, nullable=False)
+    pregnancy_num = db.Column(db.Integer)
+    birth_num = db.Column(db.Integer)
+    interruption_num = db.Column(db.Integer)
+    birth_date = db.Column(db.Date, nullable=False)
+
+    def serialize(self):
+        return{
+            "id": self.id,
+            "user_id": self.user_id,
+            "birthplan": self.birthplan,
+            "full_name": self.full_name,
+            "age": self.age,
+            "phone": self.phone,
+            "pregnancy_num": self.pregnancy_num,
+            "birth_num": self.birth_num,
+            "interruption_num": self.interruption_num,
+            "birth_date": self.birth_date
+        }
+
+class Birthplan_video(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    birthplan = db.Column(db.Integer, db.ForeignKey('birthplan.id'), nullable=False)
+    url = db.Column(db.String(100), nullable=False)
+    birthplan_section = db.relationship('Birthplan_section', backref='birthplan_video', lazy=True)
+
+    def serialize(self):
+        return{
+            "id": self.id,
+            "birthplan": self.birthplan,
+            "url": self.url,
+            "birthplan_section": self.birthplan_section
+        }
+
+class Birthplan_section(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    birthplan = db.Column(db.Integer, db.ForeignKey('birthplan.id'), nullable=False)
+    birthplan_video_id = db.Column(db.Integer, db.ForeignKey('birthplan_video.id'), nullable=False)
+    title = db.Column(db.String(100))
+    subtitle = db.Column(db.String(100))
+    birthplan_answer_id = db.relationship('Birthplan_answer', backref='birthplan_section', lazy=True)
+    birthplan_comment_id = db.relationship('Birthplan_comment', backref='birthplan_section', lazy=True)
+
+    def serialize(self):
+        return{
+            "id": self.id,
+            "birthplan": self.birthplan,
+            "birthplan_video_id": self.birthplan_video_id,
+            "title": self.title,
+            "subtitle": self.subtitle,
+            "birthplan_answer_id": self.birthplan_answer_id,
+            "birthplan_comment_id": self.birthplan_comment_id
+        }
+
+class Birthplan_answer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    birthplan = db.Column(db.Integer, db.ForeignKey('birthplan.id'), nullable=False)
+    birthplan_section_id = db.Column(db.Integer, db.ForeignKey('birthplan_section.id'), nullable=False)
+    answer_type = db.Column(db.String(50), nullable=False)
+    answer_text = db.Column(db.String(300), nullable=False)
+    checked = db.Column(db.Boolean, nullable=False)
+    input_text = db.Column(db.String(300))
+    multiselect = db.Column(db.Boolean, nullable=False)
+
+    def serialize(self):
+        return{
+            "id": self.id,
+            "birthplan": self.birthplan,
+            "birthplan_section_id": self.birthplan_section_id,
+            "answer_type": self.answer_type,
+            "answer_text": self.answer_text,
+            "checked": self.checked,
+            "input_text": self.input_text,
+            "multiselect": self.multiselect
+        }
+
+class Birthplan_comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    birthplan = db.Column(db.Integer, db.ForeignKey('birthplan.id'), nullable=False)
+    birthplan_section_id = db.Column(db.Integer, db.ForeignKey('birthplan_section.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    comment_text = db.Column(db.String(600), nullable=False)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "birthplan": self.birthplan,
+            "birthplan_section_id": self.birthplan_section_id,
+            "user_id" : self.user_id,
+            "comment_text": self.comment_text
+        }
+      
