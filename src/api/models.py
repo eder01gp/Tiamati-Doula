@@ -276,9 +276,8 @@ class CalendarAvailability(db.Model):
 class Birthplan(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    birthplan_video = db.relationship('Birthplan_video', backref='birthplan', lazy=True)
-    birthplan_section = db.relationship('Birthplan_section', backref='birthplan', lazy=True)
-    birthplan_form = db.relationship('Birthplan_form', backref='birthplan', lazy=True)
+    birthplan_section = db.relationship('Birthplan_section', backref='section_birthplan', lazy=True)
+    birthplan_form = db.relationship('BirthplanForm', backref='form_birthplan', lazy=True)
 
     def serialize(self):
         return{
@@ -317,7 +316,6 @@ class BirthplanForm(db.Model):
 
 class Birthplan_video(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    birthplan = db.Column(db.Integer, db.ForeignKey('birthplan.id'), nullable=False)
     url = db.Column(db.String(100), nullable=False)
     birthplan_section = db.relationship('Birthplan_section', backref='birthplan_video', lazy=True)
 
@@ -335,7 +333,7 @@ class Birthplan_section(db.Model):
     birthplan_video_id = db.Column(db.Integer, db.ForeignKey('birthplan_video.id'), nullable=False)
     title = db.Column(db.String(100))
     subtitle = db.Column(db.String(100))
-    birthplan_answer_id = db.relationship('Birthplan_answer', backref='birthplan_section', lazy=True)
+    birthplan_answer_id = db.relationship('Birthplan_answer', backref='birthplan_section_answer', lazy=True)
     birthplan_comment_id = db.relationship('Birthplan_comment', backref='birthplan_section', lazy=True)
 
     def serialize(self):
