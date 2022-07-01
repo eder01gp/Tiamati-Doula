@@ -46,7 +46,7 @@ export const Home = () => {
   }, []);
 
   return (
-    <div className="div-home container">
+    <div id="body-home" className="div-home container">
       {/* header */}
       <div id="header" className="row">
         <div
@@ -57,49 +57,22 @@ export const Home = () => {
 
       {/* What is Tiamati */}
       <div className="row py-3">
-        <div id="what-is-tiamati" className="col-sm text-center p-2 m-2">
+        <div id="what-is-tiamati" className="col-sm text-center p-2 m-2 border-purple-green">
           <h2>¿Necesitas una Doula?</h2>
-          <p id="what-is-tiamati-text" className="p-2">
+          <p className="p-2">
             Un servicio de acompañamiento a la mujer embarazada y a la pareja.
             Un apoyo incondicional durante todo el embarazo, basado en
             evidencias científicas, para empoderar a la mujer y potenciar un
             embarazo tranquilo y placentero.
           </p>
-          {/*           <h4>La ciencia nos dice:</h4>
-          <div id="benefits" className="row">
-            <div id="benefits-left" className="col-6">
-              <img
-                className="benefits-arrow"
-                src="https://th.bing.com/th/id/R.c18ea882d9fb63866c0f77151fa013e9?rik=%2bxBr2Nyu6%2fc6hg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fdownload_155466.png&ehk=ZFAJlKPtcm%2bDZ%2faDLx7oenbSXUAc1P0%2bUSDrahxcRmE%3d&risl=&pid=ImgRaw&r=0"
-                alt="arrow"
-              />
-              <div className="benefits-text">
-                <h6>28% menos de cesáreas</h6>
-                <h6>31% menos uso de pitocin</h6>
-                <h6>9% menos uso de medicacion</h6>
-                <h6>Partos 40 minutos más cortos</h6>
-              </div>
-            </div>
-            <div id="benefits-right" className="col-6">
-              <img
-                className="benefits-arrow"
-                src="https://th.bing.com/th/id/R.faaa5a285136fd4a98d24365beaa3bf7?rik=UveaSIN8Fxpktg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fdownload_424749.png&ehk=0VfQbRVcZNL1ViSOrCahJNW75NNRte2lhP2O%2b6xlirQ%3d&risl=&pid=ImgRaw&r=0"
-                alt="arrow"
-              />
-              <div className="benefits-text">
-                <h6>34% experiencias más positivas</h6>
-                <h6>Mejor APGAR en el bebé</h6>
-              </div>
-            </div>
-          </div> */}
         </div>
         {/* free appointment */}
-        <div id="free-appointment" className="col-sm text-center p-2 m-2">
+        <div className="col-sm text-center p-2 m-2 border-purple-green">
           <h2>¿Nos conocemos?</h2>
           <div>
-            <p id="free-appointment-text">Sin ningún compromiso</p>
+            <p>Sin ningún compromiso</p>
             <Link to="/appointment">
-              <button className="fill">Pide tu cita</button>
+              <button className="btn-fill">Pide tu cita</button>
             </Link>
           </div>
         </div>
@@ -108,31 +81,30 @@ export const Home = () => {
       <div id="bio" className="row py-3 d-flex align-items-center">
         <div
           id="bio-hello-text"
-          className="col mx-3 d-flex flex-column justify-content-around"
+          className="col d-flex flex-column justify-content-around"
         >
           <div className="mt-2">
             <h2>
-              ¡Hola!
+{/*               ¡Hola!
               <br />
-              ¡Soy Margarida!
+              ¡Soy Margarida! */}
             </h2>
           </div>
           <div className="">
             <Link to="/bio">
-              <button id="bio-button" className="fill m-3">
+{/*               <button className="btn-fill m-3">
                 Esta es mi historia
-              </button>
+              </button> */}
             </Link>
           </div>
         </div>
-        <div id="bio-picture" className="col-4"></div>
+        {/* <div id="bio-picture" className="col-4"></div> */}
       </div>
       {/* services */}
       <div className="row py-3">
         <div className="father-display-table">
           <div
-            id="services-title"
-            className="child-display-cell text-center m-4"
+            className="child-display-cell text-center m-4 border-purple-green"
           >
             <h2>Estos son los servicios que ofrezco:</h2>
           </div>
@@ -141,7 +113,7 @@ export const Home = () => {
       <div id="services" className="row d-flex justify-content-around py-3">
         {store.services.map((serv) => {
           return (
-            <div key={serv.id} className="card service-card my-4 mx-2">
+            <div key={serv.id} className="card service-card my-4 mx-2 border-multicolor">
               <img
                 className="card-img-top"
                 src={serv.service.service_cover_url}
@@ -153,14 +125,14 @@ export const Home = () => {
               </div>
               <div className="d-flex justify-content-between">
                 <Link to={"/services/#" + serv.service_id}>
-                  <button class="slide">
+                  <button class="btn-slide">
                     <div>Leer más</div>
                     <i class="icon-arrow-right"></i>
                   </button>
                 </Link>
                 <Link to="/checkout">
                   <button
-                    className="fill"
+                    className="btn-fill btn-fill-purple btn-fill-left "
                     id="btn-I-want-service"
                     onClick={() => {
                       actions.serviceSelected(serv.service_id);
@@ -278,7 +250,7 @@ export const Home = () => {
       </div>
       <div className="row mx-2">
         {/* documents */}
-        <div id="documents" className="d-flex justify-content-center">
+        <div id="documents" className="d-flex justify-content-center border-purple-green">
           <img
             id="documents-img"
             className="m-4"
@@ -292,7 +264,7 @@ export const Home = () => {
             >
               <p>Regístrate y accede a tu guía para embarazadas</p>
               <Link to="/loginPage">
-                <button className="fill ms-5" id="btn-get-doc">
+                <button className="btn-fill btn-fill-green ms-5" id="">
                   Obtener
                 </button>
               </Link>
@@ -304,11 +276,11 @@ export const Home = () => {
       <div id="faq-home" className="row my-5">
         <img id="" src="" alt="" />
         <div id="faq-home-right">
-          <h3>¿Tienes dudas?</h3>
+          <h2>¿Tienes dudas?</h2>
           <Link to="/faq">
             <button id="btn-faq">
               {" "}
-              <h2>FAQ</h2>{" "}
+              <h1>FAQ</h1>{" "}
             </button>
           </Link>
         </div>

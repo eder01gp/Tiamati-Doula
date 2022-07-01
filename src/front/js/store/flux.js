@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-      "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu47.gitpod.io/" +
+      "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu51.gitpod.io/" +
         "api",
       logged: null,
       token: null,
@@ -205,6 +205,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ services: newService });
         getActions().serviceSelectedUpdate();
       },
+
       uploadCloud: async (body) => {
         const options = {
           body,
