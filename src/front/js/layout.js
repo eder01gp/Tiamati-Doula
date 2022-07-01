@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { LogoHeader } from "./component/logoHeader";
 
 import { Home } from "./pages/home";
 import { LoginPage } from "./pages/loginPage";
@@ -21,7 +22,8 @@ import { Redirect } from "./pages/redirect";
 import { User_appointment } from "./pages/user_appointment";
 import { Modify_appointment } from "./pages/modify_appointment";
 import { Appointment } from "./pages/appointment";
-import { LogoHeader } from "./component/logoHeader";
+import { Stylesheet } from "./pages/stylesheet";
+
 
 import injectContext from "./store/appContext";
 
@@ -92,6 +94,9 @@ const Layout = () => {
               </Route>
               <Route exact path="/modify_appointment">
                 <Modify_appointment />
+              </Route>
+              <Route exact path="/stylesheet">
+                <Stylesheet />
               </Route>
               <Route>
                 <h1>Not found!</h1>
