@@ -1,10 +1,12 @@
-import React from "react";
-import { Context } from "../store/appContext";
+import React, { useEffect } from "react";
 import { FormData } from "../component/form_data";
 import { useHistory } from "react-router-dom";
+import "../../styles/form.css";
 
 export const Form = () => {
   const history = useHistory();
+
+  useEffect(() => {}, []);
 
   return (
     <div className="mb-5">
@@ -12,8 +14,8 @@ export const Form = () => {
         dismissBtn={
           <button
             type="button"
-            id="modal-button-left"
-            className="float-end"
+            id="btn-right-form-dismiss"
+            className="btn-fill btn-fill-purple float-end"
             onClick={() => history.push("/")}
           >
             Omitir

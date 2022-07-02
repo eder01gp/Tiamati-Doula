@@ -55,10 +55,8 @@ export const Modify_appointment = () => {
     <div className="modify_appointment container">
       {showCalendar == true ? <Calendar className="mx-5" /> : null}
       <div className="make-appointment">
-        <h4 className="text-start">
-          {showTitle == true ? <strong>MODIFICA TU CITA</strong> : null}
-        </h4>
-        <div id="datetime" className="">
+        <h2>{showTitle == true ? "MODIFICA TU CITA" : null}</h2>
+        <div id="datetime" className="Service">
           {showService == true ? (
             <div>
               <div className="datetime-header py-1">
@@ -79,11 +77,12 @@ export const Modify_appointment = () => {
                   >
                     <option>Elige un servicio...</option>
                     {store.user_service_hired_id.map((x, index) => {
-                      return (
-                        <option key={index} value={x.name}>
-                          {x.name}
-                        </option>
-                      );
+                      if (x.service_id != 1)
+                        return (
+                          <option key={index} value={x.name}>
+                            {x.name}
+                          </option>
+                        );
                     })}
                   </select>
                 </div>
@@ -110,7 +109,7 @@ export const Modify_appointment = () => {
           ) : null}
 
           {store.showDate == true ? (
-            <div>
+            <div className="Date">
               <div className="datetime-header py-1">
                 <h6 className="pt-2">FECHA</h6>
               </div>
@@ -126,6 +125,7 @@ export const Modify_appointment = () => {
                   onClick={() => {
                     setShowService(true);
                     actions.setShowDate(false);
+                    setShowCalendar(false);
                   }}
                 ></i>
               </div>
@@ -150,6 +150,7 @@ export const Modify_appointment = () => {
                             setHourSelected(i.time);
                             actions.setShowTime(false);
                             setShowAppointment(true);
+                            setShowCalendar(false);
                           }}
                         >
                           {i.time}
@@ -177,12 +178,12 @@ export const Modify_appointment = () => {
               <div className="datetime-header py-1">
                 <h6 className="pt-2">CAMBIO DE CITA</h6>
               </div>
-              <div className="datetime-body text-start ms-3 mt-2">
+              <div className="datetime-body text-start mx-2 mt-2">
                 <p className="appointment_type mb-0">
                   <u>·Antigua cita: </u>
                 </p>
                 <p>
-                  <b>{store.appointmentToModify.service + ": "}</b>
+                  <i>{store.appointmentToModify.service + ": "}</i>
                   {(new Date(store.appointmentToModify.date).getDay() == 0
                     ? "Domingo, "
                     : new Date(store.appointmentToModify.date).getDay() == 1
@@ -210,7 +211,7 @@ export const Modify_appointment = () => {
                   <u>·Nueva cita: </u>
                 </p>
                 <p>
-                  <b>{serviceName + ": "}</b>
+                  <i>{serviceName + ": "}</i>
                   {(new Date(store.dateSelected).getDay() == 0
                     ? "Domingo, "
                     : new Date(store.dateSelected).getDay() == 1
@@ -239,11 +240,12 @@ export const Modify_appointment = () => {
                   onClick={() => {
                     actions.setShowTime(true);
                     setShowAppointment(false);
+                    setShowCalendar(true);
                   }}
                 ></i>
 
                 <button
-                  className="btn-appointment btn btn-sm me-2 float-end"
+                  className="btn-appointment me-2 float-end"
                   onClick={() => {
                     modifyUserAppointment();
                     setShowAppointment(false);
@@ -263,14 +265,14 @@ export const Modify_appointment = () => {
                 <h6 className="pt-2">CITA</h6>
               </div>
               <div className="check-msg">
-                <i className="fa-solid fa-circle-check fa-lg ms-5 my-5"></i>
-                <h6 className="d-inline ms-2">
+                <i className="fa fa-check-circle text-success ms-5 my-5"></i>
+                <div className="d-inline mx-1 text-success">
                   Tu cita se ha guardado correctamente
-                </h6>
+                </div>
               </div>
               <div>
                 <button
-                  className="btn-appointment btn btn-sm float-end me-3"
+                  className="btn-appointment float-end me-3"
                   onClick={() => history.push("/user_appointment")}
                 >
                   Ver mis citas

@@ -1,5 +1,4 @@
 .appointment {
-  margin-top: 3cm;
   justify-content: center;
 }
 @media (max-width: 750px) {
@@ -24,7 +23,7 @@
 }
 
 .datetime-header {
-  background-color: #d8cce5;
+  background-color: #c5b4d9;
   padding-left: 10px;
   border-bottom: 1px solid rgb(104, 104, 104);
 }
@@ -68,17 +67,13 @@
 }
 
 .arrow {
-  color: #82c0a4;
+  color: #4e4e56;
 }
 
 #btn-appointment {
   padding: 3px;
   font-size: 14px;
-  background: hsl(269, 40%, 90%);
-}
-
-.fa-circle-check {
-  color: #8fe962;
+  background: #c5b4d9;
 }
 
 .check-msg {
@@ -88,8 +83,4 @@
 .input-select-service {
   width: 80%;
   margin: auto;
-}
-
-.text-start {
-  font-family: "Anek Malayalam", sans-serif;
 }

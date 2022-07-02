@@ -249,14 +249,14 @@ export const FormData = (props) => {
             />
           </div>
         </div>
-        <div className="col-12">
+        <div className="col-12 mt-4 pe-3">
           {props.closeBtn}
           {props.dismissBtn}
           {props.saveBtn}
           <button
             type="button"
             id="btn-left-form-data"
-            className="fill mx-2 float-end"
+            className="btn-fill mx-3 float-end"
             data-bs-toggle="modal"
             data-bs-target="#dataSaved"
             onClick={() => {

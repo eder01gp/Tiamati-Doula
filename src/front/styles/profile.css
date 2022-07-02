@@ -1,10 +1,27 @@
+@media (max-width: 750px) {
+  .div-profile {
+    margin-left: 2px;
+  }
+}
+@media (min-width: 750px) {
+  .div-profile {
+    margin: auto;
+  }
+}
+@media (min-width: 1000px) {
+  .div-profile {
+    margin: auto;
+  }
+}
+
 .head-table-profile,
 .body-table-profile {
-  border-width: 5px;
+  border-width: 2px;
+  border: 2px solid #c5b4d9;
 }
 
 .head-table-profile {
-  background: #d8cce5;
+  background: #c5b4d9;
 }
 
 .table-profile-services {
@@ -25,7 +42,6 @@
 }
 
 .row-table-services {
-  background: whitesmoke;
   border-color: #ceb5e4;
   padding-bottom: 0;
 }
@@ -35,12 +51,6 @@ td {
   padding-bottom: 0;
   height: 50px;
   vertical-align: middle;
-}
-
-.btn-calendar {
-  font-size: 14px;
-  padding: 3px;
-  padding-inline: 10px;
 }
 
 /* Fill button styling */
@@ -57,46 +67,35 @@ td {
   background-color: rgba(0, 0, 0, 0);
 }
 
-#btn-right-form {
+#btn-input-email {
   padding-inline: 5px;
-  padding: 3px;
+  padding: 10px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   font-size: 14px;
-}
-#btn-right-form::after {
-  padding-inline: 5px;
-  padding: 3px;
-  font-size: 14px;
-  background: rgb(157, 110, 157);
-  top: -2px;
-  left: -2px;
 }
 
-#btn-left-form {
-  padding-inline: 5px;
-  padding: 3px;
-  font-size: 14px;
+#menu-profile-btn {
+  border-color: #080808;
+  border-radius: 0;
+  font-size: 17px;
+  padding: 10px;
 }
-#btn-left-form::after {
-  padding-inline: 5px;
-  padding: 3px;
-  font-size: 14px;
-  background: #aaffff;
-  top: -2px;
-  left: -2px;
+
+#menu-profile-btn-active {
+  background-color: #8972b2;
+  font-size: 17px;
+  padding: 10px;
+}
+#menu-profile-btn-active::after {
+  background-color: transparent;
 }
 
 #btn-plan {
-  background-color: #a2f4ff;
-  padding-inline: 5px;
-  padding: 3px;
-  font-size: 14px;
-  border-radius: 5px;
-}
-
-#btn-right-form-data {
-  background-color: aquamarine;
-  padding-inline: 5px;
-  padding: 3px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-top: 1px;
+  padding-bottom: 1px;
   font-size: 14px;
 }
 
@@ -130,13 +129,13 @@ td {
 }
 
 #modal-button-right {
-  background-color: #ffff00ba;
+  background-color: #f1b606;
   border: 1px solid black;
 }
 
 #modal-button-left {
   border: 1px solid black;
-  background-color: #ddb6eb;
+  background-color: #c5b4d9;
 }
 
 #link-search-in-web {
@@ -145,35 +144,38 @@ td {
 }
 
 #link-search-in-web:hover {
-  color: #00bcd4;
+  color: #77a9af;
   text-decoration: none;
 }
 
-.title-user-services {
-  color: hsl(263, 20%, 55%);
+.icon-edit-email {
+  color: #5a4b9a;
 }
 
-.icons-form {
-  color: #7f387f;
+.icon-calendar-v {
+  color: #f1b606;
+  font-size: 25px;
 }
 
-.menu-profile-btn {
-  color: #9c27b0;
-  background: transparent;
-  border-color: #9c27b0;
-}
-.menu-profile-btn:hover {
-  color: #a6508f;
-  background: transparent;
-  border-color: #f19fff;
-}
-
-.icon-calendar-profile {
-  color: #f19fff;
+.icon-calendar-x {
+  color: #ff5968;
+  font-size: 25px;
 }
 
 #btn-calendar-profile {
-  background-color: rgb(119, 36, 119);
-  border: 1px solid;
-  border-radius: 5px;
+  border: none;
+  padding: 0.1rem;
+  background: transparent;
+}
+
+.sessions-left-num {
+  font-size: 20px;
+}
+
+.modal-content {
+  border-radius: 0;
+}
+
+.font-services-name {
+  font-size: 15px;
 }
