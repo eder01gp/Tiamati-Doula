@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-      "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu51.gitpod.io/" +
+      "https://3001-ederdon-tiamatidoula-pajnr7xqs5q.ws-eu47.gitpod.io/" +
         "api",
       logged: null,
       token: null,
@@ -23,9 +23,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       documents: [],
       services_selected: [],
       service_id1_hired: false,
+      cleanUploadDataBool: false,
     },
 
     actions: {
+      cleanUploadData: (bool) => {
+        setStore({ cleanUploadDataBool: bool})
+      },
+
       getUsers: async () => {
         const response = await fetch(getStore().url + "/users");
         const info = await response.json();
@@ -95,6 +100,18 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ documents: data.response });
         } catch (e) {
           console.log("Error getting documents");
+        }
+      },
+
+      deleteDocument: async (id) => {
+        const response = await fetch(getStore().url + "/document/"+id, {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        if (response.status == 200) {
+          getActions().getDocuments();
         }
       },
 
@@ -213,6 +230,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
         const resp = await fetch(getStore().url + "/upload", options);
         const data = await resp.json();
+        if (resp.status == 400) return {"400": data.msg}
         return data.document_created_url;
       },
 
