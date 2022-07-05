@@ -141,17 +141,27 @@ def delete_user():
     db.session.commit()
     return jsonify({"msg": "User deleted, ok"}), 200     
 
-#upload
 
 @api.route('/upload', methods=['POST'])
 def upload():
     try:
         result = cloudinary.uploader.upload(request.files["document"])
+    except ValueError:
+        # Error must supply api_key  
+        return jsonify({"msg":"Falta api_key. Contacta al administrador/a de la web"}), 400
+    except cloudinary.exceptions.Error as error:  
+        return jsonify({"msg":str(error)}), 400
     except:
-        return jsonify({"msg":"Failed to upload to Cloudinary"}), 400
+        return jsonify({"msg":"Contacta al administrador/a de la web"}), 400
     document_url = result["secure_url"]    
     return jsonify({"document_created_url": document_url}), 200
 
+@api.route('/document/<id>', methods=['DELETE'])
+def delete_document(id):
+    document = Document.query.get(id)
+    db.session.delete(document)
+    db.session.commit()  
+    return jsonify({"response":"Documento borrado correctamente"}), 200  
         
 @api.route('/document', methods=['POST'])
 def new_document():
