@@ -1,9 +1,6 @@
-.div-user-appointment {
-  margin-top: 3cm;
-}
-
 .list-group-appointment {
   width: 600px;
+  border-radius: 0;
 }
 @media (max-width: 750px) {
   .list-group-appointment {
@@ -34,54 +31,12 @@
   background-color: rgba(0, 0, 0, 0);
 }
 
-#btn-right-form {
-  padding-inline: 5px;
-  padding: 3px;
-  font-size: 14px;
-}
-#btn-right-form::after {
-  padding-inline: 5px;
-  padding: 3px;
-  font-size: 14px;
-  background: rgb(157, 110, 157);
-  top: -2px;
-  left: -2px;
-}
-
-#btn-left-form {
-  padding-inline: 5px;
-  padding: 3px;
-  font-size: 14px;
-}
-#btn-left-form::after {
-  padding-inline: 5px;
-  padding: 3px;
-  font-size: 14px;
-  background: #aaffff;
-  top: -2px;
-  left: -2px;
-}
-
-#btn-plan {
-  background-color: #c6f8ff;
-  padding-inline: 5px;
-  padding: 3px;
-  font-size: 14px;
-}
-
-#btn-right-form-data {
-  background-color: aquamarine;
-  padding-inline: 5px;
-  padding: 3px;
-  font-size: 14px;
-}
-
 .pencil-edit-date {
-  color: #c17ecd;
+  color: #5a4b9a;
 }
 
 .trash-delete-date {
-  color: #9c27b0;
+  color: #8972b2;
 }
 
 .fill::after {
@@ -110,11 +65,11 @@
 }
 
 #modal-button-right {
-  background-color: #ffff00ba;
+  background-color: #ffe54c;
   border: 1px solid black;
 }
 
 #modal-button-left {
   border: 1px solid black;
-  background-color: #ddb6eb;
+  background-color: #c5b4d9;
 }

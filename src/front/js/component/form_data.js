@@ -34,7 +34,7 @@ export const FormData = (props) => {
   };
 
   return (
-    <div className="form-container-div container pb-3 px-3 overflow-auto bg-white">
+    <div className="form-container-div container pb-3 px-3 overflow-auto">
       <div className="text-center mt-3">
         <h6 className="h6-form mb-4">
           Este formulario me ayudaría a conocerte mejor y poder ofrecerte un
@@ -42,24 +42,24 @@ export const FormData = (props) => {
         </h6>
       </div>
       <form className="row g-3">
-        <div className="col-auto">
+        <div className="col-12 col-sm-12 col-lg-6">
           <label className="visually-hidden">NOMBRE USUARIA</label>
           <div className="input-group">
-            <div className="question-form input-group-text bg-light">
+            <div className="question-answer-formData question-form input-group-text bg-light">
               ¿Cómo te llamas?
             </div>
             <input
               type="text"
-              className="form-control"
+              className="question-answer-formData form-control"
               defaultValue={user ? user.name : null}
               onChange={(e) => setUser({ ...user, name: e.target.value })}
             />
           </div>
         </div>
-        <div className="col-3 col-lg-5 col-sm-auto">
+        <div className="col-12 col-sm-12 col-lg-6">
           <label className="visually-hidden">Nº SEMANAS EMBARAZO</label>
           <div className="input-group">
-            <div className="question-form input-group-text bg-light">
+            <div className="question-answer-formData question-form input-group-text bg-light">
               ¿De cuántas semanas estás?
             </div>
             <input
@@ -67,7 +67,8 @@ export const FormData = (props) => {
               name="cantidad"
               step="0.5"
               min="1"
-              className="form-control"
+              placeholder="0"
+              className="question-answer-formData form-control"
               defaultValue={user ? user.pregnancy_weeks : null}
               onChange={(e) =>
                 setUser({ ...user, pregnancy_weeks: e.target.value })
@@ -75,15 +76,53 @@ export const FormData = (props) => {
             />
           </div>
         </div>
-        <div className="col-auto">
+        <div className="col-12 col-sm-12 col-lg-6">
           <label className="visually-hidden">FECHA APROX. PARTO</label>
           <div className="input-group">
-            <div className="question-form input-group-text bg-light">
+            <div className="question-answer-formData question-form input-group-text bg-light">
               Fecha probable de parto
             </div>
             <input
               type="date"
-              className="form-control"
+              min={
+                new Date().getFullYear() +
+                "-" +
+                (new Date().getMonth() + 1 > 0 && new Date().getMonth() + 1 < 10
+                  ? "0" + (new Date().getMonth() + 1)
+                  : new Date().getMonth() + 1) +
+                "-" +
+                new Date().getDate()
+              }
+              max={
+                (new Date().getMonth() == 0 || new Date().getMonth() == 1
+                  ? new Date().getFullYear()
+                  : new Date().getFullYear() + 1) +
+                "-" +
+                (new Date().getMonth() + 11 == 13
+                  ? "01"
+                  : new Date().getMonth() + 11 == 14
+                  ? "02"
+                  : new Date().getMonth() + 11 == 15
+                  ? "03"
+                  : new Date().getMonth() + 11 == 16
+                  ? "04"
+                  : new Date().getMonth() + 11 == 17
+                  ? "05"
+                  : new Date().getMonth() + 11 == 18
+                  ? "06"
+                  : new Date().getMonth() + 11 == 19
+                  ? "07"
+                  : new Date().getMonth() + 11 == 20
+                  ? "08"
+                  : new Date().getMonth() + 11 == 21
+                  ? "09"
+                  : new Date().getMonth() + 11 == 22
+                  ? "10"
+                  : new Date().getMonth() + 11) +
+                "-" +
+                new Date().getDate()
+              }
+              className="question-answer-formData form-control"
               id="selectedDate"
               defaultValue={user ? user.aproximate_birth_date : null}
               onChange={(e) => {
@@ -95,17 +134,18 @@ export const FormData = (props) => {
             />
           </div>
         </div>
-        <div className="col-auto col-lg-4 col-sm-auto">
+        <div className="col-12 col-sm-12 col-lg-6">
           <label className="visually-hidden">Nº HIJOS</label>
           <div className="input-group">
-            <div className="question-form input-group-text bg-light">
+            <div className="question-answer-formData question-form input-group-text bg-light">
               ¿Cuántos hijos tienes?
             </div>
             <input
               type="number"
               name="cantidad"
               min="0"
-              className="form-control"
+              placeholder="0"
+              className="question-answer-formData form-control"
               defaultValue={user ? user.children_number : null}
               onChange={(e) => {
                 setUser({
@@ -120,17 +160,18 @@ export const FormData = (props) => {
           </div>
         </div>
         {caesareanSectionInput ? (
-          <div className="col-auto col-lg-5 col-sm-auto">
+          <div className="col-12">
             <label className="visually-hidden">Nº CESÁREAS</label>
             <div className="input-group">
-              <div className="question-form input-group-text bg-light">
+              <div className="question-answer-formData question-form input-group-text bg-light">
                 ¿Cuántas cesáreas has tenido?
               </div>
               <input
                 type="number"
                 name="cantidad"
                 min="0"
-                className="form-control"
+                placeholder="0"
+                className="question-answer-formData form-control"
                 defaultValue={user ? user.caesarean_sections_number : null}
                 onChange={(e) =>
                   setUser({
@@ -142,38 +183,38 @@ export const FormData = (props) => {
             </div>
           </div>
         ) : null}
-        <div className="col-auto">
+        <div className="col-12">
           <label className="visually-hidden">ACOMPAÑANTE</label>
           <div className="input-group">
-            <div className="question-form input-group-text bg-light">
+            <div className="question-answer-formData question-form input-group-text bg-light">
               ¿Tienes acompañante? Escribe su nombre y su relación contigo
             </div>
             <input
               type="text"
-              className="form-control"
+              className="question-answer-formData form-control"
               defaultValue={user ? user.companion : null}
               onChange={(e) => setUser({ ...user, companion: e.target.value })}
             />
           </div>
         </div>
-        <div className="col-auto">
+        <div className="col-12 col-sm-12 col-lg-5">
           <label className="visually-hidden">CIUDAD</label>
           <div className="input-group">
-            <div className="question-form input-group-text bg-light">
+            <div className="question-answer-formData question-form input-group-text bg-light">
               ¿Dónde te ubicas?
             </div>
             <input
               type="text"
-              className="form-control"
+              className="question-answer-formData form-control"
               defaultValue={user ? user.city : null}
               onChange={(e) => setUser({ ...user, city: e.target.value })}
             />
           </div>
         </div>
-        <div className="col-auto">
+        <div className="col-12 col-sm-12 col-lg-7">
           <label className="visually-hidden">LUGAR PARTO</label>
           <div className="input-group">
-            <div className="question-form input-group-text bg-light">
+            <div className="question-answer-formData question-form input-group-text bg-light">
               ¿Deseas un parto en hospital o en casa?
             </div>
             <select
@@ -189,15 +230,15 @@ export const FormData = (props) => {
             </select>
           </div>
         </div>
-        <div className="col-8">
+        <div className="col-12">
           <label className="visually-hidden">HOSPITAL ACTUAL</label>
           <div className="input-group">
-            <div className="question-form input-group-text bg-light">
+            <div className="question-answer-formData question-form input-group-text bg-light">
               Si estás siendo acompañada en un hospital/clínica, escribe cuál:
             </div>
             <input
               type="text"
-              className="form-control"
+              className="question-answer-formData form-control"
               defaultValue={user ? user.current_hospital : null}
               onChange={(e) =>
                 setUser({
@@ -208,14 +249,14 @@ export const FormData = (props) => {
             />
           </div>
         </div>
-        <div className="col-12">
+        <div className="col-12 mt-4 pe-3">
           {props.closeBtn}
           {props.dismissBtn}
           {props.saveBtn}
           <button
             type="button"
             id="btn-left-form-data"
-            className="fill mx-2 float-end"
+            className="btn-fill mx-3 float-end"
             data-bs-toggle="modal"
             data-bs-target="#dataSaved"
             onClick={() => {
@@ -239,11 +280,13 @@ export const FormData = (props) => {
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-body">
-                <i className="check-icon fa-solid fa-circle-check fa-lg text-success float-start"></i>
-                <p className="d-inline mx-1">Datos guardados correctamente</p>
+                <i className="fa fa-check-circle text-success float-start"></i>
+                <div className="d-inline mx-1 text-success">
+                  Datos guardados correctamente
+                </div>
                 <button
                   type="button"
-                  class="btn-close float-end"
+                  className="btn-close float-end"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                   onClick={props.redirect}

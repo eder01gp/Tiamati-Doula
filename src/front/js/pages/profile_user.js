@@ -13,6 +13,8 @@ export const Profile_user = () => {
   const [inputEmail, setInputEmail] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [showServices, setShowServices] = useState(true);
+  const [btnRightProfileActive, setBtnRightProfileActive] = useState(false);
+  const [btnLeftProfileActive, setBtnLeftProfileActive] = useState(true);
 
   useEffect(() => {
     actions.verify();
@@ -38,23 +40,26 @@ export const Profile_user = () => {
   return (
     <div className="div-profile container">
       <div>
-        <div className="Change email-password m-auto mt-5 mb-5">
+        <div className="Change email-password m-auto mt-1 mb-5">
           {/* User email & edit button*/}
           {userInfo ? (
             <div className="d-flex">
               <p className="mb-0 mt-2">
-                <i className="icons-form fa-solid fa-gear"></i> Email:{" "}
+                <i className="icon-edit-email fa-solid fa-gear"></i> Email:{" "}
                 {store.user_info ? store.user_info.email : null}
               </p>
               <div
                 type="button"
                 className="mt-2"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Cambiar email"
                 onClick={() => {
                   setUserInfo(false);
                   setInputEmail(true);
                 }}
               >
-                <i className="icons-form fa-solid fa-pen-to-square mx-2"></i>
+                <i className="icon-edit-email fa-solid fa-pen-to-square mx-2"></i>
               </div>
             </div>
           ) : null}
@@ -74,8 +79,8 @@ export const Profile_user = () => {
           {inputEmail ? (
             <div className=" mt-2 mb-5">
               <button
-                id="btn-left-form"
-                className="fill"
+                id="btn-input-email"
+                className="btn-fill btn-fill-green"
                 type="submit"
                 onClick={() => {
                   changeEmail();
@@ -87,8 +92,8 @@ export const Profile_user = () => {
               </button>
 
               <button
-                id="btn-right-form"
-                className="fill mx-3"
+                id="btn-input-email"
+                className="btn-fill btn-fill-purple mx-3"
                 onClick={() => {
                   setInputEmail(false);
                   setUserInfo(true);
@@ -103,19 +108,33 @@ export const Profile_user = () => {
         <div className="FORM-AND-SERVICES-MENU">
           <div className="btn-group justify-content-center" role="group">
             <button
-              className="menu-profile-btn btn "
+              id={
+                btnLeftProfileActive == true
+                  ? "menu-profile-btn-active"
+                  : "menu-profile-btn"
+              }
+              className="btn-fill btn-fill-purple me-2"
               onClick={() => {
                 setShowForm(false);
                 setShowServices(true);
+                setBtnRightProfileActive(false);
+                setBtnLeftProfileActive(true);
               }}
             >
               Mis servicios
             </button>
             <button
-              className="menu-profile-btn  btn  btn-sm "
+              id={
+                btnRightProfileActive == true
+                  ? "menu-profile-btn-active"
+                  : "menu-profile-btn"
+              }
+              className="btn-fill btn-fill-purple"
               onClick={() => {
                 setShowForm(true);
                 setShowServices(false);
+                setBtnRightProfileActive(true);
+                setBtnLeftProfileActive(false);
               }}
             >
               Información Personal
@@ -123,9 +142,9 @@ export const Profile_user = () => {
           </div>
           {showServices ? (
             <div className="Hired-Services mt-5">
-              <h5 className="title-user-services">
+              <h6 className="title-user-services">
                 <u>SERVICIOS CONTRATADOS</u>
-              </h5>
+              </h6>
               {store.user_service_hired_id.length != 0 ? (
                 <table className="table-profile-services table table-bordered">
                   <thead className="head-table-profile">
@@ -145,7 +164,7 @@ export const Profile_user = () => {
                     {store.user_service_hired_id.map((x, index) => {
                       return (
                         <tr key={index} className="row-table-services">
-                          <td>{x.name}</td>
+                          <td className="font-services-name">{x.name}</td>
                           <td>
                             {store.appointment.map((appointment) => {
                               if (appointment.service == x.service_id) {
@@ -165,38 +184,38 @@ export const Profile_user = () => {
                             {x.service_id == 1 ? (
                               <button
                                 id="btn-plan"
-                                className="fill"
+                                className="btn-fill btn-fill-green"
                                 onClick={() => history.push("/birthplan")}
                               >
                                 Acceder al plan
                               </button>
                             ) : x.sessions_left > 0 ? (
                               <div className="d-inline">
-                                <p className="m-0">
+                                <h6 className="sessions-left-num d-inline">
                                   {x.sessions_left}{" "}
-                                  <button
-                                    id="btn-calendar-profile"
-                                    className="btn-calendar ms-4"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    title="Reservar cita"
-                                    onClick={() => history.push("/appointment")}
-                                  >
-                                    <i className="icon-calendar-profile fa-solid fa-calendar-check"></i>
-                                  </button>
-                                  <button
-                                    id="btn-calendar-profile"
-                                    className="btn-calendar ms-2"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    title="Modificar o cancelar cita"
-                                    onClick={() =>
-                                      history.push("/user_appointment")
-                                    }
-                                  >
-                                    <i className="icon-calendar-profile fa-solid fa-calendar-xmark"></i>
-                                  </button>
-                                </p>
+                                </h6>
+                                <button
+                                  id="btn-calendar-profile"
+                                  className="btn-calendar ms-3"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  title="Reservar cita"
+                                  onClick={() => history.push("/appointment")}
+                                >
+                                  <i className="icon-calendar-v fa-solid fa-calendar-check"></i>
+                                </button>
+                                <button
+                                  id="btn-calendar-profile"
+                                  className="btn-calendar"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  title="Modificar o cancelar cita"
+                                  onClick={() =>
+                                    history.push("/user_appointment")
+                                  }
+                                >
+                                  <i className="icon-calendar-x fa-solid fa-calendar-xmark ms-2"></i>
+                                </button>
                               </div>
                             ) : (
                               "-"
@@ -219,13 +238,13 @@ export const Profile_user = () => {
             </div>
           ) : null}
           {showForm ? (
-            <div className="Personal-Data">
+            <div className="Personal-Data mt-5">
               <FormData
                 closeBtn={
                   <button
                     type="button"
-                    id="btn-right-form-data"
-                    className="fill float-end"
+                    id="btn-right-form-dismiss"
+                    className="btn-fill btn-fill-purple float-end"
                     onClick={() => {
                       setShowForm(false);
                       setShowServices(true);
@@ -238,7 +257,7 @@ export const Profile_user = () => {
             </div>
           ) : null}
         </div>
-        <div className="DELETE-ACCOUNT-BUTTON mt-5">
+        <div className="DELETE-ACCOUNT-BUTTON mt-5 mb-4">
           <button
             className="fill"
             id="btn-delete-account"
