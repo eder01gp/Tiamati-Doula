@@ -37,7 +37,7 @@ body {
   background-color: rgb(165, 250, 221, 0);
   padding: 1%;
   text-align: center;
-  color:#ff5968
+  color: #ff5968;
 }
 
 #logo-tiamati {
@@ -83,26 +83,6 @@ body {
   cursor: pointer;
 }
 
-/* Form */
-.formulario {
-  margin-top: 7%;
-  width: 80%;
-}
-
-.form-general-div {
-  margin-top: 7%;
-  width: 60%;
-  box-sizing: unset;
-}
-
-#check-data-saved-form {
-  font-size: 10px;
-}
-
-.div-profile {
-  margin-top: 7%;
-}
-
 .page-container {
   position: relative;
   min-height: 100vh;
@@ -134,7 +114,7 @@ h3 {
 }
 
 .text-wrong {
-  color:#ff5968;
+  color: #ff5968;
 }
 /* Fill button styling */
 .btn-fill {
@@ -169,7 +149,7 @@ h3 {
   left: 0px;
 }
 
-.btn-fill.btn-fill-green::after{
+.btn-fill.btn-fill-green::after {
   background-color: #4cff6a42;
 }
 
@@ -214,8 +194,6 @@ h3 {
   transition: transform 1;
 }
 
-
-
 .btn-slide div {
   transition: transform 0.8s;
 }
@@ -229,7 +207,7 @@ h3 {
   transform: translateX(6px);
 }
 
-.btn-slide.btn-slide-left i{
+.btn-slide.btn-slide-left i {
   left: 10px;
   right: initial;
 }
@@ -255,7 +233,7 @@ h3 {
     5px 5px 6px 5px rgba(0, 0, 0, 0);
 }
 
-.border-purple-green{
+.border-purple-green {
   box-shadow: #5a4b9a 0px 0px 0px 2px, #c9ffe2 0px 0px 16px;
 }
 
@@ -275,4 +253,3 @@ h3 {
   padding-right: 0;
   padding-left: 0;
 }
-

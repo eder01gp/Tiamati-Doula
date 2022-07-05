@@ -1,5 +1,4 @@
 .modify_appointment {
-  margin-top: 3cm;
   justify-content: center;
 }
 @media (max-width: 750px) {
@@ -68,7 +67,7 @@
 }
 
 .arrow {
-  color: #82c0a4;
+  color: #4e4e56;
 }
 
 .fa-circle-check {
@@ -92,5 +91,5 @@
   border: 1px solid black;
   padding: 3px;
   font-size: 14px;
-  background: hsl(269, 40%, 90%);
+  background: #c5b4d9;
 }

@@ -2,15 +2,12 @@
   width: 300px;
   background: white;
   border: 1px solid rgb(104, 104, 104);
-  border-radius: 5px;
   cursor: default;
 }
 
 #calendar-header {
-  background: #d8cce5;
+  background: #c5b4d9;
   border-bottom: 1px solid rgb(104, 104, 104);
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
 }
 
 #prev-arrow,

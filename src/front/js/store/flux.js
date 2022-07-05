@@ -77,7 +77,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       logout: () => {
         localStorage.clear();
         setStore({ logged: false });
-        setStore({service_id1_hired : false});
+        setStore({ service_id1_hired: false });
       },
 
       deleteUser: async () => {
@@ -324,7 +324,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             if (x.service_id == i.id) {
               x["name"] = i.service_name;
             }
-          if (x.service_id == 1) setStore({service_id1_hired : true})
+            if (x.service_id == 1) setStore({ service_id1_hired: true });
           }
         });
         setStore({ user_service_hired_id: data.service_hired_id });
