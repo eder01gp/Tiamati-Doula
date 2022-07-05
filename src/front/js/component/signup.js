@@ -11,51 +11,50 @@ export const Signup = (props) => {
   const history = useHistory();
 
   const saveUsersInDB = async () => {
-    try {    
-    if (
+    try {
+      if (
         user.email != null &&
         user.email.trim() != "" &&
         user.email != "" &&
         user.password != null &&
         user.password.trim() != ""
-        ) {
+      ) {
         setError(null);
 
         const response = await fetch(store.url + "/signup", {
-            method: "POST",
-            body: JSON.stringify(user),
-            headers: {
+          method: "POST",
+          body: JSON.stringify(user),
+          headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
-            },
+          },
         });
 
         const data = await response.json();
         if (!response.ok) setError(data.msg);
         if (response.status == 200) {
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("ID", data.User.id);
-            localStorage.setItem("rol", data.User.rol);
-            localStorage.setItem("email", data.User.email);
-            actions.verify();
-            actions.getUserInfo();
-            actions.getUserServiceHired();
-            if (props.push==true){
-                if (check == false) {
-                    history.push("/form");
-                } else if (check == true) {
-                    history.push("/");
-                }
-            }
-            }        
-            } else {
-                setError(confirmation.msg);
-            }
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("ID", data.User.id);
+          localStorage.setItem("rol", data.User.rol);
+          localStorage.setItem("email", data.User.email);
+          actions.verify();
+          actions.getUserInfo();
+          actions.getUserServiceHired();
+          if (props.push == true) {
+            //   if (check == false) {
+            history.push("/form");
+            //   } else if (check == true) {
+            //     history.push("/");
+            //   }
+          }
+        }
+      } else {
+        setError(confirmation.msg);
+      }
+    } catch (e) {
+      setError(e.name + ": " + e.message);
     }
-    catch (e) {
-        setError(e.name + ": " + e.message);
-    }
-    };
+  };
 
   return (
     <div className="registro mt-5">
@@ -71,7 +70,7 @@ export const Signup = (props) => {
             }
           />
         </div>
-        <div className="form-check mb-3">
+        {/* <div className="form-check mb-3">
           <input
             className="form-check-input"
             type="checkbox"
@@ -82,7 +81,7 @@ export const Signup = (props) => {
             }
           />
           <label className="form-check-label">Soy empresa</label>
-        </div>
+        </div> */}
         <div className="mb-1">
           <label htmlFor="exampleInputPassword1" className="form-label mb-0">
             Contraseña
@@ -109,5 +108,5 @@ export const Signup = (props) => {
 };
 
 Signup.propTypes = {
-    push: propTypes.any,
-}
+  push: propTypes.any,
+};

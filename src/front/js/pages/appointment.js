@@ -6,7 +6,6 @@ import "../../styles/appointment.css";
 
 export const Appointment = () => {
   let history = useHistory();
-  let planParto = "Plan de Parto";
   const { store, actions } = useContext(Context);
   const [showAppointment, setShowAppointment] = useState(false);
   const [hourSelected, setHourSelected] = useState();

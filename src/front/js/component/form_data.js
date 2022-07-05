@@ -280,11 +280,13 @@ export const FormData = (props) => {
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-body">
-                <i className="check-icon fa-solid fa-circle-check fa-lg text-success float-start"></i>
-                <p className="d-inline mx-1">Datos guardados correctamente</p>
+                <i className="fa fa-check-circle text-success float-start"></i>
+                <div className="d-inline mx-1 text-success">
+                  Datos guardados correctamente
+                </div>
                 <button
                   type="button"
-                  class="btn-close float-end"
+                  className="btn-close float-end"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                   onClick={props.redirect}
