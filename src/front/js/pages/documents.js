@@ -12,7 +12,7 @@ export const Documents = () => {
   }, []);
 
   return (
-    <div className="frame01 container ">
+    <div className="frame01 container">
       <div className="d-flex justify-content-between">
         <h1>Documentos</h1>
       </div>
