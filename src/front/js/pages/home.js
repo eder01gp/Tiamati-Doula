@@ -52,7 +52,9 @@ export const Home = () => {
         <div
           id="header-img"
           style={{ transform: `translateY(${offsetY * 0.5}px)` }}
-        ></div>
+        >
+        <img src="https://res.cloudinary.com/dxeieqxam/image/upload/v1654589067/illustrations/Banner_dark_y73sds.jpg" class="img-fluid" alt="..."></img>  
+        </div>
       </div>
 
       {/* What is Tiamati */}
@@ -83,22 +85,8 @@ export const Home = () => {
           id="bio-hello-text"
           className="col d-flex flex-column justify-content-around"
         >
-          <div className="mt-2">
-            <h2>
-{/*               ¡Hola!
-              <br />
-              ¡Soy Margarida! */}
-            </h2>
-          </div>
-          <div className="">
-            <Link to="/bio">
-{/*               <button className="btn-fill m-3">
-                Esta es mi historia
-              </button> */}
-            </Link>
-          </div>
+          <img src="https://res.cloudinary.com/dxeieqxam/image/upload/v1656848512/illustrations/Portrait_Final_5_bfuldh.jpg" class="img-fluid" alt="..."></img>
         </div>
-        {/* <div id="bio-picture" className="col-4"></div> */}
       </div>
       {/* services */}
       <div className="row py-3">

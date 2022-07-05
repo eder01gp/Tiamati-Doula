@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-      "https://3001-ederdon-tiamatidoula-pajnr7xqs5q.ws-eu47.gitpod.io/" +
+      "https://3001-ederdon-tiamatidoula-pajnr7xqs5q.ws-eu51.gitpod.io/" +
         "api",
       logged: null,
       token: null,
@@ -68,6 +68,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           const data = await resp.json();
           setStore({ logged: data.logged || false });
+          getActions().getUserServiceHired();
         } catch (e) {
           setStore({ logged: false });
           getActions().logout();
@@ -318,8 +319,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
         });
-        const data = await response.json();
-        data.service_hired_id.map((x) => {
+        if (response.status==200){
+          const data = await response.json();
+          data.service_hired_id.map((x) => {
           for (let i of data.services_id_name) {
             if (x.service_id == i.id) {
               x["name"] = i.service_name;
@@ -328,6 +330,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         });
         setStore({ user_service_hired_id: data.service_hired_id });
+        }
       },
 
       setAppointmentToModify: (value) => {

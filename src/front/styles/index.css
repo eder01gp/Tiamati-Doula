@@ -33,7 +33,7 @@ body {
 }
 
 #header-logo {
-  height: 100px;
+  height: 85px;
   background-color: rgb(165, 250, 221, 0);
   padding: 1%;
   text-align: center;
@@ -82,6 +82,17 @@ body {
   margin-bottom: 50px;
   cursor: pointer;
 }
+/* Login form */
+
+#login-form, #signup-form {
+  width: 300px;
+}
+
+/* bootstrap form */
+.form-control {
+  border-radius: 0;
+}
+
 
 .page-container {
   position: relative;
@@ -91,6 +102,42 @@ body {
 .content-wrap {
   padding-bottom: 11rem; /* Footer height */
   padding-top: 50px;
+}
+
+/* Backgrounds */
+.bg-T {
+  background-repeat: repeat;
+  background-size: 400px;
+  color:aliceblue;
+  font-weight: 900;
+  letter-spacing: 2px;
+  font-size: large;
+  align-items: center!important;
+  justify-content: center!important;
+  display: flex;
+}
+
+.bg-01{
+  background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1656848465/backgrounds/Pattern_Flowers_jvci7j.jpg);
+}
+
+.bg-02 {
+  background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1656848460/backgrounds/Pattern_Flowers_2_vsb0oj.jpg);
+}
+
+.bg-03 {
+  background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1656848460/backgrounds/Pattern_Flowers_3_isezsk.jpg);
+}
+
+.bg-04 {
+  background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1656848462/backgrounds/Pattern_Flowers_4_zh3f0c.jpg);
+}
+
+.bg-wh-pl {
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, 0.5);
+  z-index: 0;
+  color: #5a4b9a;
 }
 
 /* Paragraphs style */
@@ -116,6 +163,24 @@ h3 {
 .text-wrong {
   color: #ff5968;
 }
+/* no-fill button styling */
+.btn-no-fill {
+  font-family: "Anek Malayalam", sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  padding: 13px 20px 13px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color:hsla(240, 5%, 32%, 0.05);
+}
+
+.btn-no-fill:hover {
+  text-decoration: underline;
+}
+
 /* Fill button styling */
 .btn-fill {
   font-family: "Anek Malayalam", sans-serif;
@@ -128,7 +193,6 @@ h3 {
   cursor: pointer;
   position: relative;
   background-color: rgba(0, 0, 0, 0);
-  /*   visibility: hidden; */
 }
 
 .btn-fill::after {
