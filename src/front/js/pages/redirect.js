@@ -20,7 +20,10 @@ export const Redirect = () => {
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
-    console.log(query.get(""),"query")
+
+    for (const p of query) {
+      console.log(p);
+    }
 
     if (query.get("success")) {
       setMessage("¡Servicio contratado! ¡Muchas gracias! vas a ser redireccionad@ a tu perfil");
@@ -29,14 +32,17 @@ export const Redirect = () => {
       else redirect("profile_user")
     }
 
-    if (query.get("canceled")) {
+    else if (query.get("canceled")) {
       setMessage(
         "Pedido cancelado - vas a ser redireccionad@ al carro de compra en 5 segundos."
       );
       redirect("checkout")
     }
 
-    else redirect("loginPage")
+    else {
+      redirect("loginPage")
+    }
+
   }, []);
 
   return message ? (

@@ -5,18 +5,16 @@ import insta from "../../../img/logo/Instagram.png";
 export const Footer = () => (
   <footer className="footer text-center">
     <div className="row">
-      <a id="footer-phone" href="tel:+34 644 75 46 71" className="col-12 mb-2">
-        +34 644 75 46 71
+      <a id="footer-phone" href="tel:+34 644 75 46 71" className="col-12 my-2">+34 644 75 46 71
       </a>
       <a
         id="footer-email"
         href="mailto:hello@tiamati.com"
         className="col-12 mb-2"
-      >
-        hello@tiamati.com
+        target="_blank"
+      >hello@tiamati.com
       </a>
     </div>
-
     <img
       src={insta}
       id="insta-logo"

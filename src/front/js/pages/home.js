@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
-import logo from "../../../img/logo/logo.png";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -53,7 +52,7 @@ export const Home = () => {
           id="header-img"
           style={{ transform: `translateY(${offsetY * 0.5}px)` }}
         >
-        <img src="https://res.cloudinary.com/dxeieqxam/image/upload/v1654589067/illustrations/Banner_dark_y73sds.jpg" class="img-fluid" alt="..."></img>  
+        <img src="https://res.cloudinary.com/dxeieqxam/image/upload/v1654589067/illustrations/Banner_dark_y73sds.jpg" className="img-fluid" alt="tiamati banner" key="img01"></img>  
         </div>
       </div>
 
@@ -85,7 +84,7 @@ export const Home = () => {
           id="bio-hello-text"
           className="col d-flex flex-column justify-content-around"
         >
-          <img src="https://res.cloudinary.com/dxeieqxam/image/upload/v1656848512/illustrations/Portrait_Final_5_bfuldh.jpg" class="img-fluid" alt="..."></img>
+          <img src="https://res.cloudinary.com/dxeieqxam/image/upload/v1656848512/illustrations/Portrait_Final_5_bfuldh.jpg" className="img-fluid" alt="tiamati portrait" key="img02"></img>
         </div>
       </div>
       {/* services */}
@@ -93,6 +92,7 @@ export const Home = () => {
         <div className="father-display-table">
           <div
             className="child-display-cell text-center m-4 border-purple-green"
+            key="cell01"
           >
             <h2>Estos son los servicios que ofrezco:</h2>
           </div>
@@ -106,6 +106,7 @@ export const Home = () => {
                 className="card-img-top"
                 src={serv.service.service_cover_url}
                 alt="Card image cap"
+                key="img03"
               />
               <div className="card-body">
                 <h5 className="card-title">{serv.service.name}</h5>
@@ -113,9 +114,9 @@ export const Home = () => {
               </div>
               <div className="d-flex justify-content-between">
                 <Link to={"/services/#" + serv.service_id}>
-                  <button class="btn-slide">
+                  <button className="btn-slide">
                     <div>Leer más</div>
-                    <i class="icon-arrow-right"></i>
+                    <i className="icon-arrow-right"></i>
                   </button>
                 </Link>
                 <Link to="/checkout">
@@ -243,7 +244,8 @@ export const Home = () => {
             id="documents-img"
             className="m-4"
             src="https://res.cloudinary.com/dxeieqxam/image/upload/c_scale,w_100/v1655462293/Home/Guia-para-embazadas_dnyevj.jpg"
-            alt=""
+            alt="documents Tiamati"
+            key="img04"
           />
           <div className="father-display-table">
             <div
@@ -262,7 +264,6 @@ export const Home = () => {
       </div>
       {/* FAQ */}
       <div id="faq-home" className="row my-5">
-        <img id="" src="" alt="" />
         <div id="faq-home-right">
           <h2>¿Tienes dudas?</h2>
           <Link to="/faq">

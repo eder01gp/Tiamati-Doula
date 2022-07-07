@@ -17,14 +17,14 @@ export const Faq = () => {
   }, []);
 
   return (
-    <div className="container mb-5" id="faq-container">
-      <div id="faq-title" className="row">
-        <h1>Preguntas Frecuentes</h1>
+    <div className="container pb-4 bg-frame bg-03" id="faq-container">
+      <div className="bg-T my-2">
+          <div className="bg-wh-pl px-4 my-2">
+            FAQ
+          </div>
       </div>
-
       {/* FAQ usuarias */}
       <div id="faq-users">
-        <h3 className="mt-3">Usuarias</h3>
         {store.user_faq.map((faqs) => {
           return (
             <div className="accordion" id="user-questions" key={faqs.id}>
@@ -40,7 +40,7 @@ export const Faq = () => {
       </div>
 
       {/* FAQ empresas */}
-      <div id="faq-business">
+{/*       <div id="faq-business">
         <h3 className="mt-3">Empresas</h3>
         {store.business_faq.map((bfaqs) => {
           return (
@@ -54,7 +54,7 @@ export const Faq = () => {
             </div>
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 };
