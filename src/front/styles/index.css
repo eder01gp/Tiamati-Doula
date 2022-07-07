@@ -55,7 +55,7 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 11rem;
+  height: 9rem;
   /*   background-color: rgb(255, 217, 146); /* Footer height */
 }
 
@@ -96,15 +96,20 @@ body {
 
 .page-container {
   position: relative;
-  min-height: 100vh;
+  min-height: 93vh;
 }
 
 .content-wrap {
-  padding-bottom: 11rem; /* Footer height */
+  padding-bottom: 9rem; /* Footer height */
   padding-top: 50px;
 }
 
 /* Backgrounds */
+.bg-frame {
+  background-repeat: repeat;
+  background-size: 400px;
+}
+
 .bg-T {
   background-repeat: repeat;
   background-size: 400px;
@@ -115,6 +120,8 @@ body {
   align-items: center!important;
   justify-content: center!important;
   display: flex;
+  width:"100%";
+  height:"50px";
 }
 
 .bg-01{
@@ -138,6 +145,7 @@ body {
   box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, 0.5);
   z-index: 0;
   color: #5a4b9a;
+  width:"fit-content";
 }
 
 /* Paragraphs style */

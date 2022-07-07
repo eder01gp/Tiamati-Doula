@@ -68,7 +68,19 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           const data = await resp.json();
           setStore({ logged: data.logged || false });
-          getActions().getUserServiceHired();
+
+          if (resp.status == 200) {
+            getActions().getUserServiceHired();
+          }
+          
+          if (resp.status == 400) {
+            getActions().logout();
+          }
+
+          if (resp.status == 401) {
+            getActions().logout();
+          }
+
         } catch (e) {
           setStore({ logged: false });
           getActions().logout();

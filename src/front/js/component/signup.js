@@ -39,7 +39,7 @@ export const Signup = (props) => {
           localStorage.setItem("email", data.User.email);
           actions.verify();
           actions.getUserInfo();
-          actions.getUserServiceHired();
+
           if (props.push == true) {
             //   if (check == false) {
             history.push("/form");

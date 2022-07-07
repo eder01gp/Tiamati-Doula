@@ -15,7 +15,6 @@ export const User_appointment = () => {
   useEffect(() => {
     actions.verify();
     actions.getUserAppointments();
-    actions.getUserServiceHired();
   }, []);
 
   const modifyUserAppointment = async () => {

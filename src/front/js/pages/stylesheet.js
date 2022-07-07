@@ -42,7 +42,7 @@ export const Stylesheet = () => {
           </div>
         </div>
         <div style={{width:"100%", height:"50px"}} className="bg-T bg-03 my-2">
-          <div className="bg-wh-pl px-4" style={{width:"fit-content"}}>
+          <div className="bg-wh-pl px-4">
             frame "bg-T bg-03" label "bg-wh-pl"
           </div>
         </div>

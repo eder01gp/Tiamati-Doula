@@ -34,7 +34,6 @@ export const Login = (props) => {
         /* setResult(confirmation.msg); */
         actions.verify();
         actions.getUserInfo();
-        actions.getUserServiceHired();
         if (props.push==true){
           history.push("/");
         }
