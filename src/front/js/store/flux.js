@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-      "https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu47.gitpod.io/" +
+        "https://3001-ederdon-tiamatidoula-tz2ykteqlkl.ws-eu51.gitpod.io/" +
         "api",
       logged: null,
       token: null,
@@ -23,6 +23,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       documents: [],
       services_selected: [],
       service_id1_hired: false,
+      birthplan_section: [],
+      birthplan_answer: [],
+      birthplan_comment: [],
     },
 
     actions: {
@@ -72,7 +75,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       logout: () => {
         localStorage.clear();
         setStore({ logged: false });
-        setStore({service_id1_hired : false});
+        setStore({ service_id1_hired: false });
       },
 
       deleteUser: async () => {
@@ -305,7 +308,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             if (x.service_id == i.id) {
               x["name"] = i.service_name;
             }
-          if (x.service_id == 1) setStore({service_id1_hired : true})
+            if (x.service_id == 1) setStore({ service_id1_hired: true });
           }
         });
         setStore({ user_service_hired_id: data.service_hired_id });
@@ -330,6 +333,24 @@ const getState = ({ getStore, getActions, setStore }) => {
         const data = await resp.json();
         console.log(data);
         window.location.replace(data.response);
+      },
+
+      getBirthplanSection: async () => {
+        const response = await fetch(getStore().url + "/birthplan_section");
+        const data = await response.json();
+        setStore({ birthplan_section: data.response });
+      },
+
+      getBirthplanAnswer: async () => {
+        const response = await fetch(getStore().url + "/birthplan_answer");
+        const data = await response.json();
+        setStore({ birthplan_answer: data.response });
+      },
+
+      getBirthplanComment: async () => {
+        const response = await fetch(getStore().url + "/birthplan_comment");
+        const data = await response.json();
+        setStore({ birthplan_comment: data.response });
       },
     },
   };

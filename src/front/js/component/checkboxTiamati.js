@@ -1,59 +1,59 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 
-export const CheckboxTiamati = ({
-  answer,
-  sections,
-  setSections,
-  section_id,
-}) => {
+export const CheckboxTiamati = ({ section, answer, setSection }) => {
+  const { store, actions } = useContext(Context);
+  const [isChecked, setIsChecked] = useState(false);
+
+  useEffect(() => {
+    actions.getBirthplanSection();
+    actions.getBirthplanAnswer();
+  }, []);
+
   return (
     <div>
       <input
         className="form-check-input"
-        type={answer.type}
-        checked={answer.checked}
-        id={answer.id}
+        type="Checkbox"
+        checked={isChecked}
+        id={store.getBirthplanAnswer.id}
         onChange={() => {
           let newSections = [];
-          for (let section_index in sections) {
-            if (sections[section_index].id != section_id) {
-              newSections.push(sections[section_index]);
+          for (let section_index in { section }) {
+            if (section[section_index].id != section_id) {
+              newSections.push(section[section_index]);
             } else {
               let newAnswers = [];
-              for (let answer_index in sections[section_index].answer) {
-                if (
-                  sections[section_index].answer[answer_index].id != answer.id
-                ) {
+              for (let answer_index in { answer }) {
+                if (answer[answer_index].id != answer.id) {
                   newAnswers.push({
-                    ...sections[section_index].answer[answer_index],
+                    ...answer[answer_index],
                     checked: false,
                     input_text:
-                      typeof sections[section_index].answer[answer_index]
-                        .input_text === "string" ||
-                      sections[section_index].answer[answer_index]
-                        .input_text instanceof String
+                      typeof answer[answer_index].input_text === "string" ||
+                      answer[answer_index].input_text instanceof String
                         ? ""
                         : null,
                   });
                 } else {
                   newAnswers.push({
-                    ...sections[section_index].answer[answer_index],
+                    ...answer[answer_index],
                     checked: true,
                   });
                 }
               }
               newSections.push({
-                ...sections[section_index],
+                ...section[section_index],
                 answer: newAnswers,
               });
             }
           }
-          setSections(newSections);
+          setSection(newSections);
         }}
       />
       <label className="form-check-label" htmlFor={answer.id}>
-        {answer.text}
+        {props.children}
         {answer.input_text != null ? (
           <input
             type="text"
@@ -61,8 +61,8 @@ export const CheckboxTiamati = ({
             value={answer.input_text}
             onChange={(e) => {
               if (answer.checked == true) {
-                setSections(
-                  sections.map((sect) => {
+                setSection(
+                  section.map((sect) => {
                     if (sect.id != section_id) {
                       return sect;
                     } else {

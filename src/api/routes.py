@@ -235,30 +235,6 @@ def get_business_faq():
     business_faq = BusinessFaq.query.all()
     business_faq_serialized = list(map(lambda business_faq: business_faq.serialize(), business_faq))
     return jsonify({"response": business_faq_serialized}), 200
-
-
-#Birthplan form
-
-@api.route('/birthplan_form', methods=['POST'])
-@jwt_required()
-def new_birthplan_info():
-    current_user_id = get_jwt_identity()
-    user = Users.query.get(current_user_id)
-    if user:
-        body_id = request.json.get("id")
-        body_full_name= request.json.get("full_name")
-        body_user_id = request.json.get("user_id")
-        body_age = request.json.get("age")
-        body_phone = request.json.get("phone")
-        body_pregnancy_num = request.json.get("pregnancy_num")
-        body_birth_num = request.json.get("birth_num")
-        body_interruption_num = request.json.get("interruption_num")
-        body_birth_date = request.json.get("birth_date")
-        birthplan_info_saved = BirthplanForm(id = body_id, full_name=body_full_name, user_id=body_user_id, age=body_age, phone=body_phone, pregnancy_num=body_pregnancy_num, birth_num=body_birth_num, interruption_num=body_interruption_num, birth_date=body_birth_date)
-        birthplan_info_saved_serialized = birthplan_info_saved.serialize()
-        db.session.add(birthplan_info_saved)
-        db.session.commit()
-        return jsonify({"saved_info": birthplan_info_saved_serialized})
     
 
 @api.route('/create_checkout_session', methods=['POST'])
@@ -453,3 +429,133 @@ def delete_user_appointment():
     appointment = Appointment.query.filter_by(user_id = current_user_id).filter_by(id = appointment_id).delete()
     db.session.commit()
     return jsonify({"msg": "User deleted, ok"}), 200
+
+#Birthplan
+
+@api.route('/birthplan_form', methods=['POST'])
+@jwt_required()
+def new_birthplan_info():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    if user:
+        body_id = request.json.get("id")
+        body_full_name= request.json.get("full_name")
+        body_user_id = request.json.get("user_id")
+        body_age = request.json.get("age")
+        body_phone = request.json.get("phone")
+        body_pregnancy_num = request.json.get("pregnancy_num")
+        body_birth_num = request.json.get("birth_num")
+        body_interruption_num = request.json.get("interruption_num")
+        body_birth_date = request.json.get("birth_date")
+        birthplan_info_saved = BirthplanForm(id = body_id, full_name=body_full_name, user_id=body_user_id, age=body_age, phone=body_phone, pregnancy_num=body_pregnancy_num, birth_num=body_birth_num, interruption_num=body_interruption_num, birth_date=body_birth_date)
+        birthplan_info_saved_serialized = birthplan_info_saved.serialize()
+        db.session.add(birthplan_info_saved)
+        db.session.commit()
+        return jsonify({"saved_info": birthplan_info_saved_serialized})
+
+@api.route('birthplan_section', methods=['POST'])
+def new_section():
+    body_id = request.json.get("id")
+    body_title = request.json.get("title")
+    body_subtitle = request.json.get("subtitle")
+    body_video = request.json.get("video")
+    new_section = Birthplan_section(id=body_id, title=body_title, subtitle=body_subtitle, video=body_video)
+    new_section_serialized = new_section.serialize()
+    db.session.add(new_section)
+    db.session.commit()
+    return jsonify({"saved": new_section_serialized})
+
+@api.route('birthplan_section', methods=['PUT'])
+def modified_section():
+    body_id = request.json.get("id")
+    body_title = request.json.get("title")
+    body_subtitle = request.json.get("subtitle")
+    body_video = request.json.get("video")
+    modified_section = Birthplan_section(id=body_id, title=body_title, subtitle=body_subtitle, video=body_video)
+    modified_section_serialized = modified_section.serialize()
+    db.session.add(modified_section)
+    db.session.commit()
+    return jsonify({"saved": modified_section_serialized})
+
+@api.route('birthplan_section', methods=['GET'])
+def get_section():
+    section = BirthplanSection.query.all()
+    section_serialized = list(map(lambda item: item.serialize(), section))
+    return jsonify({"resp": section_serialized}), 200
+
+@api.route('birthplan_answer', methods=['POST'])
+def new_answers():
+    body_id = request.json.get("id")
+    body_birthplan_section_id = request.json.get("birthplan_section_id")
+    body_answer_type = request.json.get("answer_type")
+    body_answer_text = request.json.get("answer_text")
+    body_checked = request.json.get("checked")
+    body_input_text = request.json.get("input_text")
+    body_multiselect = request.json.get("multiselect")
+    new_answers = Birthplan_answer(id=body_id, birthplan_section_id=body_birthplan_section_id, answer_type=body_answer_type, answer_text=body_answer_text, checked=body_checked, input_text=body_input_text, multiselect=body_multiselect)
+    new_answers_serialized = new_answers.serialize()
+    db.session.add(new_answers)
+    db.session.commit()
+    return jsonify({"saved": new_answers_serialized})
+
+@api.route('birthplan_answer', methods=['PUT'])
+def modify_answers():
+    body_id = request.json.get("id")
+
+    body_birthplan_section_id = request.json.get("birthplan_section_id")
+    body_answer_type = request.json.get("answer_type")
+    body_answer_text = request.json.get("answer_text")
+    body_checked = request.json.get("checked")
+    body_input_text = request.json.get("input_text")
+    body_multiselect = request.json.get("multiselect")
+    modified_answers = Birthplan_answer(id=body_id, birthplan_section_id=body_birthplan_section_id, answer_type=body_answer_type, answer_text=body_answer_text, checked=body_checked, input_text=body_input_text, multiselect=body_multiselect)
+    modified_answers_serialized = modified_answers.serialize()
+    db.session.add(modified_answers)
+    db.session.commit()
+    return jsonify({"saved": modified_answers_serialized})
+
+@api.route('birthplan_answer', methods=['GET'])
+def get_answer():
+    answer = BirthplanAnswer.query.all()
+    answer_serialized = list(map(lambda item: item.serialize(), answer))
+    return jsonify({"resp": answer_serialized}), 200
+
+@api.route('birthplan_comment', methods=['POST'])
+@jwt_required()
+def new_comment():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    if user:
+        body_id = request.json.get("id")
+        body_birthplan = request.json.get("birthplan")
+        body_birthplan_section_id = request.json.get("birthplan_section_id")
+        body_user_id = request.json.get("user_id")
+        body_comment_text = request.json.get("comment_text")
+        new_comment = Birthplan_comment(id=body_id, birthplan=body_birthplan, birthplan_section_id=body_birthplan_section_id, user_id=body_user_id, comment_text=body_comment_text)
+        new_comment_serialized = new_comment.serialize()
+        db.session.add(new_comment)
+        db.session.commit()
+        return jsonify({"saved": new_comment_serialized})
+
+@api.route('birthplan_comment', methods=['PUT'])
+@jwt_required()
+def modify_comment():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    if user:
+        body_id = request.json.get("id")
+        body_birthplan = request.json.get("birthplan")
+        body_birthplan_section_id = request.json.get("birthplan_section_id")
+        body_user_id = request.json.get("user_id")
+        body_comment_text = request.json.get("comment_text")
+        modified_comment = Birthplan_comment(id=body_id, birthplan=body_birthplan, birthplan_section_id=body_birthplan_section_id, user_id=body_user_id, comment_text=body_comment_text)
+        modified_comment_serialized = modified_comment.serialize()
+        db.session.add(modified_comment)
+        db.session.commit()
+        return jsonify({"saved": modified_comment_serialized})
+    
+@api.route('birthplan_comment', methods=['GET'])
+def get_comment():
+    comment = BirthplanComment.query.all()
+    comment_serialized = list(map(lambda item: item.serialize(), comment))
+    return jsonify({"resp": comment_serialized}), 200
