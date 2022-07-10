@@ -8,12 +8,18 @@ import { MultiSelectTiamati } from "../component/multiSelectTiamati";
 import { Link } from "react-router-dom";
 import logo from "../../../img/logo/logo.png";
 import { BirthplanSection } from "../component/birthplanSection";
+import { BirthplanComment } from "../component/birthplanComment";
 
 export const Birthplan = () => {
   const { store, actions } = useContext(Context);
+  const [sectionIndex, setSectionIndex] = useState(0);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
-    actions.verify();
+    actions.getBirthplanSection();
+    actions.getBirthplanAnswer();
+    actions.getBirthplanComment();
+    actions.getBirthplanSubsection();
   }, []);
 
   return (
@@ -31,7 +37,9 @@ export const Birthplan = () => {
           </div>
         </div>
 
-        <h1 id="title">Titulo</h1>
+        {store.birthplan_section[sectionIndex] ? (
+          <h1 id="title">{store.birthplan_section[sectionIndex].title}</h1>
+        ) : null}
 
         <div id="menu-buttons">
           <button
@@ -50,7 +58,15 @@ export const Birthplan = () => {
       </nav>
 
       {/* Section */}
-      <BirthplanSection></BirthplanSection>
+      <BirthplanSection
+        section={store.birthplan_section[sectionIndex]}
+        sectionIndex={sectionIndex}
+        subsections={store.birthplan_subsection}
+      ></BirthplanSection>
+
+      <div id="comments" className="accordion">
+        <BirthplanComment />
+      </div>
     </div>
   );
 };

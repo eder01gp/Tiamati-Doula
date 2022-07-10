@@ -3,7 +3,7 @@ import os
 from flask_admin import Admin
 
 
-from .models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceHired, ServiceToService, UserFaq, BusinessFaq, BirthplanForm, Appointment, CalendarAvailability, BirthplanSection, BirthplanAnswer, BirthplanComment
+from .models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceHired, ServiceToService, UserFaq, BusinessFaq, BirthplanForm, Appointment, CalendarAvailability, BirthplanSection, BirthplanSubsection, BirthplanAnswer, BirthplanComment 
 
 
 from flask_admin.contrib.sqla import ModelView
@@ -35,6 +35,7 @@ def setup_admin(app):
     admin.add_view(MyModel(BirthplanSection, db.session))
     admin.add_view(MyModel(BirthplanAnswer, db.session))
     admin.add_view(MyModel(BirthplanComment, db.session))
+    admin.add_view(MyModel(BirthplanSubsection, db.session))
 
 
 

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 707b6bfc1334
+Revision ID: 0dff8913759a
 Revises: 
-Create Date: 2022-07-06 10:01:25.176689
+Create Date: 2022-07-09 10:55:45.208678
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '707b6bfc1334'
+revision = '0dff8913759a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,7 +22,6 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('video', sa.String(length=200), nullable=True),
     sa.Column('title', sa.String(length=100), nullable=True),
-    sa.Column('subtitle', sa.String(length=100), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('business_faq',
@@ -71,14 +70,10 @@ def upgrade():
     sa.Column('rol', sa.String(length=150), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('birthplan_answer',
+    op.create_table('birthplan_subsection',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('subtitle', sa.String(length=100), nullable=True),
     sa.Column('birthplan_section_id', sa.Integer(), nullable=True),
-    sa.Column('answer_type', sa.String(length=50), nullable=False),
-    sa.Column('answer_text', sa.String(length=300), nullable=False),
-    sa.Column('checked', sa.Boolean(), nullable=False),
-    sa.Column('input_text', sa.String(length=300), nullable=True),
-    sa.Column('multiselect', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['birthplan_section_id'], ['birthplan_section.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -130,6 +125,19 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['service'], ['service.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('birthplan_answer',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('birthplan_section_id', sa.Integer(), nullable=True),
+    sa.Column('birthplan_subsection_id', sa.Integer(), nullable=True),
+    sa.Column('answer_type', sa.String(length=50), nullable=False),
+    sa.Column('answer_text', sa.String(length=300), nullable=False),
+    sa.Column('checked', sa.Boolean(), nullable=False),
+    sa.Column('input_text', sa.String(length=300), nullable=True),
+    sa.Column('multiselect', sa.Boolean(), nullable=False),
+    sa.ForeignKeyConstraint(['birthplan_section_id'], ['birthplan_section.id'], ),
+    sa.ForeignKeyConstraint(['birthplan_subsection_id'], ['birthplan_subsection.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('birthplan_comment',
@@ -215,11 +223,12 @@ def downgrade():
     op.drop_table('service_documents')
     op.drop_table('birthplan_form')
     op.drop_table('birthplan_comment')
+    op.drop_table('birthplan_answer')
     op.drop_table('appointment')
     op.drop_table('ServiceDocument')
     op.drop_table('users')
     op.drop_table('service')
-    op.drop_table('birthplan_answer')
+    op.drop_table('birthplan_subsection')
     op.drop_table('user_rol')
     op.drop_table('user_faq')
     op.drop_table('service_type')

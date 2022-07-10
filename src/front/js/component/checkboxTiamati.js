@@ -1,60 +1,69 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Context } from "../store/appContext";
-import PropTypes from "prop-types";
+import propTypes from "prop-types";
 
-export const CheckboxTiamati = ({ section, answer, setSection }) => {
+export const CheckboxTiamati = (props) => {
   const { store, actions } = useContext(Context);
-  const [isChecked, setIsChecked] = useState(false);
+  const [answerIndex, setAnswerIndex] = useState(0);
+  const [subAnswers, setSubAnswers] = useState({});
 
+  const getAnswerIndex = () => {
+    for (let index in store.birthplan_answer) {
+      if (store.birthplan_answer[index].id == props.answer_id) {
+        setAnswerIndex(index);
+      }
+    }
+  };
+  const getSubsectionAnswers = () => {
+    let sub = [];
+    store.birthplan_answer.map((ans) => {
+      if (ans.birthplan_subsection_id == props.subsection_id) {
+        sub.push(ans);
+      }
+    });
+    setSubAnswers(sub);
+  };
   useEffect(() => {
-    actions.getBirthplanSection();
-    actions.getBirthplanAnswer();
+    getAnswerIndex();
+    getSubsectionAnswers();
   }, []);
+
+  console.log(answerIndex);
 
   return (
     <div>
       <input
         className="form-check-input"
-        type="Checkbox"
-        checked={isChecked}
-        id={store.getBirthplanAnswer.id}
+        type={store.birthplan_answer[answerIndex].answer_type}
+        checked={store.birthplan_answer[answerIndex].checked}
+        id={store.birthplan_answer[answerIndex].id}
         onChange={() => {
-          let newSections = [];
-          for (let section_index in { section }) {
-            if (section[section_index].id != section_id) {
-              newSections.push(section[section_index]);
-            } else {
-              let newAnswers = [];
-              for (let answer_index in { answer }) {
-                if (answer[answer_index].id != answer.id) {
-                  newAnswers.push({
-                    ...answer[answer_index],
-                    checked: false,
-                    input_text:
-                      typeof answer[answer_index].input_text === "string" ||
-                      answer[answer_index].input_text instanceof String
-                        ? ""
-                        : null,
-                  });
-                } else {
-                  newAnswers.push({
-                    ...answer[answer_index],
-                    checked: true,
-                  });
-                }
+          for (let answer_index in store.birthplan_answer) {
+            if (
+              store.birthplan_answer[answer_index].birthplan_subsection_id ==
+              props.subsection_id
+            ) {
+              if (store.birthplan_answer[answer_index].id != props.answer_id) {
+                actions.setAnswer(
+                  false,
+                  store.birthplan_answer[answer_index].id
+                );
+              } else {
+                actions.setAnswer(
+                  "change",
+                  store.birthplan_answer[answer_index].id
+                );
               }
-              newSections.push({
-                ...section[section_index],
-                answer: newAnswers,
-              });
             }
           }
-          setSection(newSections);
         }}
       />
-      <label className="form-check-label" htmlFor={answer.id}>
-        {props.children}
-        {answer.input_text != null ? (
+      <label
+        className="form-check-label"
+        htmlFor={store.birthplan_answer[answerIndex].id}
+      >
+        {store.birthplan_answer[answerIndex].answer_text}
+        {/* {answer.input_text != null ? (
           <input
             type="text"
             className="ms-3"
@@ -82,8 +91,13 @@ export const CheckboxTiamati = ({ section, answer, setSection }) => {
               }
             }}
           ></input>
-        ) : null}
+        ) : null} */}
       </label>
     </div>
   );
+};
+
+CheckboxTiamati.propTypes = {
+  answer_id: propTypes.any,
+  subsection_id: propTypes.any,
 };

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import "../../styles/birthplan.css";
 import "../../styles/index.css";
 
-export const BirthplanComment = (props) => {
+export const BirthplanComment = ({ comments }) => {
   const [show, setShow] = useState(false);
 
   return (
@@ -37,10 +37,10 @@ export const BirthplanComment = (props) => {
           <div id="com1" className="card comment-card">
             <div className="card-header d-flex">
               <i className="fa-solid fa-user user-avatar me-2"></i>
-              <h6>{props.username}</h6>
+              <h6>username</h6>
             </div>
             <div className="card-body">
-              <p className="card-text">{props.text}</p>
+              <p className="card-text">text</p>
             </div>
           </div>
         </div>

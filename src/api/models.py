@@ -300,9 +300,8 @@ class BirthplanForm(db.Model):
 class BirthplanSection(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     video = db.Column(db.String(200))
-    title = db.Column(db.String(100))
-    subtitle = db.Column(db.String(100))
-    birthplan_answer_id = db.relationship('BirthplanAnswer', backref='bp_answer', lazy=True)
+    title = db.Column(db.String(100))       
+    birthplan_subsection_id = db.relationship('BirthplanSubsection', backref='bp_subsection', lazy=True)
     birthplan_comment_id = db.relationship('BirthplanComment', backref='bp_section_comment', lazy=True)
 
     def serialize(self):
@@ -310,22 +309,38 @@ class BirthplanSection(db.Model):
             "id": self.id,
             "video": self.video,
             "title": self.title,
-            "subtitle": self.subtitle,
         }
+
+class BirthplanSubsection(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    subtitle = db.Column(db.String(100))
+    birthplan_section_id = db.Column(db.Integer, db.ForeignKey('birthplan_section.id'))
+    birthplan_answer_id = db.relationship('BirthplanAnswer', backref='bp_answer', lazy=True)
+
+    def serialize(self):
+        return{
+            "id": self.id,
+            "subtitle": self.subtitle,
+            "birthplan_section_id": self.birthplan_section_id
+        }
+
 
 class BirthplanAnswer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     birthplan_section_id = db.Column(db.Integer, db.ForeignKey('birthplan_section.id'))
+    birthplan_subsection_id = db.Column(db.Integer, db.ForeignKey('birthplan_subsection.id'))
     answer_type = db.Column(db.String(50), nullable=False)
     answer_text = db.Column(db.String(300), nullable=False)
     checked = db.Column(db.Boolean, nullable=False)
     input_text = db.Column(db.String(300))
     multiselect = db.Column(db.Boolean, nullable=False)
 
+
     def serialize(self):
         return{
             "id": self.id,
             "birthplan_section_id": self.birthplan_section_id,
+            "birthplan_subsection_id": self.birthplan_subsection_id,
             "answer_type": self.answer_type,
             "answer_text": self.answer_text,
             "checked": self.checked,
