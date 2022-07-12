@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-        "https://3001-ederdon-tiamatidoula-9atnxpugyxv.ws-eu51.gitpod.io/" +
+      "https://3001-ederdon-tiamatidoula-pajnr7xqs5q.ws-eu51.gitpod.io/" +
         "api",
       logged: null,
       token: null,
@@ -23,9 +23,20 @@ const getState = ({ getStore, getActions, setStore }) => {
       documents: [],
       services_selected: [],
       service_id1_hired: false,
+      birthplan_section: [],
+      birthplan_subsection: [],
+      birthplan_answer: [],
+      birthplan_comment: [],
+      birthplan_saved_answers: [],
+      cleanUploadDataBool: false,
+
     },
 
     actions: {
+      cleanUploadData: (bool) => {
+        setStore({ cleanUploadDataBool: bool})
+      },
+
       getUsers: async () => {
         const response = await fetch(getStore().url + "/users");
         const info = await response.json();
@@ -63,6 +74,19 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           const data = await resp.json();
           setStore({ logged: data.logged || false });
+
+          if (resp.status == 200) {
+            getActions().getUserServiceHired();
+          }
+          
+          if (resp.status == 400) {
+            getActions().logout();
+          }
+
+          if (resp.status == 401) {
+            getActions().logout();
+          }
+
         } catch (e) {
           setStore({ logged: false });
           getActions().logout();
@@ -95,6 +119,18 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ documents: data.response });
         } catch (e) {
           console.log("Error getting documents");
+        }
+      },
+
+      deleteDocument: async (id) => {
+        const response = await fetch(getStore().url + "/document/"+id, {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        if (response.status == 200) {
+          getActions().getDocuments();
         }
       },
 
@@ -213,6 +249,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
         const resp = await fetch(getStore().url + "/upload", options);
         const data = await resp.json();
+        if (resp.status == 400) return {"400": data.msg}
         return data.document_created_url;
       },
 
@@ -300,8 +337,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
         });
-        const data = await response.json();
-        data.service_hired_id.map((x) => {
+        if (response.status==200){
+          const data = await response.json();
+          data.service_hired_id.map((x) => {
           for (let i of data.services_id_name) {
             if (x.service_id == i.id) {
               x["name"] = i.service_name;
@@ -310,6 +348,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         });
         setStore({ user_service_hired_id: data.service_hired_id });
+        }
       },
 
       setAppointmentToModify: (value) => {
@@ -331,6 +370,47 @@ const getState = ({ getStore, getActions, setStore }) => {
         const data = await resp.json();
         console.log(data);
         window.location.replace(data.response);
+      },
+
+      getBirthplanSection: async () => {
+        const response = await fetch(getStore().url + "/birthplan_section");
+        const data = await response.json();
+        setStore({ birthplan_section: data.resp });
+      },
+
+      getBirthplanSubsection: async () => {
+        const response = await fetch(getStore().url + "/birthplan_subsection");
+        const data = await response.json();
+        setStore({ birthplan_subsection: data.resp });
+      },
+
+      getBirthplanAnswer: async () => {
+        const response = await fetch(getStore().url + "/birthplan_answer");
+        const data = await response.json();
+        setStore({ birthplan_answer: data.resp });
+      },
+
+      getBirthplanComment: async () => {
+        const response = await fetch(getStore().url + "/birthplan_comment");
+        const data = await response.json();
+        setStore({ birthplan_comment: data.resp });
+      },
+
+      setAnswer: (bool, id) => {
+        const newAnswer = getStore().birthplan_answer.map((x) => {
+          if (x.id == id) {
+            if (bool == false) {
+              return { ...x, checked: false };
+            } else {
+              if (x.checked == true) {
+                return { ...x, checked: false };
+              } else {
+                return { ...x, checked: true };
+              }
+            }
+          } else return x;
+        });
+        setStore({ birthplan_answer: newAnswer });
       },
     },
   };

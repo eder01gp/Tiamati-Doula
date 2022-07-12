@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, redirect
-from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq, BirthplanForm, Appointment, CalendarAvailability
+from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq, BirthplanForm, Appointment, CalendarAvailability, BirthplanAnswer, BirthplanComment, BirthplanSection, BirthplanSubsection
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
@@ -18,7 +18,7 @@ import datetime
 api = Blueprint('api', __name__)  
 
 
-
+DOMAIN = "https://3000-ederdon-tiamatidoula-pajnr7xqs5q.ws-eu51.gitpod.io/"
 stripe.api_key = "sk_test_51L9AB1GwDdfyjr9WWHWxYk8V77Cd7dDRpQc1JhXslN9vOfopsi8sNtfduhXogaZobR1ggOHhfdW57YFQUIaMGdUD00yAYi6V1I"
 ENDPOINT_SECRET = "whsec_858463f07c3b0bdad46be3660513488cf9f6664d2a5f10f38a81e1b2a08134fb"
    
@@ -149,17 +149,27 @@ def delete_user():
     db.session.commit()
     return jsonify({"msg": "User deleted, ok"}), 200     
 
-#upload
 
 @api.route('/upload', methods=['POST'])
 def upload():
     try:
         result = cloudinary.uploader.upload(request.files["document"])
+    except ValueError:
+        # Error must supply api_key  
+        return jsonify({"msg":"Falta api_key. Contacta al administrador/a de la web"}), 400
+    except cloudinary.exceptions.Error as error:  
+        return jsonify({"msg":str(error)}), 400
     except:
-        return jsonify({"msg":"Failed to upload to Cloudinary"}), 400
+        return jsonify({"msg":"Contacta al administrador/a de la web"}), 400
     document_url = result["secure_url"]    
     return jsonify({"document_created_url": document_url}), 200
 
+@api.route('/document/<id>', methods=['DELETE'])
+def delete_document(id):
+    document = Document.query.get(id)
+    db.session.delete(document)
+    db.session.commit()  
+    return jsonify({"response":"Documento borrado correctamente"}), 200  
         
 @api.route('/document', methods=['POST'])
 def new_document():
@@ -243,30 +253,6 @@ def get_business_faq():
     business_faq = BusinessFaq.query.all()
     business_faq_serialized = list(map(lambda business_faq: business_faq.serialize(), business_faq))
     return jsonify({"response": business_faq_serialized}), 200
-
-
-#Birthplan form
-
-@api.route('/birthplan_form', methods=['POST'])
-@jwt_required()
-def new_birthplan_info():
-    current_user_id = get_jwt_identity()
-    user = Users.query.get(current_user_id)
-    if user:
-        body_id = request.json.get("id")
-        body_full_name= request.json.get("full_name")
-        body_user_id = request.json.get("user_id")
-        body_age = request.json.get("age")
-        body_phone = request.json.get("phone")
-        body_pregnancy_num = request.json.get("pregnancy_num")
-        body_birth_num = request.json.get("birth_num")
-        body_interruption_num = request.json.get("interruption_num")
-        body_birth_date = request.json.get("birth_date")
-        birthplan_info_saved = BirthplanForm(id = body_id, full_name=body_full_name, user_id=body_user_id, age=body_age, phone=body_phone, pregnancy_num=body_pregnancy_num, birth_num=body_birth_num, interruption_num=body_interruption_num, birth_date=body_birth_date)
-        birthplan_info_saved_serialized = birthplan_info_saved.serialize()
-        db.session.add(birthplan_info_saved)
-        db.session.commit()
-        return jsonify({"saved_info": birthplan_info_saved_serialized})
     
 
 @api.route('/create_checkout_session', methods=['POST'])
@@ -294,8 +280,8 @@ def create_checkout_session():
             client_reference_id=client_reference_id,
             customer_email=customer_email,
             mode='payment',
-            success_url="https://tiamatidoula.herokuapp.com" + "/redirect"+ '?success=true',
-            cancel_url="https://tiamatidoula.herokuapp.com" + '/redirect'+ '?canceled=true',
+            success_url= DOMAIN + "/redirect"+ '?success=true',
+            cancel_url= DOMAIN + '/redirect'+ '?canceled=true',
         )
     except Exception as e:
         return str(e)
@@ -333,19 +319,16 @@ def webhook():
 
     return jsonify(success=True)
 
-def fulfill_order(session):
-    print(session)   
+def fulfill_order(session): 
     try:
         if session["status"]=="complete":
             line_items = stripe.checkout.Session.list_line_items(session["id"])["data"]
-            print(line_items)
     except:
         return jsonify({"response": "Checkout status not complete or without line items"}), 400
 
     for service_hired in line_items:
         try:
             service = Service.query.filter_by(stripe_product_id=service_hired["price"]["product"]).first()
-            print(service)
         except:
             return jsonify({"response": "no service found for"+service_hired["description"]}), 400
 
@@ -356,8 +339,6 @@ def fulfill_order(session):
         )
         db.session.add(new_service_hired)
         db.session.commit()
-        print("new service created")
-
 
 #CALENDAR
 
@@ -479,3 +460,112 @@ def create_calendar_available_dates():
             db.session.commit()
         return jsonify({"msg": "Time created"}), 200    
     return jsonify({"msg": "Dates created"}), 200
+
+#Birthplan
+
+@api.route('/birthplan_form', methods=['POST'])
+@jwt_required()
+def new_birthplan_info():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    if user:
+        body_id = request.json.get("id")
+        body_full_name= request.json.get("full_name")
+        body_user_id = request.json.get("user_id")
+        body_age = request.json.get("age")
+        body_phone = request.json.get("phone")
+        body_pregnancy_num = request.json.get("pregnancy_num")
+        body_birth_num = request.json.get("birth_num")
+        body_interruption_num = request.json.get("interruption_num")
+        body_birth_date = request.json.get("birth_date")
+        birthplan_info_saved = BirthplanForm(id = body_id, full_name=body_full_name, user_id=body_user_id, age=body_age, phone=body_phone, pregnancy_num=body_pregnancy_num, birth_num=body_birth_num, interruption_num=body_interruption_num, birth_date=body_birth_date)
+        birthplan_info_saved_serialized = birthplan_info_saved.serialize()
+        db.session.add(birthplan_info_saved)
+        db.session.commit()
+        return jsonify({"saved_info": birthplan_info_saved_serialized})
+
+@api.route('/birthplan_form', methods=['GET'])
+def get_birthplan_form():
+    form = BirthplanForm.query.all()
+    form_serialized = list(map(lambda item: item.serialize(), form))
+    return jsonify({"resp": form_serialized}), 200
+
+@api.route('birthplan_section', methods=['POST'])
+def new_section():
+    body_id = request.json.get("id")
+    body_title = request.json.get("title")
+    body_video = request.json.get("video")
+    new_section = Birthplan_section(id=body_id, title=body_title, video=body_video)
+    new_section_serialized = new_section.serialize()
+    db.session.add(new_section)
+    db.session.commit()
+    return jsonify({"saved": new_section_serialized})
+
+@api.route('birthplan_section', methods=['GET'])
+def get_section():
+    section = BirthplanSection.query.all()
+    section_serialized = list(map(lambda item: item.serialize(), section))
+    return jsonify({"resp": section_serialized}), 200
+
+@api.route('birthplan_subsection', methods=['POST'])
+def new_subsection():
+    body_id = request.json.get("id")
+    body_subtitle = request.json.get("subtitle")
+    body_birthplan_section_id = request.json.get("birthplan_section_id")
+    new_subsection = Birthplan_subsection(id=body_id, subtitle=body_subtitle, birthplan_section_id=body_birthplan_section_id)
+    new_subsection_serialized = new_subsection.serialize()
+    db.session.add(new_subsection)
+    db.session.commit()
+    return jsonify({"saved": new_subsection_serialized})
+
+@api.route('birthplan_subsection', methods=['GET'])
+def get_subsection():
+    subsection = BirthplanSubsection.query.all()
+    subsection_serialized = list(map(lambda item: item.serialize(), subsection))
+    return jsonify({"resp": subsection_serialized}), 200
+
+@api.route('birthplan_answer', methods=['POST'])
+def new_answers():
+    body_id = request.json.get("id")
+    body_birthplan_section_id = request.json.get("birthplan_section_id")
+    body_birthplan_subsection_id = request.json.get("birthplan_subsection_id")
+    body_answer_type = request.json.get("answer_type")
+    body_answer_text = request.json.get("answer_text")
+    body_checked = request.json.get("checked")
+    body_input_text = request.json.get("input_text")
+    body_multiselect = request.json.get("multiselect")
+    new_answers = Birthplan_answer(id=body_id, birthplan_section_id=body_birthplan_section_id, birthplan_subsection_id=body_birthplan_subsection_id, answer_type=body_answer_type, answer_text=body_answer_text, checked=body_checked, input_text=body_input_text, multiselect=body_multiselect)
+    new_answers_serialized = new_answers.serialize()
+    db.session.add(new_answers)
+    db.session.commit()
+    return jsonify({"saved": new_answers_serialized})
+
+@api.route('birthplan_answer', methods=['GET'])
+def get_answer():
+    answer = BirthplanAnswer.query.all()
+    answer_serialized = list(map(lambda item: item.serialize(), answer))
+    return jsonify({"resp": answer_serialized}), 200
+
+@api.route('birthplan_comment', methods=['POST'])
+@jwt_required()
+def new_comment():
+    current_user_id = get_jwt_identity()
+    user = Users.query.get(current_user_id)
+    if user:
+        body_id = request.json.get("id")
+        body_birthplan = request.json.get("birthplan")
+        body_birthplan_section_id = request.json.get("birthplan_section_id")
+        body_user_id = request.json.get("user_id")
+        body_comment_text = request.json.get("comment_text")
+        new_comment = Birthplan_comment(id=body_id, birthplan=body_birthplan, birthplan_section_id=body_birthplan_section_id, user_id=body_user_id, comment_text=body_comment_text)
+        new_comment_serialized = new_comment.serialize()
+        db.session.add(new_comment)
+        db.session.commit()
+        return jsonify({"saved": new_comment_serialized})
+
+@api.route('birthplan_comment', methods=['GET'])
+def get_comment():
+    comment = BirthplanComment.query.all()
+    comment_serialized = list(map(lambda item: item.serialize(), comment))
+    return jsonify({"resp": comment_serialized}), 200
+

@@ -1,50 +1,62 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 import "../../styles/birthplan.css";
 
-export const MultiSelectTiamati = ({
-  answer,
-  setSections,
-  sections,
-  section_id,
-}) => {
+export const MultiSelectTiamati = (props) => {
+  const { store, actions } = useContext(Context);
+  const [isChecked, setIsChecked] = useState(false);
+  const [answer, setAnswer] = useState({});
+
+  const getAnswer = () => {
+    let ansobject = store.birthplan_answer.find((ans) => {
+      return ans.id == props.answer_id;
+    });
+    setAnswer(ansobject);
+  };
+
+  useEffect(() => {
+    getAnswer();
+  }, []);
+
   return (
     <div>
       <input
         className="form-check-input"
-        type={answer.type}
+        type={answer.answer_type}
+        checked={isChecked}
         id={answer.id}
         onChange={() => {
-          let newSections = [];
-          for (let section_index in sections) {
-            if (sections[section_index].id != section_id) {
-              newSections.push(sections[section_index]);
-            } else {
-              let newAnswers = [];
-              for (let answer_index in sections[section_index].answer) {
-                if (
-                  sections[section_index].answer[answer_index].id == answer.id
-                ) {
-                  newAnswers.push({
-                    ...sections[section_index].answer[answer_index],
-                    checked: !answer.checked,
-                  });
-                } else {
-                  newAnswers.push(sections[section_index].answer[answer_index]);
-                }
-              }
-              newSections.push({
-                ...sections[section_index],
-                answer: newAnswers,
-              });
-            }
-          }
-          setSections(newSections);
+          // let newSections = [];
+          // for (let section_index in sections) {
+          //   if (sections[section_index].id != section_id) {
+          //     newSections.push(sections[section_index]);
+          //   } else {
+          //     let newAnswers = [];
+          //     for (let answer_index in sections[section_index].answer) {
+          //       if (
+          //         sections[section_index].answer[answer_index].id == answer.id
+          //       ) {
+          //         newAnswers.push({
+          //           ...sections[section_index].answer[answer_index],
+          //           checked: !answer.checked,
+          //         });
+          //       } else {
+          //         newAnswers.push(sections[section_index].answer[answer_index]);
+          //       }
+          //     }
+          //     newSections.push({
+          //       ...sections[section_index],
+          //       answer: newAnswers,
+          //     });
+          //   }
+          // }
+          // setSections(newSections);
         }}
       />
       <label className="form-check-label" htmlFor={answer.id}>
-        {answer.text}
-        {answer.input_text != null ? (
+        <p>{answer.answer_text}</p>
+        {/* {answer.input_text != null ? (
           <input
             type="text"
             className="ms-3"
@@ -72,7 +84,7 @@ export const MultiSelectTiamati = ({
               }
             }}
           ></input>
-        ) : null}
+        ) : null} */}
       </label>
     </div>
   );

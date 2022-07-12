@@ -1,9 +1,8 @@
 #header-img {
   display: inline;
-  height: 350px;
   background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1654589067/illustrations/Banner_dark_y73sds.jpg);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   z-index: 2;
 }
@@ -13,14 +12,12 @@
 }
 
 #bio-hello-text {
-  height: 550px;
-  background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1656424713/illustrations/Portrait_Final_4_ybknog.jpg);
+  background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1656848512/illustrations/Portrait_Final_5_bfuldh.jpg);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
   border: 0px;
   text-align: center;
-  background-color: #ff5968;
 }
 
 #bio-picture {

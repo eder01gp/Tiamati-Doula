@@ -52,10 +52,15 @@ export const Signup = (props) => {
   };
 
   return (
-    <div className="registro mt-5">
-      {showAlert ? null : <p className="text-center mt-5">REGISTRO</p>}
+    <div className="my-6"> 
+      {showAlert ? null : 
+      (<div style={{width:"100%", height:"50px"}} className="bg-T bg-02 my-4"> 
+          <div className="bg-wh-pl px-4" style={{width:"fit-content"}}>
+            CREAR CUENTA
+          </div> 
+      </div>)}
       {showAlert ? (
-        <div
+      <div
           class="signupAlert alert alert-light border-multicolor m-auto"
           role="alert"
         >
@@ -84,52 +89,57 @@ export const Signup = (props) => {
               Tu registro se ha realizado correctamente
             </div>
           </div>
+        </div>) : (
+      <form id="signup-form" className="m-auto align-items-center">
+        <div className="mb-1">
+          <label className="form-label">Email</label>
+          <input
+            type="email"
+            className="form-control"
+            onChange={(e) =>
+              setUser({ ...user, email: e.target.value, rol: 1 })
+            }
+          />
         </div>
-      ) : (
-        <form className="col-3 m-auto align-items-center">
-          <div className="mb-1">
-            <label className="form-label mb-0">Email</label>
-            <input
-              type="email"
-              className="form-control"
-              onChange={(e) =>
-                setUser({ ...user, email: e.target.value, rol: 1 })
-              }
-            />
-          </div>
-          {/* <div className="form-check mb-3">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              onChange={(e) =>
-                e.target.checked
-                  ? setUser({ ...user, rol: 2 }) & setCheck(true)
-                  : setUser({ ...user, rol: 1 }) & setCheck(false)
-              }
-            />
-            <label className="form-check-label">Soy empresa</label>
-          </div> */}
-          <div className="mb-1">
-            <label htmlFor="exampleInputPassword1" className="form-label mb-0">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              onChange={(e) => setUser({ ...user, password: e.target.value })}
-            />
-          </div>
-          <h6 className="text-danger mb-3">{error}</h6>
-          <div className="d-grid gap-2">
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={(e) => saveUsersInDB()}
-            >
-              Registrarse
-            </button>
-          </div>
-        </form>
+        {/* <div className="form-check mb-3">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            onChange={(e) =>
+              e.target.checked
+                ? setUser({ ...user, rol: 2 }) & setCheck(true)
+                : setUser({ ...user, rol: 1 }) & setCheck(false)
+            }
+          />
+          <label className="form-check-label">Soy empresa</label>
+        </div> */}
+        <div className="my-3">
+          <label className="form-label">
+            Contraseña
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
+          />
+        </div>
+        <div className="my-2">
+          <button
+            type="button"
+            className="btn-no-fill w-100 my-3"
+            data-bs-toggle="modal"
+            data-bs-target="#userSaved"
+            onClick={(e) => saveUsersInDB()}
+          >
+            Registrarse
+          </button>
+        </div>
+        {error?
+        <div>
+          <i className="fa fa-times-circle text-wrong mb-3"></i>
+          <div className="d-inline mx-1 text-wrong">{error}</div>
+        </div>:null}
+      </form>
       )}
     </div>
   );

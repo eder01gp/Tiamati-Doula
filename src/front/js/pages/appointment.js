@@ -32,7 +32,6 @@ export const Appointment = () => {
 
   useEffect(() => {
     actions.verify();
-    actions.getUserServiceHired();
   }, []);
 
   const saveUserAppointment = async () => {
