@@ -42,7 +42,7 @@ export const Checkout = () => {
   return (
     <div className="frame01 container my-4">
       <h2> Checkout </h2>
-      <div className="frame02 container mt-4">
+      <div className="mt-4">
       <div className="addServices mt-5"><h4>Servicios seleccionados</h4></div>
         {store.services.map((service, i) => {
           if (service.service.selected){

@@ -5,8 +5,6 @@ import { useHistory } from "react-router-dom";
 export const Stylesheet = () => {
   const history = useHistory();
 
-  /* redirect={() => history.push("/")} */
-
   return (
     <div className="d-flex flex-column align-items-center">
       <h2 style={{textDecoration:"underline"}}>Styles:</h2>
@@ -18,6 +16,7 @@ export const Stylesheet = () => {
         <h5>Headline 5</h5>
         <h6>Headline 6</h6>
         <p>Body / font-family: "Anek Malayalam", sans-serif; font-size: 200;</p>
+        <button className="btn-no-fill my-2">className=".btn-no-fill"</button>
         <button className="btn-fill my-2">className=".btn-fill"</button>
         <button className="btn-fill btn-fill-green my-2"> className="btn-fill btn-fill-green"</button>
         <button className="btn-fill btn-fill-purple my-2">className="btn-fill btn-fill-purple"</button>
@@ -32,6 +31,26 @@ export const Stylesheet = () => {
         </button>
         <div style={{width:"100%", height:"50px"}} className="border-purple-green my-3">className="border-purple-green"</div>
         <div style={{width:"100%", height:"50px"}} className="border-multicolor my-3">className="border-multicolor"</div>
+        <div style={{width:"100%", height:"50px"}} className="bg-T bg-01 my-2"> 
+          <div className="bg-wh-pl px-4" style={{width:"fit-content"}}>
+            frame "bg-T bg-01" label "bg-wh-pl"
+          </div> 
+        </div>
+        <div style={{width:"100%", height:"50px"}} className="bg-T bg-02 my-2">
+          <div className="bg-wh-pl px-4" style={{width:"fit-content"}}>
+            frame "bg-T bg-02" label "bg-wh-pl"
+          </div>
+        </div>
+        <div style={{width:"100%", height:"50px"}} className="bg-T bg-03 my-2">
+          <div className="bg-wh-pl px-4">
+            frame "bg-T bg-03" label "bg-wh-pl"
+          </div>
+        </div>
+        <div style={{width:"100%", height:"50px"}} className="bg-T bg-04 my-2">
+          <div className="bg-wh-pl px-4" style={{width:"fit-content"}}>
+            frame "bg-T bg-04" label "bg-wh-pl"
+          </div>
+        </div>
         <div>
           <i className="fa fa-check-circle text-success"></i>
           <div className="d-inline mx-1 text-success">Algo se ha hecho correctamente</div>

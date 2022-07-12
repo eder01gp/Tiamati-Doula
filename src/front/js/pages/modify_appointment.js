@@ -35,7 +35,6 @@ export const Modify_appointment = () => {
 
   useEffect(() => {
     actions.verify();
-    actions.getUserServiceHired();
     store.appointmentToModify;
   }, []);
 

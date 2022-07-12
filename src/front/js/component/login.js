@@ -11,7 +11,8 @@ export const Login = (props) => {
 
   let history = useHistory();
 
-  const login = async () => {
+  const login = async (evt) => {
+    evt.preventDefault();
     try {
       const response = await fetch(store.url + "/login", {
         method: "POST",
@@ -30,10 +31,9 @@ export const Login = (props) => {
         localStorage.setItem("ID", confirmation.User.id);
         localStorage.setItem("rol", confirmation.User.rol);
         localStorage.setItem("email", confirmation.User.email);
-        setResult(confirmation.msg);
+        /* setResult(confirmation.msg); */
         actions.verify();
         actions.getUserInfo();
-        actions.getUserServiceHired();
         if (props.push==true){
           history.push("/");
         }
@@ -46,14 +46,17 @@ export const Login = (props) => {
   };
 
   return (
-    <div className="container my-6">
-      <p className="text-center mt-5">INICIAR SESIÓN</p>
-      <form className="col-3 m-auto align-items-center">
+    <div className="my-6">
+      <div style={{width:"100%", height:"50px"}} className="bg-T bg-01 my-4"> 
+          <div className="bg-wh-pl px-4" style={{width:"fit-content"}}>
+            INICIAR SESIÓN
+          </div> 
+      </div>
+      <form id="login-form" className="m-auto align-items-center">
         <div className="mb-1">
-          <label htmlFor="inputUser" className="col-sm-2 form-label">
+          <label htmlFor="inputUser" className="form-label">
             Email
           </label>
-          <div className="col-sm-12">
             <input
               type="text"
               className="form-control"
@@ -62,37 +65,35 @@ export const Login = (props) => {
                 setUser({ ...user, Email: e.target.value });
               }}
             />
-          </div>
         </div>
-        <div className="mb-3">
-          <label htmlFor="inputPassword3" className="col-sm-2 form-label">
-            Password
+        <div className="my-3">
+          <label className="form-label">
+            Contraseña
           </label>
-          <div className="col-sm-12">
             <input
               type="password"
               className="form-control"
-              id="inputPassword3"
               onChange={(e) => {
                 setUser({ ...user, Password: e.target.value });
               }}
             />
-          </div>
         </div>
-        <div className="col-sm-12 mx-auto">
-          <a
-            className="btn btn-light "
-            onClick={() => {
-              login("home");
+        <div className="my-2">
+          <button
+            className="btn-no-fill w-100 my-3"
+            onClick={(evt) => {
+              login(evt);
             }}
           >
-            Login
-          </a>
+            Iniciar sesión
+          </button>
         </div>
+        {result?
+        <div>
+          <i className="fa fa-times-circle text-wrong mb-3"></i>
+          <div className="d-inline mx-1 text-wrong">{result}</div>
+        </div>:null}   
       </form>
-      <div>
-        <p className="my-2 mx-auto text-center">{result}</p>
-      </div>
     </div>
   );
 };

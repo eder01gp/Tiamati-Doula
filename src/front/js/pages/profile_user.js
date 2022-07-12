@@ -21,7 +21,6 @@ export const Profile_user = () => {
   useEffect(() => {
     actions.verify();
     actions.getUserInfo();
-    actions.getUserServiceHired();
     actions.getUserAppointments();
   }, []);
 
