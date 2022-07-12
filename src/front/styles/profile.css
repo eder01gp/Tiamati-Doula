@@ -123,6 +123,8 @@ td {
   font-size: 15px;
 }
 #btn-delete-account:hover {
+  padding: 4px;
+  font-size: 15px;
   border: 2px solid #f1b606;
 }
 
@@ -186,4 +188,9 @@ td {
 
 .circle-point {
   font-size: 5px;
+}
+
+#btnModifySignup {
+  padding: 3px;
+  font-size: 15px;
 }

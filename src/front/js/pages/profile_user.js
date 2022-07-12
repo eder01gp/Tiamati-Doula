@@ -229,16 +229,15 @@ export const Profile_user = () => {
                     </h6>
                     <div
                       type="button"
-                      className="mt-2"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="Cambiar email"
+                      id="btnModifySignup"
+                      className="btn-fill mt-1 ms-2"
                       onClick={() => {
                         setUserInfo(false);
                         setInputEmail(true);
                       }}
                     >
-                      <i className="icon-edit-email fa-solid fa-pen-to-square mx-2"></i>
+                      Modificar
+                      <i className="icon-edit-email fa-solid fa-pen-to-square mx-1"></i>
                     </div>
                   </div>
                 </div>

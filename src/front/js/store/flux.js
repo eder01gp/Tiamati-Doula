@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-      "https://3001-ederdon-tiamatidoula-pajnr7xqs5q.ws-eu51.gitpod.io/" +
+        "https://3001-ederdon-tiamatidoula-bovpmoa3qtl.ws-eu53.gitpod.io/" +
         "api",
       logged: null,
       token: null,
@@ -29,12 +29,11 @@ const getState = ({ getStore, getActions, setStore }) => {
       birthplan_comment: [],
       birthplan_saved_answers: [],
       cleanUploadDataBool: false,
-
     },
 
     actions: {
       cleanUploadData: (bool) => {
-        setStore({ cleanUploadDataBool: bool})
+        setStore({ cleanUploadDataBool: bool });
       },
 
       getUsers: async () => {
@@ -78,7 +77,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (resp.status == 200) {
             getActions().getUserServiceHired();
           }
-          
+
           if (resp.status == 400) {
             getActions().logout();
           }
@@ -86,7 +85,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (resp.status == 401) {
             getActions().logout();
           }
-
         } catch (e) {
           setStore({ logged: false });
           getActions().logout();
@@ -123,7 +121,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       deleteDocument: async (id) => {
-        const response = await fetch(getStore().url + "/document/"+id, {
+        const response = await fetch(getStore().url + "/document/" + id, {
           method: "DELETE",
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -249,7 +247,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
         const resp = await fetch(getStore().url + "/upload", options);
         const data = await resp.json();
-        if (resp.status == 400) return {"400": data.msg}
+        if (resp.status == 400) return { 400: data.msg };
         return data.document_created_url;
       },
 
@@ -337,17 +335,17 @@ const getState = ({ getStore, getActions, setStore }) => {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
         });
-        if (response.status==200){
+        if (response.status == 200) {
           const data = await response.json();
           data.service_hired_id.map((x) => {
-          for (let i of data.services_id_name) {
-            if (x.service_id == i.id) {
-              x["name"] = i.service_name;
+            for (let i of data.services_id_name) {
+              if (x.service_id == i.id) {
+                x["name"] = i.service_name;
+              }
+              if (x.service_id == 1) setStore({ service_id1_hired: true });
             }
-            if (x.service_id == 1) setStore({ service_id1_hired: true });
-          }
-        });
-        setStore({ user_service_hired_id: data.service_hired_id });
+          });
+          setStore({ user_service_hired_id: data.service_hired_id });
         }
       },
 
