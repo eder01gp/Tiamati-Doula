@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-        "https://3001-ederdon-tiamatidoula-bovpmoa3qtl.ws-eu53.gitpod.io/" +
+      "https://3001-ederdon-tiamatidoula-pajnr7xqs5q.ws-eu53.gitpod.io/" +
         "api",
       logged: null,
       token: null,
@@ -397,16 +397,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       setAnswer: (bool, id) => {
         const newAnswer = getStore().birthplan_answer.map((x) => {
           if (x.id == id) {
-            if (bool == false) {
-              return { ...x, checked: false };
-            } else {
-              if (x.checked == true) {
-                return { ...x, checked: false };
-              } else {
-                return { ...x, checked: true };
-              }
-            }
-          } else return x;
+              return { ...x, checked: bool };
+            } 
+          else return x;
         });
         setStore({ birthplan_answer: newAnswer });
       },

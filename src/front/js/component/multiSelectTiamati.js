@@ -1,32 +1,23 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Context } from "../store/appContext";
-import PropTypes from "prop-types";
+import propTypes from "prop-types";
 import "../../styles/birthplan.css";
 
 export const MultiSelectTiamati = (props) => {
   const { store, actions } = useContext(Context);
-  const [isChecked, setIsChecked] = useState(false);
-  const [answer, setAnswer] = useState({});
-
-  const getAnswer = () => {
-    let ansobject = store.birthplan_answer.find((ans) => {
-      return ans.id == props.answer_id;
-    });
-    setAnswer(ansobject);
-  };
-
-  useEffect(() => {
-    getAnswer();
-  }, []);
 
   return (
     <div>
       <input
-        className="form-check-input"
-        type={answer.answer_type}
-        checked={isChecked}
-        id={answer.id}
+        className="form-check-input mx-1"
+        type={store.birthplan_answer[props.answer_index].answer_type}
+        checked={store.birthplan_answer[props.answer_index].checked}
+        id={store.birthplan_answer[props.answer_index].id}
         onChange={() => {
+          actions.setAnswer(
+            !store.birthplan_answer[props.answer_index].checked,
+            store.birthplan_answer[props.answer_index].id
+          );
           // let newSections = [];
           // for (let section_index in sections) {
           //   if (sections[section_index].id != section_id) {
@@ -54,8 +45,8 @@ export const MultiSelectTiamati = (props) => {
           // setSections(newSections);
         }}
       />
-      <label className="form-check-label" htmlFor={answer.id}>
-        <p>{answer.answer_text}</p>
+      <label className="form-check-label d-inline" htmlFor={store.birthplan_answer[props.answer_index].id}>
+        {store.birthplan_answer[props.answer_index].answer_text}
         {/* {answer.input_text != null ? (
           <input
             type="text"
@@ -88,4 +79,10 @@ export const MultiSelectTiamati = (props) => {
       </label>
     </div>
   );
+};
+
+MultiSelectTiamati.propTypes = {
+  answer_id: propTypes.any,
+  answer_index: propTypes.any,
+  subsection_id: propTypes.any,
 };

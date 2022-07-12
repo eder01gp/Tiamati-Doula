@@ -2,40 +2,36 @@ import React, { useEffect, useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 import { BirthplanSubsection } from "./birthplanSubsection";
-import { BirthplanComment } from "./birthplanComment";
-import "../../styles/birthplan.css";
-import "../../styles/index.css";
-import { CheckboxTiamati } from "./checkboxTiamati";
 
-export const BirthplanSection = ({ section, sectionIndex, subsections }) => {
+export const BirthplanSection = (props) => {
   const { store, actions } = useContext(Context);
-  const [show, setShow] = useState(false);
 
   return (
-    <div>
-      <div>
-        {store.birthplan_section[sectionIndex] ? (
-          <div>
-            <div className="video row mb-5">
+    <div className="row mt-3">
+      {store.birthplan_section[props.sectionIndex] ? store.birthplan_section[props.sectionIndex].video ? (
+      <div className="col-sm-6">
+            <div class="ratio ratio-16x9">
               <iframe
-                width="640"
-                height="360"
-                frameBorder="0"
-                allow=" fullscreen"
-                src={store.birthplan_section[sectionIndex].video}
-                controls
-              />
+                  className="embed-responsive-item"
+                  frameBorder="0"
+                  allow=" fullscreen"
+                  src={store.birthplan_section[props.sectionIndex].video}
+                  controls
+                  key={props.sectionIndex}
+                />
+              </div>
+            <div className="video mb-5 .img-fluid">
             </div>
-          </div>
-        ) : null}
-      </div>
+            </div>
+        ) : null : null}
 
-      <div id="subsections">
-        {store.birthplan_section[sectionIndex]
+
+      <div id="subsections" className="col-sm-6">
+        {store.birthplan_section[props.sectionIndex]
           ? store.birthplan_subsection.map((subsection) => {
               if (
                 subsection.birthplan_section_id ==
-                store.birthplan_section[sectionIndex].id
+                store.birthplan_section[props.sectionIndex].id
               ) {
                 return <BirthplanSubsection subsection={subsection.id} />;
               }
@@ -44,4 +40,8 @@ export const BirthplanSection = ({ section, sectionIndex, subsections }) => {
       </div>
     </div>
   );
+};
+
+BirthplanSection.propTypes = {
+  sectionIndex: PropTypes.any,
 };
