@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-        "https://3001-ederdon-tiamatidoula-tz2ykteqlkl.ws-eu53.gitpod.io/" +
+      "https://3001-ederdon-tiamatidoula-pajnr7xqs5q.ws-eu51.gitpod.io/" +
         "api",
       logged: null,
       token: null,
@@ -28,9 +28,15 @@ const getState = ({ getStore, getActions, setStore }) => {
       birthplan_answer: [],
       birthplan_comment: [],
       birthplan_saved_answers: [],
+      cleanUploadDataBool: false,
+
     },
 
     actions: {
+      cleanUploadData: (bool) => {
+        setStore({ cleanUploadDataBool: bool})
+      },
+
       getUsers: async () => {
         const response = await fetch(getStore().url + "/users");
         const info = await response.json();
@@ -68,6 +74,19 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           const data = await resp.json();
           setStore({ logged: data.logged || false });
+
+          if (resp.status == 200) {
+            getActions().getUserServiceHired();
+          }
+          
+          if (resp.status == 400) {
+            getActions().logout();
+          }
+
+          if (resp.status == 401) {
+            getActions().logout();
+          }
+
         } catch (e) {
           setStore({ logged: false });
           getActions().logout();
@@ -100,6 +119,18 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ documents: data.response });
         } catch (e) {
           console.log("Error getting documents");
+        }
+      },
+
+      deleteDocument: async (id) => {
+        const response = await fetch(getStore().url + "/document/"+id, {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        if (response.status == 200) {
+          getActions().getDocuments();
         }
       },
 
@@ -210,6 +241,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ services: newService });
         getActions().serviceSelectedUpdate();
       },
+
       uploadCloud: async (body) => {
         const options = {
           body,
@@ -217,6 +249,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
         const resp = await fetch(getStore().url + "/upload", options);
         const data = await resp.json();
+        if (resp.status == 400) return {"400": data.msg}
         return data.document_created_url;
       },
 
@@ -304,8 +337,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
         });
-        const data = await response.json();
-        data.service_hired_id.map((x) => {
+        if (response.status==200){
+          const data = await response.json();
+          data.service_hired_id.map((x) => {
           for (let i of data.services_id_name) {
             if (x.service_id == i.id) {
               x["name"] = i.service_name;
@@ -314,6 +348,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         });
         setStore({ user_service_hired_id: data.service_hired_id });
+        }
       },
 
       setAppointmentToModify: (value) => {

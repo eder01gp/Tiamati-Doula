@@ -14,6 +14,7 @@ import os
 
 api = Blueprint('api', __name__)  
 
+DOMAIN = "https://3000-ederdon-tiamatidoula-pajnr7xqs5q.ws-eu51.gitpod.io/"
 stripe.api_key = "sk_test_51L9AB1GwDdfyjr9WWHWxYk8V77Cd7dDRpQc1JhXslN9vOfopsi8sNtfduhXogaZobR1ggOHhfdW57YFQUIaMGdUD00yAYi6V1I"
 ENDPOINT_SECRET = "whsec_858463f07c3b0bdad46be3660513488cf9f6664d2a5f10f38a81e1b2a08134fb"
 
@@ -141,17 +142,27 @@ def delete_user():
     db.session.commit()
     return jsonify({"msg": "User deleted, ok"}), 200     
 
-#upload
 
 @api.route('/upload', methods=['POST'])
 def upload():
     try:
         result = cloudinary.uploader.upload(request.files["document"])
+    except ValueError:
+        # Error must supply api_key  
+        return jsonify({"msg":"Falta api_key. Contacta al administrador/a de la web"}), 400
+    except cloudinary.exceptions.Error as error:  
+        return jsonify({"msg":str(error)}), 400
     except:
-        return jsonify({"msg":"Failed to upload to Cloudinary"}), 400
+        return jsonify({"msg":"Contacta al administrador/a de la web"}), 400
     document_url = result["secure_url"]    
     return jsonify({"document_created_url": document_url}), 200
 
+@api.route('/document/<id>', methods=['DELETE'])
+def delete_document(id):
+    document = Document.query.get(id)
+    db.session.delete(document)
+    db.session.commit()  
+    return jsonify({"response":"Documento borrado correctamente"}), 200  
         
 @api.route('/document', methods=['POST'])
 def new_document():
@@ -262,8 +273,8 @@ def create_checkout_session():
             client_reference_id=client_reference_id,
             customer_email=customer_email,
             mode='payment',
-            success_url="https://tiamatidoula.herokuapp.com" + "/redirect"+ '?success=true',
-            cancel_url="https://tiamatidoula.herokuapp.com" + '/redirect'+ '?canceled=true',
+            success_url= DOMAIN + "/redirect"+ '?success=true',
+            cancel_url= DOMAIN + '/redirect'+ '?canceled=true',
         )
     except Exception as e:
         return str(e)
@@ -301,19 +312,16 @@ def webhook():
 
     return jsonify(success=True)
 
-def fulfill_order(session):
-    print(session)   
+def fulfill_order(session): 
     try:
         if session["status"]=="complete":
             line_items = stripe.checkout.Session.list_line_items(session["id"])["data"]
-            print(line_items)
     except:
         return jsonify({"response": "Checkout status not complete or without line items"}), 400
 
     for service_hired in line_items:
         try:
             service = Service.query.filter_by(stripe_product_id=service_hired["price"]["product"]).first()
-            print(service)
         except:
             return jsonify({"response": "no service found for"+service_hired["description"]}), 400
 
@@ -324,8 +332,6 @@ def fulfill_order(session):
         )
         db.session.add(new_service_hired)
         db.session.commit()
-        print("new service created")
-
 
 @api.route('/available_datetime', methods=['GET'])
 @jwt_required()

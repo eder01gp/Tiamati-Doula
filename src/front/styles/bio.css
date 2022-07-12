@@ -1,5 +1,6 @@
 .div-bio {
   justify-content: center;
+  margin-top: -40px;
 }
 
 .photo {
@@ -10,10 +11,6 @@
 .lines-images-boxes {
   height: 5.5cm;
   width: 5.5cm;
-}
-
-.photo2-bio-z-index{
-  z-index: -1
 }
 
 .speech-bubble {

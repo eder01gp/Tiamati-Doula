@@ -1,7 +1,5 @@
 .form-container-div {
-  width: 60%;
   box-sizing: unset;
-  margin-top: 50px;
   border: 0;
   -webkit-box-shadow: 8px 0px 0px 0px #8972b2, 0px 8px 0px 0px #ff5968,
     -8px 0px 0px 0px #4e4e56, 0px 0px 0px 8px #f1b606,
@@ -10,17 +8,31 @@
     -8px 0px 0px 0px #4e4e56, 0px 0px 0px 8px #f1b606,
     5px 5px 6px 5px rgb(0 0 0 / 0%);
 }
+@media (max-width: 750px) {
+  .form-container-div {
+    width: 90%;
+    margin: auto;
+  }
+}
+@media (min-width: 750px) {
+  .form-container-div {
+    width: 90%;
+  }
+}
+@media (min-width: 1200px) {
+  .form-container-div {
+    width: 65%;
+  }
+}
+
+@media (max-width: 750px) {
+  .question-answer-formData {
+    font-size: 15px;
+  }
+}
 
 .check-icon {
   margin-top: 12px;
-}
-
-.question-form {
-  color: #8c6b94;
-}
-
-.h6-form {
-  font-family: "Anek Malayalam", sans-serif;
 }
 
 /* Fill button styling */
@@ -38,10 +50,20 @@
 }
 
 #btn-left-form-data {
-  background: rgb(157, 110, 157);
-  padding-inline: 5px;
-  padding: 3px;
+  padding: 10px;
   font-size: 14px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+#btn-left-form-data::after {
+  background: #8972b2;
+}
+
+#btn-right-form-dismiss {
+  padding: 10px;
+  font-size: 14px;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 .fill::after {
