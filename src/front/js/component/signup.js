@@ -7,6 +7,7 @@ export const Signup = (props) => {
   const [user, setUser] = useState({});
   const [check, setCheck] = useState(false);
   const [error, setError] = useState();
+  const [showAlert, setShowAlert] = useState(false);
   const { store, actions } = useContext(Context);
   const history = useHistory();
 
@@ -40,13 +41,7 @@ export const Signup = (props) => {
           actions.verify();
           actions.getUserInfo();
           actions.getUserServiceHired();
-          // if (props.push == true) {
-          //   if (check == false) {
-          // history.push("/form");
-          //   } else if (check == true) {
-          //     history.push("/");
-          //   }
-          // }
+          setShowAlert(true);
         }
       } else {
         setError(confirmation.msg);
@@ -57,12 +52,44 @@ export const Signup = (props) => {
   };
 
   return (
-    <div className="my-6">    
-      <div style={{width:"100%", height:"50px"}} className="bg-T bg-02 my-4"> 
+    <div className="my-6"> 
+      {showAlert ? null : 
+      (<div style={{width:"100%", height:"50px"}} className="bg-T bg-02 my-4"> 
           <div className="bg-wh-pl px-4" style={{width:"fit-content"}}>
             CREAR CUENTA
           </div> 
-      </div>
+      </div>)}
+      {showAlert ? (
+      <div
+          class="signupAlert alert alert-light border-multicolor m-auto"
+          role="alert"
+        >
+          <h4 class="alert-heading d-inline">Bienvenid@!</h4>
+          <button
+            type="button"
+            class="btn-close float-end"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+            onClick={() => {
+              if (props.push == true) {
+                //   if (check == false) {
+                history.push("/form");
+                //   } else if (check == true) {
+                //     history.push("/");
+                //   }
+              }
+            }}
+          ></button>
+          <div className="alert-body mt-3">
+            <i
+              className="fa fa-check-circle text-success float-start"
+              aria-hidden="true"
+            ></i>
+            <div className="d-inline mx-1 text-success">
+              Tu registro se ha realizado correctamente
+            </div>
+          </div>
+        </div>) : (
       <form id="signup-form" className="m-auto align-items-center">
         <div className="mb-1">
           <label className="form-label">Email</label>
@@ -107,53 +134,13 @@ export const Signup = (props) => {
             Registrarse
           </button>
         </div>
-
-        {/* <!-- Modal --> */}
-        <div
-          className="modal fade"
-          id="userSaved"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabIndex="-1"
-          aria-labelledby="userSavedLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h4 className="mb-0">Bienvenid@!</h4>
-                <button
-                  type="button"
-                  className="btn-close float-end"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                  onClick={() => {
-                    if (props.push == true) {
-                      //   if (check == false) {
-                      history.push("/form");
-                      //   } else if (check == true) {
-                      //     history.push("/");
-                      //   }
-                    }
-                  }}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <i className="fa fa-check-circle text-success float-start"></i>
-                <div className="d-inline mx-1 text-success">
-                  Tu registro se ha realizado correctamente
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         {error?
         <div>
           <i className="fa fa-times-circle text-wrong mb-3"></i>
           <div className="d-inline mx-1 text-wrong">{error}</div>
         </div>:null}
-
       </form>
+      )}
     </div>
   );
 };

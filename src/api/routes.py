@@ -5,7 +5,6 @@ from flask import Flask, request, jsonify, url_for, Blueprint, redirect
 from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq, BirthplanForm, Appointment, CalendarAvailability, BirthplanAnswer, BirthplanComment, BirthplanSection, BirthplanSubsection
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
-from flask_mail import Mail, Message
 
 
 import cloudinary
@@ -447,7 +446,7 @@ def delete_user_appointment():
     return jsonify({"msg": "User deleted, ok"}), 200
 
 @api.route('/admin_calendar', methods=['POST'])
-# @jwt_required()
+@jwt_required()
 def create_calendar_available_dates():
     start_date = request.json.get("start_date")
     end_date = request.json.get("end_date")
@@ -456,11 +455,11 @@ def create_calendar_available_dates():
     all_hours = ['09:00:00','10:00:00','11:00:00', '12:00:00','13:00:00', '16:00:00', '17:00:00', '18:00:00', '19:00:00', '20:00:00']
     for i in dates:
         for hour in all_hours:
-            post_dates = CalendarAvailability(date = i, time = hour)
+            post_dates = CalendarAvailability(date = i, time = hour, is_available = True)
             db.session.add(post_dates)
             db.session.commit()
-        return jsonify({"msg": "Time created"})    
-    return jsonify({"msg": "Dates created"})
+        return jsonify({"msg": "Time created"}), 200    
+    return jsonify({"msg": "Dates created"}), 200
 
 #Birthplan
 

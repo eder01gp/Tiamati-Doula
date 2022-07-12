@@ -325,3 +325,12 @@ h3 {
   padding-right: 0;
   padding-left: 0;
 }
+
+.paddingStyleDiv {
+  padding: 5px;
+}
+
+.signupAlert {
+  width: fit-content;
+  border-radius: 0;
+}
