@@ -23,7 +23,7 @@ import { User_appointment } from "./pages/user_appointment";
 import { Modify_appointment } from "./pages/modify_appointment";
 import { Appointment } from "./pages/appointment";
 import { Stylesheet } from "./pages/stylesheet";
-
+import { Admin_calendar } from "./pages/admin_calendar";
 
 import injectContext from "./store/appContext";
 
@@ -97,6 +97,9 @@ const Layout = () => {
               </Route>
               <Route exact path="/stylesheet">
                 <Stylesheet />
+              </Route>
+              <Route exact path="/admin_calendar">
+                <Admin_calendar />
               </Route>
               <Route>
                 <h1>Not found!</h1>

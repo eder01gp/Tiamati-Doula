@@ -13,8 +13,10 @@ export const Profile_user = () => {
   const [inputEmail, setInputEmail] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [showServices, setShowServices] = useState(true);
+  const [showSettings, setShowSettings] = useState(false);
   const [btnRightProfileActive, setBtnRightProfileActive] = useState(false);
   const [btnLeftProfileActive, setBtnLeftProfileActive] = useState(true);
+  const [btnCenterProfileActive, setBtnCenterProfileActive] = useState(false);
 
   useEffect(() => {
     actions.verify();
@@ -40,72 +42,7 @@ export const Profile_user = () => {
   return (
     <div className="div-profile container">
       <div>
-        <div className="Change email-password m-auto mt-1 mb-5">
-          {/* User email & edit button*/}
-          {userInfo ? (
-            <div className="d-flex">
-              <p className="mb-0 mt-2">
-                <i className="icon-edit-email fa-solid fa-gear"></i> Email:{" "}
-                {store.user_info ? store.user_info.email : null}
-              </p>
-              <div
-                type="button"
-                className="mt-2"
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                title="Cambiar email"
-                onClick={() => {
-                  setUserInfo(false);
-                  setInputEmail(true);
-                }}
-              >
-                <i className="icon-edit-email fa-solid fa-pen-to-square mx-2"></i>
-              </div>
-            </div>
-          ) : null}
-
-          {/* Email Input */}
-          {inputEmail ? (
-            <input
-              type="email"
-              className="mb-0 mt-2"
-              placeholder="Nuevo email"
-              onChange={(e) => setUser({ ...user, email: e.target.value })}
-            />
-          ) : null}
-
-          {/* INPUTS BUTTONS */}
-          {/* Save & Close Email edit */}
-          {inputEmail ? (
-            <div className=" mt-2 mb-5">
-              <button
-                id="btn-input-email"
-                className="btn-fill btn-fill-green"
-                type="submit"
-                onClick={() => {
-                  changeEmail();
-                  setInputEmail(false);
-                  setUserInfo(true);
-                }}
-              >
-                Guardar
-              </button>
-
-              <button
-                id="btn-input-email"
-                className="btn-fill btn-fill-purple mx-3"
-                onClick={() => {
-                  setInputEmail(false);
-                  setUserInfo(true);
-                }}
-              >
-                Cerrar
-              </button>
-            </div>
-          ) : null}
-        </div>
-
-        <div className="FORM-AND-SERVICES-MENU">
+        <div className="MENU">
           <div className="btn-group justify-content-center" role="group">
             <button
               id={
@@ -117,15 +54,17 @@ export const Profile_user = () => {
               onClick={() => {
                 setShowForm(false);
                 setShowServices(true);
+                setShowSettings(false);
                 setBtnRightProfileActive(false);
                 setBtnLeftProfileActive(true);
+                setBtnCenterProfileActive(false);
               }}
             >
               Mis servicios
             </button>
             <button
               id={
-                btnRightProfileActive == true
+                btnCenterProfileActive == true
                   ? "menu-profile-btn-active"
                   : "menu-profile-btn"
               }
@@ -133,11 +72,31 @@ export const Profile_user = () => {
               onClick={() => {
                 setShowForm(true);
                 setShowServices(false);
-                setBtnRightProfileActive(true);
+                setShowSettings(false);
+                setBtnRightProfileActive(false);
                 setBtnLeftProfileActive(false);
+                setBtnCenterProfileActive(true);
               }}
             >
               Información Personal
+            </button>
+            <button
+              id={
+                btnRightProfileActive == true
+                  ? "menu-profile-btn-active"
+                  : "menu-profile-btn"
+              }
+              className="btn-fill btn-fill-purple mx-2 px-3"
+              onClick={() => {
+                setShowForm(false);
+                setShowServices(false);
+                setShowSettings(true);
+                setBtnRightProfileActive(true);
+                setBtnLeftProfileActive(false);
+                setBtnCenterProfileActive(false);
+              }}
+            >
+              <i className="fa-solid fa-gear text-dark"></i>
             </button>
           </div>
           {showServices ? (
@@ -238,7 +197,7 @@ export const Profile_user = () => {
             </div>
           ) : null}
           {showForm ? (
-            <div className="Personal-Data mt-5">
+            <div className="Personal-Data my-5">
               <FormData
                 closeBtn={
                   <button
@@ -256,67 +215,137 @@ export const Profile_user = () => {
               />
             </div>
           ) : null}
-        </div>
-        <div className="DELETE-ACCOUNT-BUTTON mt-5 mb-4">
-          <button
-            className="fill"
-            id="btn-delete-account"
-            data-bs-toggle="modal"
-            data-bs-target="#deleteUser"
-          >
-            Eliminar cuenta
-          </button>
-        </div>
+          {showSettings ? (
+            <div className="Change email-password m-auto mt-5 mb-5">
+              <h5>
+                <u>Configuración de la cuenta</u>
+              </h5>
+              {/* User email & edit button*/}
+              {userInfo ? (
+                <div className="mt-4">
+                  <div className="d-flex">
+                    <i class="fa-solid fa-circle circle-point mt-3 me-1"></i>
+                    <h6 className="mb-0 mt-2">
+                      Mi email: {store.user_info ? store.user_info.email : null}
+                    </h6>
+                    <div
+                      type="button"
+                      className="mt-2"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title="Cambiar email"
+                      onClick={() => {
+                        setUserInfo(false);
+                        setInputEmail(true);
+                      }}
+                    >
+                      <i className="icon-edit-email fa-solid fa-pen-to-square mx-2"></i>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
 
-        {/* <--Modal DELETE--> */}
-        <div
-          className="modal fade"
-          id="deleteUser"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabIndex="-1"
-          aria-labelledby="deleteUserLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="deleteUserLabel">
+              {/* Email Input */}
+              {inputEmail ? (
+                <input
+                  type="email"
+                  className="mb-0 mt-4"
+                  placeholder="Nuevo email"
+                  onChange={(e) => setUser({ ...user, email: e.target.value })}
+                />
+              ) : null}
+
+              {/* INPUTS BUTTONS */}
+              {/* Save & Close Email edit */}
+              {inputEmail ? (
+                <div className=" mt-2 mb-5">
+                  <button
+                    id="btn-input-email"
+                    className="btn-fill btn-fill-green"
+                    type="submit"
+                    onClick={() => {
+                      changeEmail();
+                      setInputEmail(false);
+                      setUserInfo(true);
+                    }}
+                  >
+                    Guardar
+                  </button>
+
+                  <button
+                    id="btn-input-email"
+                    className="btn-fill btn-fill-purple mx-3"
+                    onClick={() => {
+                      setInputEmail(false);
+                      setUserInfo(true);
+                    }}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              ) : null}
+              <div className="DELETE-ACCOUNT-BUTTON mt-5 mb-4">
+                <button
+                  className="btn-slide"
+                  id="btn-delete-account"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteUser"
+                >
                   Eliminar cuenta
-                </h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body">
-                ¿Estás segura de que quieres eliminar tu cuenta?
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="fill"
-                  id="modal-button-left"
-                  data-bs-dismiss="modal"
-                >
-                  Cancelar
                 </button>
-                <button
-                  type="button"
-                  className="fill"
-                  id="modal-button-right"
-                  data-bs-dismiss="modal"
-                  onClick={() => {
-                    actions.deleteUser();
-                  }}
-                >
-                  Eliminar
-                </button>
+              </div>
+              {/* <--Modal DELETE--> */}
+              <div
+                className="modal fade"
+                id="deleteUser"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                tabIndex="-1"
+                aria-labelledby="deleteUserLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog modal-dialog-centered">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="deleteUserLabel">
+                        Eliminar cuenta
+                      </h5>
+                      <button
+                        type="button"
+                        className="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div className="modal-body">
+                      ¿Estás segura de que quieres eliminar tu cuenta?
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="fill"
+                        id="modal-button-left"
+                        data-bs-dismiss="modal"
+                      >
+                        Cancelar
+                      </button>
+                      <button
+                        type="button"
+                        className="fill"
+                        id="modal-button-right"
+                        data-bs-dismiss="modal"
+                        onClick={() => {
+                          actions.deleteUser();
+                        }}
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </div>
     </div>
