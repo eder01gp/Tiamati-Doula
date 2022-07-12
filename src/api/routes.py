@@ -465,7 +465,7 @@ def delete_user_appointment():
     return jsonify({"msg": "User deleted, ok"}), 200
 
 @api.route('/admin_calendar', methods=['POST'])
-# @jwt_required()
+@jwt_required()
 def create_calendar_available_dates():
     start_date = request.json.get("start_date")
     end_date = request.json.get("end_date")
