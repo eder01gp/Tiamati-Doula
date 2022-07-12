@@ -6,6 +6,7 @@ export const Admin_calendar = () => {
   const { store, actions } = useContext(Context);
   const [date, setDate] = useState();
   const [time, setTime] = useState();
+  const [saved, setSaved] = useState();
   let timeAdd = [];
 
   const saveAvailableDates = async () => {
@@ -18,6 +19,12 @@ export const Admin_calendar = () => {
       },
     });
     const data = await response.json();
+    if (response.status == 200) {
+      setSaved(true);
+      setTimeout(() => {
+        setSaved(false);
+      }, 1000);
+    }
   };
 
   //   if (localStorage.getItem("rol") == 3) {
@@ -59,7 +66,7 @@ export const Admin_calendar = () => {
         }
         onChange={(e) => setDate({ ...date, end_date: e.target.value })}
       ></input>
-      <div>
+      {/* <div>
         <label htmlFor="hours" className="form-label ms-3 me-1">
           Horas:
         </label>
@@ -68,7 +75,6 @@ export const Admin_calendar = () => {
           type="time"
           onChange={(e) => setTime({ ...time, hour: e.target.value })}
         ></input>
-        {console.log(time)}
         <button onClick={() => timeAdd.push(time)}>Añadir hora</button>
       </div>
       {timeAdd.map((x, item) => {
@@ -76,14 +82,13 @@ export const Admin_calendar = () => {
           <div key={item}>
             <h6>Horas seleccionadas:</h6>
             <p>{x}</p>
-            {/* <button onClick={timeAdd.filter((i) => i != item)}>eliminar</button> */}
+            <button onClick={timeAdd.filter((i) => i != item)}>eliminar</button> 
           </div>
         );
-      })}
+      })} */}
       <div className="mt-2">
-        <button onClick={() => saveAvailableDates()}>
-          Confirmar fechas y horas
-        </button>
+        <button onClick={() => saveAvailableDates()}>Confirmar fecha</button>
+        {saved ? <h6>Guardado!</h6> : null}
       </div>
     </div>
   );

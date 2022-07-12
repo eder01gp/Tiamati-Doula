@@ -7,6 +7,7 @@ export const Signup = (props) => {
   const [user, setUser] = useState({});
   const [check, setCheck] = useState(false);
   const [error, setError] = useState();
+  const [showAlert, setShowAlert] = useState(false);
   const { store, actions } = useContext(Context);
   const history = useHistory();
 
@@ -40,13 +41,7 @@ export const Signup = (props) => {
           actions.verify();
           actions.getUserInfo();
           actions.getUserServiceHired();
-          // if (props.push == true) {
-          //   if (check == false) {
-          // history.push("/form");
-          //   } else if (check == true) {
-          //     history.push("/");
-          //   }
-          // }
+          setShowAlert(true);
         }
       } else {
         setError(confirmation.msg);
@@ -58,93 +53,84 @@ export const Signup = (props) => {
 
   return (
     <div className="registro mt-5">
-      <p className="text-center mt-5">REGISTRO</p>
-      <form className="col-3 m-auto align-items-center">
-        <div className="mb-1">
-          <label className="form-label mb-0">Email</label>
-          <input
-            type="email"
-            className="form-control"
-            onChange={(e) =>
-              setUser({ ...user, email: e.target.value, rol: 1 })
-            }
-          />
-        </div>
-        {/* <div className="form-check mb-3">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            onChange={(e) =>
-              e.target.checked
-                ? setUser({ ...user, rol: 2 }) & setCheck(true)
-                : setUser({ ...user, rol: 1 }) & setCheck(false)
-            }
-          />
-          <label className="form-check-label">Soy empresa</label>
-        </div> */}
-        <div className="mb-1">
-          <label htmlFor="exampleInputPassword1" className="form-label mb-0">
-            Contraseña
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-          />
-        </div>
-        <h6 className="text-danger mb-3">{error}</h6>
-        <div className="d-grid gap-2">
+      {showAlert ? null : <p className="text-center mt-5">REGISTRO</p>}
+      {showAlert ? (
+        <div
+          class="signupAlert alert alert-light border-multicolor m-auto"
+          role="alert"
+        >
+          <h4 class="alert-heading d-inline">Bienvenid@!</h4>
           <button
             type="button"
-            className="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#userSaved"
-            onClick={(e) => saveUsersInDB()}
-          >
-            Registrarse
-          </button>
-        </div>
-
-        {/* <!-- Modal --> */}
-        <div
-          className="modal fade"
-          id="userSaved"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabIndex="-1"
-          aria-labelledby="userSavedLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h4 className="mb-0">Bienvenid@!</h4>
-                <button
-                  type="button"
-                  className="btn-close float-end"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                  onClick={() => {
-                    if (props.push == true) {
-                      //   if (check == false) {
-                      history.push("/form");
-                      //   } else if (check == true) {
-                      //     history.push("/");
-                      //   }
-                    }
-                  }}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <i className="fa fa-check-circle text-success float-start"></i>
-                <div className="d-inline mx-1 text-success">
-                  Tu registro se ha realizado correctamente
-                </div>
-              </div>
+            class="btn-close float-end"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+            onClick={() => {
+              if (props.push == true) {
+                //   if (check == false) {
+                history.push("/form");
+                //   } else if (check == true) {
+                //     history.push("/");
+                //   }
+              }
+            }}
+          ></button>
+          <div className="alert-body mt-3">
+            <i
+              className="fa fa-check-circle text-success float-start"
+              aria-hidden="true"
+            ></i>
+            <div className="d-inline mx-1 text-success">
+              Tu registro se ha realizado correctamente
             </div>
           </div>
         </div>
-      </form>
+      ) : (
+        <form className="col-3 m-auto align-items-center">
+          <div className="mb-1">
+            <label className="form-label mb-0">Email</label>
+            <input
+              type="email"
+              className="form-control"
+              onChange={(e) =>
+                setUser({ ...user, email: e.target.value, rol: 1 })
+              }
+            />
+          </div>
+          {/* <div className="form-check mb-3">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              onChange={(e) =>
+                e.target.checked
+                  ? setUser({ ...user, rol: 2 }) & setCheck(true)
+                  : setUser({ ...user, rol: 1 }) & setCheck(false)
+              }
+            />
+            <label className="form-check-label">Soy empresa</label>
+          </div> */}
+          <div className="mb-1">
+            <label htmlFor="exampleInputPassword1" className="form-label mb-0">
+              Contraseña
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
+            />
+          </div>
+          <h6 className="text-danger mb-3">{error}</h6>
+          <div className="d-grid gap-2">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={(e) => saveUsersInDB()}
+            >
+              Registrarse
+            </button>
+          </div>
+        </form>
+      )}
     </div>
   );
 };
