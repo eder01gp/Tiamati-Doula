@@ -5,18 +5,24 @@ from flask import Flask, request, jsonify, url_for, Blueprint, redirect
 from api.models import db, Users, UserData, UserRol, ServiceType, Service, Document, ServiceRols, ServiceDocuments, ServiceToService, ServiceHired, UserFaq, BusinessFaq, BirthplanForm, Appointment, CalendarAvailability, BirthplanAnswer, BirthplanComment, BirthplanSection, BirthplanSubsection
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
+from flask_mail import Mail, Message
+
 
 import cloudinary
 import cloudinary.uploader
 import stripe
 import json
 import os
+import datetime
+
 
 api = Blueprint('api', __name__)  
+
 
 DOMAIN = "https://3000-ederdon-tiamatidoula-pajnr7xqs5q.ws-eu51.gitpod.io/"
 stripe.api_key = "sk_test_51L9AB1GwDdfyjr9WWHWxYk8V77Cd7dDRpQc1JhXslN9vOfopsi8sNtfduhXogaZobR1ggOHhfdW57YFQUIaMGdUD00yAYi6V1I"
 ENDPOINT_SECRET = "whsec_858463f07c3b0bdad46be3660513488cf9f6664d2a5f10f38a81e1b2a08134fb"
+   
 
 @api.route('/protected', methods=['GET'])
 @jwt_required()
@@ -29,6 +35,7 @@ def private():
     else:
         return jsonify({"logged": False}), 400
 
+
 @api.route('/signup', methods=['POST'])
 def save_signup_user():
     body_email = request.json.get("email")
@@ -40,6 +47,7 @@ def save_signup_user():
             db.session.add(user_created)
             db.session.commit()
             access_token = create_access_token(identity=user_created.id)
+           
             return jsonify({"logged":True, "token": access_token, "msg": "Usuario creado correctamente", "User": user_created.serialize()}), 200    
         else: return jsonify({"msg": "Error, el email ya existe como usuaria"}), 400   
     else: return jsonify({"msg": "Error, comprueba email y contraseña"}), 400       
@@ -333,6 +341,8 @@ def fulfill_order(session):
         db.session.add(new_service_hired)
         db.session.commit()
 
+#CALENDAR
+
 @api.route('/available_datetime', methods=['GET'])
 @jwt_required()
 def get_available_datetime():
@@ -435,6 +445,22 @@ def delete_user_appointment():
     appointment = Appointment.query.filter_by(user_id = current_user_id).filter_by(id = appointment_id).delete()
     db.session.commit()
     return jsonify({"msg": "User deleted, ok"}), 200
+
+@api.route('/admin_calendar', methods=['POST'])
+# @jwt_required()
+def create_calendar_available_dates():
+    start_date = request.json.get("start_date")
+    end_date = request.json.get("end_date")
+    all_dates_and_time = [(datetime.datetime.strptime(start_date,"%Y-%m-%d") + datetime.timedelta(days=d)) for d in range((datetime.datetime.strptime(end_date,"%Y-%m-%d") - datetime.datetime.strptime(start_date,"%Y-%m-%d")).days + 1)] 
+    dates = list(map(lambda x: x.date().strftime("%Y-%m-%d"), all_dates_and_time))
+    all_hours = ['09:00:00','10:00:00','11:00:00', '12:00:00','13:00:00', '16:00:00', '17:00:00', '18:00:00', '19:00:00', '20:00:00']
+    for i in dates:
+        for hour in all_hours:
+            post_dates = CalendarAvailability(date = i, time = hour)
+            db.session.add(post_dates)
+            db.session.commit()
+        return jsonify({"msg": "Time created"})    
+    return jsonify({"msg": "Dates created"})
 
 #Birthplan
 
@@ -543,3 +569,4 @@ def get_comment():
     comment = BirthplanComment.query.all()
     comment_serialized = list(map(lambda item: item.serialize(), comment))
     return jsonify({"resp": comment_serialized}), 200
+

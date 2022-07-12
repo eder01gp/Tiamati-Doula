@@ -39,14 +39,14 @@ export const Signup = (props) => {
           localStorage.setItem("email", data.User.email);
           actions.verify();
           actions.getUserInfo();
-
-          if (props.push == true) {
-            //   if (check == false) {
-            history.push("/form");
-            //   } else if (check == true) {
-            //     history.push("/");
-            //   }
-          }
+          actions.getUserServiceHired();
+          // if (props.push == true) {
+          //   if (check == false) {
+          // history.push("/form");
+          //   } else if (check == true) {
+          //     history.push("/");
+          //   }
+          // }
         }
       } else {
         setError(confirmation.msg);
@@ -100,16 +100,59 @@ export const Signup = (props) => {
           <button
             type="button"
             className="btn-no-fill w-100 my-3"
+            data-bs-toggle="modal"
+            data-bs-target="#userSaved"
             onClick={(e) => saveUsersInDB()}
           >
             Registrarse
           </button>
+        </div>
+
+        {/* <!-- Modal --> */}
+        <div
+          className="modal fade"
+          id="userSaved"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabIndex="-1"
+          aria-labelledby="userSavedLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h4 className="mb-0">Bienvenid@!</h4>
+                <button
+                  type="button"
+                  className="btn-close float-end"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  onClick={() => {
+                    if (props.push == true) {
+                      //   if (check == false) {
+                      history.push("/form");
+                      //   } else if (check == true) {
+                      //     history.push("/");
+                      //   }
+                    }
+                  }}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <i className="fa fa-check-circle text-success float-start"></i>
+                <div className="d-inline mx-1 text-success">
+                  Tu registro se ha realizado correctamente
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         {error?
         <div>
           <i className="fa fa-times-circle text-wrong mb-3"></i>
           <div className="d-inline mx-1 text-wrong">{error}</div>
         </div>:null}
+
       </form>
     </div>
   );
