@@ -23,7 +23,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       documents: [],
       services_selected: [],
       service_id1_hired: false,
+      birthplan_section: [],
+      birthplan_subsection: [],
+      birthplan_answer: [],
+      birthplan_comment: [],
+      birthplan_saved_answers: [],
       cleanUploadDataBool: false,
+
     },
 
     actions: {
@@ -364,6 +370,47 @@ const getState = ({ getStore, getActions, setStore }) => {
         const data = await resp.json();
         console.log(data);
         window.location.replace(data.response);
+      },
+
+      getBirthplanSection: async () => {
+        const response = await fetch(getStore().url + "/birthplan_section");
+        const data = await response.json();
+        setStore({ birthplan_section: data.resp });
+      },
+
+      getBirthplanSubsection: async () => {
+        const response = await fetch(getStore().url + "/birthplan_subsection");
+        const data = await response.json();
+        setStore({ birthplan_subsection: data.resp });
+      },
+
+      getBirthplanAnswer: async () => {
+        const response = await fetch(getStore().url + "/birthplan_answer");
+        const data = await response.json();
+        setStore({ birthplan_answer: data.resp });
+      },
+
+      getBirthplanComment: async () => {
+        const response = await fetch(getStore().url + "/birthplan_comment");
+        const data = await response.json();
+        setStore({ birthplan_comment: data.resp });
+      },
+
+      setAnswer: (bool, id) => {
+        const newAnswer = getStore().birthplan_answer.map((x) => {
+          if (x.id == id) {
+            if (bool == false) {
+              return { ...x, checked: false };
+            } else {
+              if (x.checked == true) {
+                return { ...x, checked: false };
+              } else {
+                return { ...x, checked: true };
+              }
+            }
+          } else return x;
+        });
+        setStore({ birthplan_answer: newAnswer });
       },
     },
   };
