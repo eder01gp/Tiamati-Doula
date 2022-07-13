@@ -21,10 +21,7 @@
 }
 
 .video iframe {
-  width: 60%;
-  height: 60%;
   aspect-ratio: 16 / 9;
-  margin-left: 20%;
 }
 
 .instructions {
