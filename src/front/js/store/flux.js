@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       url:
-      "https://3001-ederdon-tiamatidoula-pajnr7xqs5q.ws-eu53.gitpod.io/" +
+        "https://tiamatidoula.herokuapp.com/" +
         "api",
       logged: null,
       token: null,
