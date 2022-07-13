@@ -9,6 +9,7 @@ pipenv install flask-jwt-extended
 C:\Users\derek\Desktop\Programas\stripe_1.10.3_windows_x86_64>stripe.exe
 C:\Users\derek\Desktop\Programas\stripe_1.10.3_windows_x86_64>
 stripe listen --forward-to https://3001-4geeksacade-reactflaskh-g28jy9vbgjl.ws-eu47.gitpod.io/api/webhook
+stripe listen --forward-to https://tiamatidoula.herokuapp.com/api/webhook
 
 ### Set up stripe to production
 Change stripe.api_key:
