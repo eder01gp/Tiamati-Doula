@@ -33,7 +33,9 @@ export const Birthplan = () => {
           <h1 id="title">{store.birthplan_section[sectionIndex].title}</h1>
         ) : null}
         </div>
+        <div><h3>({sectionIndex+1}/{store.birthplan_section.length})</h3></div>
         <div id="menu-buttons">
+          
           {sectionIndex>0?
           <button
             id="before-button"
