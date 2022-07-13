@@ -21,7 +21,7 @@ api = Blueprint('api', __name__)
 DOMAIN = "https://tiamatidoula.herokuapp.com/"
 stripe.api_key = "sk_test_51L9AB1GwDdfyjr9WWHWxYk8V77Cd7dDRpQc1JhXslN9vOfopsi8sNtfduhXogaZobR1ggOHhfdW57YFQUIaMGdUD00yAYi6V1I"
 ENDPOINT_SECRET = "whsec_858463f07c3b0bdad46be3660513488cf9f6664d2a5f10f38a81e1b2a08134fb"
-   
+CLOUDINARY_URL="cloudinary://548761488599237:0ICy9G-sp6IjJ4GD6usF1-TbJYs@dxeieqxam"
 
 @api.route('/protected', methods=['GET'])
 @jwt_required()
