@@ -3,11 +3,10 @@ html {
 }
 
 body {
-  /*   background-image: linear-gradient(to right, #a18cd1 0%, #fbc2eb 100%);
- */
   background-repeat: repeat;
   font-family: "Anek Malayalam", sans-serif;
   font-size: 200;
+  overflow-x: hidden;
 }
 
 /* Navbar */
@@ -34,14 +33,16 @@ body {
 }
 
 #header-logo {
-  height: 100px;
+  height: 85px;
   background-color: rgb(165, 250, 221, 0);
   padding: 1%;
   text-align: center;
+  color: #ff5968;
 }
 
 #logo-tiamati {
   width: 100px;
+  margin-top: 1%;
 }
 
 #logo-button {
@@ -54,7 +55,7 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 11rem;
+  height: 9rem;
   /*   background-color: rgb(255, 217, 146); /* Footer height */
 }
 
@@ -63,6 +64,7 @@ body {
   text-decoration: none;
   font-size: 18px;
 }
+
 #footer-email {
   color: black;
   text-decoration: none;
@@ -80,36 +82,255 @@ body {
   margin-bottom: 50px;
   cursor: pointer;
 }
+/* Login form */
 
-
-/* Form */
-.formulario {
-  margin-top: 7%;
-  width: 80%;
+#login-form, #signup-form {
+  width: 300px;
 }
 
-.form-general-div {
-  margin-top: 7%;
-  width: 60%;
-  box-sizing: unset;
+/* bootstrap form */
+.form-control {
+  border-radius: 0;
 }
 
-#check-data-saved-form {
-  font-size: 10px;
-}
-
-.div-profile {
-  margin-top: 7%;
-}
 
 .page-container {
   position: relative;
-  min-height: 100vh;
+  min-height: 93vh;
 }
 
 .content-wrap {
-  padding-bottom: 11rem; /* Footer height */
+  padding-bottom: 9rem; /* Footer height */
   padding-top: 50px;
 }
 
+/* Backgrounds */
+.bg-frame {
+  background-repeat: repeat;
+  background-size: 400px;
+}
 
+.bg-T {
+  background-repeat: repeat;
+  background-size: 400px;
+  color:aliceblue;
+  font-weight: 900;
+  letter-spacing: 2px;
+  font-size: large;
+  align-items: center!important;
+  justify-content: center!important;
+  display: flex;
+  width:"100%";
+  height:"50px";
+}
+
+.bg-01{
+  background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1656848465/backgrounds/Pattern_Flowers_jvci7j.jpg);
+}
+
+.bg-02 {
+  background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1656848460/backgrounds/Pattern_Flowers_2_vsb0oj.jpg);
+}
+
+.bg-03 {
+  background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1656848460/backgrounds/Pattern_Flowers_3_isezsk.jpg);
+}
+
+.bg-04 {
+  background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1656848462/backgrounds/Pattern_Flowers_4_zh3f0c.jpg);
+}
+
+.bg-wh-pl {
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, 0.5);
+  z-index: 0;
+  color: #5a4b9a;
+  width:"fit-content";
+}
+
+/* Paragraphs style */
+h1 {
+  font-family: "Economica", sans-serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 50px;
+}
+
+h2 {
+  font-family: "Economica", sans-serif;
+  font-style: italic;
+  font-weight: 700;
+}
+
+h3 {
+  font-family: "Economica", sans-serif;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.text-wrong {
+  color: #ff5968;
+}
+/* no-fill button styling */
+.btn-no-fill {
+  font-family: "Anek Malayalam", sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  padding: 13px 20px 13px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color:hsla(240, 5%, 32%, 0.05);
+}
+
+.btn-no-fill:hover {
+  text-decoration: underline;
+}
+
+/* Fill button styling */
+.btn-fill {
+  font-family: "Anek Malayalam", sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  padding: 13px 20px 13px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.btn-fill::after {
+  content: "";
+  background-color: #ffe54c;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 7px;
+  left: 7px;
+  transition: 0.2s;
+  visibility: visible;
+}
+
+.btn-fill:hover::after {
+  top: 0px;
+  left: 0px;
+}
+
+.btn-fill.btn-fill-green::after {
+  background-color: #4cff6a42;
+}
+
+.btn-fill.btn-fill-purple::after {
+  background-color: #c5b4d9;
+}
+
+.btn-fill.btn-fill-purple:hover::after {
+  background-color: #c5b4d9;
+}
+
+.btn-fill.btn-fill-left::after {
+  top: 0px;
+  left: -10px;
+}
+
+.btn-fill.btn-fill-left:hover::after {
+  top: 0px;
+  left: 0px;
+}
+
+/* Slide button styling */
+.btn-slide {
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  padding: 13px 30px 13px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.btn-slide i {
+  opacity: 0;
+  font-size: 13px;
+  transition: 0.2s;
+  position: absolute;
+  right: 10px;
+  top: 21px;
+  transition: transform 1;
+}
+
+.btn-slide div {
+  transition: transform 0.8s;
+}
+
+.btn-slide:hover div {
+  transform: translateX(6px);
+}
+
+.btn-slide:hover i {
+  opacity: 1;
+  transform: translateX(6px);
+}
+
+.btn-slide.btn-slide-left i {
+  left: 10px;
+  right: initial;
+}
+
+.btn-slide.btn-slide-left:hover div {
+  transform: translateX(-6px);
+}
+
+.btn-slide.btn-slide-left:hover i {
+  opacity: 1;
+  transform: translateX(-6px);
+}
+/* End of btn-Slide Button  */
+
+/* Borders */
+.border-multicolor {
+  border: 0;
+  -webkit-box-shadow: 8px 0px 0px 0px #8972b2, 0px 8px 0px 0px #ff5968,
+    -8px 0px 0px 0px #4e4e56, 0px 0px 0px 8px #f1b606,
+    5px 5px 6px 5px rgba(0, 0, 0, 0);
+  box-shadow: 8px 0px 0px 0px #8972b2, 0px 8px 0px 0px #ff5968,
+    -8px 0px 0px 0px #4e4e56, 0px 0px 0px 8px #f1b606,
+    5px 5px 6px 5px rgba(0, 0, 0, 0);
+}
+
+.border-purple-green {
+  box-shadow: #5a4b9a 0px 0px 0px 2px, #c9ffe2 0px 0px 16px;
+}
+
+/* Cards */
+.card,
+.card-img-top {
+  --bs-card-inner-border-radius: 0;
+  --bs-card-border-radius: 0;
+}
+
+.card,
+.card-footer {
+  background-color: transparent;
+}
+
+.row > .card {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.paddingStyleDiv {
+  padding: 5px;
+}
+
+.signupAlert {
+  width: fit-content;
+  border-radius: 0;
+}

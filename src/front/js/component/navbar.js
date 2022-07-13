@@ -6,10 +6,6 @@ import "../../styles/navbar.css";
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
 
-  useEffect (()=>{
-    actions.getUserServiceHired()
-  },[])
-
   return (
     <nav className="navbar navbar-light fixed-top" id="navbar">
       <div>

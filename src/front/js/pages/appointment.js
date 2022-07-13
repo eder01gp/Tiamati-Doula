@@ -32,7 +32,6 @@ export const Appointment = () => {
 
   useEffect(() => {
     actions.verify();
-    actions.getUserServiceHired();
   }, []);
 
   const saveUserAppointment = async () => {
@@ -51,9 +50,7 @@ export const Appointment = () => {
     <div className="appointment container">
       {showCalendar == true ? <Calendar className="mx-5" /> : null}
       <div className="make-appointment">
-        <h4 className="text-start">
-          {showTitle == true ? <strong>RESERVA TU CITA</strong> : null}
-        </h4>
+        <h2>{showTitle == true ? "RESERVA TU CITA" : null}</h2>
         <div id="datetime" className="">
           {showService == true ? (
             <div>
@@ -75,11 +72,12 @@ export const Appointment = () => {
                   >
                     <option>Elige un servicio...</option>
                     {store.user_service_hired_id.map((x, index) => {
-                      return (
-                        <option key={index} value={x.name}>
-                          {x.name}
-                        </option>
-                      );
+                      if (x.service_id != 1)
+                        return (
+                          <option key={index} value={x.name}>
+                            {x.name}
+                          </option>
+                        );
                     })}
                   </select>
                 </div>
@@ -123,6 +121,7 @@ export const Appointment = () => {
                   onClick={() => {
                     setShowService(true);
                     actions.setShowDate(false);
+                    setShowCalendar(false);
                   }}
                 ></i>
               </div>
@@ -147,6 +146,7 @@ export const Appointment = () => {
                             setHourSelected(i.time);
                             actions.setShowTime(false);
                             setShowAppointment(true);
+                            setShowCalendar(false);
                           }}
                         >
                           {i.time}
@@ -163,6 +163,7 @@ export const Appointment = () => {
                   onClick={() => {
                     actions.setShowTime(false);
                     actions.setShowDate(true);
+                    setShowCalendar(true);
                   }}
                 ></i>
               </div>
@@ -174,10 +175,10 @@ export const Appointment = () => {
               <div className="datetime-header py-1">
                 <h6 className="pt-2">CITA</h6>
               </div>
-              <div className="datetime-body text-start ms-3">
+              <div className="datetime-body text-start mx-2">
                 <p className="datosCita mt-2">Datos de la cita:</p>
                 <p>
-                  <b>{serviceName + ": "}</b>
+                  <i>{serviceName + ": "}</i>
                   {(new Date(store.dateSelected).getDay() == 0
                     ? "Domingo, "
                     : new Date(store.dateSelected).getDay() == 1
@@ -206,6 +207,7 @@ export const Appointment = () => {
                   onClick={() => {
                     actions.setShowTime(true);
                     setShowAppointment(false);
+                    setShowCalendar(true);
                   }}
                 ></i>
 
@@ -231,10 +233,10 @@ export const Appointment = () => {
                 <h6 className="pt-2">CITA</h6>
               </div>
               <div className="check-msg">
-                <i className="fa-solid fa-circle-check fa-lg ms-5 my-5"></i>
-                <h6 className="d-inline ms-2">
+                <i className="fa fa-check-circle text-success ms-5 my-5"></i>
+                <div className="d-inline mx-1 text-success">
                   Tu cita se ha guardado correctamente
-                </h6>
+                </div>
               </div>
               <div>
                 <button

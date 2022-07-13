@@ -15,7 +15,6 @@ export const User_appointment = () => {
   useEffect(() => {
     actions.verify();
     actions.getUserAppointments();
-    actions.getUserServiceHired();
   }, []);
 
   const modifyUserAppointment = async () => {
@@ -206,7 +205,7 @@ export const User_appointment = () => {
               <div className="modal-footer">
                 <button
                   type="button"
-                  id="modal-button-right"
+                  id="modal-button-left"
                   className="fill"
                   data-bs-dismiss="modal"
                 >
@@ -214,7 +213,7 @@ export const User_appointment = () => {
                 </button>
                 <button
                   type="button"
-                  id="modal-button-left"
+                  id="modal-button-right"
                   className="fill"
                   data-bs-dismiss="modal"
                   onClick={() => {

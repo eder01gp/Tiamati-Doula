@@ -1,212 +1,35 @@
-/* Fill button styling */
-.fill {
-  font-family: "Anek Malayalam", sans-serif;
-  font-size: 20px;
-  font-weight: 300;
-  letter-spacing: 0px;
-  padding: 13px 20px 13px;
-  outline: 0;
-  border: 1px solid black;
-  cursor: pointer;
-  position: relative;
-  background-color: rgba(0, 0, 0, 0);
-  /*   visibility: hidden; */
-}
-
-#bio-button::after,
-#btn-get-doc::after {
-  background-color: #4cff6a42;
-}
-
-.fill::after {
-  content: "";
-  background-color: #ffe54c;
-  width: 100%;
-  z-index: -1;
-  position: absolute;
-  height: 100%;
-  top: 7px;
-  left: 7px;
-  transition: 0.2s;
-  visibility: visible;
-}
-
-.fill:hover::after {
-  top: 0px;
-  left: 0px;
-}
-
-#btn-I-want-service::after {
-  background-color: #c5b4d9;
-  top: 0px;
-  left: -10px;
-}
-
-#btn-I-want-service:hover::after {
-  background-color: #c5b4d9;
-  top: 0px;
-  left: 0px;
-}
-
-#btn-faq::after,
-#btn-faq {
-  background-color: transparent;
-  white-space: nowrap;
-}
-
-#btn-faq:hover,
-#btn-faq {
-  border: 0px;
-  white-space: nowrap;
-}
-
-#btn-faq:hover {
-  text-decoration: underline;
-}
-/* End of Fill Button  */
-
-/* Slide button styling */
-.slide {
-  font-size: 18px;
-  font-weight: 200;
-  letter-spacing: 1px;
-  padding: 13px 30px 13px;
-  outline: 0;
-  border: 1px solid black;
-  cursor: pointer;
-  position: relative;
-  background-color: rgba(0, 0, 0, 0);
-}
-
-.slide i {
-  opacity: 0;
-  font-size: 13px;
-  transition: 0.2s;
-  position: absolute;
-  right: 10px;
-  top: 21px;
-  transition: transform 1;
-}
-
-.slide div {
-  transition: transform 0.8s;
-}
-
-.slide:hover div {
-  transform: translateX(-6px);
-}
-
-.slide:hover i {
-  opacity: 1;
-  transform: translateX(-6px);
-}
-/* End of Slide Button  */
-
-h2 {
-  font-family: "Economica", sans-serif;
-  font-style: italic;
-  font-weight: 700;
-}
-
 #header-img {
   display: inline;
-  height: 350px;
   background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1654589067/illustrations/Banner_dark_y73sds.jpg);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   z-index: 2;
-}
-
-#what-is-tiamati,
-#free-appointment,
-#documents,
-#services-title {
-  box-shadow: #5a4b9a 0px 0px 0px 2px, #c9ffe2 0px 0px 16px;
-}
-
-#what-is-tiamati-text #free-appointment-text {
-  padding: 2%;
-  font-family: "Anek Malayalam", sans-serif;
-  font-size: 200;
 }
 
 #what-is-tiamati {
   background-color: #c5b4d9;
 }
 
-.benefits-arrow {
-  height: 100px;
-  width: 30px;
-}
-
-#free-appointment {
-  padding: 4%;
-  padding-top: 5%;
-  /* height: 500px; */
-  /* background-color: #FF5968; */
-}
-
-#first-appointment-text {
-  /* font-size: 80px; */
-}
-
-#free-appointment h3 {
-  /* font-size: 40px; */
-  margin-top: 1%;
-}
-
 #bio-hello-text {
-  /*   background-color: #f1b6068a; */
+  background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1656848512/illustrations/Portrait_Final_5_bfuldh.jpg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
   border: 0px;
   text-align: center;
 }
 
 #bio-picture {
-  height: 350px;
+  height: 500px;
   background-image: url(https://res.cloudinary.com/dxeieqxam/image/upload/v1654589077/illustrations/Portrait_yellow_purple_phkh10.jpg);
-  background-position-y: 15%;
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: center;
+  background-position: bottom;
 }
-
-#bio-button {
-  font-size: 1rem;
-}
-
-/* #services {
-  background-color: rgba(7, 103, 247, 0.103);
-} */
 
 .service-card {
   width: 25rem;
-}
-
-.card,
-.card-img-top {
-  --bs-card-inner-border-radius: 0;
-  --bs-card-border-radius: 0;
-}
-
-.card,
-.card-footer {
-  background-color: transparent;
-}
-
-.row > .card {
-  padding-right: 0;
-  padding-left: 0;
-}
-
-.card {
-  border: 0;
-  -webkit-box-shadow: 8px 0px 0px 0px #8972b2, 0px 8px 0px 0px #ff5968,
-    -8px 0px 0px 0px #4e4e56, 0px 0px 0px 8px #f1b606,
-    5px 5px 6px 5px rgba(0, 0, 0, 0);
-  box-shadow: 8px 0px 0px 0px #8972b2, 0px 8px 0px 0px #ff5968,
-    -8px 0px 0px 0px #4e4e56, 0px 0px 0px 8px #f1b606,
-    5px 5px 6px 5px rgba(0, 0, 0, 0);
 }
 
 #documents {
@@ -218,15 +41,6 @@ h2 {
   height: 137px;
 }
 
-/* #documents-right {
-}
-
-#reviews {
-}
-
-.carousel-item {
-
-} */
 .carousel-control-next-icon,
 .carousel-control-prev-icon {
   background-color: #ff5968;
@@ -248,16 +62,6 @@ h2 {
   text-align: center;
 }
 
-#faq-home {
-  /* height: 300px; */
-  /* background-color: rgb(175, 187, 255); */
-  text-align: center;
-}
-
-#faq-home h2 {
-  font-size: 80px;
-}
-
 .father-display-table {
   display: table;
 }
@@ -265,4 +69,24 @@ h2 {
 .child-display-cell {
   display: table-cell;
   vertical-align: middle;
+}
+
+#btn-faq::after,
+#btn-faq {
+  background-color: transparent;
+  white-space: nowrap;
+}
+
+#btn-faq:hover,
+#btn-faq {
+  border: 0px;
+  white-space: nowrap;
+}
+
+#btn-faq:hover {
+  text-decoration: underline;
+}
+
+#faq-home {
+  text-align: center;
 }

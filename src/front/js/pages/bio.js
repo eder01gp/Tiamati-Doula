@@ -37,25 +37,19 @@ export const Bio = () => {
 
   return (
     <div className="div-bio container">
-      <h1 className="text-center mb-3 mt-3">BIO</h1>
+      <h1 className="text-center mb-0 mt-3">BIO</h1>
       <div className="justify-content-center d-flex">
         {/* LINE 1 */}
-        <div className="lines-images-boxes  mx-1 ">
+        <div className="lines-images-boxes  mx-1">
           <div className="img+text p-0">
             <div className="div-img">
               <img
+                style={image1}
+                onMouseOver={() => setImage1(null) & setText1(true)}
+                onMouseLeave={() => setImage1(blackANDwhite) & setText1(false)}
                 src="https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos.jpg"
                 alt=""
                 className="photo"
-                style={image1}
-                onMouseOver={() => {
-                  setImage1(null);
-                  setText1(true);
-                }}
-                onMouseLeave={() => {
-                  setImage1(blackANDwhite);
-                  setText1(false);
-                }}
               />
             </div>
             {text1 ? (
@@ -72,12 +66,12 @@ export const Bio = () => {
           <div className="img+text p-0">
             <div className="div-img">
               <img
-                src="https://uploads-ssl.webflow.com/5b516280e4645f724f4db51e/5da51c792977a7f803e2f2cd_HERO%20image-%20Blog%20(4).png"
-                alt=""
-                className="photo photo2-bio-z-index"
                 style={image2}
                 onMouseOver={() => setImage2(null) & setText2(true)}
                 onMouseLeave={() => setImage2(blackANDwhite) & setText2(false)}
+                src="https://www.veritasint.com/blog/wp-content/uploads/2020/06/toxoplasmosis-y-embarazo.jpg"
+                alt=""
+                className="photo"
               />
             </div>
             {text2 ? (
@@ -97,7 +91,7 @@ export const Bio = () => {
                 style={image3}
                 onMouseOver={() => setImage3(null) & setText3(true)}
                 onMouseLeave={() => setImage3(blackANDwhite) & setText3(false)}
-                src="https://www.hola.com/imagenes/estar-bien/20190205136904/que-es-una-doula-y-cual-es-su-papel/0-644-478/doula-t.jpg"
+                src="https://letsfamily.es/wp-content/uploads/2017/12/doula-1-scaled.jpg"
                 alt=""
                 className="photo"
               />
